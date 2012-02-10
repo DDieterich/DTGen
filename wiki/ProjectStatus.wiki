@@ -1,11 +1,11 @@
 #summary Status of DTGen Project AS/OF 10-Feb-2012.
 #labels Featured
 
-= Release Notes for Current Release =
+= Current Release =
 
   _No Current Release_
 
-= Work in Progress for Next Release =
+= Next Release =
 
   * Documentation
   * Code Uploads
