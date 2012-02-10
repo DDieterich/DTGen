@@ -1,4 +1,4 @@
-#summary DTGen Wiki Home Page.
+#summary Wiki Home Page.
 
 = Introduction =
 
