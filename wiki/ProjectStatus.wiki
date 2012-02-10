@@ -1,14 +1,11 @@
 #summary Status of DTGen Project AS/OF 10-Feb-2012.
 #labels Featured
 
-= Introduction =
+= Release Notes for Current Release =
 
-Add your content here.
+  _No Current Release_
 
+= Work in Progress for Next Release =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * Documentation
+  * Code Uploads
