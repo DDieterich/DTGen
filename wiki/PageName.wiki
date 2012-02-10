@@ -1,4 +1,4 @@
-#summary Wiki Home Page.
+#summary Wiki Home Page
 
 = Introduction =
 
