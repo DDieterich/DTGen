@@ -4,9 +4,6 @@
 
 Welcome to the DTGen Wiki.
 
-
-= Development =
-
 Pages Needed for:
   * Release Schedule
   * Unit Testing Guidelines
