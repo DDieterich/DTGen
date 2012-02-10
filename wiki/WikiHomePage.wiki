@@ -1,14 +1,12 @@
-#summary One-sentence summary of this page.
+#summary Wiki Home Page
 #labels Featured
 
 = Introduction =
 
-Add your content here.
+Welcome to the DTGen Wiki.
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Pages Needed for:
+  * Release Schedule
+  * Unit Testing Guidelines
+  * Integration Testing
+  * Release Process
