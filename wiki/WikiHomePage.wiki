@@ -6,5 +6,5 @@
 Welcome to the DTGen Wiki.
 
   * ReleaseSchedule
-  * UnitTesting Guidelines
-  * ReleaseProcess with Integration Testing
+  * UnitTesting
+  * ReleaseProcess
