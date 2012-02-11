@@ -5,8 +5,6 @@
 
 Welcome to the DTGen Wiki.
 
-Pages Needed for:
-  * Release Schedule
-  * Unit Testing Guidelines
-  * Integration Testing
-  * Release Process
+  * ReleaseSchedule
+  * UnitTesting Guidelines
+  * ReleaseProcess with Integration Testing
