@@ -1,4 +1,4 @@
-#summary Release Process
+#summary Release Process with Integration Testing
 
 = Introduction =
 
