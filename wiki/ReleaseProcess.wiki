@@ -4,8 +4,13 @@
 
 The DTGen release process incorporates a software generator into the
 
-  * Optionally Drop/Create Gen User
-  * Load schema (glob, integ, mods, ods, oltp)
+  * Clear out test environment
+  * Create generator owner
+  * Load "lite" generator (glob, integ, mods, ods, oltp, comp)
+  * Create 
+  * Load "TST" data and generate
+  * Optionally Drop/Create test environment
+  * Load "TST" application
   * Run Unit Test Scripts
   * Re-Generate Scripts
   * Re-Create Database
