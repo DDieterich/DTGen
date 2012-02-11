@@ -1,0 +1,21 @@
+= Feature Set Unit Testing =
+
+Unit testing is performed based on the following feature sets
+
+  * Natural Key Update-able Views
+  * Sequences and Surrogate Primary Keys (PK)
+  * Indexed Foreign Keys (FK) and Natural Keys (NK)
+  * Custom Check Constraints
+  * Enforced Discrete Domains (no FK)
+  * Enforced Case Folding
+  * Full Procedural APIs for each Entity
+  * Full Path Hierarchical Data (PK and NK)
+  * Entity Based History and Audit
+  * Point-in-Time ASOF Views
+  * Audited POP Functions
+  * Comprehensive OMNI Views
+
+  * Default Maintenance User Interface (APEX)
+  * Includes Data Domain Filterable Grid Edit (APEX)
+  * Includes Generated PL/SQL for CLOB DML (APEX)
+  * Query-able ASOF and OMNI Reporting (APEX)
