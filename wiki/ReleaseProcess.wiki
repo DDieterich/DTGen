@@ -2,25 +2,19 @@
 
 = Introduction =
 
-The DTGen release process incorporates a software generator into the
+The DTGen release is complicated by the fact that DTGen is used to generate DTGen. The starting point for this circular process is the scripts used to create DTGen in the database. Accordingly, the source for DTGen are these scripts.
 
-  * Clear out test environment
+release process incorporates a software generator into the
+
+
+= Integration Testing =
+
+  * Reset test environment
   * Create generator owner
-  * Load "lite" generator (glob, integ, mods, ods, oltp, comp)
-  * Create 
+  * Load "Lite" generator (glob, integ, mods, ods, oltp, comp)
+  * Load "GEN" data and generate
+  * Create and test install package
   * Load "TST" data and generate
-  * Optionally Drop/Create test environment
-  * Load "TST" application
-  * Run Unit Test Scripts
-  * Re-Generate Scripts
-  * Re-Create Database
-  * Run Unit Tests
-  * Run Integration Tests
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * Create and test "SmallOffice" environment
+  * Create and test "ThreeTier" environment
+  * Create and test "Performance" environment
