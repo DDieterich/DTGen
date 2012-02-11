@@ -25,25 +25,3 @@ Integration testing covers 4 environments.
   * Create and test SmallOffice environment
   * Create and test ThreeTier environment
   * Create and test PerfFocus environment
-
-= Feature Set Unit Testing =
-
-Unit testing is performed based on the following feature sets
-
-  * Natural Key Update-able Views
-  * Configurable Multi-Tier Deployments
-  * Sequences and Surrogate Primary Keys (PK)
-  * Indexed Foreign Keys (FK) and Natural Keys (NK)
-  * Custom Check Constraints
-  * Enforced Discrete Domains (no FK)
-  * Enforced Case Folding
-  * Full Procedural APIs for each Entity
-  * Full Path Hierarchical Data (PK and NK)
-  * Default Maintenance User Interface (APEX)
-  * Includes Data Domain Filterable Grid Edit (APEX)
-  * Includes Generated PL/SQL for CLOB DML (APEX)
-  * Entity Based History and Audit
-  * Point-in-Time ASOF Views
-  * Audited POP Functions
-  * Comprehensive OMNI Views
-  * Query-able ASOF and OMNI Reporting
