@@ -4,8 +4,6 @@
 
 The DTGen release is complicated by the fact that DTGen is used to generate DTGen. The starting point for this circular process is the scripts used to create DTGen in the database. Accordingly, the source for DTGen are these scripts.
 
-release process incorporates a software generator into the
-
 
 = Integration Testing =
 
