@@ -4,7 +4,7 @@
 
 The DTGen release is complicated by the fact that DTGen is used to generate DTGen. The starting point for this circular process is the scripts used to create DTGen in the database. Accordingly, the source for DTGen are these scripts.
 
-The DTGen release process follows best practices from "Version Control with Subversion" (http://svnbook.red-bean.com/)
+The DTGen release process follows "Common Branching Patterns" best practices from "Version Control with Subversion" (http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.branchmerge.commonpatterns)
 
 = Integration Testing =
 
