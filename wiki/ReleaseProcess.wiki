@@ -1,8 +1,11 @@
 #summary Release Process
 
+
 = Introduction =
 
 The DTGen release is complicated by the fact that DTGen is used to generate DTGen. The starting point for this circular process is the scripts used to create DTGen in the database. Accordingly, the source for DTGen are these scripts.
+
+The DTGen release process follows best practices from "Version Control with Subversion" (http://svnbook.red-bean.com/)
 
 
 = Integration Testing =
@@ -11,7 +14,7 @@ The DTGen release is complicated by the fact that DTGen is used to generate DTGe
   * Create generator owner
   * Load "Lite" generator (glob, integ, mods, ods, oltp, comp)
   * Load "GEN" data and generate
-  * Create and test install package
+  * Create and test load the install package
   * Load "TST" data and generate
   * Create and test "SmallOffice" environment
   * Create and test "ThreeTier" environment
