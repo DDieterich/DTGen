@@ -1,4 +1,4 @@
-#summary Release Process with Integration Testing
+#summary Release Process
 
 = Introduction =
 
@@ -8,14 +8,9 @@ The DTGen release process follows "Common Branching Patterns" best practices fro
 
 = Integration Testing =
 
-Integration testing covers 4 environments.
+Integration testing covers 4 environments.  The InstallPackage environment is a basic install of DTGEN.  The integration testing for this environment is a simple installation log file comparison with a known good installation file.  The other environments (SmallOffice, ThreeTier, and PerfFocus) are potential deployment environments from applications generated with DTGen.  The integration testing for these environments consists of feature set UnitTesting and APEX GUI integration testing.  The complete set of unit tests is run during release to assist in pin-pointing specific problems with the release.
 
-  * InstallPackage - Installation log file comparison
-  * SmallOffice Deployment - Feature Set Unit Testing
-  * ThreeTier Deployment - Feature Set Unit Testing
-  * PerfFocus Deployment - Feature Set Unit Testing
-
-= Integration Test Process =
+= Release Test Procedure =
 
   * Reset test environment
   * Load from "src" (glob, integ, mods, ods, oltp, comp)
