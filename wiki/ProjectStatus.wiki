@@ -7,5 +7,7 @@
 
 = Next Release =
 
+  * Reorganize (Done)
+  * Demo Code
   * Documentation
   * Code Uploads
