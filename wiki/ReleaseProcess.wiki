@@ -43,6 +43,7 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Apply Changes
      * Export/Import
      * Export
+        * Application: 900 DTGen
         * File Format: DOS
         * Owner Override: (empty)
         * Build Status Override: Run and Build Application
