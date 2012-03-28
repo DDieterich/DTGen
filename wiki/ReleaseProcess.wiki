@@ -23,26 +23,32 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
 
 = Release Procedure =
 
+{{{
   * Update "ver" in "generate" package body and compile
   * Login to APEX
-  * Applications
-  * Run DTGen Application
-  * Login to DTGen Application
-  * Select Application
-  * GoTo FILES
-  * Generate Create Files
-  * Generate GUI Files
-  * Update Assembled Scripts
-  * Download dtgen_dataload.ctl to "supp"
-  * Download install_db.sql to "supp"
-  * Logout from DTGen Application
-  * Application 900
-  * Edit Application Properties
-  * Update Version Number
-  * Apply Changes
-  * Export/Import
-  * Export
-  * File Format: DOS
-  * Owner Override: (empty)
-  * Build Status Override: Run and Build Application
-  * 
+     * Applications
+     * Run DTGen Application
+        * Login to DTGen Application
+        * Select Application
+        * GoTo FILES
+        * Generate Create Files
+        * Generate GUI Files
+        * Update Assembled Scripts
+        * Download dtgen_dataload.ctl to "supp"
+        * Download install_db.sql to "supp"
+        * Logout from DTGen Application
+     * Application 900
+     * Edit Application Properties
+        * Update Version Number
+        * Apply Changes
+     * Export/Import
+     * Export
+        * File Format: DOS
+        * Owner Override: (empty)
+        * Build Status Override: Run and Build Application
+        * Debugging: Yes
+        * AsOf: (empty)
+        * 
+        * 
+        * 
+}}}
