@@ -35,7 +35,7 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Generate GUI Files
         * Update Assembled Scripts
         * Download dtgen_dataload.ctl to "supp"
-        * Download install_db.sql to "supp"
+        * Download install_db.sql to "src"
         * Logout from DTGen Application
      * Application 900
      * Edit Application Properties
@@ -54,6 +54,15 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Export Private Interactive Reports:      No
         * Export Interactive Report Subscriptions: No
         * Export Developer Comments:               Yes
-        * Export Application
-     * 
+        * Export Application (download to "src")
+     * Logout from APEX
+  * ZIP these directories and file:
+     -) demo
+     -) docs
+     -) src
+     -) supp
+     -) test
+     -) README.txt
+  * Rename the ZIP file with the current version
+  * Upload to http://code.google.com/p/dtgen/downloads/list
 }}}
