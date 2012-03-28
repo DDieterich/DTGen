@@ -39,3 +39,10 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
   * Application 900
   * Edit Application Properties
   * Update Version Number
+  * Apply Changes
+  * Export/Import
+  * Export
+  * File Format: DOS
+  * Owner Override: (empty)
+  * Build Status Override: Run and Build Application
+  * 
