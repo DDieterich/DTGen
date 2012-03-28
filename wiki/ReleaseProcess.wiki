@@ -48,7 +48,11 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Build Status Override: Run and Build Application
         * Debugging: Yes
         * AsOf: (empty)
-        * 
-        * 
-        * 
+        * Export Supporting Object Definitions:    Yes
+        * Export Public Interactive Reports:       Yes
+        * Export Private Interactive Reports:      No
+        * Export Interactive Report Subscriptions: No
+        * Export Developer Comments:               Yes
+        * Export Application
+     * 
 }}}
