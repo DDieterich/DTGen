@@ -59,6 +59,10 @@ REM Create DTGen Schema Objects
 REM
 connect &OWNERNAME./&OWNERPASS.
 @install_db
+@generate.pks
+@assemble.pks
+@generate.pkb
+@assemble.pkb
 REM HOST sqlldr &OWNERNAME./&OWNERPASS. CONTROL=dtgen_dataload.ctl
 
 set feedback on
