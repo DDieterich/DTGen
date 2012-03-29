@@ -13,6 +13,7 @@ create_user.sql  - Sample script create the application user login with synonyms
                    (The user login is the second parameter)
                    (The initial password is the same as the user login)
 comp_file.sql    - Used by altgen.sql
+delete_ods.sql   - Sample script to delete all data from DTGen tables
 fullgen.sql      - Sample script to generate all scripts for an application
                    (The ABBR of the application is the first parameter)
 select_file.sql  - Used by altgen.sql
