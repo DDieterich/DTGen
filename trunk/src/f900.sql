@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   18:29 Wednesday March 28, 2012
+--   Date and Time:   01:35 Thursday March 29, 2012
 --   Exported By:     GEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 29625608302242757 + wwv_flow_api.g_id_offset,
   p_error_template=> 29621910771242735 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120328182935',
+  p_checksum_salt_last_reset => '20120329013537',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 29624509359242756 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 29625211954242756 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'GEN',
-  p_last_upd_yyyymmddhh24miss=> '20120328182935',
+  p_last_upd_yyyymmddhh24miss=> '20120329013537',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -57377,38 +57377,39 @@ s:=s||''||chr(10)||
 s:=s||'select i.tab_cols_nk1 app'||chr(10)||
 '         ,''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' || i.tag id'||chr(10)||
 '         ,''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' par_id'||chr(10)||
-'         ,t.name || ''_'' || i.tag || nvl2(i.uniq,'' (Unique)'',null) name'||chr(10)||
-'         ,t.abbr || ''_'' || i.tag abbr'||chr(10)||
+'         ,t.name || ''_'' || i.tag || case substr(i.tag,1,1)'||chr(10)||
+'                                    when ''u'' then '' (Unique)'''||chr(10)||
+'                                    end                       name'||chr(10)||
+'         ,t.abbr || ''_'' || i.tag ';
+
+s:=s||'abbr'||chr(10)||
 '         ,gui_util.index_desc (i.tab_cols_nk1, i.tab_cols_nk2, i.tag) description'||chr(10)||
 '         ,''ob_index.gif'' icon'||chr(10)||
-'';
-
-s:=s||'         ,''f?p=#APP_ID#:TAB_INDEXES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
+'         ,''f?p=#APP_ID#:TAB_INDEXES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
 '          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_TAB_IND_TAG#:'' ||'||chr(10)||
 '          ''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' || i.tag ||'||chr(10)||
 '          '','' || i.tab_cols_nk2 || '','' || i.tag || '':'' link'||chr(10)||
-'    from  indexes_act i'||chr(10)||
-'          inner join tab_cols tc on i.tab_col_id = tc.id'||chr(10)||
-'          inner join tables t    on tc.table_id  = ';
+'    from  index';
 
-s:=s||'t.id'||chr(10)||
+s:=s||'es_act i'||chr(10)||
+'          inner join tab_cols tc on i.tab_col_id = tc.id'||chr(10)||
+'          inner join tables t    on tc.table_id  = t.id'||chr(10)||
 '    group by i.tab_cols_nk1'||chr(10)||
 '            ,i.tab_cols_nk2'||chr(10)||
 '            ,tc.table_id'||chr(10)||
 '            ,t.name'||chr(10)||
 '            ,t.abbr'||chr(10)||
 '            ,i.tag'||chr(10)||
-'            ,i.uniq'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
 '         ,''PRG|'' || applications_nk1 || ''|'' || id id'||chr(10)||
-'         ,''PRG|'' || applications_nk1 || ''|'' par_id'||chr(10)||
+'         ,''PRG|'' || applications_nk1 || ''';
+
+s:=s||'|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,'''' abbr'||chr(10)||
 '         ,description'||chr(10)||
-'         ,''ob_package_body.gif'' ';
-
-s:=s||'icon'||chr(10)||
+'         ,''ob_package_body.gif'' icon'||chr(10)||
 '         ,''f?p=#APP_ID#:PROGRAMS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
 '          ''P1_TREE_ID,#PAGE_PROGRAM_ID#:'' ||'||chr(10)||
 '          ''PRG|'' || applications_nk1 || ''|'' || id || '','' || id ||'||chr(10)||
@@ -57416,13 +57417,13 @@ s:=s||'icon'||chr(10)||
 '    from  programs_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''DOM|'' || applications_nk1 || ''|'' || id id'||chr(10)||
+'         ,''DOM|'' || applications_nk1 ||';
+
+s:=s||' ''|'' || id id'||chr(10)||
 '         ,''DOM|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,abbr'||chr(10)||
-'  ';
-
-s:=s||'       ,description'||chr(10)||
+'         ,description'||chr(10)||
 '         ,''pe_list.gif'' icon'||chr(10)||
 '         ,''f?p=#APP_ID#:DOMAINS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
 '          ''P1_TREE_ID,#PAGE_DOMAIN_ID#:'' ||'||chr(10)||
@@ -57431,21 +57432,21 @@ s:=s||'       ,description'||chr(10)||
 '    from  domains_act'||chr(10)||
 '   union all'||chr(10)||
 '   select domains_nk1 app'||chr(10)||
-'         ,''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id id'||chr(10)||
-'         ,''DOM|'' || domains_nk';
+'   ';
 
-s:=s||'1 || ''|'' || domain_id par_id'||chr(10)||
+s:=s||'      ,''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id id'||chr(10)||
+'         ,''DOM|'' || domains_nk1 || ''|'' || domain_id par_id'||chr(10)||
 '         ,value name'||chr(10)||
 '         ,'''' || seq abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''pe_list.gif'' icon'||chr(10)||
 '         ,''f?p=#APP_ID#:DOMAIN_VALUES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
 '          ''P1_TREE_ID,#PAGE_DOMAINS_NK2#,#PAGE_DOMAIN_VALUE_ID#:'' ||'||chr(10)||
-'          ''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id ||'||chr(10)||
-'          '','' || domains_nk2 || '','' || id || '':'' link'||chr(10)||
-'    from  doma';
+'          ''VAL|'' || domains_nk1 || ''|'' ||';
 
-s:=s||'in_values_act'||chr(10)||
+s:=s||' domains_nk2 || ''|'' || id ||'||chr(10)||
+'          '','' || domains_nk2 || '','' || id || '':'' link'||chr(10)||
+'    from  domain_values_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
 '         ,''EXC|'' || applications_nk1 || ''|'' || id id'||chr(10)||
@@ -57454,11 +57455,11 @@ s:=s||'in_values_act'||chr(10)||
 '         ,'''' || code abbr'||chr(10)||
 '         ,message description'||chr(10)||
 '         ,''ob_trigger.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:EXCEPTIONS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_EXCEPTION_ID#:'' ||'||chr(10)||
-'          ''EXC|'' || appl';
+'         ,''f?p=#APP_ID#:EXCEPTIONS:#AP';
 
-s:=s||'ications_nk1 || ''|'' || id ||'||chr(10)||
+s:=s||'P_SESSION#::#DEBUG#::'' ||'||chr(10)||
+'          ''P1_TREE_ID,#PAGE_EXCEPTION_ID#:'' ||'||chr(10)||
+'          ''EXC|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
 '          '','' || id || '':'' link'||chr(10)||
 '    from  exceptions_act'||chr(10)||
 '   union all'||chr(10)||
@@ -57468,15 +57469,15 @@ s:=s||'ications_nk1 || ''|'' || id ||'||chr(10)||
 '         ,name'||chr(10)||
 '         ,'''' abbr'||chr(10)||
 '         ,description description'||chr(10)||
-'         ,''ob_trigger.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:FILES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P';
+'      ';
 
-s:=s||'1_TREE_ID,#PAGE_FILE_ID#:'' ||'||chr(10)||
+s:=s||'   ,''ob_trigger.gif'' icon'||chr(10)||
+'         ,''f?p=#APP_ID#:FILES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
+'          ''P1_TREE_ID,#PAGE_FILE_ID#:'' ||'||chr(10)||
 '          ''F|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
 '          '','' || id || '':'' link'||chr(10)||
 '    from  files_act;'||chr(10)||
-'';
+'¿';
 
 wwv_flow_api.create_install_script(
   p_id => 30385306960584046 + wwv_flow_api.g_id_offset,
