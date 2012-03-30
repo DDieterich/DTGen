@@ -57,17 +57,11 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Download "f900.sql" to "src" directory
      * Logout from APEX
   * Commit changes to Subversion
-  * Create a Release branch in Subversion:
-     -) demo
-     -) docs
-     -) src
-     -) supp
-     -) test
-     -) README.txt
-  * Export the Release branch from Subversion
+  * Create a Release "branch" from "trunk" in Subversion
+  * Export the Release "branch" directory from Subversion
   * ZIP the export
   * Name the ZIP file with the current version
   * Upload to http://code.google.com/p/dtgen/downloads/list
      -) Type-Archive
-     -) OpSys-Windows
+     -) OpSys-Windows?
 }}}
