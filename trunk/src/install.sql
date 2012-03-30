@@ -1,6 +1,6 @@
 
 REM
-REM DTGEN Installation Script
+REM DTGen Database Installation Script
 REM (Must be run as the "system" user)
 REM
 REM Copyright (c) 2011, Duane.Dieterich@gmail.com
@@ -23,8 +23,8 @@ spool install
 
 REM Initialize Variables
 REM
-define OWNERNAME = gen     -- New DTGen Schema Name
-define OWNERPASS = gen     -- New DTGen Schema Password
+define OWNERNAME = dtgen   -- New DTGen Schema Name
+define OWNERPASS = dtgen   -- New DTGen Schema Password
 define TSPACE = users      -- Default Tablespace for DTGen Account
 
 REM Configure SQL*Plus
@@ -59,12 +59,28 @@ REM Create DTGen Schema Objects
 REM
 connect &OWNERNAME./&OWNERPASS.
 @install_db
-@generate.pks
-@assemble.pks
-@generate.pkb
-@assemble.pkb
-REM HOST sqlldr &OWNERNAME./&OWNERPASS. CONTROL=dtgen_dataload.ctl
 
 set feedback on
+set define off
+prompt
+
+prompt generate.pks
+@generate.pks
+/
+
+prompt assemble.pks
+@assemble.pks
+/
+
+prompt generate.pkb
+@generate.pkb
+/
+
+prompt generate.pkb
+@assemble.pkb
+/
+
+set define on
 set verify on
+
 spool off

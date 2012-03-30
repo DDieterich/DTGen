@@ -4,26 +4,24 @@ REM  fullgen.sql - Sample script to generate all scripts for an application
 REM
 
 set trimspool on
-set serveroutput on
+set serveroutput on size unlimited
 set define '&'
 set verify off
 
-define APP_ID = GEN     -- APPLICATIONS.ABBR for the Application
+define APP_ID = DTGEN   -- APPLICATIONS.ABBR for the Application
 
-spool gen
+spool fullgen
 BEGIN
    util.set_usr('Initial Load');  -- Any string will work for this parameter
    -- The following calls are equivalent to "generate.run('&APP_ID.');"
    generate.cr('&APP_ID.');
    generate.dr('&APP_ID.');
-   generate.usr('&APP_ID.');
    generate.gui('&APP_ID.');
 END;
 /
 spool off
 
 set linesize 4000
-set trimspool 1048576
 set pagesize 0
 set feedback off
 set termout off
