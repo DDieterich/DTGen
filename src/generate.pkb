@@ -71,13 +71,15 @@ BEGIN
        where file_id = fbuff.id;
    exception
       when no_data_found then
-         fbuff.id               := null;
+         fbuff.id         := null;
+		 --fbuff.created_dt := sysdate;
          files_dml.ins
                (n_id                  => fbuff.id
                ,n_application_id      => fbuff.application_id
                ,n_applications_nk1_in => null
                ,n_name                => fbuff.name
                ,n_type                => fbuff.type
+               --,n_created_dt          => fbuff.created_dt
                ,n_description         => fbuff.description);
       when others then
          raise;
