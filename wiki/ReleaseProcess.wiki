@@ -30,11 +30,11 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * Run DTGen Application
         * Login to DTGen Application
         * Select Application "DTGEN"
-        * GoTo FILES
+        * Click the "FILES" tab
         * Click "Generate All Files" and wait
         * Click "Update Assembled Scripts" and wait
-        * Download dtgen_dataload.ctl to "supp" directory
-        * Download install_db.sql to "src" directory
+        * Download "dtgen_dataload.ctl" to "supp" directory
+        * Download "install_db.sql" to "src" directory
         * Logout from DTGen Application
      * Application 900
      * Edit Application Properties
