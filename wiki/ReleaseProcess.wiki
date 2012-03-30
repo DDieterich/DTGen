@@ -53,7 +53,8 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
         * Export Private Interactive Reports:      No
         * Export Interactive Report Subscriptions: No
         * Export Developer Comments:               Yes
-        * Export Application (download to "src")
+        * Export Application
+        * Download "f900.sql" to "src" directory
      * Logout from APEX
   * ZIP these directories and file:
      -) demo
