@@ -29,7 +29,7 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * Applications
      * Run DTGen Application
         * Login to DTGen Application
-        * Select Application
+        * Select Application DTGEN
         * GoTo FILES
         * Generate Create Files
         * Generate GUI Files
