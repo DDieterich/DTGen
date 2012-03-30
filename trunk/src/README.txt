@@ -14,7 +14,7 @@ uninstall.sql  - Uninstalls DTGen
 DTGen Installation:
 -------------------
 1) Install and Confirm Oracle Database installation
-   -) Download and Install any Oracle Database Edition
+   -) Install Oracle10g or higher, any Database Edition
       (Express, Personal, Standard One, Standard, or Enterprise)
    -) Confirm SQL*Plus command line connection
       (sqlplus system/password)
@@ -26,22 +26,33 @@ DTGen Installation:
    -) Review the output in the install.LST file.
       (The output from a successful installation is below)
 3) Install DTGen application in APEX (optional)
-   -) Login to APEX
-      (http://127.0.0.1:8080/apex)
-	  (Use the system username and password)
-   -) Create a workspace
-      Database User: Use Existing
-      Database Username: dtgen
-	  Application Express Username: dtgen
+   -) If APEX is not installed, install 4.0 or better.
+      (Continue with next setp if unsure.)
+      (Every Database Edition includes APEX)
+   -) Login to APEX as an administrator
+      (Different versions do this differently.)
+	  (There should be some menu option or desktop icon to get to APEX)
+      (-OR- try http://127.0.0.1:8080/apex)
+	  (If the login requests a workspace, use INTERNAL, user "ADMIN", and the dba password)
+	  (If the login does not request a workspace, try user "SYSTEM" and the dba password)
+   -) Confirm/Install APEX 4.0 or better
+	  (Lower right corner of APEX home page, ex: "Application Express 4.0.2.00.09")
+	  (Upgrade to APEX 4.0 if needed: "http://www.oracle.com/technetwork/developer-tools/apex")
+   -) Create a workspace on an existing Database/Schema User
+      (Different versions do this differently.)
+	  Existing Database/Schema User: YES
+      Database or Schema Username: dtgen
+	  Workspace or APEX Username: dtgen
 	  Password: dtgen
-   -) Login to the newly created APEX user "dtgen"
+   -) Logout of APEX
+   -) Login to APEX as Workspace User dtgen
    -) Click on "Application Builder"
    -) Click on "Import"
    -) Click on "Browse" to open a "Chose File to Upload" window.
    -) Select "f900.sql" and click on "Open" to close the window.
    -) File Type: Database Application, Page or Component
    -) Click on "Next"
-   -) Receive the screen: "The export file has been imported successfully"
+   -) Receive the screen "Successfully Imported File"
    -) Click on "Next"
    -) Review the following parameters:
       Current Workspace: DTGEN
