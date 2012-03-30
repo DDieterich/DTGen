@@ -2,7 +2,7 @@ create or replace package generate
 as
 
 /************************************************************
-DTGEN "generate" Package Header
+DTGEN "generate" Package Specification
 
 Copyright (c) 2011, Duane.Dieterich@gmail.com
 All rights reserved.
@@ -72,4 +72,3 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
          (app_abbr_in  in  varchar2);
 
 end generate;
-/

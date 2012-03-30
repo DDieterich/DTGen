@@ -10,9 +10,9 @@ set serveroutput on
 set define '&'
 set verify off
 
-define APP_ID = GEN     -- APPLICATIONS.ABBR for the Application
+define APP_ID = DTGEN     -- APPLICATIONS.ABBR for the Application
 
-spool gen
+spool altgen
 BEGIN
    util.set_usr('Initial Load');  -- Any string will work for this parameter
    generate.init('&APP_ID.');

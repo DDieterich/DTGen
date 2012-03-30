@@ -17,7 +17,7 @@ spool uninstall
 
 REM Initialize Variables
 REM
-define OWNERNAME = GEN     -- New DTGen Schema Name
+define OWNERNAME = DTGEN     -- New DTGen Schema Name
 
 REM Configure SQL*Plus
 REM

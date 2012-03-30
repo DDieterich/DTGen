@@ -18,23 +18,23 @@ DTGen Installation:
       (Express, Personal, Standard One, Standard, or Enterprise)
    -) Confirm SQL*Plus command line connection
       (sqlplus system/password)
-2) Install DTGen
+2) Install DTGen objects in database
    -) Review and optionally edit "install.sql"
       (Values for variables OWNERNAME, OWNERPASS, and TSPACE)
    -) Run the database installation script in SQL*Plus
       (sqlplus system/password @install)
    -) Review the output in the install.LST file.
       (The output from a successful installation is below)
-3) Install DTGen Generator for APEX (optional)
+3) Install DTGen application in APEX (optional)
    -) Login to APEX
       (http://127.0.0.1:8080/apex)
 	  (Use the system username and password)
    -) Create a workspace
       Database User: Use Existing
-      Database Username: gen
-	  Application Express Username: gen
-	  Password: gen
-   -) Login to the newly created APEX user "gen"
+      Database Username: dtgen
+	  Application Express Username: dtgen
+	  Password: dtgen
+   -) Login to the newly created APEX user "dtgen"
    -) Click on "Application Builder"
    -) Click on "Import"
    -) Click on "Browse" to open a "Chose File to Upload" window.
@@ -44,18 +44,18 @@ DTGen Installation:
    -) Receive the screen: "The export file has been imported successfully"
    -) Click on "Next"
    -) Review the following parameters:
-      Current Workspace: GEN
+      Current Workspace: DTGEN
 	  Export File Application ID: 900
 	  Export File Version: 2010.05.03
-	  Export File Parsing Schema: GEN
+	  Export File Parsing Schema: DTGEN
 	  Application Origin: This application was exported from another workspace.
-      Parsing Schema: GEN
+      Parsing Schema: DTGEN
 	  Build Status: Run and Build Application
       Install as Application: Reuse Application ID 900 From Export File
    -) Click on "Install"
    -) Review the following parameters:
-      Application: 900 - GEN_01
-	  Parsing Schema: GEN
+      Application: 900 - DTGen
+	  Parsing Schema: DTGEN
 	  Free Space Required in KB: 0
       Install Supporting Objects: Yes
    -) Click on "Next"
@@ -67,6 +67,8 @@ DTGen Installation:
 DTGen Un-install:
 -----------------
    -) Remove the DTGen application from APEX
+   -) Remove the DTGEN workspace from APEX
+      (May need to login as "ADMIN" using workspace "INTERNAL")
    -) Review and optionally edit "uninstall.sql"
       (Values for variables OWNERNAME, OWNERPASS, and TSPACE)
    -) sqlplus system/password @uninstall
@@ -209,4 +211,21 @@ TABLE_NAME
 TABLE_NAME
 --------------------
 ***  exceptions  ***
+
+generate.pks
+
+Pacakge created.
+
+assemble.pks
+
+Package created.
+
+generate.pkb
+
+Package body created.
+
+assemble.pkb
+
+Package body created.
+
 ==================================================
