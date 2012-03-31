@@ -1,5 +1,4 @@
-
-http://www.filehippo.com/download_tortoisesvn/5617/#summary Release Process
+#summary Release Process
 
 = Introduction =
 
