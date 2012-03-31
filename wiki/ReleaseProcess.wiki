@@ -1,5 +1,4 @@
 
-
 http://www.filehippo.com/download_tortoisesvn/5617/#summary Release Process
 
 = Introduction =
@@ -14,7 +13,7 @@ SQL*Developer 3.1.07 Uses SVN/Kit 1.3.2<br>
 SVN/Kit 1.3.2 Uses SVN Client 1.6.2
 
 Note: The latest TortoiseSVN Release uses SVN client 1.7<br>
-SVN Client 1.7 is not compatable with SVN Client 1.6
+SVN Client 1.7 is not compatible with SVN Client 1.6
 
 A compatible version of TortoiseSVN can be downloaded at<br>
 http://www.filehippo.com/download_tortoisesvn/5617/
