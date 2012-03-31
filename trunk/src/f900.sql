@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   22:58 Friday March 30, 2012
+--   Date and Time:   12:35 Saturday March 31, 2012
 --   Exported By:     GEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 29625608302242757 + wwv_flow_api.g_id_offset,
   p_error_template=> 29621910771242735 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120330225854',
+  p_checksum_salt_last_reset => '20120331123547',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 29624509359242756 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 29625211954242756 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'GEN',
-  p_last_upd_yyyymmddhh24miss=> '20120330225854',
+  p_last_upd_yyyymmddhh24miss=> '20120331123547',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -1769,34 +1769,19 @@ a1:=a1||'select case when connect_by_isleaf = 1 then 0'||chr(10)||
 'from ('||chr(10)||
 '   select name, ''/i/htmldb/icons/'' || icon icon, id,'||chr(10)||
 '          par_id, ''ID:'' || id || '', '' || description description,'||chr(10)||
-'repla';
+'     ';
 
-a1:=a1||'ce(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(link'||chr(10)||
-',''#APP_ID#'',:APP_ID)'||chr(10)||
-',''#APP_SESSION#'',:APP_SESSION)'||chr(10)||
-',''#DEBUG#'',:DEBUG)'||chr(10)||
-',''#PAGE_DOMAIN_ID#'',''P21_DOM_ID'')'||chr(10)||
-',''#PAGE_DOMAINS_NK2#'',''P21_DOMAINS_NK2'')'||chr(10)||
-',''#PAGE_DOMAIN_VALUE_ID#'',''P31_VAL_ID'')'||chr(10)||
-',''#TABLE_GROUP_SEARCH#'',''P41_GROUP_NAME'')'||chr(10)||
-',''#PAGE_TABLE_ID#'',''P41_TAB_ID'')'||chr(10)||
-',''#PAGE_TABLES_NK2#';
-
-a1:=a1||''',''P41_TABLES_NK2'')'||chr(10)||
-',''#PAGE_TAB_COL_ID#'',''P51_COL_ID'')'||chr(10)||
-',''#PAGE_CHECK_CON_ID#'',''P61_CON_ID'')'||chr(10)||
-',''#PAGE_TAB_IND_TAG#'',''P71_IND_TAG'')'||chr(10)||
-',''#PAGE_PROGRAM_ID#'',''P81_PRG_ID'')'||chr(10)||
-',''#PAGE_EXCEPTION_ID#'',''P91_EXC_ID'')'||chr(10)||
-',''#PAGE_FILE_ID#'',''P11_FILE_ID'')'||chr(10)||
-'link'||chr(10)||
-'    from  "#OWNER#"."APP_TREE_VW"'||chr(10)||
+a1:=a1||'     replace(replace(replace(link'||chr(10)||
+'                                 ,''!APP_ID!'',:APP_ID)'||chr(10)||
+'                         ,''!APP_SESSION!'',:APP_SESSION)'||chr(10)||
+'                 ,''!DEBUG!'',:DEBUG                      ) link'||chr(10)||
+'    from  "#OWNER#"."GUI_APP_TREE_VW"'||chr(10)||
 '    where app = "#OWNER#".applications_dml.get_nk(:P1_APP_ID)'||chr(10)||
 '   union all'||chr(10)||
-'   select ''New Application'' name, null icon, ''APP|0''';
+'   select ''New Application'' name, null icon, ''APP|0'' id,'||chr(10)||
+'          ''APP|'' par_id';
 
-a1:=a1||' id,'||chr(10)||
-'          ''APP|'' par_id, '''' description,'||chr(10)||
+a1:=a1||', '''' description,'||chr(10)||
 '          null link'||chr(10)||
 '    from  dual'||chr(10)||
 '    where :P1_APP_ID is null)'||chr(10)||
@@ -2773,7 +2758,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'No help is available for this page.'
  ,p_last_updated_by => 'GEN'
- ,p_last_upd_yyyymmddhh24miss => '20120330223128'
+ ,p_last_upd_yyyymmddhh24miss => '20120331123053'
   );
 null;
  
@@ -3089,74 +3074,6 @@ declare
   l_clob clob;
   l_length number := 1;
 begin
-s:=s||'DECLARE'||chr(10)||
-'   app_abbr  varchar2(30) := applications_dml.get_nk(:P1_APP_ID);'||chr(10)||
-'BEGIN'||chr(10)||
-'   htp.p(''<br>'');'||chr(10)||
-'   htp.p(''Click on one of the following links to DOWNLOAD<br>'');'||chr(10)||
-'   htp.p(''<br>'');'||chr(10)||
-'   for buff in ('||chr(10)||
-'      select * from apex_application_files'||chr(10)||
-'       where flow_id     = :APP_ID '||chr(10)||
-'        and  description like app_abbr || '' %'''||chr(10)||
-'       order by title  )'||chr(10)||
-'   loop'||chr(10)||
-'--      htp.p(''id: ''        || buff.id     ';
-
-s:=s||'     ||'||chr(10)||
-'--        '', flow_id: ''     || buff.flow_id     ||'||chr(10)||
-'--        '', name: ''        || buff.name        ||'||chr(10)||
-'--        '', title: ''       || buff.title       ||'||chr(10)||
-'--        '', doc_size: ''    || buff.doc_size    ||'||chr(10)||
-'--        '', created_on: ''  || to_char(buff.created_on, ''YYYYMMDD HH24MISS'') ||'||chr(10)||
-'--        '', description: '' || buff.description ||'||chr(10)||
-'--        ''<br>'' || chr(10));'||chr(10)||
-'      htp.anchor(''p?n='' || ';
-
-s:=s||'buff.id'||chr(10)||
-'                ,buff.title || '' - '' ||'||chr(10)||
-'                    buff.description || '' ('' ||'||chr(10)||
-'                    buff.doc_size || '' bytes '' ||'||chr(10)||
-'                    to_char(buff.created_on, ''DD-Mon-YYYY HH24:MI:SS'') || '')'''||chr(10)||
-'                ,'''''||chr(10)||
-'                ,''style="color:green"'');'||chr(10)||
-'      htp.p(''<br>'');'||chr(10)||
-'   end loop;'||chr(10)||
-'   htp.p(''<br>'');'||chr(10)||
-'END;';
-
-wwv_flow_api.create_page_plug (
-  p_id=> 30390029333190250 + wwv_flow_api.g_id_offset,
-  p_flow_id=> wwv_flow.g_flow_id,
-  p_page_id=> 11,
-  p_plug_name=> 'Assemble Scripts and Download',
-  p_region_name=>'',
-  p_plug_template=> 29625608302242757+ wwv_flow_api.g_id_offset,
-  p_plug_display_sequence=> 40,
-  p_plug_display_column=> 1,
-  p_plug_display_point=> 'AFTER_SHOW_ITEMS',
-  p_plug_source=> s,
-  p_plug_source_type=> 'PLSQL_PROCEDURE',
-  p_translate_title=> 'Y',
-  p_plug_display_error_message=> '#SQLERRM#',
-  p_plug_query_row_template=> 1,
-  p_plug_query_headings_type=> 'QUERY_COLUMNS',
-  p_plug_query_num_rows => 15,
-  p_plug_query_num_rows_type => 'NEXT_PREVIOUS_LINKS',
-  p_plug_query_row_count_max => 500,
-  p_plug_query_show_nulls_as => ' - ',
-  p_plug_display_condition_type => '',
-  p_pagination_display_position=>'BOTTOM_RIGHT',
-  p_plug_customized=>'0',
-  p_plug_caching=> 'NOT_CACHED',
-  p_plug_comment=> '');
-end;
-/
-declare
-  s varchar2(32767) := null;
-  l_clob clob;
-  l_length number := 1;
-begin
 s:=s||'<h3 style="color:purple;text-align:left">'||chr(10)||
 'NOTICE: The buttons on this page may take some time to process.<br>'||chr(10)||
 '</h3>';
@@ -3447,6 +3364,320 @@ wwv_flow_api.create_report_columns (
   p_column_alignment=>'LEFT',
   p_default_sort_column_sequence=>0,
   p_disable_sort_column=>'Y',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+  l_clob clob;
+  l_length number := 1;
+begin
+s:=s||'select id download_link'||chr(10)||
+'      ,title'||chr(10)||
+'      ,doc_size'||chr(10)||
+'      ,created_on'||chr(10)||
+'      ,description'||chr(10)||
+'      ,mime_type'||chr(10)||
+'      ,dad_charset'||chr(10)||
+'      ,content_type'||chr(10)||
+'      ,file_type'||chr(10)||
+'      ,file_charset'||chr(10)||
+' from  apex_application_files'||chr(10)||
+' where flow_id     = :APP_ID'||chr(10)||
+'  and  description like '||chr(10)||
+'          applications_dml.get_nk(:P1_APP_ID) || '' %''';
+
+wwv_flow_api.create_report_region (
+  p_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_page_id=> 11,
+  p_name=> 'Assemble Scripts and Download',
+  p_region_name=>'',
+  p_template=> 29625608302242757+ wwv_flow_api.g_id_offset,
+  p_display_sequence=> 40,
+  p_display_column=> 1,
+  p_display_point=> 'AFTER_SHOW_ITEMS',
+  p_source=> s,
+  p_source_type=> 'SQL_QUERY',
+  p_display_error_message=> '#SQLERRM#',
+  p_plug_caching=> 'NOT_CACHED',
+  p_customized=> '0',
+  p_translate_title=> 'Y',
+  p_ajax_enabled=> 'Y',
+  p_query_row_template=> 29629208990242788+ wwv_flow_api.g_id_offset,
+  p_query_headings_type=> 'COLON_DELMITED_LIST',
+  p_query_num_rows=> '15',
+  p_query_options=> 'DERIVED_REPORT_COLUMNS',
+  p_query_show_nulls_as=> ' - ',
+  p_query_break_cols=> '0',
+  p_query_no_data_found=> 'no data found',
+  p_query_num_rows_type=> 'NEXT_PREVIOUS_LINKS',
+  p_pagination_display_position=> 'BOTTOM_RIGHT',
+  p_csv_output=> 'N',
+  p_query_asc_image=> 'apex/builder/dup.gif',
+  p_query_asc_image_attr=> 'width="16" height="16" alt="" ',
+  p_query_desc_image=> 'apex/builder/ddown.gif',
+  p_query_desc_image_attr=> 'width="16" height="16" alt="" ',
+  p_plug_query_strip_html=> 'Y',
+  p_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445320088624715 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 1,
+  p_form_element_id=> null,
+  p_column_alias=> 'DOWNLOAD_LINK',
+  p_column_display_sequence=> 1,
+  p_column_heading=> 'Link',
+  p_column_link=>'p?n=#DOWNLOAD_LINK#',
+  p_column_linktext=>'Download',
+  p_column_alignment=>'CENTER',
+  p_heading_alignment=>'CENTER',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'Y',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_lov_show_nulls=> 'NO',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_lov_display_extra=> 'YES',
+  p_include_in_export=> 'Y',
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445416161624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 2,
+  p_form_element_id=> null,
+  p_column_alias=> 'TITLE',
+  p_column_display_sequence=> 2,
+  p_column_heading=> 'Title',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>1,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445502886624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 3,
+  p_form_element_id=> null,
+  p_column_alias=> 'DOC_SIZE',
+  p_column_display_sequence=> 3,
+  p_column_heading=> 'Doc Size',
+  p_column_alignment=>'RIGHT',
+  p_heading_alignment=>'RIGHT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445621971624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 4,
+  p_form_element_id=> null,
+  p_column_alias=> 'CREATED_ON',
+  p_column_display_sequence=> 4,
+  p_column_heading=> 'Created On',
+  p_column_format=> 'DD-MON-YYYY HH24:MI',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_lov_show_nulls=> 'NO',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_lov_display_extra=> 'YES',
+  p_include_in_export=> 'Y',
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445707794624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 5,
+  p_form_element_id=> null,
+  p_column_alias=> 'DESCRIPTION',
+  p_column_display_sequence=> 5,
+  p_column_heading=> 'Description',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445821226624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 6,
+  p_form_element_id=> null,
+  p_column_alias=> 'MIME_TYPE',
+  p_column_display_sequence=> 6,
+  p_column_heading=> 'Mime Type',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30445901155624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 7,
+  p_form_element_id=> null,
+  p_column_alias=> 'DAD_CHARSET',
+  p_column_display_sequence=> 7,
+  p_column_heading=> 'Dad Charset',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30446023761624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 8,
+  p_form_element_id=> null,
+  p_column_alias=> 'CONTENT_TYPE',
+  p_column_display_sequence=> 8,
+  p_column_heading=> 'Content Type',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30446125912624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 9,
+  p_form_element_id=> null,
+  p_column_alias=> 'FILE_TYPE',
+  p_column_display_sequence=> 9,
+  p_column_heading=> 'File Type',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
+  p_sum_column=> 'N',
+  p_hidden_column=> 'N',
+  p_display_as=>'ESCAPE_SC',
+  p_is_required=> false,
+  p_pk_col_source=> s,
+  p_column_comment=>'');
+end;
+/
+declare
+  s varchar2(32767) := null;
+begin
+s := null;
+wwv_flow_api.create_report_columns (
+  p_id=> 30446220933624721 + wwv_flow_api.g_id_offset,
+  p_region_id=> 30445007517624642 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_query_column_id=> 10,
+  p_form_element_id=> null,
+  p_column_alias=> 'FILE_CHARSET',
+  p_column_display_sequence=> 10,
+  p_column_heading=> 'File Charset',
+  p_column_alignment=>'LEFT',
+  p_heading_alignment=>'LEFT',
+  p_default_sort_column_sequence=>0,
+  p_disable_sort_column=>'N',
   p_sum_column=> 'N',
   p_hidden_column=> 'N',
   p_display_as=>'ESCAPE_SC',
@@ -3940,7 +4171,7 @@ wwv_flow_api.create_page_item(
   p_is_required=> false,
   p_accept_processing=> 'REPLACE_EXISTING',
   p_item_sequence=> 100,
-  p_item_plug_id => 30390029333190250+wwv_flow_api.g_id_offset,
+  p_item_plug_id => 30445007517624642+wwv_flow_api.g_id_offset,
   p_use_cache_before_default=> 'NO',
   p_item_default=> 'UPD_SCRIPTS',
   p_prompt=>'Update Assembled Scripts',
@@ -3979,7 +4210,7 @@ wwv_flow_api.create_page_item(
   p_is_required=> false,
   p_accept_processing=> 'REPLACE_EXISTING',
   p_item_sequence=> 110,
-  p_item_plug_id => 30390029333190250+wwv_flow_api.g_id_offset,
+  p_item_plug_id => 30445007517624642+wwv_flow_api.g_id_offset,
   p_use_cache_before_default=> 'NO',
   p_item_default=> 'DEL_SCRIPTS',
   p_prompt=>'Delete Assembled Scripts',
@@ -4018,7 +4249,7 @@ wwv_flow_api.create_page_item(
   p_is_required=> false,
   p_accept_processing=> 'REPLACE_EXISTING',
   p_item_sequence=> 130,
-  p_item_plug_id => 30390029333190250+wwv_flow_api.g_id_offset,
+  p_item_plug_id => 30445007517624642+wwv_flow_api.g_id_offset,
   p_use_cache_before_default=> 'YES',
   p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
   p_prompt=>'Number of Scripts Deleted',
@@ -57127,29 +57358,28 @@ declare
     l_clob clob;
     l_length number := 1;
 begin
-s:=s||'create or replace view app_tree_vw as'||chr(10)||
-'   select '''' app'||chr(10)||
+s:=s||'select '''' app'||chr(10)||
 '         ,''APP|'' id'||chr(10)||
 '         ,'''' par_id'||chr(10)||
 '         ,''APPLICATIONS'' name'||chr(10)||
 '         ,''APP'' abbr'||chr(10)||
 '         ,''Applications to be Generated by DTGen'' description'||chr(10)||
 '         ,''ob_library.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:HOME:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:HOME:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
 '          ''P1_TREE_ID,P1_APP_ID:'' ||'||chr(10)||
 '          ''APP|,:'' link'||chr(10)||
 '    from  dual'||chr(10)||
 '   union all'||chr(10)||
-'   select abb';
-
-s:=s||'r app'||chr(10)||
+'   select abbr app'||chr(10)||
 '         ,''APP|'' || id id'||chr(10)||
-'         ,''APP|'' par_id'||chr(10)||
+'         ';
+
+s:=s||',''APP|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''ob_library.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:HOME:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:HOME:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
 '          ''P1_TREE_ID,P1_APP_ID:'' ||'||chr(10)||
 '          ''APP|'' || id || '','' || id ||'||chr(10)||
 '          '':'' link'||chr(10)||
@@ -57157,116 +57387,116 @@ s:=s||'r app'||chr(10)||
 '   union all'||chr(10)||
 '   select abbr app'||chr(10)||
 '         ,''TAB|'' || abbr || ''|'' id'||chr(10)||
-'         ,''AP';
+'         ,''APP|'' || id par_id'||chr(10)||
+'         ,''1) TABLES'' na';
 
-s:=s||'P|'' || id par_id'||chr(10)||
-'         ,''1) TABLES'' name'||chr(10)||
+s:=s||'me'||chr(10)||
 '         ,''TAB'' abbr'||chr(10)||
 '         ,''Tables in Application '' || abbr description'||chr(10)||
 '         ,''pe_tabform.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TABLES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLE_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:TABLES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TAB_ID:'' ||'||chr(10)||
 '          ''TAB|'' || abbr || ''|,'' ||'||chr(10)||
 '          '':'' link'||chr(10)||
 '    from  applications_act'||chr(10)||
 '   union all'||chr(10)||
 '   select abbr app'||chr(10)||
-'         ,''DOM|'' || abbr || ''|''';
-
-s:=s||' id'||chr(10)||
+'         ,''DOM|'' || abbr || ''|'' id'||chr(10)||
 '         ,''APP|'' || id par_id'||chr(10)||
-'         ,''2) DOMAINS'' name'||chr(10)||
+'         ,''2';
+
+s:=s||') DOMAINS'' name'||chr(10)||
 '         ,''DOM'' abbr'||chr(10)||
 '         ,''Domains in Application '' || abbr description'||chr(10)||
 '         ,''pe_list.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:DOMAINS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_DOMAIN_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:DOMAINS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P21_DOM_ID:'' ||'||chr(10)||
 '          ''DOM|'' || abbr || ''|,'' ||'||chr(10)||
 '          '':'' link'||chr(10)||
 '    from  applications_act'||chr(10)||
 '   union all'||chr(10)||
 '   select abbr app'||chr(10)||
-'         ,''PR';
-
-s:=s||'G|'' || abbr || ''|'' id'||chr(10)||
+'         ,''PRG|'' || abbr || ''|'' id'||chr(10)||
 '         ,''APP|'' || id par_id'||chr(10)||
-'         ,''3) PROGRAMS'' name'||chr(10)||
+'';
+
+s:=s||'         ,''3) PROGRAMS'' name'||chr(10)||
 '         ,''PRG'' abbr'||chr(10)||
 '         ,''Programs in Application '' || abbr description'||chr(10)||
 '         ,''ob_package_body.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:PROGRAMS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_PROGRAM_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:PROGRAMS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P81_PRG_ID:'' ||'||chr(10)||
 '          ''PRG|'' || abbr || ''|,'' ||'||chr(10)||
 '          '':'' link'||chr(10)||
 '    from  applications_act'||chr(10)||
 '   union all'||chr(10)||
-'  ';
-
-s:=s||' select abbr app'||chr(10)||
+'   select abbr app'||chr(10)||
 '         ,''EXC|'' || abbr || ''|'' id'||chr(10)||
-'         ,''APP|'' || id par_id'||chr(10)||
+'       ';
+
+s:=s||'  ,''APP|'' || id par_id'||chr(10)||
 '         ,''4) EXCEPTIONS'' name'||chr(10)||
 '         ,''EXC'' abbr'||chr(10)||
 '         ,''Exceptions in Application '' || abbr description'||chr(10)||
 '         ,''ob_trigger.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:EXCEPTIONS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_EXCEPTION_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:EXCEPTIONS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P91_EXC_ID:'' ||'||chr(10)||
 '          ''EXC|'' || abbr || ''|,'' ||'||chr(10)||
 '          '':'' link'||chr(10)||
-'    from ';
-
-s:=s||' applications_act'||chr(10)||
+'    from  applications_act'||chr(10)||
 '   union all'||chr(10)||
 '   select abbr app'||chr(10)||
-'         ,''F|'' || abbr || ''|'' id'||chr(10)||
+'         ,''F|'' || ';
+
+s:=s||'abbr || ''|'' id'||chr(10)||
 '         ,''APP|'' || id par_id'||chr(10)||
 '         ,''5) FILES'' name'||chr(10)||
 '         ,''F'' abbr'||chr(10)||
 '         ,''Files in Application '' || abbr description'||chr(10)||
 '         ,''pt_files.png'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:FILES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_FILE_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:FILES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P11_FILE_ID:'' ||'||chr(10)||
 '          ''F|'' || abbr || ''|,'' ||'||chr(10)||
 '          '':'' link'||chr(10)||
-'    ';
-
-s:=s||'from  applications_act'||chr(10)||
+'    from  applications_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''GRP|'' || applications_nk1 || ''|'' || nvl(group_name,'' '') id'||chr(10)||
+'    ';
+
+s:=s||'     ,''GRP|'' || applications_nk1 || ''|'' || nvl(group_name,'' '') id'||chr(10)||
 '         ,''TAB|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,nvl(group_name,'' '') || '' Table Group'' name'||chr(10)||
 '         ,nvl(group_name,'' '') abbr'||chr(10)||
 '         ,count(*)   || '' tables are included in the '' ||'||chr(10)||
-'          nvl(group_name,'' '') || '' Table Group in Application '' ||';
-
-s:=s||''||chr(10)||
+'          nvl(group_name,'' '') || '' Table Group in Application '' ||'||chr(10)||
 '          applications_nk1         description'||chr(10)||
-'         ,''pt_list.png'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TABLES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#TABLE_GROUP_SEARCH#,#PAGE_TABLE_ID#:'' ||'||chr(10)||
+'         ,''pt_list.png''';
+
+s:=s||' icon'||chr(10)||
+'         ,''f?p=!APP_ID!:TABLES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_GROUP_NAME,P41_TAB_ID:'' ||'||chr(10)||
 '          ''TAB|'' || applications_nk1 || ''|'' || nvl(group_name,'' '') ||'||chr(10)||
 '          '','' || nvl(group_name,'' '') || '',:'' link'||chr(10)||
 '    from  tables_act'||chr(10)||
 '    group by applications_nk1'||chr(10)||
 '            ,application_id'||chr(10)||
-'';
-
-s:=s||'            ,nvl(group_name,'' '')'||chr(10)||
+'            ,nvl(group_name,'' '')'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''TAB|'' || applications_nk1 || ''|'' || id id'||chr(10)||
+'     ';
+
+s:=s||'    ,''TAB|'' || applications_nk1 || ''|'' || id id'||chr(10)||
 '         ,''GRP|'' || applications_nk1 || ''|'' || nvl(group_name,'' '') par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''pe_tabform.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TABLES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#TABLE_GROUP_SEARCH#,#PAGE_TAB';
-
-s:=s||'LE_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:TABLES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_GROUP_NAME,P41_TAB_ID:'' ||'||chr(10)||
 '          ''TAB|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
-'          '','' || nvl(group_name,'' '') || '','' || id || '':'' link'||chr(10)||
+'          '','' || nvl(group_n';
+
+s:=s||'ame,'' '') || '','' || id || '':'' link'||chr(10)||
 '    from  tables_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
@@ -57274,34 +57504,34 @@ s:=s||'LE_ID#:'' ||'||chr(10)||
 '         ,''TAB|'' || applications_nk1 || ''|'' || id par_id'||chr(10)||
 '         ,''1) COLUMNS'' name'||chr(10)||
 '         ,''COL'' abbr'||chr(10)||
-'         ,''Columns in Table '' || abbr ||';
-
-s:=s||''||chr(10)||
+'         ,''Columns in Table '' || abbr ||'||chr(10)||
 '          '' in Application '' || applications_nk1 description'||chr(10)||
 '         ,''ob_lob.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TAB_COLS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_TAB_COL_ID#:'' ||'||chr(10)||
+'   ';
+
+s:=s||'      ,''f?p=!APP_ID!:TAB_COLS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P51_COL_ID:'' ||'||chr(10)||
 '          ''COL|'' || applications_nk1 || ''|'' || abbr || ''|,'' ||'||chr(10)||
 '          abbr || '',:'' link'||chr(10)||
 '    from  tables_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''CON|'' || applicati';
-
-s:=s||'ons_nk1 || ''|'' || abbr || ''|'' id'||chr(10)||
+'         ,''CON|'' || applications_nk1 || ''|'' || abbr || ''|'' id'||chr(10)||
 '         ,''TAB|'' || applications_nk1 || ''|'' || id par_id'||chr(10)||
-'         ,''2) CONSTRAINTS'' name'||chr(10)||
+'         ,''2)';
+
+s:=s||' CONSTRAINTS'' name'||chr(10)||
 '         ,''CON'' abbr'||chr(10)||
 '         ,''Constraints on Table '' || abbr ||'||chr(10)||
 '          '' in Application '' || applications_nk1 description'||chr(10)||
 '         ,''ob_browser.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:CHECK_CONS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_CHECK_CON';
-
-s:=s||'_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:CHECK_CONS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P61_CON_ID:'' ||'||chr(10)||
 '          ''CON|'' || applications_nk1 || ''|'' || abbr || ''|,'' ||'||chr(10)||
 '          abbr || '',:'' link'||chr(10)||
-'    from  tables_act'||chr(10)||
+'    from  tabl';
+
+s:=s||'es_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
 '         ,''IND|'' || applications_nk1 || ''|'' || abbr || ''|'' id'||chr(10)||
@@ -57309,84 +57539,84 @@ s:=s||'_ID#:'' ||'||chr(10)||
 '         ,''3) INDEXES'' name'||chr(10)||
 '         ,''IND'' abbr'||chr(10)||
 '         ,''Indexes on Table '' || abbr ||'||chr(10)||
-'          '' in Applicatio';
-
-s:=s||'n ''  || applications_nk1 description'||chr(10)||
+'          '' in Application ''  || applications_nk1 description'||chr(10)||
 '         ,''ob_index.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TAB_INDEXES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_TAB_IND_TAG#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:TAB_INDEXES:!APP_SESSION';
+
+s:=s||'!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P71_IND_TAG:'' ||'||chr(10)||
 '          ''IND|'' || applications_nk1 || ''|'' || abbr || ''|,'' ||'||chr(10)||
 '          abbr || '',:'' link'||chr(10)||
 '    from  tables_act'||chr(10)||
 '   union all'||chr(10)||
 '   select tc.tables_nk1 app'||chr(10)||
-'         ,''COL|'' || tc.tables_nk1 || ''|'' || tc.tabl';
-
-s:=s||'es_nk2 || ''|'' || tc.id id'||chr(10)||
+'         ,''COL|'' || tc.tables_nk1 || ''|'' || tc.tables_nk2 || ''|'' || tc.id id'||chr(10)||
 '         ,''COL|'' || tc.tables_nk1 || ''|'' || tc.tables_nk2 || ''|'' par_id'||chr(10)||
 '         ,tc.name || ''  '''||chr(10)||
-'         || nvl2(tc.fk_tables_nk2,''FK:''||fk.name,'''')'||chr(10)||
+' ';
+
+s:=s||'        || nvl2(tc.fk_tables_nk2,''FK:''||fk.name,'''')'||chr(10)||
 '         || nvl2(tc.d_domains_nk2,''DOM:''||d.name,'''')'||chr(10)||
 '         || nvl2(tc.type,lower(tc.type)'||chr(10)||
 '                        || nvl2(tc.len,''('' || tc.len'||chr(10)||
 '                                      || nvl2(tc.scale,''.''||tc.scale,'''')'||chr(10)||
-'    ';
-
-s:=s||'                                  || '')'''||chr(10)||
+'                                      || '')'''||chr(10)||
 '                                      ,'''')'||chr(10)||
 '                        ,'''')   name'||chr(10)||
-'         ,trim(to_char(tc.seq)) abbr'||chr(10)||
+'     ';
+
+s:=s||'    ,trim(to_char(tc.seq)) abbr'||chr(10)||
 '         ,tc.description'||chr(10)||
 '         ,''ob_lob.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TAB_COLS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_TAB_COL_ID#:'' ||'||chr(10)||
-'          ''COL|'' || tc.tables_nk1 || ''|'' || tc.tables_nk2 || ''|'' ';
-
-s:=s||'|| tc.id ||'||chr(10)||
+'         ,''f?p=!APP_ID!:TAB_COLS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P51_COL_ID:'' ||'||chr(10)||
+'          ''COL|'' || tc.tables_nk1 || ''|'' || tc.tables_nk2 || ''|'' || tc.id ||'||chr(10)||
 '          '','' || tc.tables_nk2 || '','' || tc.id || '':'' link'||chr(10)||
 '    from  tab_cols_act tc'||chr(10)||
-'          left outer join tables_act fk on tc.fk_table_id = fk.id'||chr(10)||
+'          left outer join tables_act f';
+
+s:=s||'k on tc.fk_table_id = fk.id'||chr(10)||
 '          left outer join domains_act d on tc.d_domain_id =  d.id'||chr(10)||
 '   union all'||chr(10)||
 '   select tables_nk1 app'||chr(10)||
 '         ,''CON|'' || tables_nk1 || ''|'' || tables_nk2 || ''|'' || id id'||chr(10)||
-'         ,''CON|'' || tables_nk1 || ''|'' || tables_nk2 || ''|'' par_id';
-
-s:=s||''||chr(10)||
+'         ,''CON|'' || tables_nk1 || ''|'' || tables_nk2 || ''|'' par_id'||chr(10)||
 '         ,text name'||chr(10)||
 '         ,trim(to_char(seq)) abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''ob_browser.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:CHECK_CONS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_CHECK_CON_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:CH';
+
+s:=s||'ECK_CONS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P61_CON_ID:'' ||'||chr(10)||
 '          ''CON|'' || tables_nk1 || ''|'' || tables_nk2 || ''|'' || id ||'||chr(10)||
 '          '','' || tables_nk2 || '','' || id || '':'' link'||chr(10)||
 '    from  check_cons_act'||chr(10)||
 '   union all'||chr(10)||
-'   ';
-
-s:=s||'select i.tab_cols_nk1 app'||chr(10)||
+'   select i.tab_cols_nk1 app'||chr(10)||
 '         ,''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' || i.tag id'||chr(10)||
-'         ,''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' par_id'||chr(10)||
+'         ,''IND|'' || i.tab_cols_nk1 || ''|'' ';
+
+s:=s||'|| i.tab_cols_nk2 || ''|'' par_id'||chr(10)||
 '         ,t.name || ''_'' || i.tag || case substr(i.tag,1,1)'||chr(10)||
 '                                    when ''u'' then '' (Unique)'''||chr(10)||
 '                                    end                       name'||chr(10)||
-'         ,t.abbr || ''_'' || i.tag ';
-
-s:=s||'abbr'||chr(10)||
+'         ,t.abbr || ''_'' || i.tag abbr'||chr(10)||
 '         ,gui_util.index_desc (i.tab_cols_nk1, i.tab_cols_nk2, i.tag) description'||chr(10)||
 '         ,''ob_index.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:TAB_INDEXES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_TABLES_NK2#,#PAGE_TAB_IND_TAG#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:TAB_IN';
+
+s:=s||'DEXES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P41_TABLES_NK2,P71_IND_TAG:'' ||'||chr(10)||
 '          ''IND|'' || i.tab_cols_nk1 || ''|'' || i.tab_cols_nk2 || ''|'' || i.tag ||'||chr(10)||
 '          '','' || i.tab_cols_nk2 || '','' || i.tag || '':'' link'||chr(10)||
-'    from  index';
-
-s:=s||'es_act i'||chr(10)||
+'    from  indexes_act i'||chr(10)||
 '          inner join tab_cols tc on i.tab_col_id = tc.id'||chr(10)||
 '          inner join tables t    on tc.table_id  = t.id'||chr(10)||
 '    group by i.tab_cols_nk1'||chr(10)||
-'            ,i.tab_cols_nk2'||chr(10)||
+'       ';
+
+s:=s||'     ,i.tab_cols_nk2'||chr(10)||
 '            ,tc.table_id'||chr(10)||
 '            ,t.name'||chr(10)||
 '            ,t.abbr'||chr(10)||
@@ -57394,87 +57624,86 @@ s:=s||'es_act i'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
 '         ,''PRG|'' || applications_nk1 || ''|'' || id id'||chr(10)||
-'         ,''PRG|'' || applications_nk1 || ''';
-
-s:=s||'|'' par_id'||chr(10)||
+'         ,''PRG|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,'''' abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''ob_package_body.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:PROGRAMS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_PROGRAM_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:PROGRAMS:!APP_SESSION!::!DEBUG!';
+
+s:=s||'::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P81_PRG_ID:'' ||'||chr(10)||
 '          ''PRG|'' || applications_nk1 || ''|'' || id || '','' || id ||'||chr(10)||
 '          '':'' link'||chr(10)||
 '    from  programs_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''DOM|'' || applications_nk1 ||';
-
-s:=s||' ''|'' || id id'||chr(10)||
+'         ,''DOM|'' || applications_nk1 || ''|'' || id id'||chr(10)||
 '         ,''DOM|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,abbr'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''pe_list.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:DOMAINS:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_DOMAIN_ID#:'' ||'||chr(10)||
+'         ,''f?p=!AP';
+
+s:=s||'P_ID!:DOMAINS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P21_DOM_ID:'' ||'||chr(10)||
 '          ''DOM|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
 '          '','' || id || '':'' link'||chr(10)||
 '    from  domains_act'||chr(10)||
 '   union all'||chr(10)||
 '   select domains_nk1 app'||chr(10)||
-'   ';
-
-s:=s||'      ,''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id id'||chr(10)||
+'         ,''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id id'||chr(10)||
 '         ,''DOM|'' || domains_nk1 || ''|'' || domain_id par_id'||chr(10)||
 '         ,value name'||chr(10)||
-'         ,'''' || seq abbr'||chr(10)||
+'         ,'''' || seq abb';
+
+s:=s||'r'||chr(10)||
 '         ,description'||chr(10)||
 '         ,''pe_list.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:DOMAIN_VALUES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_DOMAINS_NK2#,#PAGE_DOMAIN_VALUE_ID#:'' ||'||chr(10)||
-'          ''VAL|'' || domains_nk1 || ''|'' ||';
-
-s:=s||' domains_nk2 || ''|'' || id ||'||chr(10)||
+'         ,''f?p=!APP_ID!:DOMAIN_VALUES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P21_DOMAINS_NK2,P31_VAL_ID:'' ||'||chr(10)||
+'          ''VAL|'' || domains_nk1 || ''|'' || domains_nk2 || ''|'' || id ||'||chr(10)||
 '          '','' || domains_nk2 || '','' || id || '':'' link'||chr(10)||
 '    from  domain_values_act'||chr(10)||
 '   union all'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
-'         ,''EXC|'' || applications_nk1 || ''|'' || id id'||chr(10)||
+'         ,''EXC|'' || applicatio';
+
+s:=s||'ns_nk1 || ''|'' || id id'||chr(10)||
 '         ,''EXC|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,'''' || code abbr'||chr(10)||
 '         ,message description'||chr(10)||
 '         ,''ob_trigger.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:EXCEPTIONS:#AP';
-
-s:=s||'P_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_EXCEPTION_ID#:'' ||'||chr(10)||
+'         ,''f?p=!APP_ID!:EXCEPTIONS:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P91_EXC_ID:'' ||'||chr(10)||
 '          ''EXC|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
 '          '','' || id || '':'' link'||chr(10)||
 '    from  exceptions_act'||chr(10)||
-'   union all'||chr(10)||
+'   union al';
+
+s:=s||'l'||chr(10)||
 '   select applications_nk1 app'||chr(10)||
 '         ,''F|'' || applications_nk1 || ''|'' || id id'||chr(10)||
 '         ,''F|'' || applications_nk1 || ''|'' par_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,'''' abbr'||chr(10)||
 '         ,description description'||chr(10)||
-'      ';
-
-s:=s||'   ,''ob_trigger.gif'' icon'||chr(10)||
-'         ,''f?p=#APP_ID#:FILES:#APP_SESSION#::#DEBUG#::'' ||'||chr(10)||
-'          ''P1_TREE_ID,#PAGE_FILE_ID#:'' ||'||chr(10)||
+'         ,''ob_trigger.gif'' icon'||chr(10)||
+'         ,''f?p=!APP_ID!:FILES:!APP_SESSION!::!DEBUG!::'' ||'||chr(10)||
+'          ''P1_TREE_ID,P11_FILE_ID:'' ||'||chr(10)||
 '          ''F|'' || applications_nk1 || ''|'' || id ||'||chr(10)||
-'          '','' || id || '':'' link'||chr(10)||
-'    from  files_act;'||chr(10)||
-'¿';
+'          '','' || id';
+
+s:=s||' || '':'' link'||chr(10)||
+'    from  files_act';
 
 wwv_flow_api.create_install_script(
   p_id => 30385306960584046 + wwv_flow_api.g_id_offset,
   p_flow_id => wwv_flow.g_flow_id,
   p_install_id=> 30229501198201858 + wwv_flow_api.g_id_offset,
-  p_name => 'APP_TREE_VW',
+  p_name => 'GUI_APP_TREE_VW',
   p_sequence=> 50,
   p_script_type=> 'INSTALL',
   p_script_clob=> s);
@@ -57492,7 +57721,404 @@ declare
     l_clob clob;
     l_length number := 1;
 begin
-s := null;
+s:=s||'create or replace'||chr(10)||
+'package body gui_util as'||chr(10)||
+''||chr(10)||
+'p_flow_id        number;'||chr(10)||
+'p_title          varchar2(255);'||chr(10)||
+'p_doc_size       number;'||chr(10)||
+'p_blob_content   blob;'||chr(10)||
+'p_description    varchar2(4000);'||chr(10)||
+''||chr(10)||
+'function is_number'||chr(10)||
+'      (str_in  in  varchar2)'||chr(10)||
+'   return number'||chr(10)||
+'as'||chr(10)||
+'begin'||chr(10)||
+'   case to_number(str_in)'||chr(10)||
+'      when 1 then return 1; else return 1;'||chr(10)||
+'      end case;'||chr(10)||
+'exception'||chr(10)||
+'   when VALUE_ERROR then'||chr(10)||
+'      return 0;'||chr(10)||
+'   when';
+
+s:=s||' others then'||chr(10)||
+'      raise;'||chr(10)||
+'end is_number;'||chr(10)||
+''||chr(10)||
+'procedure update_apex_app_files'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,aa_key_in    in  varchar2'||chr(10)||
+'      ,suffix_in    in  varchar2'||chr(10)||
+'      ,un_in        in  varchar2)'||chr(10)||
+'is'||chr(10)||
+'   dest_offset   number  := 1;'||chr(10)||
+'   src_offset    number  := 1;'||chr(10)||
+'   lang_context  number  := DBMS_LOB.DEFAULT_LANG_CTX;'||chr(10)||
+'   warning       number;'||chr(10)||
+'   p_id  number;'||chr(10)||
+'   cnt   number;'||chr(10)||
+'begin'||chr(10)||
+'   dbms_';
+
+s:=s||'lob.trim(p_blob_content, 0);'||chr(10)||
+'   if un_in is null'||chr(10)||
+'   then'||chr(10)||
+'      dbms_lob.converttoblob'||chr(10)||
+'         (p_blob_content'||chr(10)||
+'         ,assemble.install_script(app_abbr_in, aa_key_in, suffix_in)'||chr(10)||
+'         ,dbms_lob.lobmaxsize'||chr(10)||
+'         ,dest_offset'||chr(10)||
+'         ,src_offset'||chr(10)||
+'         ,dbms_lob.default_csid'||chr(10)||
+'         ,lang_context'||chr(10)||
+'         ,warning'||chr(10)||
+'         );'||chr(10)||
+'   elsif un_in = ''un'''||chr(10)||
+'   then'||chr(10)||
+'      dbms_lob.converttoblob'||chr(10)||
+'   ';
+
+s:=s||'      (p_blob_content'||chr(10)||
+'         ,assemble.uninstall_script(app_abbr_in, aa_key_in, suffix_in)'||chr(10)||
+'         ,dbms_lob.lobmaxsize'||chr(10)||
+'         ,dest_offset'||chr(10)||
+'         ,src_offset'||chr(10)||
+'         ,dbms_lob.default_csid'||chr(10)||
+'         ,lang_context'||chr(10)||
+'         ,warning'||chr(10)||
+'         );'||chr(10)||
+'   else'||chr(10)||
+'      dbms_lob.converttoblob'||chr(10)||
+'         (p_blob_content'||chr(10)||
+'         ,assemble.data_script(app_abbr_in)'||chr(10)||
+'         ,dbms_lob.lobmaxsize'||chr(10)||
+'         ,des';
+
+s:=s||'t_offset'||chr(10)||
+'         ,src_offset'||chr(10)||
+'         ,dbms_lob.default_csid'||chr(10)||
+'         ,lang_context'||chr(10)||
+'         ,warning'||chr(10)||
+'         );'||chr(10)||
+'   end if;'||chr(10)||
+'   if warning != DBMS_LOB.NO_WARNING'||chr(10)||
+'   then'||chr(10)||
+'      DBMS_OUTPUT.PUT_LINE(''gui_util.update_scripts() '' ||'||chr(10)||
+'             ''had problems with dbms_lob.converttoblob.'');'||chr(10)||
+'   end if;'||chr(10)||
+'   p_doc_size     := dbms_lob.getlength(p_blob_content);'||chr(10)||
+'   delete from apex_application_files'||chr(10)||
+'    w';
+
+s:=s||'here flow_id = p_flow_id'||chr(10)||
+'     and  title   = p_title;'||chr(10)||
+'   p_id := wwv_flow_id.next_val;'||chr(10)||
+'   insert into apex_application_files'||chr(10)||
+'         (id'||chr(10)||
+'         ,flow_id'||chr(10)||
+'         ,name'||chr(10)||
+'         ,title'||chr(10)||
+'         ,mime_type'||chr(10)||
+'         ,doc_size'||chr(10)||
+'         ,dad_charset'||chr(10)||
+'         ,content_type'||chr(10)||
+'         ,blob_content'||chr(10)||
+'         ,description'||chr(10)||
+'         ,file_type'||chr(10)||
+'         ,file_charset)'||chr(10)||
+'      values'||chr(10)||
+'         (p_id'||chr(10)||
+'         ,p_';
+
+s:=s||'flow_id'||chr(10)||
+'         ,p_id || ''/'' || p_title'||chr(10)||
+'         ,p_title'||chr(10)||
+'         ,''text/plain'''||chr(10)||
+'         ,p_doc_size'||chr(10)||
+'         ,''ascii'''||chr(10)||
+'         ,''BLOB'''||chr(10)||
+'         ,p_blob_content'||chr(10)||
+'         ,p_description'||chr(10)||
+'         ,''SCRIPT'''||chr(10)||
+'         ,''utf-8'');'||chr(10)||
+'end update_apex_app_files;'||chr(10)||
+''||chr(10)||
+'procedure update_scripts'||chr(10)||
+'      (app_abbr_in  in  varchar2)'||chr(10)||
+'is'||chr(10)||
+'begin'||chr(10)||
+'   p_flow_id := v(''APP_ID'');'||chr(10)||
+'   -- install_db'||chr(10)||
+'   p_title        := ''install_db';
+
+s:=s||'.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' database installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''DB'', '''', '''');'||chr(10)||
+'   -- install_db_sec'||chr(10)||
+'   p_title        := ''install_db_sec.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' database security installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''DB'', ''sec'', '''');'||chr(10)||
+'   -- install_mt'||chr(10)||
+'   p_title        := ''install_mt.sql'';'||chr(10)||
+'   p_description ';
+
+s:=s||' := app_abbr_in || '' mid-tier installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', '''', '''');'||chr(10)||
+'   -- install_mt_sec'||chr(10)||
+'   p_title        := ''install_mt_sec.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' mid-tier security installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', ''sec'', '''');'||chr(10)||
+'   -- install_usr'||chr(10)||
+'   p_title        := ''install_usr.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' u';
+
+s:=s||'ser synonym installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''USR'', '''', '''');'||chr(10)||
+'   -- install_gui'||chr(10)||
+'   p_title        := ''install_gui.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' APEX maintenance GUI installation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''GUI'', '''', '''');'||chr(10)||
+'   -- uninstall_usr'||chr(10)||
+'   p_title        := ''uninstall_usr.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' user synonym uninst';
+
+s:=s||'allation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''USR'', '''', ''un'');'||chr(10)||
+'   -- uninstall_mt'||chr(10)||
+'   p_title        := ''uninstall_mt.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' mid-tier uninstallation script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', '''', ''un'');'||chr(10)||
+'   -- uninstall_db'||chr(10)||
+'   p_title        := ''uninstall_db.sql'';'||chr(10)||
+'   p_description  := app_abbr_in || '' database uninstallation script'';'||chr(10)||
+'   update';
+
+s:=s||'_apex_app_files(app_abbr_in, ''DB'', '''', ''un'');'||chr(10)||
+'   -- dtgen_dataload'||chr(10)||
+'   p_title        := ''dtgen_dataload.ctl'';'||chr(10)||
+'   p_description  := app_abbr_in || '' DTGen dataload script'';'||chr(10)||
+'   update_apex_app_files(app_abbr_in, '''', '''', ''xx'');'||chr(10)||
+'end update_scripts;'||chr(10)||
+''||chr(10)||
+'function gen_ind_tag'||chr(10)||
+'      (tables_nk1_in     in  varchar2'||chr(10)||
+'      ,tables_nk2_in     in  varchar2'||chr(10)||
+'      ,uniq_in           in  varchar2)'||chr(10)||
+'   return varchar2';
+
+s:=s||''||chr(10)||
+'as'||chr(10)||
+'   maxnum     number;'||chr(10)||
+'begin'||chr(10)||
+'   select max(to_number(substr(tag,3)))'||chr(10)||
+'     into maxnum'||chr(10)||
+'    from  indexes_act'||chr(10)||
+'    where tab_cols_nk1 = tables_nk1_in'||chr(10)||
+'     and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'     and  lower(substr(tag,2,1)) = ''x'''||chr(10)||
+'     and  gui_util.is_number(substr(tag,3)) = 1;'||chr(10)||
+'   return case upper(uniq_in)'||chr(10)||
+'          when ''Y'' then ''u'' else ''i'''||chr(10)||
+'          end || ''x'' || (nvl(maxnum,0) + 1);'||chr(10)||
+'end gen_ind';
+
+s:=s||'_tag;'||chr(10)||
+''||chr(10)||
+'function index_desc'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,tab_abbr_in  in  varchar2'||chr(10)||
+'      ,ind_tag_in   in  varchar2)'||chr(10)||
+'   return varchar2'||chr(10)||
+'as'||chr(10)||
+'   l_vc_arr2   apex_application_global.vc_arr2; '||chr(10)||
+'begin '||chr(10)||
+'   select tab_cols_nk3'||chr(10)||
+'     bulk collect '||chr(10)||
+'     into l_vc_arr2 '||chr(10)||
+'    from  indexes_act'||chr(10)||
+'    where tab_cols_nk1 = app_abbr_in'||chr(10)||
+'     and  tab_cols_nk2 = tab_abbr_in'||chr(10)||
+'     and  tag          = ind_tag_in'||chr(10)||
+'';
+
+s:=s||'    order by seq;'||chr(10)||
+'   if lower(substr(ind_tag_in,1,1)) = ''u'''||chr(10)||
+'   then'||chr(10)||
+'      return ''Unique index on columns: '' ||'||chr(10)||
+'              apex_util.table_to_string ( '||chr(10)||
+'                 p_table => l_vc_arr2, '||chr(10)||
+'                 p_string => '', '');'||chr(10)||
+'   end if;'||chr(10)||
+'   return ''Index on columns: '' ||'||chr(10)||
+'           apex_util.table_to_string ( '||chr(10)||
+'              p_table => l_vc_arr2, '||chr(10)||
+'              p_string => '', '');'||chr(10)||
+'end index_desc';
+
+s:=s||';'||chr(10)||
+''||chr(10)||
+'function create_index'||chr(10)||
+'      (column_string_in  in  varchar2'||chr(10)||
+'      ,tables_nk1_in     in  varchar2'||chr(10)||
+'      ,tables_nk2_in     in  varchar2'||chr(10)||
+'      ,uniq_in           in  varchar2)'||chr(10)||
+'   return number'||chr(10)||
+'as'||chr(10)||
+'   l_vc_arr2  apex_application_global.vc_arr2;'||chr(10)||
+'   maxnum     number;'||chr(10)||
+'   tagname    varchar2(20);'||chr(10)||
+'   numrows    number;'||chr(10)||
+'BEGIN'||chr(10)||
+'   l_vc_arr2 := APEX_UTIL.STRING_TO_TABLE(column_string_in);'||chr(10)||
+'   tagname := ge';
+
+s:=s||'n_ind_tag (tables_nk1_in, tables_nk2_in, uniq_in);'||chr(10)||
+'   numrows := 0;'||chr(10)||
+'   FOR i IN 1..l_vc_arr2.count'||chr(10)||
+'   LOOP'||chr(10)||
+'      insert into indexes_act'||chr(10)||
+'            (tab_cols_nk1'||chr(10)||
+'            ,tab_cols_nk2'||chr(10)||
+'            ,tab_cols_nk3'||chr(10)||
+'            ,tag'||chr(10)||
+'            ,seq)'||chr(10)||
+'         values'||chr(10)||
+'            (tables_nk1_in'||chr(10)||
+'            ,tables_nk2_in'||chr(10)||
+'            ,l_vc_arr2(i)'||chr(10)||
+'            ,tagname'||chr(10)||
+'            ,i);'||chr(10)||
+'      numrows :=';
+
+s:=s||' numrows + 1;'||chr(10)||
+'   END LOOP;'||chr(10)||
+'   return numrows;'||chr(10)||
+'end create_index;'||chr(10)||
+''||chr(10)||
+'function update_index'||chr(10)||
+'      (column_string_in  in  varchar2'||chr(10)||
+'      ,tables_nk1_in     in  varchar2'||chr(10)||
+'      ,tables_nk2_in     in  varchar2'||chr(10)||
+'      ,uniq_in           in  varchar2'||chr(10)||
+'      ,tagname_io    in out  varchar2)'||chr(10)||
+'   return number'||chr(10)||
+'as'||chr(10)||
+'   l_vc_arr2  apex_application_global.vc_arr2;'||chr(10)||
+'   colcnt     number;'||chr(10)||
+'   tagname    varchar2(20);'||chr(10)||
+'   nu';
+
+s:=s||'mrows    number;'||chr(10)||
+'   col_match  boolean;'||chr(10)||
+'BEGIN'||chr(10)||
+'   l_vc_arr2 := APEX_UTIL.STRING_TO_TABLE(column_string_in);'||chr(10)||
+'   tagname := case upper(uniq_in)'||chr(10)||
+'              when ''Y'' then ''u'' else ''i'''||chr(10)||
+'              end || substr(tagname_io,2);'||chr(10)||
+'   if tagname != tagname_io'||chr(10)||
+'   then'||chr(10)||
+'      -- The tag name has changed. Check for existence of new tag name'||chr(10)||
+'      select count(tag)'||chr(10)||
+'        into colcnt'||chr(10)||
+'       from  indexes_act';
+
+s:=s||''||chr(10)||
+'       where tab_cols_nk1 = tables_nk1_in'||chr(10)||
+'        and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'        and  tag          = tagname;'||chr(10)||
+'      if colcnt > 0'||chr(10)||
+'      then'||chr(10)||
+'         -- The new tag name already exists, Create a unique tag name'||chr(10)||
+'         tagname := gen_ind_tag (tables_nk1_in, tables_nk2_in, uniq_in);'||chr(10)||
+'      end if;'||chr(10)||
+'   end if;'||chr(10)||
+'   select count(tag)'||chr(10)||
+'     into colcnt'||chr(10)||
+'    from  indexes_act'||chr(10)||
+'    where tab_cols_';
+
+s:=s||'nk1 = tables_nk1_in'||chr(10)||
+'     and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'     and  tag          = tagname_io;'||chr(10)||
+'   if colcnt != l_vc_arr2.count'||chr(10)||
+'   then'||chr(10)||
+'      -- The number of columns has changed'||chr(10)||
+'      col_match := FALSE;'||chr(10)||
+'   else'||chr(10)||
+'      -- Check for column differences'||chr(10)||
+'      col_match := TRUE;'||chr(10)||
+'      for buff in ('||chr(10)||
+'         select tab_cols_nk3'||chr(10)||
+'               ,rownum'||chr(10)||
+'          from  indexes_act'||chr(10)||
+'          where tab_cols';
+
+s:=s||'_nk1 = tables_nk1_in'||chr(10)||
+'           and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'           and  tag          = tagname_io)'||chr(10)||
+'      loop'||chr(10)||
+'         if buff.tab_cols_nk3 != l_vc_arr2(buff.rownum)'||chr(10)||
+'         then'||chr(10)||
+'            -- Found a column mis-match'||chr(10)||
+'            col_match := FALSE;'||chr(10)||
+'         end if;'||chr(10)||
+'      end loop;'||chr(10)||
+'   end if;'||chr(10)||
+'   if not col_match'||chr(10)||
+'   then'||chr(10)||
+'      -- Delete and Insert because the columns have changed'||chr(10)||
+'      ';
+
+s:=s||'delete from indexes_act'||chr(10)||
+'       where tab_cols_nk1 = tables_nk1_in'||chr(10)||
+'        and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'        and  tag          = tagname_io;'||chr(10)||
+'      numrows := SQL%ROWCOUNT;'||chr(10)||
+'      FOR i IN 1..l_vc_arr2.count'||chr(10)||
+'      LOOP'||chr(10)||
+'         insert into indexes_act'||chr(10)||
+'               (tab_cols_nk1'||chr(10)||
+'               ,tab_cols_nk2'||chr(10)||
+'               ,tab_cols_nk3'||chr(10)||
+'               ,tag'||chr(10)||
+'               ,seq)'||chr(10)||
+'            val';
+
+s:=s||'ues'||chr(10)||
+'               (tables_nk1_in'||chr(10)||
+'               ,tables_nk2_in'||chr(10)||
+'               ,l_vc_arr2(i)'||chr(10)||
+'               ,tagname'||chr(10)||
+'               ,i);'||chr(10)||
+'         numrows := numrows + 1;'||chr(10)||
+'      END LOOP;'||chr(10)||
+'      tagname_io := tagname;'||chr(10)||
+'      return (numrows/2);'||chr(10)||
+'   end if;'||chr(10)||
+'   if tagname = tagname_io'||chr(10)||
+'   then'||chr(10)||
+'      -- No columns were changed and the tag names match'||chr(10)||
+'      return 0;'||chr(10)||
+'   end if;'||chr(10)||
+'   -- Update the tag name onl';
+
+s:=s||'y'||chr(10)||
+'   update indexes_act'||chr(10)||
+'     set  tag = tagname'||chr(10)||
+'    where tab_cols_nk1 = tables_nk1_in'||chr(10)||
+'     and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
+'     and  tag          = tagname_io;'||chr(10)||
+'   numrows := SQL%ROWCOUNT;'||chr(10)||
+'   tagname_io := tagname;'||chr(10)||
+'   return numrows;'||chr(10)||
+'end update_index;'||chr(10)||
+''||chr(10)||
+'begin'||chr(10)||
+'   dbms_lob.createtemporary(p_blob_content, true, dbms_lob.session);'||chr(10)||
+'end gui_util;';
+
 wwv_flow_api.create_install_script(
   p_id => 30385711378604245 + wwv_flow_api.g_id_offset,
   p_flow_id => wwv_flow.g_flow_id,
