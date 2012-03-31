@@ -6,6 +6,14 @@ The DTGen release is complicated by the fact that DTGen is used to generate DTGe
 
 The DTGen release process follows "Common Branching Patterns" best practices from "Version Control with Subversion" (http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.branchmerge.commonpatterns).
 
+= SVN Version Information =
+
+SQL*Developer 3.1.07 Uses SVN/Kit 1.3.2
+SVN/Kit 1.3.2 Uses SVN Client 1.6.2
+
+Note: The latest TortoiseSVN Release uses SVN client 1.7
+SVN Client 1.7 is not compatable with SVN Client 1.6
+
 = Integration Testing =
 
 Integration testing covers 4 environments.  The InstallPackage environment is a basic install of DTGEN.  The integration testing for this environment is a simple installation log file comparison with a known good installation file.  The other environments (SmallOffice, ThreeTier, and PerfFocus) are potential deployment environments from applications generated with DTGen.  The integration testing for these environments consists of feature set UnitTesting and APEX GUI integration testing.  The complete set of unit tests is run during release to assist in pin-pointing specific problems with the release.  APEX GUI testing is the most complete, end-to-end integration testing of DTGen.
