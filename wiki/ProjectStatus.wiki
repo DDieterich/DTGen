@@ -8,6 +8,8 @@
 = Next Release =
 
   * Reorganize (Done)
-  * Code Uploads (Done)
+  * Finalize Release (Working)
+  * Code Uploads (Working)
   * Demo Code
+  * Automated Release Testing
   * Documentation
