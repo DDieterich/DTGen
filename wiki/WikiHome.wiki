@@ -5,6 +5,6 @@
 
 Welcome to the DTGen Wiki.
 
-  * ReleaseSchedule
+  * ProjectStatus
   * UnitTesting
   * ReleaseProcess
