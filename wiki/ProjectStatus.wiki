@@ -1,4 +1,4 @@
-#summary Status of DTGen Project AS/OF 10-Feb-2012.
+#summary Status of DTGen Project AS/OF 31-Mar-2012.
 #labels Featured
 
 = Current Release =
@@ -8,6 +8,6 @@
 = Next Release =
 
   * Reorganize (Done)
+  * Code Uploads (Done)
   * Demo Code
   * Documentation
-  * Code Uploads
