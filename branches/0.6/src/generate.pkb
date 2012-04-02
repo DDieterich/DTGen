@@ -1140,7 +1140,7 @@ BEGIN
    p('--    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('');
    p('function get_version');
-   p('   return varchar2;');
+   p('   return varchar2');
    p('is');
    p('begin');
    p('   return ''' || ver  || ''';');
