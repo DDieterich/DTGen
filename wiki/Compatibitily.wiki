@@ -6,12 +6,13 @@
 
 DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Express in an Oracle database.
 
-= Details =
+= Minimum Requirements =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Oracle Database ==
+
+|| *Oper/Sys* || *DB Ed* || *DB Ver* || *APEX Ver* ||
+|| Any || Any || 10g || 4.0 ||
+
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
