@@ -131,6 +131,7 @@ begin
       when others then
          raise;
    end;
+   rclob := '';
    p('');
    p('--');
    p('--  Uninstall ' || get_aa_key_name(aa_key_in, suffix_in) ||
