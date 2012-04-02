@@ -1,11 +1,10 @@
-#summary DTGen current release compatibility with previous releases and Oracle versions.
-
-= Introduction =
+#summary DTGen release compatibility Oracle DB and APEX versions.
 
 *DRAFT PAGE*
 
-The current release of DTGen is 1.0 (
-http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.5.zip&can=4&q=)
+= Introduction =
+
+DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Express in an Oracle database.
 
 = Details =
 
