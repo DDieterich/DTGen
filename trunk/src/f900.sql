@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   12:35 Saturday March 31, 2012
+--   Date and Time:   17:01 Monday April 2, 2012
 --   Exported By:     GEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 29625608302242757 + wwv_flow_api.g_id_offset,
   p_error_template=> 29621910771242735 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120331123547',
+  p_checksum_salt_last_reset => '20120402170137',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -168,7 +168,7 @@ wwv_flow_api.create_flow(
   p_cust_authentication_process=> '.'||to_char(29631227260242835 + wwv_flow_api.g_id_offset)||'.',
   p_cust_authentication_page=> '',
   p_custom_auth_login_url=> '',
-  p_flow_version=> 'DTGen_0.5',
+  p_flow_version=> 'DTGen_0.6',
   p_flow_status=> 'AVAILABLE_W_EDIT_LINK',
   p_flow_unavailable_text=> 'This application is currently unavailable at this time.',
   p_build_status=> 'RUN_AND_BUILD',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 29624509359242756 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 29625211954242756 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'GEN',
-  p_last_upd_yyyymmddhh24miss=> '20120331123547',
+  p_last_upd_yyyymmddhh24miss=> '20120402170137',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -2758,7 +2758,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'No help is available for this page.'
  ,p_last_updated_by => 'GEN'
- ,p_last_upd_yyyymmddhh24miss => '20120331123053'
+ ,p_last_upd_yyyymmddhh24miss => '20120402161541'
   );
 null;
  
@@ -3520,7 +3520,7 @@ wwv_flow_api.create_report_columns (
   p_column_alias=> 'CREATED_ON',
   p_column_display_sequence=> 4,
   p_column_heading=> 'Created On',
-  p_column_format=> 'DD-MON-YYYY HH24:MI',
+  p_column_format=> 'DD-MON-YYYY HH24:MI:SS',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
   p_default_sort_column_sequence=>0,
@@ -4489,6 +4489,7 @@ declare
 begin
 p:=p||'BEGIN'||chr(10)||
 '   gui_util.update_scripts(applications_dml.get_nk(:P1_APP_ID));'||chr(10)||
+'   commit;'||chr(10)||
 'exception when others then util.err(:APP_ID||''P''||:APP_PAGE_ID||'':UPD_SCRIPTS: ''||sqlerrm); raise;'||chr(10)||
 'END;';
 
