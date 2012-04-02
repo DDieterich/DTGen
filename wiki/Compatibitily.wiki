@@ -1,4 +1,4 @@
-#DTGen current release compatibility with previous releases and Oracle versions.
+#summary DTGen current release compatibility with previous releases and Oracle versions.
 
 = Introduction =
 
