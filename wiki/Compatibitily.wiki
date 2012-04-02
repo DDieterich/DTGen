@@ -1,4 +1,4 @@
-#summary DTGen release compatibility Oracle DB and APEX versions.
+#summary DTGen release compatibility.
 
 = Introduction =
 
