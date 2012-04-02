@@ -1,0 +1,18 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Express in an Oracle database.
+
+= Minimum Requirements =
+
+|| *Oper/Sys* || *DB Ed* || *DB Ver* || *APEX Ver* ||
+|| Any || Any^1^ || 10g || 4.0 ||
+
+Note ^1^: Oracle Express Edition does not support Materialized View Logs
+
+= Tested Installations =
+
+|| *Oper/Sys* || *DB Ed* || *DB Ver* || *APEX Ver* ||
+|| Windows7-64bit || XE || 10g || 4.0 ||
+|| WindowsXP || XE || 11g || 4.0 ||
