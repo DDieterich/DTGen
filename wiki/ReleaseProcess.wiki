@@ -14,11 +14,9 @@ SVN/Kit 1.3.2 Uses SVN Client 1.6.2
 Note: The latest TortoiseSVN Release uses SVN client 1.7<br>
 SVN Client 1.7 is not compatible with SVN Client 1.6
 
-TortoiseSVN with the 1.6.2 SVN client can be downloaded at<br>
-http://www.filehippo.com/download_tortoisesvn/5617/
-
 TortoiseSVN with the last 1.6 SVN client (1.6.17) can be downloaded at<br>
-http://www.filehippo.com/download_tortoisesvn/9952/
+ * (32-bit) http://www.filehippo.com/download_tortoisesvn/9952/
+ * (64-bit) http://www.filehippo.com/download_tortoisesvn/9952/
 
 Subversion 1.6 compatability information can be found at<br>
 http://subversion.apache.org/docs/release-notes/1.6.html
