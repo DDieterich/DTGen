@@ -2,7 +2,7 @@
 
 = Introduction =
 
-DTGen runs requires an Oracle database. DTGen GUI requires Oracle's Application Express on an Oracle database and a web browser.
+DTGen requires an Oracle database. DTGen GUI requires Oracle's Application Express on an Oracle database and a web browser.
 
 = Minimum Requirements =
 
