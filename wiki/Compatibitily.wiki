@@ -11,8 +11,9 @@ DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Expres
 == Oracle Database ==
 
 || *Oper/Sys* || *DB Ed* || *DB Ver* || *APEX Ver* ||
-|| Any || Any || 10g || 4.0 ||
+|| Any || Any^1^ || 10g || 4.0 ||
 
+Note ^1^: Oracle Express Edition does not support Materialized View Logs
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
