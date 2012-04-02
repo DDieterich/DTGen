@@ -15,9 +15,9 @@ Note ^1^: Oracle Express Edition does not support Materialized View Logs
 
 = Tested Installations =
 
-|| *Operating<br>System* || *DB Ed* || *DB Ver* || *APEX Ver* ||
-|| Windows7-64bit || XE || 10g-32bit || 4.0 ||
-|| WindowsXP-32bit || XE || 11g-32bit || 4.0 ||
+|| *Operating System* || *Database<br>Edition* || *Database<br>Version* || *APEX<br>Vers* ||
+|| Windows7-64bit || Oracle XE || 10g-32bit || 4.0 ||
+|| WindowsXP-32bit || Oracle XE || 11g-32bit || 4.0 ||
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
