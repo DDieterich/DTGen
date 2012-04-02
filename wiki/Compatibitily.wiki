@@ -11,7 +11,14 @@ DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Expres
 || *Database* || *Database<br>Edition* || *APEX<br>Vers* ||
 || Oracle10g || Any^1^ || 4.0 ||
 
+|| *Browser* || Version^2^ ||
+|| Microsoft Internet Explorer || 7.0 ||
+|| Mozilla Firefox || 3.5 ||
+|| Google Chrome || 4.0 ||
+|| Apple Safari || 4.0 ||
+
 Note ^1^: Oracle Express Edition does not support Materialized View Logs
+Note ^2^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
 
 = Tested Installations =
 
