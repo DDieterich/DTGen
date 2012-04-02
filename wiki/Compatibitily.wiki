@@ -1,7 +1,5 @@
 #summary DTGen release compatibility Oracle DB and APEX versions.
 
-*DRAFT PAGE*
-
 = Introduction =
 
 DTGen runs on an Oracle database.  DTGen GUI runs on Oracle's Application Express in an Oracle database.
