@@ -16,7 +16,7 @@ SVN Client 1.7 is not compatible with SVN Client 1.6
 
 TortoiseSVN with the last 1.6 SVN client (1.6.17) can be downloaded at<br>
  * (32-bit) http://www.filehippo.com/download_tortoisesvn/9952/
- * (64-bit) http://www.filehippo.com/download_tortoisesvn/9952/
+ * (64-bit) http://sourceforge.net/projects/tortoisesvn/files/1.6.16/Application/
 
 Subversion 1.6 compatability information can be found at<br>
 http://subversion.apache.org/docs/release-notes/1.6.html
