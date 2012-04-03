@@ -6,6 +6,7 @@ Many hours of programming time are dedicated to tasks that are repeated on every
 
   * Data history (audit trails, "undo", archiving, etc...)
   * Surrogate keys (very useful, but not intuitive to users)
+  * Simple domain integrity ("yes" or "no" data values)
   * Multi-Tier deployment (caching of data at the mid-tier)
   * Hierarchical data and paths (manager to employee relationships)
   * Data maintenance forms (basic data query and modification)
