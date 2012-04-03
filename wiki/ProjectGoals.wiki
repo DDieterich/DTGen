@@ -32,7 +32,7 @@ There are many software generators available.  Oracle's own Data Modeler can gen
  * A single number is simpler than multi-column natural keys
  * Can follow records from one database to another
  * More difficult for user to work with than natural keys
- * Transactional views allow natural key data manipulation of surrogate keys
+ * Transactional views allow natural key data manipulation of foreign surrogate keys
 
 = Simple Domain Integrity =
 
@@ -51,7 +51,7 @@ There are many software generators available.  Oracle's own Data Modeler can gen
 
 = Data Maintenance Forms =
 
- * Basic data query available as soon as schema is generated
+ * Basic data query user interface as soon as schema is generated
  * Data maintenance with application specific integrity checking
 
 ----
