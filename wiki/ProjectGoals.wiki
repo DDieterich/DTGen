@@ -11,15 +11,38 @@ Many hours of programming time are dedicated to tasks that are repeated on every
   * Hierarchical data and paths (ex. manager to employee relationships)
   * Data maintenance forms (basic data query and modification)
 
-There are many software generators available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to change for individual project or company needs, i.e. customized generation.  DTGen was created as a starting point
+There are many software generators available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to change for individual project or company needs, i.e. customized generation.  DTGen was created as a starting point for customized Oracle database software generation.
 
+= Data History =
 
-= Details =
+ * Tracking of what data was available when
+ * Simple concept
+ * Complicated by data entry errors
+ * "Undo" is a modern expectation of data systems
+ * Auditing implies tracking who changed the data
+ * Auditing "Undo" is even more complicated
+ * Reporting becomes very difficult
+ * LOG tables do simple "when it happened" tracking
+ * EFF tables allow historical entry of "when it happened"
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Surrogate Keys =
+
+ * Natural keys are easier for the user to understand
+ * Enable natural key changes without losing original record reference
+ * A single number is simpler than multi-column natural keys
+ * Can follow records from one database to another
+ * More difficult for user to work with than natural keys
+ * Transactional views allow natural key data manipulation of surrogate keys
+
+= Simple Domain Integrity =
+
+ * Any small, discrete data set that rarely changes
+ * Examples are (Yes, No), (Male, Female), (Flag), Types of Things
+ * Avoid using foreign key tables
+ * Avoid overloading a single table of domain values
+ * Automatically built into application as check constraints
+
+= 
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
