@@ -6,12 +6,12 @@ Many hours of programming time are dedicated to tasks that are repeated on every
 
   * Data history (audit trails, "undo", archiving, etc...)
   * Surrogate keys (very useful, but not intuitive to users)
-  * Simple domain integrity (ex. "yes" or "no" data values)
+  * Simple domain integrity (ex. "yes" or "no" without foreign key tables)
   * Multi-Tier deployment (data caching and integrity at the mid-tier)
   * Hierarchical data and paths (ex. manager to employee relationships)
   * Data maintenance forms (basic data query and modification)
 
-There are many software generators available.  Oracle's own Data Modeler can generate database 
+There are many software generators available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to change for individual project or company needs, i.e. customized generation.  DTGen was created as a starting point
 
 
 = Details =
