@@ -12,12 +12,11 @@ Many hours of programming time are dedicated to tasks that are repeated on every
   * Data maintenance forms (basic data query and modification)
   * Background logging facility (including ease of instrumentation)
 
-There are many software generators available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to change for individual project or company needs, i.e. customized generation.  DTGen was created as a starting point for customized Oracle database software generation.
+One way to avoid hours of programming time is to use a software generator.  Many software generators are available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to modify the generator for individual project or company needs.  DTGen was created as a starting point for customized Oracle database software generation.
 
 = Data History =
 
  * Tracking of what data was available when
- * Simple concept
  * Complicated by data entry errors
  * "Undo" is a modern expectation of data systems
  * Auditing implies tracking who changed the data
@@ -25,6 +24,7 @@ There are many software generators available.  Oracle's own Data Modeler can gen
  * Reporting becomes very difficult
  * LOG tables do simple "when it happened" tracking
  * EFF tables allow historical entry of "when it happened"
+ * OMNI views allow a complete view of data, history, and audit
 
 = Surrogate Keys =
 
