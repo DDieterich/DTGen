@@ -1,0 +1,15 @@
+#summary Background and goals for the project
+
+= Introduction =
+
+The need for DTGen arose from the realization that many hours of programming were dedicated to tasks that are repeated on every project.  A software generator was needed to automate these tedious tasks.
+
+There are many software generators available.  Oracle's own Data Modeller
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
