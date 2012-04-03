@@ -42,7 +42,17 @@ There are many software generators available.  Oracle's own Data Modeler can gen
  * Avoid overloading a single table of domain values
  * Automatically built into application as check constraints
 
-= 
+= Multi-Tier Deployment =
+ (data caching and integrity at the mid-tier)
+
+= Hierarchical Data and Paths =
+
+ (ex. manager to employee relationships)
+
+= Data Maintenance Forms =
+
+ * Basic data query available as soon as schema is generated
+ * Data maintenance with application specific integrity checking
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
