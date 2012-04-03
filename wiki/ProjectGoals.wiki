@@ -63,7 +63,7 @@ One way to avoid hours of programming time is to use a software generator.  Many
  * Basic data query user interface as soon as schema is generated
  * Data maintenance with application specific integrity checking
 
-= Background Logging Facility
+= Background Logging Facility =
 
  * Easily capture error and debug information for administrators
  * Autonomous transaction for independently committed log data
