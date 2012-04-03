@@ -43,11 +43,19 @@ There are many software generators available.  Oracle's own Data Modeler can gen
  * Automatically built into application as check constraints
 
 = Multi-Tier Deployment =
- (data caching and integrity at the mid-tier)
+
+ * Need to move data integrity checks out of database
+ * ex. Transaction Processing Performance Council's TPC-C
+ * Caching of slow-moving data outside of database
+ * Distributed table packages allow integrity checks at mid-tier
+ * Materialized views allow data caching at mid-tier
 
 = Hierarchical Data and Paths =
 
- (ex. manager to employee relationships)
+ * A table that is a foreign key to itself
+ * ex. A manager oversees employees and is also an employee
+ * Hierarchical organizations imply an organizational path
+ * Transactional views allow hierarchical path data manipulation
 
 = Data Maintenance Forms =
 
