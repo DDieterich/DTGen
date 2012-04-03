@@ -2,11 +2,13 @@
 
 = Introduction =
 
-Many hours of programming time are dedicated to tasks that are repeated on every project.  In particular, 3 areas usually require effort to design and code:
+Many hours of programming time are dedicated to tasks that are repeated on every project.  With regard to data and databases, several areas usually require effort to design and code:
 
   * Data history (audit trails, UNDO, archiving, etc...)
   * Surrogate keys (very useful, but not intuitive to users)
   * Data maintenance forms (basic data query and modification)
+  * Application Programmatic Interfaces (APIs)
+  * Multi-Tier deployment (caching of data at the mid-tier)
 
 There are many software generators available.  Oracle's own Data Modeler can generate database 
 
