@@ -10,6 +10,7 @@ Many hours of programming time are dedicated to tasks that are repeated on every
   * Multi-Tier deployment (data caching and integrity at the mid-tier)
   * Hierarchical data and paths (ex. manager to employee relationships)
   * Data maintenance forms (basic data query and modification)
+  * Background logging facility (including ease of instrumentation)
 
 There are many software generators available.  Oracle's own Data Modeler can generate data dictionary language (DDL) for the Oracle database.  However, the real strength of a generator comes from an ability to change for individual project or company needs, i.e. customized generation.  DTGen was created as a starting point for customized Oracle database software generation.
 
@@ -61,6 +62,12 @@ There are many software generators available.  Oracle's own Data Modeler can gen
 
  * Basic data query user interface as soon as schema is generated
  * Data maintenance with application specific integrity checking
+
+= Background Logging Facility
+
+ * Easily capture error and debug information for administrators
+ * Autonomous transaction for independently committed log data
+ * DBMS packages for self-identifying location data
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
