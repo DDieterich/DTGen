@@ -4,11 +4,11 @@
 
 Many hours of programming time are dedicated to tasks that are repeated on every project.  With regard to data and databases, several areas usually require effort to design and code:
 
-  * Data history (audit trails, UNDO, archiving, etc...)
+  * Data history (audit trails, "undo", archiving, etc...)
   * Surrogate keys (very useful, but not intuitive to users)
-  * Data maintenance forms (basic data query and modification)
-  * Application Programmatic Interfaces (APIs)
   * Multi-Tier deployment (caching of data at the mid-tier)
+  * Hierarchical data and paths (manager to employee relationships)
+  * Data maintenance forms (basic data query and modification)
 
 There are many software generators available.  Oracle's own Data Modeler can generate database 
 
