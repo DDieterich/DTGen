@@ -1,4 +1,5 @@
 #summary DTGen release compatibility.
+#labels Phase-Deploy
 
 = Introduction =
 
