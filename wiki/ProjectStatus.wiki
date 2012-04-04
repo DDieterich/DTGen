@@ -1,7 +1,7 @@
 #summary Status of DTGen Project AS/OF 31-Mar-2012.
 #labels Featured
 
-DTGen_Project.png
+http://code.google.com/p/dtgen/wiki/DTGen_Project.png
 
 = Current Release =
 
