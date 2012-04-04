@@ -1,4 +1,5 @@
 #summary Release Process
+#labels Phase-ProjectManage
 
 = Introduction =
 
