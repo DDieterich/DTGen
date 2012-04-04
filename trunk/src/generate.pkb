@@ -72,14 +72,14 @@ BEGIN
    exception
       when no_data_found then
          fbuff.id         := null;
-		 --fbuff.created_dt := sysdate;
+		     fbuff.created_dt := sysdate;
          files_dml.ins
                (n_id                  => fbuff.id
                ,n_application_id      => fbuff.application_id
                ,n_applications_nk1_in => null
                ,n_name                => fbuff.name
                ,n_type                => fbuff.type
-               --,n_created_dt          => fbuff.created_dt
+               ,n_created_dt          => fbuff.created_dt
                ,n_description         => fbuff.description);
       when others then
          raise;
@@ -1140,7 +1140,7 @@ BEGIN
    p('--    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('');
    p('function get_version');
-   p('   return varchar2;');
+   p('   return varchar2');
    p('is');
    p('begin');
    p('   return ''' || ver  || ''';');
