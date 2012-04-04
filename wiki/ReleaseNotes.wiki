@@ -1,11 +1,6 @@
 #summary DTGen Release Notes
 #labels Phase-Deploy
 
-= Introduction =
-
-Release 1.0 is the initial production release.
-
-
 = Release 1.0 =
 
 == New Features ==
