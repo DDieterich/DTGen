@@ -9,4 +9,4 @@ No previous releases
 
 == Bugs ==
 
-* Issue #2
+ * Issue #2
