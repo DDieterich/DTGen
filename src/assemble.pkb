@@ -15,13 +15,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 FS  varchar2(1) := chr(28);
 
+----------------------------------------
 procedure p
       (line_in  in  varchar2)
 is
 begin
    rclob := rclob || line_in || chr(10);
 end p;
-
+----------------------------------------
 function get_aa_key_name
       (aa_key_in    in  varchar2
       ,suffix_in    in  varchar2)
