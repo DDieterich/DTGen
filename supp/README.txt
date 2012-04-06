@@ -1,9 +1,6 @@
 
-File Descriptions in this directory
+File descriptions in this directory
 -----------------------------------
-altgen.sql       - Alternate script to generate an application
-                   (The ABBR of the application is set in the script)
-                   (Requires select_file.sql and comp_file.sql scripts)
 create_owner.sql - Sample script to creates the application schema owner with roles
                    (The name of the schema owner is the first parameter)
                    (schema owner is the "apex_app_name" for the application)
@@ -12,13 +9,14 @@ create_user.sql  - Sample script create the application user login with synonyms
                    (The name of the schema owner is the first parameter)
                    (The user login is the second parameter)
                    (The initial password is the same as the user login)
-comp_file.sql    - Used by altgen.sql
+comp_file.sql    - Used by an alternaitve path in fullgen.sql
 delete_ods.sql   - Sample script to delete all data from DTGen tables
 fullgen.sql      - Sample script to generate all scripts for an application
                    (The ABBR of the application is the first parameter)
-select_file.sql  - Used by altgen.sql
+select_file.sql  - Used by an alternaitve path in fullgen.sql
 
-Scripts Created by fullgen.sql:
+
+Scripts created by fullgen.sql:
 -------------------------------
 install_db.sql     - Creates the schema objects needed for the database (data-tier)
                       -) GLOBal objects (Global Types, UTIL_LOG, and UTIL & GLOB Package)
@@ -41,8 +39,8 @@ uninstall_mt.sql   - Drops the schema objects needed for the mid-tier
 uninstall_db.sql   - Drops the schema objects needed for the database (data-tier)
 
 
-Scripts Created by altgen.sql:
-------------------------------
+Scripts created by an alternaitve path in fullgen.sql:
+------------------------------------------------------
 comp.sql             - Creates application specific COMPiled packages, functions, and procedures
 create_dist.sql      - Creates the DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
 create_dist_sec.sql  - Creates security for the DIST objects
