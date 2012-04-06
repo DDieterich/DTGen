@@ -41,6 +41,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure init
          (app_abbr_in  in  varchar2);
 
+   -- Drop/Delete Scripts
    procedure drop_usyn;
    procedure drop_mods;
    procedure drop_oltp;
@@ -51,6 +52,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure drop_gdst;
    procedure drop_glob;
 
+   -- Create Scripts
    procedure create_glob;
    procedure create_gdst;
    procedure create_ods;
@@ -60,15 +62,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure create_mods;
    procedure create_usyn;
 
+   -- Create GUI Script
    procedure create_flow;
-
-   procedure dr
-         (app_abbr_in  in  varchar2);
-   procedure cr
-         (app_abbr_in  in  varchar2);
-   procedure gui
-         (app_abbr_in  in  varchar2);
-   procedure run
-         (app_abbr_in  in  varchar2);
 
 end generate;

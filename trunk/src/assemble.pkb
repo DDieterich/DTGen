@@ -13,7 +13,10 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
-FS  varchar2(1) := chr(28);
+FS  CONSTANT varchar2(1)  := chr(28);  -- Line Feed character
+
+lo_opname     varchar2(64);  -- Operation Name for LongOps
+lo_num_units  number;        -- Number of Units for LongOps
 
 ----------------------------------------
 procedure p
@@ -66,6 +69,10 @@ begin
       when others then
          raise;
    end;
+   lo_opname := 'DTGen ' || app_abbr_in || ' Install Script Assembly';
+   lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
+   util.init_longops(lo_opname, lo_num_units,
+      get_aa_key_name(aa_key_in, suffix_in), 'tables');
    rclob := '';
    p('');
    p('--');
@@ -100,7 +107,9 @@ begin
          rclob := rclob || buff.value || chr(10);
       end loop;
       rclob := rclob || chr(10);
+      util.add_longops (1);
    end loop;
+   util.end_longops;
    return rclob;
 end install_script;
 ----------------------------------------
@@ -132,6 +141,10 @@ begin
       when others then
          raise;
    end;
+   lo_opname := 'DTGen ' || app_abbr_in || ' Uninstall Script Assembly';
+   lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
+   util.init_longops(lo_opname, lo_num_units,
+      get_aa_key_name(aa_key_in, suffix_in), 'tables');
    rclob := '';
    p('');
    p('--');
@@ -166,7 +179,9 @@ begin
          rclob := rclob || buff.value || chr(10);
       end loop;
       rclob := rclob || chr(10);
+      util.add_longops (1);
    end loop;
+   util.end_longops;
    return rclob;
 end uninstall_script;
 ----------------------------------------
@@ -239,6 +254,7 @@ begin
    p('-- sqlldr username/password CONTROL=FILENAME');
    p('--');
    p('load data infile *');
+   lo_num_units := 0;
    for tbuff in table_cursor
    loop
       p('into table ' || tbuff.name || '_ACT APPEND when key = ''' ||
@@ -263,7 +279,11 @@ begin
             end;
       end loop;
       p(cs || ')');
+      lo_num_units := lo_num_units + 1;
    end loop;
+   lo_num_units := lo_num_units + 1;  -- Add one for util.end_longops
+   lo_opname := 'DTGen ' || app_abbr_in || ' Install Script Assembly';
+   util.init_longops(lo_opname, lo_num_units, 'SQL*Loader.ctl', 'tables');
    p('BEGINDATA');
    for tbuff in table_cursor
    loop
@@ -321,7 +341,9 @@ begin
       loop
          p(db_list(i));
       end loop;
+      util.add_longops (1);
    end loop;
+   util.end_longops;
    return rclob;
 end data_script;
 ----------------------------------------
