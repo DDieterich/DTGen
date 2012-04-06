@@ -14,6 +14,9 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
+lo_opname      varchar2(64);  -- Operation Name for LongOps
+lo_num_tables  number;        -- Number of Tables for LongOps
+
 ver  varchar2(20) := 'DTGen_0.6';
 sec_lines  sec_lines_type;
 sec_line0  sec_lines_type;  -- Used to reset the sec_lines array
@@ -67,12 +70,16 @@ BEGIN
        from  files  F
        where F.application_id = fbuff.application_id
         and  F.name           = fbuff.name;
+      fbuff.created_dt := sysdate;
+      update files_act
+        set  created_dt = fbuff.created_dt
+       where id = fbuff.id;
       delete from file_lines_act
        where file_id = fbuff.id;
    exception
       when no_data_found then
          fbuff.id         := null;
-		     fbuff.created_dt := sysdate;
+         fbuff.created_dt := sysdate;
          files_dml.ins
                (n_id                  => fbuff.id
                ,n_application_id      => fbuff.application_id
@@ -10458,7 +10465,7 @@ BEGIN
    p('      p_button_redirect_url=> ''f?p=&APP_ID.:'' || (' || (pnum2 + tbuff.seq) ||
              ' + page_os) || '':&SESSION.::&DEBUG.:'' || (' || (pnum2 + tbuff.seq) ||
              ' + page_os),');
-   p('      p_required_patch => null + wwv_flow_api.g_id_offset);');
+   p('      p_required_patch => null);');
    p('');
    pseq := pseq + 1;
    p('   wwv_flow_api.create_page_item(');
@@ -14331,6 +14338,11 @@ BEGIN
    fbuff.application_id := abuff.id;
    fbuff.type           := 'SQL';
    load_nk_aa;
+   lo_opname := 'DTGen ' || abuff.abbr || ' File Generation';
+   select count(id) + 1  -- Add one for util.end_longops
+    into  lo_num_tables
+    from  tables
+    where application_id = abuff.id;
    sec_lines := sec_line0;
    sec_line  := 0;
 EXCEPTION
@@ -14458,6 +14470,7 @@ IS
 BEGIN
    fbuff.name           := 'create_ods';
    fbuff.description    := 'Create Online Data Store using generated code';
+   util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    open_file;
    p('');
    for buff in (
@@ -14476,8 +14489,10 @@ BEGIN
       create_ind_hoa;
       create_ind_pdat;
       create_pop_body;
+      util.add_longops (1);
    END LOOP;
    dump_sec_lines;
+   util.end_longops;
 END create_ods;
 ----------------------------------------
 PROCEDURE drop_integ
@@ -14512,6 +14527,7 @@ IS
 BEGIN
    fbuff.name           := 'create_integ';
    fbuff.description    := 'Create ODS integrity using generated code';
+   util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    open_file;
    p('');
    for buff in (
@@ -14526,8 +14542,10 @@ BEGIN
       create_cons;
       create_ttrig;
       create_tp_body;
+      util.add_longops (1);
    END LOOP;
    dump_sec_lines;
+   util.end_longops;
 END create_integ;
 ----------------------------------------
 PROCEDURE drop_dist
@@ -14570,6 +14588,7 @@ BEGIN
    if abuff.dbid    IS NOT NULL and
       abuff.db_auth IS NOT NULL
    then
+      util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
       for buff in (
          select * FROM tables TAB
           where TAB.application_id = abuff.id
@@ -14585,7 +14604,9 @@ BEGIN
             create_ind_act;
          end if;
          create_tp_body;
+         util.add_longops (1);
       END LOOP;
+      util.end_longops;
    end if;
    dump_sec_lines;
 END create_dist;
@@ -14625,6 +14646,7 @@ IS
 BEGIN
    fbuff.name           := 'create_oltp';
    fbuff.description    := 'Create Online Data Store using generated code';
+   util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    open_file;
    p('');
    for buff in (
@@ -14643,8 +14665,10 @@ BEGIN
       create_vtrig;
       create_vp_body;
       create_dp_body;
+      util.add_longops (1);
    END LOOP;
    dump_sec_lines;
+   util.end_longops;
 END create_oltp;
 ----------------------------------------
 PROCEDURE drop_mods
@@ -14723,6 +14747,7 @@ BEGIN
    THEN
       fbuff.name        := 'create_flow';
       fbuff.description := 'APEX flow export file used to create APEX objects';
+      util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
       open_file;
       p('');
       init_flow;
@@ -14735,68 +14760,18 @@ BEGIN
       LOOP
          tbuff := buff;
          next_table;
-         maint_flow;        -- Generate Main Maintenance Page
+         maint_flow;       -- Generate Main Maintenance Page
          form_flow;        -- Generate Table DML Form Page
          omni_flow;        -- Generate OMNI Report Page
          asof_flow;        -- Generate ASOF Report Page
          tuid_flow;        -- Generate Table User Interface Defaults
+         util.add_longops (1);
       END LOOP;
       auid_flow;           -- Generate Attribute User Interface Defaults
       fin_flow;
+      util.end_longops;
    END IF;
 END create_flow;
-----------------------------------------
-procedure dr
-      (app_abbr_in  in  varchar2)
-is
-begin
-   init(app_abbr_in);
-   drop_usyn;
-   drop_mods;
-   drop_oltp;
-   drop_dist;
-   drop_integ;
-   delete_ods;
-   drop_ods;
-   drop_gdst;
-   drop_glob;
-   commit;
-end dr;
-----------------------------------------
-procedure cr
-      (app_abbr_in  in  varchar2)
-is
-begin
-   init(app_abbr_in);
-   create_glob;
-   create_gdst;
-   create_ods;
-   create_integ;
-   create_dist;
-   create_oltp;
-   create_mods;
-   create_usyn;
-   commit;
-end cr;
-----------------------------------------
-procedure gui
-      (app_abbr_in  in  varchar2)
-is
-begin
-   init(app_abbr_in);
-   create_flow;
-   commit;
-end gui;
-----------------------------------------
-PROCEDURE run
-      (app_abbr_in  in  varchar2)
-IS
-   -- This is a legacy call that may need to be deprecated
-BEGIN
-   dr(app_abbr_in);
-   cr(app_abbr_in);
-   gui(app_abbr_in);
-END run;
 ----------------------------------------
 begin
    sec_lines := sec_line0;

@@ -1,7 +1,7 @@
 
 REM
 REM DTGen Database Installation Script
-REM (Must be run as the "system" user)
+REM (Must be run as the "sys as sysdba" user)
 REM
 REM Copyright (c) 2011, Duane.Dieterich@gmail.com
 REM All rights reserved.
@@ -51,6 +51,10 @@ grant create materialized view to &OWNERNAME.;
 grant create synonym to &OWNERNAME.;
 grant DEBUG CONNECT SESSION to &OWNERNAME.;
 grant DEBUG ANY PROCEDURE to &OWNERNAME.;
+grant execute on dbms_lock to &OWNERNAME.;
+
+REM Create DTGEN Roles
+REM
 create role &OWNERNAME._dml;
 create role &OWNERNAME._app;
 grant &OWNERNAME._app to &OWNERNAME._dml;

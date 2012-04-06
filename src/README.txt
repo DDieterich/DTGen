@@ -17,12 +17,12 @@ DTGen Installation:
    -) Install Oracle10g or higher, any Database Edition
       (Express, Personal, Standard One, Standard, or Enterprise)
    -) Confirm SQL*Plus command line connection
-      (sqlplus system/password)
+      (sqlplus sys/password as sysdba)
 2) Install DTGen objects in database
    -) Review and optionally edit "install.sql"
       (Values for variables OWNERNAME, OWNERPASS, and TSPACE)
    -) Run the database installation script in SQL*Plus
-      (sqlplus system/password @install)
+      (sqlplus sys/password as sysdba @install)
    -) Review the output in the install.LST file.
       (The output from a successful installation is below)
 3) Install DTGen application in APEX (optional)
