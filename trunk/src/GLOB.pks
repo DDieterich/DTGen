@@ -33,8 +33,8 @@ is
 
    function request_lock
          (lockname_in  in  varchar2)
-      return INTEGER;
+      return varchar2;
    function release_lock
-      return INTEGER;
+      return varchar2;
 
 end glob;

@@ -12,6 +12,7 @@ is
 st_expiration_specs   INTEGER;        -- Single Threaded DBMS_LOCK
 st_lockhandle         varchar2(128);  -- Single Threaded DBMS_LOCK
 st_lockmode           INTEGER;        -- Single Threaded DBMS_LOCK
+st_lockname           varchar2(128);  -- Single Threaded DBMS_LOCK
 st_release_on_commit  BOOLEAN;        -- Single Threaded DBMS_LOCK
 st_timeout            number;         -- Single Threaded DBMS_LOCK
 
@@ -49,41 +50,78 @@ end upd_early_eff;
 ----------------------------------------
 function request_lock
       (lockname_in  in  varchar2)
-   return INTEGER
+   return varchar2
 is
-   -- Note: Return CONSTANTS are defined in the UTIL package
+   retcd number;
 begin
-   if st_lockhandle is not null
+   if st_lockname is not null
    then
-      return -1;   -- UTIL.LOCK_ERROR
+      if st_lockname = lockname_in
+      then
+         return 'SUCCESS';
+      else
+         return 'RELEASE ONLY';
+      end if;
    end if;
-   st_lockmode := DBMS_LOCK.X_MODE;
-   st_expiration_specs := 3000;
+   st_expiration_specs  := 3000;
+   st_lockmode          := DBMS_LOCK.X_MODE;
+   st_lockname          := lockname_in;
    st_release_on_commit := FALSE;
-   st_timeout := 1;
+   st_timeout           := 1;
    dbms_lock.allocate_unique(lockname_in
                             ,st_lockhandle
                             ,st_expiration_specs);
-   return dbms_lock.request(st_lockhandle
-                           ,st_lockmode
-                           ,st_timeout);
+   retcd := dbms_lock.request(st_lockhandle
+                             ,st_lockmode
+                             ,st_timeout);
+   case retcd
+      when 0 then
+         return 'SUCCESS';
+      when 4 then
+         -- This session already owns the lock
+         return 'SUCCESS';
+      when 1 then
+         st_lockname   := null;
+         return 'TIMEOUT';
+      when 2 then
+         st_lockname   := null;
+         return 'DEADLOCK';
+      when 3 then
+         st_lockname   := null;
+         return 'PARAMETER ERROR';
+      when 5 then
+         st_lockname   := null;
+         return 'ILLEGAL LOCKNAME';
+   end case;
+   return 'END ERROR';
 end request_lock;
 ----------------------------------------
 function release_lock
-   return INTEGER
+   return varchar2
 is
-   -- Note: Return CONSTANTS are defined in the UTIL package
    retcd INTEGER;
 begin
-   if st_lockhandle is null
+   if st_lockname is null
    then
-      return -1;   -- UTIL.LOCK_ERROR
+      return 'SUCCESS';
    end if;
    retcd := dbms_lock.release(st_lockhandle);
-   st_lockhandle := null;
-   return retcd;
+   case retcd
+      when 0 then
+         st_lockname   := null;
+         return 'SUCCESS';
+      when 4 then
+         -- This session doesn't own the lock
+         st_lockname   := null;
+         return 'SUCCESS';
+      when 3 then
+         return 'PARAMETER ERROR';
+      when 5 then
+         return 'ILLEGAL LOCKNAME';
+   end case;
+   return 'END ERROR';
 end release_lock;
 ----------------------------------------
 begin
-   st_lockhandle := null;
+   st_lockname := null;
 end glob;
