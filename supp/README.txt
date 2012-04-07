@@ -102,13 +102,8 @@ Create an application in APEX to use "create_flow.sql":
 2) Load the Maintenance GUI with Menu, LOVs, and Prefs
    -) In another window, run the command:
       sqlplus (owner)/(password)
-      SQL> spool create_flow
-	  SQL> @create_flow (owner) (workspace) (app_name)
-      Where (owner) is the "owner" for the application
-       and  (password) is the password for the owner
-       and  (workspace) is the Oracle APEX workspace
-       and  (app_name) is the APEX Application Name
-	  SQL> spool off
+      SQL> spool install_gui
+	  SQL> @install_gui
 	  SQL> exit
 3) Add the Navigation List to Page 1
    -) Edit Page 1
