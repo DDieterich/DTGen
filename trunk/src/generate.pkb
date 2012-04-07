@@ -7265,7 +7265,7 @@ BEGIN
          display_as := 'TEXT';
          alignment  := 'LEFT';
       when 'DATE' then
-         display_as := 'DATE_POPUP';
+         display_as := '_DATE_';
          alignment  := 'CENTER';
       when 'TIMESTAMP WITH TIME ZONE' then
          display_as := 'DISPLAY_AND_SAVE';
@@ -7299,7 +7299,10 @@ BEGIN
    p('      p_disable_sort_column=>''N'',');
    p('      p_sum_column=> ''N'',');
    p('      p_hidden_column=> ''N'',');
-   p('      p_display_as=>''' || display_as || ''',');
+   p('      p_display_as=>''' || case display_as
+                                    when '_DATE_' then 'DATE_PICKER'
+                                    else display_as
+                                    end || ''',');
    p('      p_lov_show_nulls=> ''' || lov_nulls || ''',');
    if is_bigtext(cbuff)
    then
@@ -7328,7 +7331,10 @@ BEGIN
    p('      p_plug_id=> ract_id,');
    p('      p_column_sequence=> ' || (cnum - 1) || ',');
    p('      p_query_column_name=> ''' || upper(cbuff.name) || ''',');
-   p('      p_display_as=> ''' || display_as || ''',');
+   p('      p_display_as=> ''' || case display_as
+                                     when '_DATE_' then 'DATE_POPUP'
+                                     else display_as
+                                     end || ''',');
    p('      p_column_comment=> ''' || replace(cbuff.description,'''','''''') || ''');');
 END create_crc;
 ----------------------------------------
@@ -11223,7 +11229,7 @@ BEGIN
    pr('       ''      :P'' || pnum || ''_MRI_COUNT := MRI_COUNT;'' ');
    pr('       ''      :P'' || pnum || ''_MRU_COUNT := MRU_COUNT;'' ');
    pr('       ''   end if;'' ');
-   pr('       ''exception when others then util.err(:APP_ID||''''P''''||:APP_PAGE_ID||'''':GEN_MRU: ''''||sqlerrm); raise;'';');
+   pr('       ''exception when others then util.err(:APP_ID||''''P''''||:APP_PAGE_ID||'''':GEN_MRU: ''''||sqlerrm); raise;'' ');
    p('       ''end;'';');
    p('');
    pseq := pseq + 1;

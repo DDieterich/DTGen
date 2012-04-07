@@ -1,14 +1,14 @@
 
 File Descriptions in this directory:
 ------------------------------------
-assemble.pkb   - Used by install.sql
-assemble.pks   - Used by install.sql
-f900.sql       - APEX export of the GUI source for DTGen
-generate.pkb   - Used by install.sql
-generate.pks   - Used by install.sql
-install.sql    - Installs DTGen in an Oracle database
-install_db.sql - Used by install.sql
-uninstall.sql  - Uninstalls DTGen
+assemble.pkb       - Used by install.sql
+assemble.pks       - Used by install.sql
+f900.sql           - APEX export of the GUI source for DTGen
+generate.pkb       - Used by install.sql
+generate.pks       - Used by install.sql
+install.sql        - Installs DTGen in an Oracle database
+install_db.sql     - Used by install.sql
+uninstall.sql      - Uninstalls DTGen
 
 
 DTGen Installation:
