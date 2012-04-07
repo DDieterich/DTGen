@@ -201,11 +201,11 @@ procedure err
       )
 is
    fcs_txt  varchar2(2000) := DBMS_UTILITY.FORMAT_ERROR_BACKTRACE;
-   retcd    INTEGER;
+   retstr   varchar2(100);
 begin
    log (txt_in, fcs_txt);
    end_longops;
-   retcd := glob.release_lock;
+   retstr := glob.release_lock;
 end err;
 ----------------------------------------
 function db_object_exists

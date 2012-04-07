@@ -13,7 +13,7 @@ prompt  APPLICATION 850 - DTGen
 -- Application Export:
 --   Application:     850
 --   Name:            DTGen
---   Date and Time:   03:34 Saturday April 7, 2012
+--   Date and Time:   13:22 Saturday April 7, 2012
 --   Exported By:     DTGEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 60083636433549386 + wwv_flow_api.g_id_offset,
   p_error_template=> 60079938902549364 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120407033402',
+  p_checksum_salt_last_reset => '20120407132259',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 60082537490549385 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 60083240085549385 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'DTGEN',
-  p_last_upd_yyyymmddhh24miss=> '20120407033402',
+  p_last_upd_yyyymmddhh24miss=> '20120407132259',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -2758,7 +2758,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'No help is available for this page.'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20120407033140'
+ ,p_last_upd_yyyymmddhh24miss => '20120407093844'
   );
 null;
  
@@ -4909,7 +4909,6 @@ p:=p||'||'||chr(10)||
 '                      ';
 
 p:=p||'   '' Generate ERROR'''');''                    || LF ||'||chr(10)||
-'                  ''      raise;''                                  || LF ||'||chr(10)||
 '                  ''end;'';'||chr(10)||
 '      --util.log(sql_txt);'||chr(10)||
 '      :P11_JOB_NUM := APEX_PLSQL_JOB.SUBMIT_PROCESS(sql_txt, sysdate,'||chr(10)||
@@ -4917,12 +4916,12 @@ p:=p||'   '' Generate ERROR'''');''                    || LF ||'||chr(10)||
 '         '' Generate PENDING'');'||chr(10)||
 '   else'||chr(10)||
 '      :P11_JOB_NUM := null;'||chr(10)||
-'      gui_u';
-
-p:=p||'til.gen_all(applications_dml.get_nk(:P1_APP_ID));'||chr(10)||
+'      gui_util.gen_all(applications_dml.get_nk(:P1_APP_ID));'||chr(10)||
 '      commit;'||chr(10)||
 '   end if;'||chr(10)||
-'exception when others then util.err(:APP_ID||''P''||:APP_PAGE_ID||'':GEN_ALL: ''||sqlerrm); raise;'||chr(10)||
+'';
+
+p:=p||'exception when others then util.err(:APP_ID||''P''||:APP_PAGE_ID||'':GEN_ALL: ''||sqlerrm); raise;'||chr(10)||
 'END;';
 
 wwv_flow_api.create_page_process(
@@ -4980,7 +4979,6 @@ p:=p||'||'||chr(10)||
 '                     ';
 
 p:=p||'    '' Assemble ERROR'''');''                    || LF ||'||chr(10)||
-'                  ''      raise;''                                  || LF ||'||chr(10)||
 '                  ''end;'';'||chr(10)||
 '      --util.log(sql_txt);'||chr(10)||
 '      :P11_JOB_NUM := APEX_PLSQL_JOB.SUBMIT_PROCESS(sql_txt, sysdate,'||chr(10)||
@@ -4988,11 +4986,11 @@ p:=p||'    '' Assemble ERROR'''');''                    || LF ||'||chr(10)||
 '         '' Assemble PENDING'');'||chr(10)||
 '   else'||chr(10)||
 '      :P11_JOB_NUM := null;'||chr(10)||
-'      gui_';
-
-p:=p||'util.gen_all(applications_dml.get_nk(:P1_APP_ID));'||chr(10)||
+'      gui_util.gen_all(applications_dml.get_nk(:P1_APP_ID));'||chr(10)||
 '      commit;'||chr(10)||
-'   end if;'||chr(10)||
+'   end if;';
+
+p:=p||''||chr(10)||
 'exception when others then util.err(:APP_ID||''P''||:APP_PAGE_ID||'':ASM_ALL: ''||sqlerrm); raise;'||chr(10)||
 'END;';
 
@@ -57937,14 +57935,37 @@ declare
     l_length number := 1;
 begin
 s:=s||'create or replace'||chr(10)||
-'PACKAGE GUI_UTIL AS '||chr(10)||
+'package gui_util'||chr(10)||
+'AS '||chr(10)||
+''||chr(10)||
+'/************************************************************'||chr(10)||
+'DTGEN "GUI_Util" Package Specification'||chr(10)||
+''||chr(10)||
+'Copyright (c) 2011, Duane.Dieterich@gmail.com'||chr(10)||
+'All rights reserved.'||chr(10)||
+''||chr(10)||
+'Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:'||chr(10)||
+''||chr(10)||
+'Redistributions of source code must retain the';
+
+s:=s||' above copyright notice, this list of conditions and the following disclaimer.'||chr(10)||
+'Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.'||chr(10)||
+'THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INC';
+
+s:=s||'LUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPT';
+
+s:=s||'ION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'||chr(10)||
+'************************************************************/'||chr(10)||
 ''||chr(10)||
 'function is_number'||chr(10)||
 '      (str_in  in  varchar2)'||chr(10)||
 '   return number;'||chr(10)||
 ''||chr(10)||
-'procedure update_scripts'||chr(10)||
-'      (app_abbr_in  in  varchar2);'||chr(10)||
+'function get_lockname'||chr(10)||
+'      (app';
+
+s:=s||'_abbr_in  in  varchar2)'||chr(10)||
+'   return varchar2;'||chr(10)||
 ''||chr(10)||
 'function index_desc'||chr(10)||
 '      (app_abbr_in  in  varchar2'||chr(10)||
@@ -57954,14 +57975,14 @@ s:=s||'create or replace'||chr(10)||
 ''||chr(10)||
 'function create_index'||chr(10)||
 '      (column_string_in  in  varchar2'||chr(10)||
-'      ,tables_nk1_in     in  va';
-
-s:=s||'rchar2'||chr(10)||
+'      ,tables_nk1_in     in  varchar2'||chr(10)||
 '      ,tables_nk2_in     in  varchar2'||chr(10)||
 '      ,uniq_in           in  varchar2)'||chr(10)||
 '   return number;'||chr(10)||
 ''||chr(10)||
-'function update_index'||chr(10)||
+'function update_inde';
+
+s:=s||'x'||chr(10)||
 '      (column_string_in  in  varchar2'||chr(10)||
 '      ,tables_nk1_in     in  varchar2'||chr(10)||
 '      ,tables_nk2_in     in  varchar2'||chr(10)||
@@ -57969,7 +57990,18 @@ s:=s||'rchar2'||chr(10)||
 '      ,tagname_io    in out  varchar2)'||chr(10)||
 '   return number;'||chr(10)||
 ''||chr(10)||
-'END GUI_UTIL;';
+'procedure gen_all'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,job_num_in   in  number default null);'||chr(10)||
+''||chr(10)||
+'procedure asm_all'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,job_num_in   in  number default ';
+
+s:=s||'null'||chr(10)||
+'      ,flow_id_in   in  number default null);'||chr(10)||
+''||chr(10)||
+'end gui_util;';
 
 wwv_flow_api.create_install_script(
   p_id => 60843535222900230 + wwv_flow_api.g_id_offset,
@@ -58358,14 +58390,37 @@ declare
     l_length number := 1;
 begin
 s:=s||'create or replace'||chr(10)||
-'package body gui_util as'||chr(10)||
+'package body gui_util'||chr(10)||
+'as'||chr(10)||
 ''||chr(10)||
-'p_flow_id        number;'||chr(10)||
-'p_title          varchar2(255);'||chr(10)||
-'p_doc_size       number;'||chr(10)||
-'p_blob_content   blob;'||chr(10)||
-'p_description    varchar2(4000);'||chr(10)||
+'/************************************************************'||chr(10)||
+'DTGEN "GUI_Util" Package Body'||chr(10)||
 ''||chr(10)||
+'Copyright (c) 2011, Duane.Dieterich@gmail.com'||chr(10)||
+'All rights reserved.'||chr(10)||
+''||chr(10)||
+'Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:'||chr(10)||
+''||chr(10)||
+'Redistributions of source code must retain the abov';
+
+s:=s||'e copyright notice, this list of conditions and the following disclaimer.'||chr(10)||
+'Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.'||chr(10)||
+'THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDIN';
+
+s:=s||'G, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) ';
+
+s:=s||'HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.'||chr(10)||
+'************************************************************/'||chr(10)||
+''||chr(10)||
+'af_blob_content blob;            -- APEX_APPLICATION_FILES'||chr(10)||
+'af_description  varchar2(4000);  -- APEX_APPL';
+
+s:=s||'ICATION_FILES'||chr(10)||
+'af_doc_size     number;          -- APEX_APPLICATION_FILES'||chr(10)||
+'af_flow_id      number;          -- APEX_APPLICATION_FILES'||chr(10)||
+'af_title        varchar2(255);   -- APEX_APPLICATION_FILES'||chr(10)||
+''||chr(10)||
+'----------------------------------------'||chr(10)||
 'function is_number'||chr(10)||
 '      (str_in  in  varchar2)'||chr(10)||
 '   return number'||chr(10)||
@@ -58374,36 +58429,46 @@ s:=s||'create or replace'||chr(10)||
 '   case to_number(str_in)'||chr(10)||
 '      when 1 then return 1; else return 1;'||chr(10)||
 '      end case;'||chr(10)||
-'exception'||chr(10)||
+'exceptio';
+
+s:=s||'n'||chr(10)||
 '   when VALUE_ERROR then'||chr(10)||
 '      return 0;'||chr(10)||
-'   when';
-
-s:=s||' others then'||chr(10)||
+'   when others then'||chr(10)||
 '      raise;'||chr(10)||
 'end is_number;'||chr(10)||
-''||chr(10)||
+'----------------------------------------'||chr(10)||
+'function get_lockname'||chr(10)||
+'      (app_abbr_in  in  varchar2)'||chr(10)||
+'   return varchar2'||chr(10)||
+'is'||chr(10)||
+'begin'||chr(10)||
+'   return ''DTGen '' || app_abbr_in;'||chr(10)||
+'end;'||chr(10)||
+'----------------------------------------'||chr(10)||
 'procedure update_apex_app_files'||chr(10)||
 '      (app_abbr_in  in  varchar2'||chr(10)||
 '      ,aa_key_in    in  varchar2'||chr(10)||
-'      ,suffix_in    in  varchar2'||chr(10)||
+'     ';
+
+s:=s||' ,suffix_in    in  varchar2'||chr(10)||
 '      ,un_in        in  varchar2)'||chr(10)||
 'is'||chr(10)||
 '   dest_offset   number  := 1;'||chr(10)||
 '   src_offset    number  := 1;'||chr(10)||
 '   lang_context  number  := DBMS_LOB.DEFAULT_LANG_CTX;'||chr(10)||
 '   warning       number;'||chr(10)||
-'   p_id  number;'||chr(10)||
+'   af_id  number;'||chr(10)||
 '   cnt   number;'||chr(10)||
 'begin'||chr(10)||
-'   dbms_';
-
-s:=s||'lob.trim(p_blob_content, 0);'||chr(10)||
+'   dbms_lob.trim(af_blob_content, 0);'||chr(10)||
 '   if un_in is null'||chr(10)||
 '   then'||chr(10)||
 '      dbms_lob.converttoblob'||chr(10)||
-'         (p_blob_content'||chr(10)||
-'         ,assemble.install_script(app_abbr_in, aa_key_in, suffix_in)'||chr(10)||
+'         (af_blob_content'||chr(10)||
+'         ,assemble.install_scri';
+
+s:=s||'pt(app_abbr_in, aa_key_in, suffix_in)'||chr(10)||
 '         ,dbms_lob.lobmaxsize'||chr(10)||
 '         ,dest_offset'||chr(10)||
 '         ,src_offset'||chr(10)||
@@ -58414,12 +58479,12 @@ s:=s||'lob.trim(p_blob_content, 0);'||chr(10)||
 '   elsif un_in = ''un'''||chr(10)||
 '   then'||chr(10)||
 '      dbms_lob.converttoblob'||chr(10)||
-'   ';
-
-s:=s||'      (p_blob_content'||chr(10)||
+'         (af_blob_content'||chr(10)||
 '         ,assemble.uninstall_script(app_abbr_in, aa_key_in, suffix_in)'||chr(10)||
 '         ,dbms_lob.lobmaxsize'||chr(10)||
-'         ,dest_offset'||chr(10)||
+'         ,dest_off';
+
+s:=s||'set'||chr(10)||
 '         ,src_offset'||chr(10)||
 '         ,dbms_lob.default_csid'||chr(10)||
 '         ,lang_context'||chr(10)||
@@ -58427,32 +58492,32 @@ s:=s||'      (p_blob_content'||chr(10)||
 '         );'||chr(10)||
 '   else'||chr(10)||
 '      dbms_lob.converttoblob'||chr(10)||
-'         (p_blob_content'||chr(10)||
+'         (af_blob_content'||chr(10)||
 '         ,assemble.data_script(app_abbr_in)'||chr(10)||
 '         ,dbms_lob.lobmaxsize'||chr(10)||
-'         ,des';
-
-s:=s||'t_offset'||chr(10)||
+'         ,dest_offset'||chr(10)||
 '         ,src_offset'||chr(10)||
 '         ,dbms_lob.default_csid'||chr(10)||
 '         ,lang_context'||chr(10)||
 '         ,warning'||chr(10)||
 '         );'||chr(10)||
 '   end if;'||chr(10)||
-'   if warning != DBMS_LOB.NO_WARNING'||chr(10)||
+'   if warning ';
+
+s:=s||'!= DBMS_LOB.NO_WARNING'||chr(10)||
 '   then'||chr(10)||
 '      DBMS_OUTPUT.PUT_LINE(''gui_util.update_scripts() '' ||'||chr(10)||
 '             ''had problems with dbms_lob.converttoblob.'');'||chr(10)||
 '   end if;'||chr(10)||
-'   p_doc_size     := dbms_lob.getlength(p_blob_content);'||chr(10)||
+'   af_doc_size     := dbms_lob.getlength(af_blob_content);'||chr(10)||
+'   af_id := wwv_flow_id.next_val;'||chr(10)||
 '   delete from apex_application_files'||chr(10)||
-'    w';
-
-s:=s||'here flow_id = p_flow_id'||chr(10)||
-'     and  title   = p_title;'||chr(10)||
-'   p_id := wwv_flow_id.next_val;'||chr(10)||
+'    where flow_id = af_flow_id'||chr(10)||
+'     and  title   = af_title;'||chr(10)||
 '   insert into apex_application_files'||chr(10)||
-'         (id'||chr(10)||
+'         (';
+
+s:=s||'id'||chr(10)||
 '         ,flow_id'||chr(10)||
 '         ,name'||chr(10)||
 '         ,title'||chr(10)||
@@ -58465,91 +58530,34 @@ s:=s||'here flow_id = p_flow_id'||chr(10)||
 '         ,file_type'||chr(10)||
 '         ,file_charset)'||chr(10)||
 '      values'||chr(10)||
-'         (p_id'||chr(10)||
-'         ,p_';
-
-s:=s||'flow_id'||chr(10)||
-'         ,p_id || ''/'' || p_title'||chr(10)||
-'         ,p_title'||chr(10)||
+'         (af_id'||chr(10)||
+'         ,af_flow_id'||chr(10)||
+'         ,af_id || ''/'' || af_title'||chr(10)||
+'         ,af_title'||chr(10)||
 '         ,''text/plain'''||chr(10)||
-'         ,p_doc_size'||chr(10)||
+'         ,af_doc_size'||chr(10)||
 '         ,''ascii'''||chr(10)||
-'         ,''BLOB'''||chr(10)||
-'         ,p_blob_content'||chr(10)||
-'         ,p_description'||chr(10)||
+'        ';
+
+s:=s||' ,''BLOB'''||chr(10)||
+'         ,af_blob_content'||chr(10)||
+'         ,af_description'||chr(10)||
 '         ,''SCRIPT'''||chr(10)||
 '         ,''utf-8'');'||chr(10)||
 'end update_apex_app_files;'||chr(10)||
-''||chr(10)||
-'procedure update_scripts'||chr(10)||
-'      (app_abbr_in  in  varchar2)'||chr(10)||
-'is'||chr(10)||
-'begin'||chr(10)||
-'   p_flow_id := v(''APP_ID'');'||chr(10)||
-'   -- install_db'||chr(10)||
-'   p_title        := ''install_db';
-
-s:=s||'.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' database installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''DB'', '''', '''');'||chr(10)||
-'   -- install_db_sec'||chr(10)||
-'   p_title        := ''install_db_sec.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' database security installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''DB'', ''sec'', '''');'||chr(10)||
-'   -- install_mt'||chr(10)||
-'   p_title        := ''install_mt.sql'';'||chr(10)||
-'   p_description ';
-
-s:=s||' := app_abbr_in || '' mid-tier installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''MT'', '''', '''');'||chr(10)||
-'   -- install_mt_sec'||chr(10)||
-'   p_title        := ''install_mt_sec.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' mid-tier security installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''MT'', ''sec'', '''');'||chr(10)||
-'   -- install_usr'||chr(10)||
-'   p_title        := ''install_usr.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' u';
-
-s:=s||'ser synonym installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''USR'', '''', '''');'||chr(10)||
-'   -- install_gui'||chr(10)||
-'   p_title        := ''install_gui.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' APEX maintenance GUI installation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''GUI'', '''', '''');'||chr(10)||
-'   -- uninstall_usr'||chr(10)||
-'   p_title        := ''uninstall_usr.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' user synonym uninst';
-
-s:=s||'allation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''USR'', '''', ''un'');'||chr(10)||
-'   -- uninstall_mt'||chr(10)||
-'   p_title        := ''uninstall_mt.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' mid-tier uninstallation script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, ''MT'', '''', ''un'');'||chr(10)||
-'   -- uninstall_db'||chr(10)||
-'   p_title        := ''uninstall_db.sql'';'||chr(10)||
-'   p_description  := app_abbr_in || '' database uninstallation script'';'||chr(10)||
-'   update';
-
-s:=s||'_apex_app_files(app_abbr_in, ''DB'', '''', ''un'');'||chr(10)||
-'   -- dtgen_dataload'||chr(10)||
-'   p_title        := ''dtgen_dataload.ctl'';'||chr(10)||
-'   p_description  := app_abbr_in || '' DTGen dataload script'';'||chr(10)||
-'   update_apex_app_files(app_abbr_in, '''', '''', ''xx'');'||chr(10)||
-'end update_scripts;'||chr(10)||
-''||chr(10)||
+'----------------------------------------'||chr(10)||
 'function gen_ind_tag'||chr(10)||
 '      (tables_nk1_in     in  varchar2'||chr(10)||
 '      ,tables_nk2_in     in  varchar2'||chr(10)||
 '      ,uniq_in           in  varchar2)'||chr(10)||
-'   return varchar2';
-
-s:=s||''||chr(10)||
+'   return varchar2'||chr(10)||
 'as'||chr(10)||
 '   maxnum     number;'||chr(10)||
 'begin'||chr(10)||
 '   select max(to_number(substr(tag,3)))'||chr(10)||
-'     into maxnum'||chr(10)||
+'     in';
+
+s:=s||'to maxnum'||chr(10)||
 '    from  indexes_act'||chr(10)||
 '    where tab_cols_nk1 = tables_nk1_in'||chr(10)||
 '     and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
@@ -58558,12 +58566,12 @@ s:=s||''||chr(10)||
 '   return case upper(uniq_in)'||chr(10)||
 '          when ''Y'' then ''u'' else ''i'''||chr(10)||
 '          end || ''x'' || (nvl(maxnum,0) + 1);'||chr(10)||
-'end gen_ind';
-
-s:=s||'_tag;'||chr(10)||
-''||chr(10)||
+'end gen_ind_tag;'||chr(10)||
+'----------------------------------------'||chr(10)||
 'function index_desc'||chr(10)||
-'      (app_abbr_in  in  varchar2'||chr(10)||
+'      (app_a';
+
+s:=s||'bbr_in  in  varchar2'||chr(10)||
 '      ,tab_abbr_in  in  varchar2'||chr(10)||
 '      ,ind_tag_in   in  varchar2)'||chr(10)||
 '   return varchar2'||chr(10)||
@@ -58577,10 +58585,10 @@ s:=s||'_tag;'||chr(10)||
 '    where tab_cols_nk1 = app_abbr_in'||chr(10)||
 '     and  tab_cols_nk2 = tab_abbr_in'||chr(10)||
 '     and  tag          = ind_tag_in'||chr(10)||
-'';
+'    order by seq;'||chr(10)||
+'   if lower(substr(in';
 
-s:=s||'    order by seq;'||chr(10)||
-'   if lower(substr(ind_tag_in,1,1)) = ''u'''||chr(10)||
+s:=s||'d_tag_in,1,1)) = ''u'''||chr(10)||
 '   then'||chr(10)||
 '      return ''Unique index on columns: '' ||'||chr(10)||
 '              apex_util.table_to_string ( '||chr(10)||
@@ -58591,10 +58599,10 @@ s:=s||'    order by seq;'||chr(10)||
 '           apex_util.table_to_string ( '||chr(10)||
 '              p_table => l_vc_arr2, '||chr(10)||
 '              p_string => '', '');'||chr(10)||
-'end index_desc';
+'end index_desc;'||chr(10)||
+'-------------------------------------';
 
-s:=s||';'||chr(10)||
-''||chr(10)||
+s:=s||'---'||chr(10)||
 'function create_index'||chr(10)||
 '      (column_string_in  in  varchar2'||chr(10)||
 '      ,tables_nk1_in     in  varchar2'||chr(10)||
@@ -58608,9 +58616,9 @@ s:=s||';'||chr(10)||
 '   numrows    number;'||chr(10)||
 'BEGIN'||chr(10)||
 '   l_vc_arr2 := APEX_UTIL.STRING_TO_TABLE(column_string_in);'||chr(10)||
-'   tagname := ge';
+'   tagname := g';
 
-s:=s||'n_ind_tag (tables_nk1_in, tables_nk2_in, uniq_in);'||chr(10)||
+s:=s||'en_ind_tag (tables_nk1_in, tables_nk2_in, uniq_in);'||chr(10)||
 '   numrows := 0;'||chr(10)||
 '   FOR i IN 1..l_vc_arr2.count'||chr(10)||
 '   LOOP'||chr(10)||
@@ -58626,13 +58634,13 @@ s:=s||'n_ind_tag (tables_nk1_in, tables_nk2_in, uniq_in);'||chr(10)||
 '            ,l_vc_arr2(i)'||chr(10)||
 '            ,tagname'||chr(10)||
 '            ,i);'||chr(10)||
-'      numrows :=';
+'      numrows :';
 
-s:=s||' numrows + 1;'||chr(10)||
+s:=s||'= numrows + 1;'||chr(10)||
 '   END LOOP;'||chr(10)||
 '   return numrows;'||chr(10)||
 'end create_index;'||chr(10)||
-''||chr(10)||
+'----------------------------------------'||chr(10)||
 'function update_index'||chr(10)||
 '      (column_string_in  in  varchar2'||chr(10)||
 '      ,tables_nk1_in     in  varchar2'||chr(10)||
@@ -58642,11 +58650,11 @@ s:=s||' numrows + 1;'||chr(10)||
 '   return number'||chr(10)||
 'as'||chr(10)||
 '   l_vc_arr2  apex_application_global.vc_arr2;'||chr(10)||
-'   colcnt     number;'||chr(10)||
-'   tagname    varchar2(20);'||chr(10)||
-'   nu';
+'   colcnt     ';
 
-s:=s||'mrows    number;'||chr(10)||
+s:=s||'number;'||chr(10)||
+'   tagname    varchar2(20);'||chr(10)||
+'   numrows    number;'||chr(10)||
 '   col_match  boolean;'||chr(10)||
 'BEGIN'||chr(10)||
 '   l_vc_arr2 := APEX_UTIL.STRING_TO_TABLE(column_string_in);'||chr(10)||
@@ -58657,10 +58665,10 @@ s:=s||'mrows    number;'||chr(10)||
 '   then'||chr(10)||
 '      -- The tag name has changed. Check for existence of new tag name'||chr(10)||
 '      select count(tag)'||chr(10)||
-'        into colcnt'||chr(10)||
-'       from  indexes_act';
+'   ';
 
-s:=s||''||chr(10)||
+s:=s||'     into colcnt'||chr(10)||
+'       from  indexes_act'||chr(10)||
 '       where tab_cols_nk1 = tables_nk1_in'||chr(10)||
 '        and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
 '        and  tag          = tagname;'||chr(10)||
@@ -58672,10 +58680,10 @@ s:=s||''||chr(10)||
 '   end if;'||chr(10)||
 '   select count(tag)'||chr(10)||
 '     into colcnt'||chr(10)||
-'    from  indexes_act'||chr(10)||
-'    where tab_cols_';
+'';
 
-s:=s||'nk1 = tables_nk1_in'||chr(10)||
+s:=s||'    from  indexes_act'||chr(10)||
+'    where tab_cols_nk1 = tables_nk1_in'||chr(10)||
 '     and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
 '     and  tag          = tagname_io;'||chr(10)||
 '   if colcnt != l_vc_arr2.count'||chr(10)||
@@ -58688,10 +58696,10 @@ s:=s||'nk1 = tables_nk1_in'||chr(10)||
 '      for buff in ('||chr(10)||
 '         select tab_cols_nk3'||chr(10)||
 '               ,rownum'||chr(10)||
-'          from  indexes_act'||chr(10)||
-'          where tab_cols';
+'          f';
 
-s:=s||'_nk1 = tables_nk1_in'||chr(10)||
+s:=s||'rom  indexes_act'||chr(10)||
+'          where tab_cols_nk1 = tables_nk1_in'||chr(10)||
 '           and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
 '           and  tag          = tagname_io)'||chr(10)||
 '      loop'||chr(10)||
@@ -58704,10 +58712,10 @@ s:=s||'_nk1 = tables_nk1_in'||chr(10)||
 '   end if;'||chr(10)||
 '   if not col_match'||chr(10)||
 '   then'||chr(10)||
-'      -- Delete and Insert because the columns have changed'||chr(10)||
-'      ';
+'      -- Delete and Inser';
 
-s:=s||'delete from indexes_act'||chr(10)||
+s:=s||'t because the columns have changed'||chr(10)||
+'      delete from indexes_act'||chr(10)||
 '       where tab_cols_nk1 = tables_nk1_in'||chr(10)||
 '        and  tab_cols_nk2 = tables_nk2_in'||chr(10)||
 '        and  tag          = tagname_io;'||chr(10)||
@@ -58718,11 +58726,11 @@ s:=s||'delete from indexes_act'||chr(10)||
 '               (tab_cols_nk1'||chr(10)||
 '               ,tab_cols_nk2'||chr(10)||
 '               ,tab_cols_nk3'||chr(10)||
-'               ,tag'||chr(10)||
-'               ,seq)'||chr(10)||
-'            val';
+'               ';
 
-s:=s||'ues'||chr(10)||
+s:=s||',tag'||chr(10)||
+'               ,seq)'||chr(10)||
+'            values'||chr(10)||
 '               (tables_nk1_in'||chr(10)||
 '               ,tables_nk2_in'||chr(10)||
 '               ,l_vc_arr2(i)'||chr(10)||
@@ -58736,11 +58744,11 @@ s:=s||'ues'||chr(10)||
 '   if tagname = tagname_io'||chr(10)||
 '   then'||chr(10)||
 '      -- No columns were changed and the tag names match'||chr(10)||
-'      return 0;'||chr(10)||
-'   end if;'||chr(10)||
-'   -- Update the tag name onl';
+'      return 0;';
 
-s:=s||'y'||chr(10)||
+s:=s||''||chr(10)||
+'   end if;'||chr(10)||
+'   -- Update the tag name only'||chr(10)||
 '   update indexes_act'||chr(10)||
 '     set  tag = tagname'||chr(10)||
 '    where tab_cols_nk1 = tables_nk1_in'||chr(10)||
@@ -58750,9 +58758,252 @@ s:=s||'y'||chr(10)||
 '   tagname_io := tagname;'||chr(10)||
 '   return numrows;'||chr(10)||
 'end update_index;'||chr(10)||
-''||chr(10)||
+'----------------------------------------'||chr(10)||
+'procedure gen_all'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,job_nu';
+
+s:=s||'m_in   in  number default null)'||chr(10)||
+'is'||chr(10)||
+'   lockname    varchar2(128);'||chr(10)||
+'   js_prefix   varchar2(50);'||chr(10)||
+'   job_status  varchar2(100);'||chr(10)||
+'   retstr      varchar2(100);'||chr(10)||
 'begin'||chr(10)||
-'   dbms_lob.createtemporary(p_blob_content, true, dbms_lob.session);'||chr(10)||
+'   -- Single thread the longops processes so that FILE_LINES'||chr(10)||
+'   --   don''t change while this is running and only one of'||chr(10)||
+'   --   these runs at any given time.'||chr(10)||
+'   lockname  := get_lockname(app_abbr_in);'||chr(10)||
+'   js_prefix := substr(lockname,1,40) |';
+
+s:=s||'| '' Generate'';'||chr(10)||
+'   retstr := glob.request_lock(lockname);'||chr(10)||
+'   if retstr <> ''SUCCESS'''||chr(10)||
+'   then'||chr(10)||
+'      raise_application_error(-20000,'||chr(10)||
+'         ''GLOB.REQUEST_LOCK returned '' || retstr);'||chr(10)||
+'   end if;'||chr(10)||
+'   generate.init(app_abbr_in);'||chr(10)||
+''||chr(10)||
+'   -- Create Scripts'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_glob (1 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_glob;'||chr(10)||
+''||chr(10)||
+'   job_statu';
+
+s:=s||'s := js_prefix || '' create_gdst (2 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_gdst;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_ods (3 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_ods;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_integ (4 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generat';
+
+s:=s||'e.create_integ;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_dist (5 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_dist;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_oltp (6 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_oltp;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_mods (7 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_n';
+
+s:=s||'um_in, job_status);'||chr(10)||
+'   generate.create_mods;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' create_usyn (8 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_usyn;'||chr(10)||
+''||chr(10)||
+'   -- Drop/Delete Scripts'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' drop_usyn (9 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_usyn;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' drop_mods (10';
+
+s:=s||' of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_mods;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' drop_oltp (11 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_oltp;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' drop_dist (12 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_dist;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefi';
+
+s:=s||'x || '' drop_integ (13 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_integ;'||chr(10)||
+''||chr(10)||
+'   job_status := js_prefix || '' delete_ods (14 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.delete_ods;'||chr(10)||
+''||chr(10)||
+'   job_status := lockname || '' Generate drop_ods (15 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_o';
+
+s:=s||'ds;'||chr(10)||
+''||chr(10)||
+'   job_status := lockname || '' Generate drop_gdst (16 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_gdst;'||chr(10)||
+''||chr(10)||
+'   job_status := lockname || '' Generate drop_glob (17 of 18)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.drop_glob;'||chr(10)||
+''||chr(10)||
+'   -- Create GUI Script'||chr(10)||
+''||chr(10)||
+'   job_status := lockname || '' Generate create_flow (18 of 18)'';'||chr(10)||
+'   apex_p';
+
+s:=s||'lsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   generate.create_flow;'||chr(10)||
+'   '||chr(10)||
+'   retstr := glob.release_lock;'||chr(10)||
+'   if retstr <> ''SUCCESS'''||chr(10)||
+'   then'||chr(10)||
+'      raise_application_error(-20000,'||chr(10)||
+'         ''GLOB.RELEASE_LOCK returned '' || retstr);'||chr(10)||
+'   end if;'||chr(10)||
+'   job_status := js_prefix || '' All COMPLETE'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'end gen_all;'||chr(10)||
+'--------------------------------';
+
+s:=s||'--------'||chr(10)||
+'procedure asm_all'||chr(10)||
+'      (app_abbr_in  in  varchar2'||chr(10)||
+'      ,job_num_in   in  number default null'||chr(10)||
+'      ,flow_id_in   in  number default null)'||chr(10)||
+'is'||chr(10)||
+'   lockname    varchar2(128);'||chr(10)||
+'   js_prefix   varchar2(50);'||chr(10)||
+'   job_status  varchar2(100);'||chr(10)||
+'   retstr      varchar2(100);'||chr(10)||
+'begin'||chr(10)||
+'   -- Single thread the longops processes so that FILE_LINES'||chr(10)||
+'   --   don''t change while this is running and only one of'||chr(10)||
+'   ';
+
+s:=s||'--   these runs at any given time.'||chr(10)||
+'   lockname := get_lockname(app_abbr_in);'||chr(10)||
+'   js_prefix := substr(lockname,1,40) || '' Assemble'';'||chr(10)||
+'   retstr := glob.request_lock(lockname);'||chr(10)||
+'   if retstr <> ''SUCCESS'''||chr(10)||
+'   then'||chr(10)||
+'      raise_application_error(-20000,'||chr(10)||
+'         ''GLOB.REQUEST_LOCK returned '' || retstr);'||chr(10)||
+'   end if;'||chr(10)||
+'   af_flow_id := nvl(flow_id_in, v(''APP_ID''));'||chr(10)||
+'   -- install_db'||chr(10)||
+'   af_title        := ''instal';
+
+s:=s||'l_db.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' database installation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (1 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''DB'', '''', '''');'||chr(10)||
+'   -- install_db_sec'||chr(10)||
+'   af_title        := ''install_db_sec.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' database security installation script''';
+
+s:=s||';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (2 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''DB'', ''sec'', '''');'||chr(10)||
+'   -- install_mt'||chr(10)||
+'   af_title        := ''install_mt.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' mid-tier installation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (3 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job';
+
+s:=s||'_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', '''', '''');'||chr(10)||
+'   -- install_mt_sec'||chr(10)||
+'   af_title        := ''install_mt_sec.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' mid-tier security installation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (4 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', ''s';
+
+s:=s||'ec'', '''');'||chr(10)||
+'   -- install_usr'||chr(10)||
+'   af_title        := ''install_usr.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' user synonym installation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (5 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''USR'', '''', '''');'||chr(10)||
+'   -- uninstall_usr'||chr(10)||
+'   af_title        := ''uninstall_usr.sql'';'||chr(10)||
+'   af_descriptio';
+
+s:=s||'n  := app_abbr_in || '' user synonym uninstallation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (7 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''USR'', '''', ''un'');'||chr(10)||
+'   -- uninstall_mt'||chr(10)||
+'   af_title        := ''uninstall_mt.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' mid-tier uninstallation script'';'||chr(10)||
+'   job_status := js_prefix ';
+
+s:=s||'|| '' '' || af_title || '' (8 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''MT'', '''', ''un'');'||chr(10)||
+'   -- uninstall_db'||chr(10)||
+'   af_title        := ''uninstall_db.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' database uninstallation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (9 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_';
+
+s:=s||'status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''DB'', '''', ''un'');'||chr(10)||
+'   -- dtgen_dataload'||chr(10)||
+'   af_title        := ''dtgen_dataload.ctl'';'||chr(10)||
+'   af_description  := app_abbr_in || '' DTGen dataload script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (10 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, '''', '''', ''xx'');'||chr(10)||
+'   -- install_gui'||chr(10)||
+'   af_title ';
+
+s:=s||'       := ''install_gui.sql'';'||chr(10)||
+'   af_description  := app_abbr_in || '' APEX maintenance GUI installation script'';'||chr(10)||
+'   job_status := js_prefix || '' '' || af_title || '' (11 of 11)'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'   update_apex_app_files(app_abbr_in, ''GUI'', '''', '''');'||chr(10)||
+'   --'||chr(10)||
+'   retstr := glob.release_lock;'||chr(10)||
+'   if retstr <> ''SUCCESS'''||chr(10)||
+'   then'||chr(10)||
+'      raise_application_error(-20000,'||chr(10)||
+'';
+
+s:=s||'         ''GLOB.RELEASE_LOCK returned '' || retstr);'||chr(10)||
+'   end if;'||chr(10)||
+'   job_status := js_prefix || '' All COMPLETE'';'||chr(10)||
+'   apex_plsql_job.update_job_status(job_num_in, job_status);'||chr(10)||
+'end asm_all;'||chr(10)||
+'----------------------------------------'||chr(10)||
+'begin'||chr(10)||
+'   dbms_lob.createtemporary(af_blob_content, true, dbms_lob.session);'||chr(10)||
 'end gui_util;';
 
 wwv_flow_api.create_install_script(
