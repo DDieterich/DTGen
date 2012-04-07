@@ -327,22 +327,22 @@ is
    lockname    varchar2(128);
    js_prefix   varchar2(50);
    job_status  varchar2(100);
-   retcd       INTEGER;
+   retstr      varchar2(100);
 begin
    -- Single thread the longops processes so that FILE_LINES
    --   don't change while this is running and only one of
    --   these runs at any given time.
    lockname  := get_lockname(app_abbr_in);
-   retcd := glob.request_lock(lockname);
-   if retcd <> UTIL.LOCK_SUCCESS
+   js_prefix := substr(lockname,1,40) || ' Generate';
+   retstr := glob.request_lock(lockname);
+   if retstr <> 'SUCCESS'
    then
       raise_application_error(-20000,
-         'DBMS_LOCK.REQUEST returned a ' || retcd);
+         'GLOB.REQUEST_LOCK returned ' || retstr);
    end if;
    generate.init(app_abbr_in);
 
    -- Create Scripts
-   js_prefix := substr(lockname,1,40) || ' Generate';
 
    job_status := js_prefix || ' create_glob (1 of 18)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
@@ -420,11 +420,11 @@ begin
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_flow;
    
-   retcd := glob.release_lock;
-   if retcd <> UTIL.LOCK_SUCCESS
+   retstr := glob.release_lock;
+   if retstr <> 'SUCCESS'
    then
       raise_application_error(-20000,
-         'DBMS_LOCK.RELEASE returned a ' || retcd);
+         'GLOB.RELEASE_LOCK returned ' || retstr);
    end if;
    job_status := js_prefix || ' All COMPLETE';
    apex_plsql_job.update_job_status(job_num_in, job_status);
@@ -438,20 +438,20 @@ is
    lockname    varchar2(128);
    js_prefix   varchar2(50);
    job_status  varchar2(100);
-   retcd       INTEGER;
+   retstr      varchar2(100);
 begin
    -- Single thread the longops processes so that FILE_LINES
    --   don't change while this is running and only one of
    --   these runs at any given time.
    lockname := get_lockname(app_abbr_in);
-   retcd := glob.request_lock(lockname);
-   if retcd <> UTIL.LOCK_SUCCESS
+   js_prefix := substr(lockname,1,40) || ' Assemble';
+   retstr := glob.request_lock(lockname);
+   if retstr <> 'SUCCESS'
    then
       raise_application_error(-20000,
-         'DBMS_LOCK.REQUEST returned a ' || retcd);
+         'GLOB.REQUEST_LOCK returned ' || retstr);
    end if;
    af_flow_id := nvl(flow_id_in, v('APP_ID'));
-   js_prefix := substr(lockname,1,40) || ' Assemble';
    -- install_db
    af_title        := 'install_db.sql';
    af_description  := app_abbr_in || ' database installation script';
@@ -513,11 +513,11 @@ begin
    apex_plsql_job.update_job_status(job_num_in, job_status);
    update_apex_app_files(app_abbr_in, 'GUI', '', '');
    --
-   retcd := glob.release_lock;
-   if retcd <> UTIL.LOCK_SUCCESS
+   retstr := glob.release_lock;
+   if retstr <> 'SUCCESS'
    then
       raise_application_error(-20000,
-         'DBMS_LOCK.RELEASE returned a ' || retcd);
+         'GLOB.RELEASE_LOCK returned ' || retstr);
    end if;
    job_status := js_prefix || ' All COMPLETE';
    apex_plsql_job.update_job_status(job_num_in, job_status);
