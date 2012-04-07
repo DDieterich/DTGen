@@ -17,6 +17,7 @@ Unit testing is performed based on the following feature sets
   * Point-in-Time ASOF Views
   * Audited POP Functions
   * Comprehensive OMNI Views
+  * Custom Global Locks for Single Threaded Logic
 
   * Default Maintenance User Interface (APEX)
   * Includes Data Domain Filterable Grid Edit (APEX)
