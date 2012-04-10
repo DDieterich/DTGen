@@ -91,7 +91,8 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * HEAD revision
      * Click "OK"
   * ZIP the export
-  * Name the ZIP file with the current version
+     * Select all directories and files under ".../Releases/DTGen_ReleaseNumber"
+     * Rename the ZIP file to "DTGen_ReleaseNumber"
   * Upload to http://code.google.com/p/dtgen/downloads/list
      -) Type-Archive
      -) OpSys-Any?
