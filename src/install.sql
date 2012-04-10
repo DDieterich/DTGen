@@ -80,7 +80,7 @@ prompt generate.pkb
 @generate.pkb
 /
 
-prompt generate.pkb
+prompt assemble.pkb
 @assemble.pkb
 /
 

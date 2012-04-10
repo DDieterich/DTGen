@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 lo_opname      varchar2(64);  -- Operation Name for LongOps
 lo_num_tables  number;        -- Number of Tables for LongOps
 
-ver  varchar2(20) := 'DTGen_0.7';
+ver  varchar2(20) := 'DTGen_0.8';
 sec_lines  sec_lines_type;
 sec_line0  sec_lines_type;  -- Used to reset the sec_lines array
 sec_line   number;
@@ -1049,7 +1049,7 @@ BEGIN
    p('         st_lockname := null;');
    p('         return ''SUCCESS'';');
    p('      when 4 then');
-   p('         -- This session doesn't own the lock');
+   p('         -- This session doesn''t own the lock');
    p('         st_lockname := null;');
    p('         return ''SUCCESS'';');
    p('      when 3 then');
