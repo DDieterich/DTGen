@@ -78,7 +78,18 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * Select "HEAD Revision in the repository"
      * Set "Log Message" tp "DTGen Release ReleaseNumber"
      * Click "OK"
-  * Export the Release "branch" directory from Subversion
+  * Right-Click on ".../svn" -> "SVN Update"
+  * Export the Release
+     * Create directory ".../Releases/DTGen_ReleaseNumber"
+     * Select ".../svn/branches/ReleaseNumber"
+     * Right-Click on ".../svn/branches/ReleaseNumber" -> TortoiseSVN -> Export
+     * URL of repository: ".../svn/branches/ReleaseNumber"
+     * Export Directory: ".../releases/DTGen_ReleaseNumber"
+     * "Fully Recursive"
+     * UNCHECKED Omit externals
+     * eol style: default
+     * HEAD revision
+     * Click "OK"
   * ZIP the export
   * Name the ZIP file with the current version
   * Upload to http://code.google.com/p/dtgen/downloads/list
