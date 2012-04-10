@@ -114,4 +114,19 @@ Create an application in APEX to use "create_flow.sql":
    -) Click the "Add this list to the current page" at the bottom of the page.
    -) Click "Next" and "Create List Region" (All the defaults work correctly).
 4) Add Page 1 to the Breadcrumb
-   -) 
+   -) Edit Page 1
+   -) Click "Shared Components" (It's the gear icon on the toolbar)
+   -) Click the "Breadcrumbs" link in the "Navigation" Group
+   -) Click on "Breadcrumb" (It may be the only entry)
+   -) Click on the Pencil ICON next to "Maintenance Manu"
+   -) Change "Parent Entry" from "Select Parent" to "Page 1(Page 1)"
+   -) Click "Apply Changes"
+   -) Click on the Pencil ICON next to "Utility Log Report"
+   -) Change "Parent Entry" from "Select Parent" to "Page 1(Page 1)"
+   -) Click "Apply Changes"
+   -) Click on the Pencil ICON next to "OMNI Reports Menu"
+   -) Change "Parent Entry" from "Select Parent" to "Page 1(Page 1)"
+   -) Click "Apply Changes"
+   -) Click on the Pencil ICON next to "ASOF Reports Menu"
+   -) Change "Parent Entry" from "Select Parent" to "Page 1(Page 1)"
+   -) Click "Apply Changes"
