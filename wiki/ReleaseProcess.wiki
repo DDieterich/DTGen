@@ -58,7 +58,7 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * Export/Import
      * Export
         * Application: 900 DTGen
-        * File Format: DOS
+        * File Format: UNIX
         * Owner Override: (empty)
         * Build Status Override: Run and Build Application
         * Debugging: Yes
@@ -78,5 +78,5 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
   * Name the ZIP file with the current version
   * Upload to http://code.google.com/p/dtgen/downloads/list
      -) Type-Archive
-     -) OpSys-Windows?
+     -) OpSys-Any?
 }}}
