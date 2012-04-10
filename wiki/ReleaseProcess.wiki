@@ -73,6 +73,11 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
      * Logout from APEX
   * Commit changes to Subversion
   * Create a Release "branch" from "trunk" in Subversion
+     * Right-Click on ".../svn/trunk" -> TortoiseSVN -> Branch/Tag
+     * Set "To URL:" to ".../svn/branches/ReleaseNumber"
+     * Select "HEAD Revision in the repository"
+     * Set "Log Message" tp "DTGen Release ReleaseNumber"
+     * Click "OK"
   * Export the Release "branch" directory from Subversion
   * ZIP the export
   * Name the ZIP file with the current version
