@@ -1,4 +1,9 @@
 
+REM
+REM Create User Sample Script
+REM (Must be run as the "system" or "sys as sysdba" user)
+REM
+
 set define '&'
 
 set trimspool on
