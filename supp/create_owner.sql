@@ -1,4 +1,9 @@
 
+REM
+REM Create Schema User Sample Script
+REM (Must be run as the "sys as sysdba" user)
+REM
+
 set define '&'
 
 set trimspool on
@@ -20,6 +25,7 @@ grant create materialized view to &1.;
 grant create synonym to &1.;
 grant DEBUG CONNECT SESSION to &1.;
 grant DEBUG ANY PROCEDURE to &1.;
+grant execute on DBMS_LOCK to &1.;
 create role &1._dml;
 create role &1._app;
 grant &1._app to &1._dml;

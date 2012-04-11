@@ -1,4 +1,8 @@
 
+DTGen "supp" (Supplemental Materials) README File
+   Developed by DMSTEX (http://dmstex.com)
+
+
 File descriptions in this directory
 -----------------------------------
 create_owner.sql - Sample script to creates the application schema owner with roles
