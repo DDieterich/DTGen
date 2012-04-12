@@ -23,25 +23,25 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    
    rclob   clob;
 
+   procedure install_script
+         (app_abbr_in  in  varchar2
+         ,aa_key_in    in  varchar2
+         ,suffix_in    in  varchar2 default '');
    function install_script
          (app_abbr_in  in  varchar2
          ,aa_key_in    in  varchar2
          ,suffix_in    in  varchar2 default '')
       return clob;
-   procedure install_script
+
+   procedure uninstall_script
          (app_abbr_in  in  varchar2
          ,aa_key_in    in  varchar2
          ,suffix_in    in  varchar2 default '');
-
    function uninstall_script
          (app_abbr_in  in  varchar2
          ,aa_key_in    in  varchar2
          ,suffix_in    in  varchar2 default '')
       return clob;
-   procedure uninstall_script
-         (app_abbr_in  in  varchar2
-         ,aa_key_in    in  varchar2
-         ,suffix_in    in  varchar2 default '');
 
    procedure data_script
          (app_abbr_in  in  varchar2);

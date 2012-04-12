@@ -21,14 +21,14 @@ Example Demonstration Procedure:
 --------------------------------
 sqlplus sys/password as sysdba @create_demo_user
 cd basics
-sqlplus dtgen_demo_db/dtgen_demo_db @e1
-sqlplus dtgen_demo_db/dtgen_demo_db @e2
-sqlplus dtgen_demo_db/dtgen_demo_db @e3
-sqlplus dtgen_demo_db/dtgen_demo_db @e4
-sqlplus dtgen_demo_db/dtgen_demo_db @e5
-sqlplus dtgen_demo_db/dtgen_demo_db @e6
-sqlplus dtgen_demo_db/dtgen_demo_db @e7
-sqlplus dtgen_demo_db/dtgen_demo_db @e8
-sqlplus dtgen_demo_db/dtgen_demo_db @e9
+sqlplus /nolog @e1
+sqlplus /nolog @e2
+sqlplus /nolog @e3
+sqlplus /nolog @e4
+sqlplus /nolog @e5
+sqlplus /nolog @e6
+sqlplus /nolog @e7
+sqlplus /nolog @e8
+sqlplus /nolog @e9
 cd ..
 sqlplus system/password @drop_demo_user

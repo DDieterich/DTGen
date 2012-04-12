@@ -5,11 +5,8 @@ REM (Must be run as the "system" or "sys as sysdba" user)
 REM
 
 set define '&'
-
-set trimspool on
-set serveroutput on
-set feedback off
 set verify off
+set trimspool on
 
 spool create_user_&1._&2.
 

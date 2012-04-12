@@ -6,6 +6,7 @@ REM
 
 spool create_demo_users
 set define '&'
+set verify off
 
 REM Initialize Variables
 REM
@@ -22,12 +23,12 @@ REM
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set trimspool on
-set serveroutput on
 set feedback off
+set serveroutput on
 set define on
 
-REM Create DB Schema User
-REM
+prompt Create DB Schema Owner
+
 create user &DB_NAME. identified by &DB_PASS.
    default tablespace &TSPACE.
    temporary tablespace temp;
@@ -46,8 +47,8 @@ create role &DB_NAME._dml;
 create role &DB_NAME._app;
 grant &DB_NAME._app to &DB_NAME._dml;
 
-REM Create MT Schema User
-REM
+prompt Create MT Schema Owner
+
 create user &MT_NAME. identified by &MT_PASS.
    default tablespace &TSPACE.
    temporary tablespace temp;
@@ -58,15 +59,19 @@ alter user &MT_NAME.
 grant connect to &MT_NAME.;
 grant resource to &MT_NAME.;
 grant create view to &MT_NAME.;
-grant create database link to &OWNERNAME.;
-grant create materialized view to &OWNERNAME.;
-grant create synonym to &OWNERNAME.;
+grant create database link to &MT_NAME.;
+grant create materialized view to &MT_NAME.;
+grant create synonym to &MT_NAME.;
 grant DEBUG CONNECT SESSION to &MT_NAME.;
 grant DEBUG ANY PROCEDURE to &MT_NAME.;
 grant execute on DBMS_LOCK to &MT_NAME.;
 
-REM Create MT Schema User
-REM
+create role &MT_NAME._dml;
+create role &MT_NAME._app;
+grant &MT_NAME._app to &MT_NAME._dml;
+
+prompt Create User
+
 create user &USR_NAME. identified by &USR_PASS.
    default tablespace &TSPACE.
    temporary tablespace temp;
