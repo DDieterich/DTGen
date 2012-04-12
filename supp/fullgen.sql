@@ -4,7 +4,7 @@ REM  fullgen.sql - Sample script to generate all scripts for an application
 REM
 
 set trimspool on
-set serveroutput on size unlimited
+set serveroutput on size 1000000 format wrapped
 set define '&'
 set verify off
 
@@ -46,25 +46,25 @@ set feedback off
 set termout off
 
 spool install_db.sql
-execute assemble.install('&APP_ID.','DB','');
-spool dtgen_dataload.ctl
-assemble.data_script('&APP_ID.')
+execute assemble.install_script('&APP_ID.','DB');
 spool install_db_sec.sql
-execute assemble.install('&APP_ID.','DB','sec');
+execute assemble.install_script('&APP_ID.','DB','sec');
 spool install_mt.sql
-execute assemble.install('&APP_ID.','MT','');
+execute assemble.install_script('&APP_ID.','MT');
 spool install_mt_sec.sql
-execute assemble.install('&APP_ID.','MT','sec');
+execute assemble.install_script('&APP_ID.','MT','sec');
 spool install_usr.sql
-execute assemble.install('&APP_ID.','USR','');
+execute assemble.install_script('&APP_ID.','USR');
 spool install_gui.sql
-execute assemble.install('&APP_ID.','GUI','');
+execute assemble.install_script('&APP_ID.','GUI');
 spool uninstall_mt.sql
-execute assemble.uninstall('&APP_ID.','MT','');
+execute assemble.uninstall_script('&APP_ID.','MT');
 spool uninstall_usr.sql
-execute assemble.uninstall('&APP_ID.','USR','');
+execute assemble.uninstall_script('&APP_ID.','USR');
 spool uninstall_db.sql
-execute assemble.uninstall('&APP_ID.','DB','');
+execute assemble.uninstall_script('&APP_ID.','DB');
+spool dtgen_dataload.ctl
+execute assemble.data_script('&APP_ID.')
 spool off
 
 set verify on

@@ -6,6 +6,7 @@ REM
 
 spool drop_demo_users
 set define '&'
+set verify off
 
 REM Initialize Variables
 REM
@@ -19,11 +20,10 @@ WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set trimspool on
 set serveroutput on
-set feedback off
 set define on
 
 prompt
-prompt This will remove the following user from the database:
+prompt This will remove the following users from the database:
 prompt
 prompt   -) &USR_NAME.
 prompt   -) &MT_NAME.

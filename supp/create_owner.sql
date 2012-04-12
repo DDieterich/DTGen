@@ -5,9 +5,9 @@ REM (Must be run as the "sys as sysdba" user)
 REM
 
 set define '&'
-
+set verify off
 set trimspool on
-set serveroutput on
+
 spool create_owner_&1.
 
 create user &1. identified by &1.

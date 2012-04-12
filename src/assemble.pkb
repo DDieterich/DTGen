@@ -13,17 +13,24 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
-FS  CONSTANT varchar2(1)  := chr(28);  -- Line Feed character
+FS  CONSTANT  varchar2(1)  := chr(28);  -- Field Separator character
 
 lo_opname     varchar2(64);  -- Operation Name for LongOps
 lo_num_units  number;        -- Number of Units for LongOps
+
+USE_RCLOB     boolean      := FALSE;
 
 ----------------------------------------
 procedure p
       (line_in  in  varchar2)
 is
 begin
-   rclob := rclob || line_in || chr(10);
+   if USE_RCLOB
+   then
+      rclob := rclob || line_in || chr(10);
+   else
+      dbms_output.put_line(line_in);
+   end if;
 end p;
 ----------------------------------------
 function get_aa_key_name
@@ -52,14 +59,15 @@ begin
    return rstr;
 end get_aa_key_name;
 ----------------------------------------
-function install_script
+procedure install_script
       (app_abbr_in  in  varchar2
       ,aa_key_in    in  varchar2
       ,suffix_in    in  varchar2 default '')
-   return clob
 is
    nk2  varchar2(100);
 begin
+   dbms_output.enable(1000000);
+   rclob := '';
    begin
       vc2_list := aa_vc2(upper(aa_key_in));
    exception
@@ -73,7 +81,6 @@ begin
    lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
    util.init_longops(lo_opname, lo_num_units,
       get_aa_key_name(aa_key_in, suffix_in), 'tables');
-   rclob := '';
    p('');
    p('--');
    p('--  Install ' || get_aa_key_name(aa_key_in, suffix_in) ||
@@ -104,34 +111,36 @@ begin
            and  files_nk2 = lower(nk2)
           order by seq )
       loop
-         rclob := rclob || buff.value || chr(10);
+         p(buff.value);
       end loop;
-      rclob := rclob || chr(10);
+      p('');
       util.add_longops (1);
    end loop;
    util.end_longops;
-   return rclob;
 end install_script;
 ----------------------------------------
-procedure install_script
-      (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
-      ,suffix_in    in  varchar2 default '')
-is
-begin
-   dbms_output.put_line(
-      install_script(app_abbr_in, aa_key_in, suffix_in)
-      );
-end install_script;
-----------------------------------------
-function uninstall_script
+function install_script
       (app_abbr_in  in  varchar2
       ,aa_key_in    in  varchar2
       ,suffix_in    in  varchar2 default '')
    return clob
 is
+begin
+   USE_RCLOB := TRUE;
+   install_script(app_abbr_in, aa_key_in, suffix_in);
+   USE_RCLOB := FALSE;
+   return rclob;
+end install_script;
+----------------------------------------
+procedure uninstall_script
+      (app_abbr_in  in  varchar2
+      ,aa_key_in    in  varchar2
+      ,suffix_in    in  varchar2 default '')
+is
    nk2  varchar2(100);
 begin
+   dbms_output.enable(1000000);
+   rclob := '';
    begin
       vc2_list := aa_vc2(upper(aa_key_in));
    exception
@@ -145,7 +154,6 @@ begin
    lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
    util.init_longops(lo_opname, lo_num_units,
       get_aa_key_name(aa_key_in, suffix_in), 'tables');
-   rclob := '';
    p('');
    p('--');
    p('--  Uninstall ' || get_aa_key_name(aa_key_in, suffix_in) ||
@@ -176,29 +184,29 @@ begin
            and  files_nk2 = lower(nk2)
           order by seq )
       loop
-         rclob := rclob || buff.value || chr(10);
+         p(buff.value);
       end loop;
-      rclob := rclob || chr(10);
+      p('');
       util.add_longops (1);
    end loop;
    util.end_longops;
-   return rclob;
 end uninstall_script;
 ----------------------------------------
-procedure uninstall_script
+function uninstall_script
       (app_abbr_in  in  varchar2
       ,aa_key_in    in  varchar2
       ,suffix_in    in  varchar2 default '')
+   return clob
 is
 begin
-   dbms_output.put_line(
-      uninstall_script(app_abbr_in, aa_key_in, suffix_in)
-      );
+   USE_RCLOB := TRUE;
+   uninstall_script(app_abbr_in, aa_key_in, suffix_in);
+   USE_RCLOB := FALSE;
+   return rclob;
 end uninstall_script;
 ----------------------------------------
-function data_script
+procedure data_script
       (app_abbr_in  in  varchar2)
-   return clob
 is
    cursor table_cursor is
       select max(lvl) lvl
@@ -243,6 +251,7 @@ is
    cs         varchar2(32767);   -- Column String
    ss         varchar2(32767);   -- SQL String
 begin
+   dbms_output.enable(1000000);
    rclob := '';
    p('--');
    p('-- DTGen SQL*Loader Control File');
@@ -344,14 +353,17 @@ begin
       util.add_longops (1);
    end loop;
    util.end_longops;
-   return rclob;
 end data_script;
 ----------------------------------------
-procedure data_script
+function data_script
       (app_abbr_in  in  varchar2)
+   return clob
 is
 begin
-   dbms_output.put_line(data_script(app_abbr_in));
+   USE_RCLOB := TRUE;
+   data_script(app_abbr_in);
+   USE_RCLOB := FALSE;
+   return rclob;
 end data_script;
 ----------------------------------------
 begin
