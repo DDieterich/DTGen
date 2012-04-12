@@ -18,10 +18,7 @@ set define '&'
 
 REM Initialize Variables
 REM
-define OWNERNAME = dtgen         -- DTGen Schema Name
-define OWNERPASS = dtgen         -- DTGen Schema Password
-define DB_NAME = dtgen_db_demo   -- Database DEMO Schema Username
-define DB_PASS = dtgen           -- Database DEMO Schema Password
+@vars
 
 REM Configure SQL*Plus
 REM

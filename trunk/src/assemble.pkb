@@ -105,6 +105,9 @@ begin
       then
          nk2 := nk2 || '_' || suffix_in;
       end if;
+      p('');
+      p('select '' -) '||nk2||'  '' as FILE_NAME from dual;');
+      p('');
       for buff in (
          select value from file_lines_act
           where files_nk1 = upper(app_abbr_in)
@@ -178,6 +181,9 @@ begin
       then
          nk2 := nk2 || '_' || suffix_in;
       end if;
+      p('');
+      p('select '' -) '||nk2||'  '' as FILE_NAME from dual;');
+      p('');
       for buff in (
          select value from file_lines_act
           where files_nk1 = upper(app_abbr_in)

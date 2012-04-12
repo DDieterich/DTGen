@@ -10,7 +10,7 @@ create_demo_users.sql  - Script to create Database users for Exercises
 drop_demo_users.sql    - Script to drop Database users for Exercises
 gui                    - Directory for GUI Demonstration Exercises
 tier                   - Directory for Tier Demonstration Exercises
-
+vars.sql               - Variable Declarations for scripts
 
 Introduction:
 -------------
