@@ -18,7 +18,7 @@ set define '&'
 
 REM Initialize Variables
 REM
-@vars
+@../vars
 
 REM Configure SQL*Plus
 REM
@@ -26,18 +26,19 @@ WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
-set serveroutput on size 1000000 format wrapped
 set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+set serveroutput on size 1000000 format wrapped
 
 select sequence_name from user_sequences;
 
-select substr(uc.table_name,1,20)       table_name
-      ,substr(uc.constraint_name,1,20)  constraint_name
-	  ,substr(ucc.column_name,1,20)     column_name
-	  ,ucc.position
+column table_name      format A20
+column constraint_name format A20
+column column_name     format A20
+
+select uc.table_name, uc.constraint_name, ucc.column_name, ucc.position
  from  user_constraints uc
   left outer join user_cons_columns ucc on uc.constraint_name = ucc.constraint_name
  where uc.constraint_type = 'P'
@@ -45,8 +46,12 @@ select substr(uc.table_name,1,20)       table_name
  order by uc.table_name
       ,ucc.column_name;
 
+column table_name      clear
+column constraint_name clear
+column column_name     clear
+
 select id, deptno, dname, loc from dept;
 
-select id, empno, ename, m_mgr_id, d_dept_id from emp;
+select id, empno, ename, mgr_emp_id, dept_id from emp;
 
 spool off

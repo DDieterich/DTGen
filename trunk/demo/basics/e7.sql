@@ -1,7 +1,7 @@
 
 REM
-REM Basic Demonstration, Exercise #6, Enforced Descrete Domains
-REM   (sqlplus /nolog @e6)
+REM Basic Demonstration, Exercise #7, Enforced Case Folding
+REM   (sqlplus /nolog @e7)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com
 REM All rights reserved.
@@ -13,7 +13,7 @@ REM Redistributions in binary form must reproduce the above copyright notice, th
 REM THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 REM
 
-spool e6
+spool e7
 set define '&'
 
 REM Initialize Variables
@@ -34,14 +34,68 @@ set serveroutput on size 1000000 format wrapped
 
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
+
 set echo on
 
--- Attempt to alter SMITH's job incorrectly
-update emp_act
-  set  job = 'FIREMAN'
- where ename = 'SMITH';
+select empno, ename
+ from  emp
+ where empno = 7369;
 
 set echo off
+set feedback off
+
+prompt
+begin
+   dbms_output.enable(1000000);
+   dbms_output.put_line('glob.fold_strings := TRUE;');
+                         glob.fold_strings := TRUE;
+end;
+/
+prompt
+
+set feedback 1
+set echo on
+
+-- Change SMITH's name to mixed-case
+update emp_act
+  set  ename = 'Smith'
+ where empno = 7369;
+
+select empno, ename
+ from  emp
+ where empno = 7369;
+
+set echo off
+set feedback off
+
+prompt
+begin
+   dbms_output.put_line('glob.fold_strings := FALSE;');
+                         glob.fold_strings := FALSE;
+end;
+/
+prompt
+
+set feedback 1
+set echo on
+
+-- Change SMITH's name to mixed-case
+update emp_act
+  set  ename = 'Smith'
+ where empno = 7369;
+
+select empno, ename
+ from  emp
+ where empno = 7369;
+
+set echo off
+
+begin
+   glob.fold_strings := TRUE;
+   commit;
+end;
+/
+
 WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
 WHENEVER OSERROR EXIT ROLLBACK
 spool off

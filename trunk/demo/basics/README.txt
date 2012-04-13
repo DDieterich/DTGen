@@ -15,4 +15,3 @@ e6.sql          - Exercise #6: Enforced Descrete Domains
 e7.sql          - Exercise #7: Enforced Case Folding
 e8.sql          - Exercise #8: Full Procedural APIs
 e9.sql          - Exercise #9: Custom Check Constraints
-vars.sql        - Variable Declarations for scripts
