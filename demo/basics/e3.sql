@@ -1,7 +1,7 @@
 
 REM
-REM Basic Demonstration, Exercise #2, Sequences and Surrogate Keys
-REM   (sqlplus /nolog @e2)
+REM Basic Demonstration, Exercise #3, Indexed Foreign Keys and Natural Keys
+REM   (sqlplus /nolog @e3)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com
 REM All rights reserved.
@@ -18,7 +18,7 @@ set define '&'
 
 REM Initialize Variables
 REM
-@vars
+@../vars
 
 REM Configure SQL*Plus
 REM
@@ -26,17 +26,59 @@ WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
-set serveroutput on size 1000000 format wrapped
 set define on
 
+prompt Login to &OWNERNAME.
+connect &OWNERNAME./&OWNERPASS.
+set serveroutput on size 1000000 format wrapped
+
+column column_name format A19
+column comments    format A60 word_wrapped
+
+select column_name, comments
+ from  user_col_comments
+ where table_name  = 'TAB_COLS_ACT'
+  and  column_name in ('TABLES_NK2', 'NAME', 'SEQ',
+       'NK', 'TYPE', 'LEN', 'FK_PREFIX', 'FK_TABLES_NK2');
+
+column column_name clear
+column comments    clear
+
+column tables_nk2    format A18
+column name          format A15
+column nk            format 999
+column type          format A15
+column fk_prefix     format A10
+column fk_tables_nk2 format A18
+
+select tables_nk2, name, seq, nk, type, len
+ from  tab_cols_act
+ where tables_nk1 = 'D1'
+  and  nk            is not null;
+
+select tables_nk2, name, seq, fk_prefix, fk_tables_nk2
+ from  tab_cols_act
+ where tables_nk1    = 'D1'
+  and  fk_tables_nk1 = 'D1';
+
+column tables_nk2    clear
+column name          clear
+column nk            clear
+column type          clear
+column fk_prefix     clear
+column fk_tables_nk2 clear
+
+prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+set serveroutput on size 1000000 format wrapped
 
-select substr(uc.constraint_name,1,15)  constraint_name
-	  ,substr(uc.table_name,1,15)       table_name
-      ,substr(ucc.column_name,1,15)     column_name
-	  ,ucc.position
-      ,substr(uic.index_name,1,15)      index_name
+column constraint_name format A15
+column table_name      format A15
+column column_name     format A15
+column index_name      format A15
+
+select uc.constraint_name, uc.table_name, ucc.column_name, ucc.position, uic.index_name
  from  user_constraints uc
   left outer join user_cons_columns ucc on uc.constraint_name = ucc.constraint_name
   left outer join user_ind_columns uic on uc.table_name   = uic.table_name
@@ -46,5 +88,10 @@ select substr(uc.constraint_name,1,15)  constraint_name
   and  uc.view_related    is null
  order by uc.constraint_name
       ,ucc.position;
+
+column constraint_name clear
+column table_name      clear
+column column_name     clear
+column index_name      clear
 
 spool off
