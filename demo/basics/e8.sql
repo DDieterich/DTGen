@@ -156,7 +156,40 @@ end;
 select id, empno, ename, job, sal, mgr_emp_nk1, dept_nk1
   from emp_act where ename = 'BOGUS';
 
-rollback;
+declare
+   type empcurtype is ref cursor return emp%ROWTYPE;
+   c1   empcurtype;
+   buff emp%rowtype;
+begin
+   dbms_output.enable;
+   glob.fold_strings := TRUE;
+   open c1 for
+      select * from emp
+       where empno = 21;
+   fetch c1 into buff;
+   close c1;
+   dbms_output.put_line('buff.mgr_emp_id after emp_dml.ins is "' ||
+                         buff.mgr_emp_id || '"');
+   emp_dml.upd
+      (o_id_in             => buff.id
+      ,n_empno             => buff.empno
+      ,n_ename             => buff.ename
+      ,n_job               => buff.job
+      ,n_mgr_emp_id        => buff.mgr_emp_id
+      ,n_mgr_nk_path_in    => '7839:7566:7902'
+      ,n_hiredate          => buff.hiredate
+      ,n_sal               => buff.sal
+      ,n_comm              => buff.comm
+      ,n_dept_id           => buff.dept_id
+      ,nkdata_provided_in  => 'T'
+      );
+   dbms_output.put_line('buff.mgr_emp_id after emp_dml.ins is "' ||
+                         buff.mgr_emp_id || '"');
+end;
+/
+
+select id, empno, ename, job, sal, mgr_emp_nk1, dept_nk1
+  from emp_act where ename = 'BOGUS';
 
 set echo off
 
@@ -165,9 +198,4 @@ column empno       clear
 column mgr_id_path clear
 column mgr_nk_path clear
 
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
-
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
-WHENEVER OSERROR EXIT ROLLBACK
 spool off
