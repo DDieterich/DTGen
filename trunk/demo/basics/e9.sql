@@ -50,7 +50,7 @@ column description  format A32 word_wrapped
 
 select tables_nk2, seq, text, description
  from  check_cons_act
- where tables_nk1 = 'D1';
+ where tables_nk1 = 'DEMO1';
 
 column tables_nk2   clear
 column seq          clear

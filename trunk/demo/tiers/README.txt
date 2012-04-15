@@ -1,18 +1,23 @@
 
 DTGen Tiers Demonstration
-   Developed by DMSTEX
-   http://dmstex.com
-   April 11, 2012
+   Developed by DMSTEX (http://dmstex.com)
 
-
-Table of Contents:
-------------------
- -) Introduction
- -) Exercise #1: Simple Mid-Tier
- -) Exercise #2: Materialized Views
- -) Exercise #3: Global Locks
- -) Exercise #4: DB Tier Streamlining
 
 Introduction:
--------------
-  The exercises in the tiers demonstration shows how DTGen generated code works in a variety of deployments
+The exercises in the tiers demonstration shows how DTGen generated code works in a variety of deployments
+
+
+File Descriptions in this directory:
+------------------------------------
+tiers_demo.odt - Demonstration Documentation (OpenOffice format)
+tiers_demo.pdf - Demonstration Documentation (Acrobat format)
+e1.sql         - Simple Mid-Tier
+e2.sql         - Materialized Views
+e3.sql         - Global Locks
+e4.sql         - DB Tier Streamlining
+
+
+Exercises that Modify Data
+--------------------------
+There are ? exercises that modify data in the database.  These exercises cannot be re-run without resetting the database.
+  -) e1.sql
