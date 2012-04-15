@@ -10,9 +10,7 @@ set verify off
 
 REM Initialize Variables
 REM
-define USR_NAME = dtgen_usr_demo -- DEMO User Username
-define MT_NAME = dtgen_mt_demo   -- Mid-Tier DEMO Schema Username
-define DB_NAME = dtgen_db_demo   -- Database DEMO Schema Username
+@vars
 
 REM Configure SQL*Plus
 REM
@@ -25,12 +23,20 @@ set define on
 prompt
 prompt This will remove the following users from the database:
 prompt
+prompt   -) &USR2_NAME.
+prompt   -) &MT2_NAME.
 prompt   -) &USR_NAME.
 prompt   -) &MT_NAME.
 prompt   -) &DB_NAME.
 prompt
 prompt Press ENTER to continue
 accept junk
+
+drop user &USR2_NAME. cascade;
+
+drop role &MT2_NAME._app;
+drop role &MT2_NAME._dml;
+drop user &MT2_NAME. cascade;
 
 drop user &USR_NAME. cascade;
 

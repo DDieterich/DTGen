@@ -2,6 +2,7 @@
 DTGen "demo" (Demonstration Exercises) README File
    Developed by DMSTEX (http://dmstex.com)
 
+
 File Descriptions in this directory:
 ------------------------------------
 asof                   - Directory for ASOF Demonstration Exercises
@@ -12,9 +13,10 @@ gui                    - Directory for GUI Demonstration Exercises
 tier                   - Directory for Tier Demonstration Exercises
 vars.sql               - Variable Declarations for scripts
 
+
 Introduction:
 -------------
-  Each demonstration directory contains several exercises.  The exercises are numbered and must be executed in sequential order.  The demo users must be created with the "create_demo_users.sql" script before the first exercise is run in any demonstration directory.  The demo users must be dropped with the "drop_demo_users.sql" script before the "create_demo_users.sql" script can be re-used.  The exercises also assume that the default username/password (dtgen/dtgen) is still in use for the generator.  Names and passwords are set at the top of each script and can be modified, if necessary.
+  Each demonstration directory contains several exercises.  The exercises are numbered and should be executed in sequential order.  Documentation for each demonstration is contained in a PDF file in the directory.  The demonstration users must be created with the "create_demo_users.sql" script before the first exercise is run in any demonstration directory.  The demonstration users must be dropped with the "drop_demo_users.sql" script before the "create_demo_users.sql" script can be re-run.  The default username/password (dtgen/dtgen) is assumed to be in use for the generator.  Names and passwords are set in the "vars.sql" script and can be modified, if necessary.
 
 
 Example Demonstration Procedure:
