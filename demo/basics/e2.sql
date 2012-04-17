@@ -22,8 +22,8 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
+WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
+WHENEVER OSERROR EXIT ROLLBACK
 set feedback off
 set trimspool on
 set define on
@@ -53,5 +53,27 @@ column column_name     clear
 select id, deptno, dname, loc from dept;
 
 select id, empno, ename, mgr_emp_id, dept_id from emp;
+
+set feedback 1
+column sal format 99999
+set echo on
+
+select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1
+ from  emp_act where dept_nk1 = 10;
+
+update dept_act
+  set  deptno = 99
+ where deptno = 10;
+
+select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1
+ from  emp_act where dept_nk1 = 99;
+
+rollback;
+
+select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1
+ from  emp_act where dept_nk1 = 10;
+
+set echo off
+column sal clear
 
 spool off
