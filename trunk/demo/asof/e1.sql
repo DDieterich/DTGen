@@ -96,14 +96,29 @@ connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
 @install_db
 
-execute util.set_usr('Demo2');
+execute glob.db_constraints := FALSE
 
 prompt
 prompt ============================================================
 
-insert into dept_act (deptno, dname, loc) values (10, 'ACCOUNTING', 'NEW YORK');
-insert into dept_act (deptno, dname, loc) values (20, 'RESEARCH', 'DALLAS');
-insert into dept_act (deptno, dname, loc) values (30, 'SALES', 'CHICAGO');
+alter trigger dept_bi disable;
+
+insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (1, 10, 'ACCOUNTING', 'NEW YORK', 'Demo2Init', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
+insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (2, 20, 'RESEARCH', 'DALLAS', 'Demo2Init', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
+insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (3, 30, 'SALES', 'CHICAGO', 'Demo2Init', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
+insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (4, 40, 'OPERATIONS', 'BOSTON', 'Demo2Init', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
+
+declare
+   junk number;
+begin
+   for i in 1 .. 4
+   loop
+      select dept_seq.nextval into junk from dual;
+   end loop;
+end;
+/
+
+alter trigger dept_bi enable;
 
 column column_name format A19
 column comments    format A60 word_wrapped
@@ -121,7 +136,7 @@ column deptno       format 99999
 column dname        format A10
 column loc          format A10
 column aud_beg_usr  format A11
-column aud_beg_dtm  format A15   truncate
+column aud_beg_dtm  format A12   truncate
 
 select deptno, dname, loc, aud_beg_usr, aud_beg_dtm from dept_act;
 
@@ -135,23 +150,63 @@ column aud_beg_dtm  clear
 prompt
 prompt ============================================================
 
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7839, 'KING', 'PRESIDENT', NULL, TO_DATE('17-NOV-1981', 'DD-MON-YYYY'), 5000, 10, TO_TIMESTAMP('17-NOV-1981', 'DD-MON-YYYY'));
+alter trigger emp_bi disable;
+alter table emp disable constraint emp_fk1;
 
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7566, 'JONES', 'MANAGER', 7839, TO_DATE('02-APR-1981', 'DD-MON-YYYY'), 2975, 20, TO_TIMESTAMP('02-APR-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7788, 'SCOTT', 'ANALYST', 7566, TO_DATE('09-DEC-1982', 'DD-MON-YYYY'), 3000, 20, TO_TIMESTAMP('09-DEC-1982', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7876, 'ADAMS', 'CLERK', 7788, TO_DATE('12-JAN-1983', 'DD-MON-YYYY'), 1100, 20, TO_TIMESTAMP('12-JAN-1983', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7902, 'FORD', 'ANALYST', 7566, TO_DATE('03-DEC-1981', 'DD-MON-YYYY'), 3000, 20, TO_TIMESTAMP('03-DEC-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7369, 'SMITH', 'CLERK', 7902, TO_DATE('17-DEC-1980', 'DD-MON-YYYY'), 800, 20, TO_TIMESTAMP('17-DEC-1980', 'DD-MON-YYYY'));
+REM  Note: Inserts into EMP_HIST can only be done by the schema owner.
 
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7698, 'BLAKE', 'MANAGER', 7839, TO_DATE('1-MAY-1981', 'DD-MON-YYYY'), 2850, NULL, 30, TO_TIMESTAMP('1-MAY-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7499, 'ALLEN', 'SALESMAN', 7698, TO_DATE('20-FEB-1981', 'DD-MON-YYYY'), 1600, 300, 30, TO_TIMESTAMP('20-FEB-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7521, 'WARD', 'SALESMAN', 7698, TO_DATE('22-FEB-1981', 'DD-MON-YYYY'), 1250, 500, 30, TO_TIMESTAMP('22-FEB-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7654, 'MARTIN', 'SALESMAN', 7698, TO_DATE('28-SEP-1981', 'DD-MON-YYYY'), 1250, 1400, 30, TO_TIMESTAMP('28-SEP-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7844, 'TURNER', 'SALESMAN', 7698, TO_DATE('08-SEP-1981', 'DD-MON-YYYY'), 1500, 0, 30, TO_TIMESTAMP('08-SEP-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, comm, dept_nk1, eff_beg_dtm) values (7900, 'JAMES', 'CLERK', 7698, TO_DATE('03-DEC-1981', 'DD-MON-YYYY'), 950, NULL, 30, TO_TIMESTAMP('03-DEC-1981', 'DD-MON-YYYY'));
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (1,7301,'ELLISON','PRESIDENT',null,to_date('1980-11-2','YYYY-MM-DD'),4000,null,1,to_date('1980-11-2','YYYY-MM-DD'),to_date('1981-6-30','YYYY-MM-DD'),'Y',to_date('1980-11-2','YYYY-MM-DD'),'DAVIS',to_date('1981-6-29','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (2,7344,'DAVIS','CLERK',1,to_date('1980-11-16','YYYY-MM-DD'),1400,null,1,to_date('1980-11-16','YYYY-MM-DD'),to_date('1981-6-23','YYYY-MM-DD'),'',to_date('1980-11-18','YYYY-MM-DD'),'DAVIS',to_date('1981-6-24','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (2,7344,'DAVIS','CLERK',11,to_date('1980-11-16','YYYY-MM-DD'),1400,null,1,to_date('1981-6-23','YYYY-MM-DD'),to_date('1981-8-21','YYYY-MM-DD'),'',to_date('1981-6-22','YYYY-MM-DD'),'SMITH',to_date('1981-8-21','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (2,7344,'DAVIS','CLERK',12,to_date('1980-11-16','YYYY-MM-DD'),1400,null,1,to_date('1981-8-21','YYYY-MM-DD'),to_date('1981-11-29','YYYY-MM-DD'),'',to_date('1981-8-20','YYYY-MM-DD'),'SMITH',to_date('1981-11-29','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (2,7344,'DAVIS','CLERK',15,to_date('1980-11-16','YYYY-MM-DD'),1400,null,1,to_date('1981-11-29','YYYY-MM-DD'),to_date('1981-12-8','YYYY-MM-DD'),'Y',to_date('1981-11-27','YYYY-MM-DD'),'SMITH',to_date('1981-12-9','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (3,7369,'SMITH','CLERK',1,to_date('1980-12-17','YYYY-MM-DD'),800,null,1,to_date('1980-12-17','YYYY-MM-DD'),to_date('1983-2-26','YYYY-MM-DD'),'',to_date('1980-12-17','YYYY-MM-DD'),'DAVIS',to_date('1983-2-24','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (3,7369,'SMITH','CLERK',11,to_date('1980-12-17','YYYY-MM-DD'),800,null,1,to_date('1981-6-23','YYYY-MM-DD'),to_date('1981-8-21','YYYY-MM-DD'),'',to_date('1981-6-20','YYYY-MM-DD'),'SMITH',to_date('1981-8-23','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (3,7369,'SMITH','CLERK',12,to_date('1980-12-17','YYYY-MM-DD'),800,null,1,to_date('1981-8-21','YYYY-MM-DD'),to_date('1981-11-29','YYYY-MM-DD'),'',to_date('1981-8-21','YYYY-MM-DD'),'SMITH',to_date('1981-11-27','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (3,7369,'SMITH','CLERK',15,to_date('1980-12-17','YYYY-MM-DD'),800,null,1,to_date('1981-11-29','YYYY-MM-DD'),to_date('1983-2-26','YYYY-MM-DD'),'',to_date('1981-11-29','YYYY-MM-DD'),'SMITH',to_date('1983-2-25','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (3,7369,'SMITH','CLERK',18,to_date('1980-12-17','YYYY-MM-DD'),800,null,2,to_date('1983-2-26','YYYY-MM-DD'),to_date('1983-2-26','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (4,7499,'ALLEN','SALESMAN',1,to_date('1981-2-20','YYYY-MM-DD'),1600,300,1,to_date('1981-2-20','YYYY-MM-DD'),to_date('1981-5-15','YYYY-MM-DD'),'',to_date('1981-2-19','YYYY-MM-DD'),'SMITH',to_date('1981-5-12','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (4,7499,'ALLEN','SALESMAN',8,to_date('1981-2-20','YYYY-MM-DD'),1600,300,3,to_date('1981-5-15','YYYY-MM-DD'),to_date('1981-5-16','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (5,7521,'WARD','SALESMAN',1,to_date('1981-2-22','YYYY-MM-DD'),1250,500,1,to_date('1981-2-22','YYYY-MM-DD'),to_date('1981-5-15','YYYY-MM-DD'),'',to_date('1981-2-24','YYYY-MM-DD'),'SMITH',to_date('1981-5-13','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (5,7521,'WARD','SALESMAN',8,to_date('1981-2-22','YYYY-MM-DD'),1250,500,3,to_date('1981-5-15','YYYY-MM-DD'),to_date('1981-5-12','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (6,7566,'JONES','MANAGER',1,to_date('1981-4-2','YYYY-MM-DD'),2975,null,2,to_date('1981-4-2','YYYY-MM-DD'),to_date('1981-6-23','YYYY-MM-DD'),'',to_date('1981-4-3','YYYY-MM-DD'),'SMITH',to_date('1981-6-25','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (6,7566,'JONES','MANAGER',11,to_date('1981-4-2','YYYY-MM-DD'),2975,null,2,to_date('1981-6-23','YYYY-MM-DD'),to_date('1981-8-21','YYYY-MM-DD'),'',to_date('1981-6-21','YYYY-MM-DD'),'SMITH',to_date('1981-8-21','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (6,7566,'JONES','MANAGER',12,to_date('1981-4-2','YYYY-MM-DD'),2975,null,2,to_date('1981-8-21','YYYY-MM-DD'),to_date('1981-11-29','YYYY-MM-DD'),'',to_date('1981-8-23','YYYY-MM-DD'),'SMITH',to_date('1981-11-29','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (6,7566,'JONES','MANAGER',15,to_date('1981-4-2','YYYY-MM-DD'),2975,null,2,to_date('1981-11-29','YYYY-MM-DD'),to_date('1981-11-27','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (7,7654,'MARTIN','SALESMAN',1,to_date('1981-4-17','YYYY-MM-DD'),1250,1400,3,to_date('1981-4-17','YYYY-MM-DD'),to_date('1981-5-15','YYYY-MM-DD'),'Y',to_date('1981-4-18','YYYY-MM-DD'),'SMITH',to_date('1981-5-15','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (8,7698,'BLAKE','MANAGER',1,to_date('1981-5-1','YYYY-MM-DD'),2850,null,3,to_date('1981-5-1','YYYY-MM-DD'),to_date('1981-6-23','YYYY-MM-DD'),'',to_date('1981-5-2','YYYY-MM-DD'),'SMITH',to_date('1981-6-21','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (8,7698,'BLAKE','MANAGER',11,to_date('1981-5-1','YYYY-MM-DD'),2850,null,3,to_date('1981-6-23','YYYY-MM-DD'),to_date('1981-8-21','YYYY-MM-DD'),'',to_date('1981-6-24','YYYY-MM-DD'),'SMITH',to_date('1981-8-23','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (8,7698,'BLAKE','MANAGER',12,to_date('1981-5-1','YYYY-MM-DD'),2850,null,3,to_date('1981-8-21','YYYY-MM-DD'),to_date('1981-11-29','YYYY-MM-DD'),'',to_date('1981-8-23','YYYY-MM-DD'),'SMITH',to_date('1981-11-29','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (8,7698,'BLAKE','MANAGER',15,to_date('1981-5-1','YYYY-MM-DD'),2850,null,3,to_date('1981-11-29','YYYY-MM-DD'),to_date('1981-11-27','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (9,7782,'CLARK','MANAGER',1,to_date('1981-6-9','YYYY-MM-DD'),2450,null,1,to_date('1981-6-9','YYYY-MM-DD'),to_date('1981-6-23','YYYY-MM-DD'),'',to_date('1981-6-9','YYYY-MM-DD'),'SMITH',to_date('1981-6-23','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (9,7782,'CLARK','MANAGER',11,to_date('1981-6-9','YYYY-MM-DD'),2450,null,1,to_date('1981-6-23','YYYY-MM-DD'),to_date('1981-8-21','YYYY-MM-DD'),'',to_date('1981-6-24','YYYY-MM-DD'),'SMITH',to_date('1981-8-21','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (9,7782,'CLARK','MANAGER',12,to_date('1981-6-9','YYYY-MM-DD'),2450,null,1,to_date('1981-8-21','YYYY-MM-DD'),to_date('1981-11-29','YYYY-MM-DD'),'',to_date('1981-8-20','YYYY-MM-DD'),'SMITH',to_date('1981-12-1','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (9,7782,'CLARK','MANAGER',15,to_date('1981-6-9','YYYY-MM-DD'),2450,null,1,to_date('1981-11-29','YYYY-MM-DD'),to_date('1981-11-28','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (10,7788,'SCOTT','ANALYST',6,to_date('1981-6-12','YYYY-MM-DD'),3000,null,2,to_date('1981-6-12','YYYY-MM-DD'),to_date('1982-3-10','YYYY-MM-DD'),'Y',to_date('1981-6-13','YYYY-MM-DD'),'SMITH',to_date('1982-3-10','YYYY-MM-DD'),'JAMES');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (11,7839,'KING','PRESIDENT',null,to_date('1981-6-16','YYYY-MM-DD'),5000,null,1,to_date('1981-6-16','YYYY-MM-DD'),to_date('1981-8-28','YYYY-MM-DD'),'Y',to_date('1981-6-13','YYYY-MM-DD'),'SMITH',to_date('1981-8-30','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (12,7840,'LANE','PRESIDENT',null,to_date('1981-8-14','YYYY-MM-DD'),6000,null,1,to_date('1981-8-14','YYYY-MM-DD'),to_date('1981-12-1','YYYY-MM-DD'),'Y',to_date('1981-8-12','YYYY-MM-DD'),'SMITH',to_date('1981-12-1','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (13,7844,'TURNER','SALESMAN',8,to_date('1981-9-8','YYYY-MM-DD'),1500,0,3,to_date('1981-9-8','YYYY-MM-DD'),to_date('1981-9-8','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (14,7654,'MARTIN','SALESMAN',8,to_date('1981-9-28','YYYY-MM-DD'),1250,1400,3,to_date('1981-9-28','YYYY-MM-DD'),to_date('1981-9-29','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (15,7839,'KING','PRESIDENT',null,to_date('1981-11-17','YYYY-MM-DD'),5000,null,1,to_date('1981-11-17','YYYY-MM-DD'),to_date('1981-11-15','YYYY-MM-DD'),'SMITH');
+insert into EMP_HIST (EMP_ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,EFF_END_DTM,LAST_ACTIVE,AUD_BEG_DTM,AUD_BEG_USR,AUD_END_DTM,AUD_END_USR) values (16,7876,'ADAMS','CLERK',6,to_date('1981-11-22','YYYY-MM-DD'),1100,null,2,to_date('1981-11-22','YYYY-MM-DD'),to_date('1982-6-15','YYYY-MM-DD'),'Y',to_date('1981-11-22','YYYY-MM-DD'),'SMITH',to_date('1982-6-13','YYYY-MM-DD'),'JAMES');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (17,7900,'JAMES','CLERK',8,to_date('1981-12-3','YYYY-MM-DD'),950,null,3,to_date('1981-12-3','YYYY-MM-DD'),to_date('1981-12-4','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (18,7902,'FORD','ANALYST',6,to_date('1981-12-3','YYYY-MM-DD'),3000,null,2,to_date('1981-12-3','YYYY-MM-DD'),to_date('1981-12-5','YYYY-MM-DD'),'SMITH');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (19,7934,'MILLER','CLERK',9,to_date('1982-1-23','YYYY-MM-DD'),1300,null,1,to_date('1982-1-23','YYYY-MM-DD'),to_date('1982-1-21','YYYY-MM-DD'),'JAMES');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (20,7788,'SCOTT','ANALYST',6,to_date('1982-12-9','YYYY-MM-DD'),3000,null,2,to_date('1982-12-9','YYYY-MM-DD'),to_date('1982-12-7','YYYY-MM-DD'),'JAMES');
+insert into EMP (ID,EMPNO,ENAME,JOB,MGR_EMP_ID,HIREDATE,SAL,COMM,DEPT_ID,EFF_BEG_DTM,AUD_BEG_DTM,AUD_BEG_USR) values (21,7876,'ADAMS','CLERK',20,to_date('1983-1-12','YYYY-MM-DD'),1100,null,2,to_date('1983-1-12','YYYY-MM-DD'),to_date('1983-1-12','YYYY-MM-DD'),'SMITH');
 
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7782, 'CLARK', 'MANAGER', 7839, TO_DATE('09-JUN-1981', 'DD-MON-YYYY'), 2450, 10, TO_TIMESTAMP('09-JUN-1981', 'DD-MON-YYYY'));
-insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1, eff_beg_dtm) values (7934, 'MILLER', 'CLERK', 7782, TO_DATE('23-JAN-1982', 'DD-MON-YYYY'), 1300, 10, TO_TIMESTAMP('23-JAN-1982', 'DD-MON-YYYY'));
+declare
+   junk number;
+begin
+   for i in 1 .. 21
+   loop
+      select emp_seq.nextval into junk from dual;
+   end loop;
+end;
+/
+
+alter table emp enable constraint emp_fk1;
+alter trigger emp_bi enable;
 
 column column_name format A19
 column comments    format A60 word_wrapped
@@ -172,11 +227,11 @@ column mgr_emp_nk1  format 9999  heading MGR_
 column hiredate     format A9
 column sal          format 9999
 column dept_nk1     format 99999 heading DEPT_
-column eff_beg_dtm  format A15   truncate
 column aud_beg_usr  format A11
+column aud_beg_dtm  format A12   truncate
 
 select empno, ename, job, mgr_emp_nk1, hiredate,
-       sal, dept_nk1, eff_beg_dtm, aud_beg_usr
+       sal, dept_nk1, aud_beg_usr, aud_beg_dtm
  from  emp_act;
 
 column empno        clear
@@ -186,7 +241,7 @@ column mgr_emp_nk1  clear
 column hiredate     clear
 column sal          clear
 column dept_nk1     clear
-column eff_beg_dtm  clear
 column aud_beg_usr  clear
+column aud_beg_dtm  clear
 
 spool off
