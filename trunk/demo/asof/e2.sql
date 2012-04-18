@@ -32,49 +32,199 @@ prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
 set serveroutput on size 1000000 format wrapped
 
-column column_name format A19
-column comments    format A60 word_wrapped
+column value        format A5
+column description  format A74 word_wrapped
 
+select value, description from domain_values_act
+ where domains_nk1 = 'DTGEN' and domains_nk2 = 'TTYPE'
+ order by seq;
 
-NEED to query the table types used in DTGen
+column value        clear
+column description  clear
 
-
-select column_name, comments
- from  user_col_comments
- where table_name  = 'TABLES'
-  and  column_name in ('TABLES_NK2', 'NAME', 'SEQ',
-       'NK', 'TYPE', 'LEN', 'FK_PREFIX', 'FK_TABLES_NK2');
-
-column column_name clear
-column comments    clear
-
-column tables_nk2    format A18
-column name          format A15
-column nk            format 999
-column type          format A15
-column fk_prefix     format A10
-column fk_tables_nk2 format A18
-
-select tables_nk2, name, seq, nk, type, len
- from  tab_cols_act
- where tables_nk1 = 'DEMO1'
-  and  nk            is not null;
-
-select tables_nk2, name, seq, fk_prefix, fk_tables_nk2
- from  tab_cols_act
- where tables_nk1    = 'DEMO1'
-  and  fk_tables_nk1 = 'DEMO1';
-
-column tables_nk2    clear
-column name          clear
-column nk            clear
-column type          clear
-column fk_prefix     clear
-column fk_tables_nk2 clear
+select seq, name, type from tables_act
+ where applications_nk1 = 'DEMO2' order by seq;
 
 prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
+
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
+
+column systimestamp  format A18   truncate
+column id            format 99
+column dept          format 999
+column loc           format A3    truncate
+column aud_beg_usr   format A11
+column aud_beg_dtm   format A18   truncate
+column aud_end_usr   format A11
+column aud_end_dtm   format A18   truncate
+
+set feedback 1
+set echo on
+
+select id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm
+  from dept_act where deptno = 50;
+select dept_id id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from dept_aud where deptno = 50;
+
+execute util.set_usr('USER1');
+select systimestamp from dual;
+insert into dept_act (deptno, dname, loc)
+  values (50, 'NEW_DEPT', 'LZ');
+
+select id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm
+  from dept_act where deptno = 50;
+select dept_id id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from dept_aud where deptno = 50;
+
+execute dbms_lock.sleep(1);
+execute util.set_usr('USER2');
+select systimestamp from dual;
+update dept_act
+  set  loc = 'LA'
+ where deptno = 50;
+
+select id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm
+  from dept_act where deptno = 50;
+select dept_id id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from dept_aud where deptno = 50;
+
+execute dbms_lock.sleep(1);
+execute util.set_usr('USER3');
+select systimestamp from dual;
+delete from dept_act where deptno = 50;
+
+select id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm
+  from dept_act where deptno = 50;
+select dept_id id, deptno dept, loc,
+  aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from dept_aud where deptno = 50;
+
+rollback;
+
+set echo off
+
+column systimestamp  clear
+column id            clear
+column dept          clear
+column loc           clear
+column aud_beg_usr   clear
+column aud_beg_dtm   clear
+column aud_end_usr   clear
+column aud_end_dtm   clear
+
+prompt
+prompt ============================================================
+
+column systimestamp  format A18   truncate
+column id            format 99
+column empno         format 9999
+column ename         format A9
+column eff_beg_dtm   format A11   truncate
+column aud_beg_usr   format A5
+column aud_beg_dtm   format A11   truncate
+column eff_end_dtm   format A11   truncate
+column aud_end_usr   format A5
+column aud_end_dtm   format A11   truncate
+
+set feedback 1
+set echo on
+
+select id, empno, ename, to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm
+  from emp_act where empno = 9999;
+select emp_id id, empno, ename,
+  to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm,
+  to_char(eff_end_dtm,'DD HH24:MI:SS') eff_end_dtm,
+  aud_end_usr, to_char(aud_end_dtm,'DD HH24:MI:SS') aud_end_dtm
+  from emp_hist where empno = 9999;
+
+execute util.set_usr('USER1');
+select systimestamp from dual;
+insert into emp_act (empno, ename, job, hiredate, sal, dept_nk1,
+     eff_beg_dtm)
+  values (9999, 'NEW_EMP', 'CLERK', sysdate, 100, 40,
+     to_timestamp('1983-6-1 11', 'YYYY-MM-DD HH24'));
+
+select id, empno, ename, to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm
+  from emp_act where empno = 9999;
+select emp_id id, empno, ename,
+  to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm,
+  to_char(eff_end_dtm,'DD HH24:MI:SS') eff_end_dtm,
+  aud_end_usr, to_char(aud_end_dtm,'DD HH24:MI:SS') aud_end_dtm
+  from emp_hist where empno = 9999;
+
+execute dbms_lock.sleep(1);
+execute util.set_usr('USER2');
+select systimestamp from dual;
+update emp_act
+  set  ename = 'UPD_EMP',
+       eff_beg_dtm = to_timestamp('1983-6-2 12', 'YYYY-MM-DD HH24')
+ where empno = 9999;
+
+select id, empno, ename, to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm
+  from emp_act where empno = 9999;
+select emp_id id, empno, ename,
+  to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm,
+  to_char(eff_end_dtm,'DD HH24:MI:SS') eff_end_dtm,
+  aud_end_usr, to_char(aud_end_dtm,'DD HH24:MI:SS') aud_end_dtm
+  from emp_hist where empno = 9999;
+
+execute dbms_lock.sleep(1);
+select systimestamp from dual;
+declare
+   eff_end_dtm  timestamp with local time zone;
+   emp_id       number;
+begin
+   util.set_usr('USER3');
+   select id into emp_id
+     from emp_act where empno = 9999;
+   eff_end_dtm := to_timestamp('1983-6-3 13', 'YYYY-MM-DD HH24');
+   emp_dml.del(emp_id, eff_end_dtm);
+end;
+/
+
+select id, empno, ename, to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm
+  from emp_act where empno = 9999;
+select emp_id id, empno, ename,
+  to_char(eff_beg_dtm,'DD HH24:MI:SS') eff_beg_dtm,
+  aud_beg_usr, to_char(aud_beg_dtm,'DD HH24:MI:SS') aud_beg_dtm,
+  to_char(eff_end_dtm,'DD HH24:MI:SS') eff_end_dtm,
+  aud_end_usr, to_char(aud_end_dtm,'DD HH24:MI:SS') aud_end_dtm
+  from emp_hist where empno = 9999;
+
+rollback;
+
+set echo off
+
+column systimestamp  clear
+column id            clear
+column empno         clear
+column ename         clear
+column eff_beg_dtm   clear
+column aud_beg_usr   clear
+column aud_beg_dtm   clear
+column eff_end_dtm   clear
+column aud_end_usr   clear
+column aud_end_dtm   clear
+
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 
 spool off
