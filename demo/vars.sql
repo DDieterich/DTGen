@@ -5,8 +5,8 @@ REM (Use @vars like an INCLUDE file)
 REM
 
 define TSPACE = users               -- Default Tablespace
-define OWNERNAME = dtgen            -- Database DEMO Schema Username
-define OWNERPASS = dtgen            -- Database DEMO Schema Password
+define OWNERNAME = dtgen            -- DTGen Generator Schema Username
+define OWNERPASS = dtgen            -- DTGen Generator Schema Password
 define DB_NAME = dtgen_db_demo      -- Database DEMO Schema Username
 define DB_PASS = dtgen              -- Database DEMO Schema Password
 define MT_NAME = dtgen_mt_demo      -- Mid-Tier DEMO Schema Username

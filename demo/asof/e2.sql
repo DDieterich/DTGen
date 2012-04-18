@@ -22,8 +22,8 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set feedback off
 set trimspool on
 set define on
@@ -49,9 +49,6 @@ prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
-
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
 
 column systimestamp  format A18   truncate
 column id            format 99
@@ -223,8 +220,5 @@ column aud_beg_dtm   clear
 column eff_end_dtm   clear
 column aud_end_usr   clear
 column aud_end_dtm   clear
-
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
 
 spool off
