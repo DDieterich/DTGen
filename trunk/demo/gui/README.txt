@@ -14,7 +14,8 @@ gui_demo.pdf - Demonstration Documentation (Acrobat format)
 e1.sql       - Default Maintenance Forms
 e2.sql       - Data Domain Filterable Grid Edit
 e3.sql       - Handling of CLOB data
-e4.sql       - Forms Development Guidelines
+e4.sql       - Comprehensive OMNI View Forms
+e5.sql       - Forms Development Guidelines
 
 
 Exercises that Modify Data
