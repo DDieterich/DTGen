@@ -1746,7 +1746,7 @@ BEGIN
        order by COL.seq )
    loop
       p('comment on column ' || tname || '.' || buff.name || ' is ''' || 
-         replace(tbuff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,CHR(39),SQ2) || ''';');
    end loop;
    p('comment on column ' || tname || '.last_active is ''Flag to indicate this as the last active record'';');
    p('');
@@ -1809,7 +1809,7 @@ BEGIN
        order by COL.seq )
    loop
       p('comment on column ' || tname || '.' || buff.name || ' is ''' || 
-         replace(tbuff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,CHR(39),SQ2) || ''';');
    end loop;
    p('');
 END create_tab_hoa;
@@ -3734,8 +3734,11 @@ BEGIN
    p('CREATE '||sp_type||' '||sp_name);
    p('   BEFORE DELETE');
    p('   ON '||tbuff.name||' FOR EACH ROW');
-   p('declare');
-   p('   x_eff_end_dtm  timestamp(9) with local time zone;');
+   if tbuff.type = 'EFF'
+   then
+      p('declare');
+      p('   x_eff_end_dtm  timestamp(9) with local time zone;');
+   end if;
    p('begin');
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -5761,9 +5764,9 @@ BEGIN
    p('create '||sp_type||' '||sp_name);
    p('   instead of delete on '||tbuff.name||'_act');
    p('   for each row');
-   p('declare');
    if tbuff.type = 'EFF'
    then
+      p('declare');
       p('   x_eff_end_dtm   timestamp(9) with local time zone;');
    end if;
    p('begin');

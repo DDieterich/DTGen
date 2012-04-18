@@ -86,10 +86,12 @@ end;
 
 prompt Capture install_db.sql Script
 set termout off
+set linesize 5000
 spool install_db.sql
 execute assemble.install_script('DEMO1', 'DB');
 
 spool install
+set linesize 80
 set termout on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
@@ -115,7 +117,7 @@ select column_name, comments
 column column_name clear
 column comments    clear
 
-select deptno, dname, loc from dept_act;
+select deptno, dname, loc from dept_act order by deptno;
 
 prompt
 prompt ============================================================
@@ -151,7 +153,8 @@ column comments    clear
 
 column sal format 99999
 
-select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1 from emp_act;
+select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1
+  from emp_act order by empno;
 
 column sal clear
 
