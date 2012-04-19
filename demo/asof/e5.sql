@@ -51,7 +51,7 @@ set echo on
 
 select empno, ename, id eid, stat, dept_id did,
        aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
- from emp_all order by empno, id;
+  from emp_all order by empno, id;
 
 execute util.set_usr('MILLER');
 
@@ -61,7 +61,10 @@ delete from emp_act
 
 select empno, ename, id eid, stat, dept_id did,
        aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
- from emp_all order by empno, id;
+  from emp_all order by empno, id;
+
+select empno, ename, id eid, dept_id did, aud_beg_usr, aud_beg_dtm
+  from emp_act where empno = 7369;
 
 rollback;
 
