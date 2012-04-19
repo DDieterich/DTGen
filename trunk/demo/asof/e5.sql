@@ -32,10 +32,12 @@ prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
 
-column stat              format A4
-column eid               format 99
 column empno             format 9999
 column ename             format A8
+column eid               format 99
+column stat              format A4
+column last_active       format A4
+column mgr_emp_id        format 9999
 column did               format 99
 column deptno            format 99
 column aud_beg_usr       format A8
@@ -66,14 +68,19 @@ select empno, ename, id eid, stat, dept_id did,
 select empno, ename, id eid, dept_id did, aud_beg_usr, aud_beg_dtm
   from emp_act where empno = 7369;
 
-rollback;
+select empno, ename, emp_id eid, last_active, mgr_emp_id, dept_id did,
+       aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from emp_hist where empno = 7369 order by aud_beg_dtm;
+
+commit;
 
 set echo off
-
-column stat              clear
-column eid               clear
 column empno             clear
 column ename             clear
+column eid               clear
+column stat              clear
+column last_active       clear
+column mgr_emp_id        clear
 column did               clear
 column deptno            clear
 column aud_beg_usr       clear
