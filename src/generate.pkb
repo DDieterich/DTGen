@@ -1554,9 +1554,9 @@ IS
    sp_name  user_errors.name%type;
 BEGIN
    p('-- Database Link to Centralized Database Server.');
-   p('-- Requires CURRENT_USER to be registered with LDAP.');
    p('create database link '||abuff.abbr||'_db');
-   p('   ' || abuff.db_auth || ' using ''' || abuff.dbid || ''';');
+   p('   ' || abuff.db_auth);
+   p('   using ''' || abuff.dbid || ''';');
    p('');
    p('create synonym pair_type for pair_type@'||abuff.abbr||'_db;');
    p('');
@@ -14706,9 +14706,19 @@ BEGIN
    fbuff.description    := 'Drop distributed integrity using generated code';
    open_file;
    p('');
-   if abuff.dbid    IS NOT NULL and
-      abuff.db_auth IS NOT NULL
+   if abuff.dbid IS NULL
    then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DB_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
       for buff in (
          select * FROM tables TAB
           where TAB.application_id = abuff.id
@@ -14736,9 +14746,19 @@ BEGIN
    fbuff.description    := 'Create distributed integrity using generated code';
    open_file;
    p('');
-   if abuff.dbid    IS NOT NULL and
-      abuff.db_auth IS NOT NULL
+   if abuff.dbid IS NULL
    then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DBA_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
       util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
       for buff in (
          select * FROM tables TAB
@@ -14757,9 +14777,9 @@ BEGIN
          create_tp_body;
          util.add_longops (1);
       END LOOP;
+      dump_sec_lines;
       util.end_longops;
    end if;
-   dump_sec_lines;
 END create_dist;
 ----------------------------------------
 PROCEDURE drop_oltp
@@ -14846,12 +14866,17 @@ END create_mods;
 PROCEDURE drop_usyn
 IS
 BEGIN
-   IF abuff.db_schema IS NOT NULL
+   fbuff.name           := 'drop_usyn';
+   fbuff.description    := 'Drop User Synonyms';
+   open_file;
+   p('');
+   IF abuff.db_schema IS NULL
    THEN
-      fbuff.name           := 'drop_usyn';
-      fbuff.description    := 'Drop User Synonyms';
-      open_file;
+      p('   --');
+      p('   -- DB_SCHEMA is not defined in APPICATIONS');
+      p('   --');
       p('');
+   ELSE
       for buff in (
          select * FROM tables TAB
           where TAB.application_id = abuff.id
@@ -14870,12 +14895,17 @@ END drop_usyn;
 PROCEDURE create_usyn
 IS
 BEGIN
-   IF abuff.db_schema IS NOT NULL
+   fbuff.name           := 'create_usyn';
+   fbuff.description    := 'Create Synonyms for Users';
+   open_file;
+   p('');
+   IF abuff.db_schema IS NULL
    THEN
-      fbuff.name           := 'create_usyn';
-      fbuff.description    := 'Create Synonyms for Users';
-      open_file;
+      p('   --');
+      p('   -- DB_SCHEMA is not defined in APPLICATIONS');
+      p('   --');
       p('');
+   ELSE
       create_gsyn;
       for buff in (
          select * FROM tables TAB
@@ -14892,15 +14922,30 @@ END create_usyn;
 PROCEDURE create_flow
 IS
 BEGIN
-   IF abuff.apex_schema   IS NOT NULL AND
-      abuff.apex_ws_name  IS NOT NULL AND
-      abuff.apex_app_name IS NOT NULL
+   fbuff.name        := 'create_flow';
+   fbuff.description := 'APEX flow export file used to create APEX objects';
+   open_file;
+   p('');
+   IF abuff.apex_schema IS NULL
    THEN
-      fbuff.name        := 'create_flow';
-      fbuff.description := 'APEX flow export file used to create APEX objects';
-      util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
-      open_file;
+      p('   ---');
+      p('   --- APEX_SCHEMA is not defined in APPLICATIONS');
+      p('   ---');
       p('');
+   ELSIF abuff.apex_ws_name IS NULL
+   THEN
+      p('   ---');
+      p('   --- APEX_WS_NAME is not defined in APPLICATIONS');
+      p('   ---');
+      p('');
+   ELSIF abuff.apex_app_name IS NULL
+   THEN
+      p('   ---');
+      p('   --- APEX_APP_NAME is not defined in APPLICATIONS');
+      p('   ---');
+      p('');
+   ELSE
+      util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
       init_flow;
       app_flow;            -- Generate Application Shared Components
       p('');

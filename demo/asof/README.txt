@@ -7,7 +7,7 @@ File Descriptions in this directory:
 ------------------------------------
 asof_demo.odt - Demonstration Documentation (OpenOffice format)
 asof_demo.pdf - Demonstration Documentation (Acrobat format)
-data.ods      - Exercise #1 Data Load Spreadsheet (OpenOffice)
+data.ods      - Exercise #1: Data Load Spreadsheet (OpenOffice)
 e1.sql        - Exercise #1: Entity Based History and Audit
 e2.sql        - Exercise #2: EFF vs. LOG Table Types
 e3.sql        - Exercise #3: Point-in-Time ASOF Views
