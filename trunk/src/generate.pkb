@@ -863,8 +863,6 @@ PROCEDURE drop_globals
 IS
 BEGIN
    p('drop package glob;');
-   p('drop type col_type;');
-   p('drop type pair_type;');
 END drop_globals;
 ----------------------------------------
 PROCEDURE create_globals
@@ -873,22 +871,6 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
 BEGIN
-   p('-- Setup Varray Structures for Name/Value Pair Storage');
-   p('create type pair_type as object');
-   p('   (name  varchar2(30)');
-   p('   ,data  varchar2(32767)');
-   p('   );');
-   p('/');
-   show_errors('TYPE', 'PAIR_TYPE');
-   ps('');
-   ps('grant execute on pair_type to '||abuff.abbr||'_dml;');
-   p('');
-   p('create type col_type as varray(100) of pair_type;');
-   p('/');
-   show_errors('TYPE', 'COL_TYPE');
-   ps('');
-   ps('grant execute on col_type to '||abuff.abbr||'_dml;');
-   p('');
    sp_type := 'package';
    sp_name := 'glob';
    p('CREATE ' || sp_type || ' ' || sp_name);
@@ -1074,6 +1056,8 @@ IS
 BEGIN
    p('drop package util;');
    p('drop table util_log;');
+   p('drop type col_type;');
+   p('drop type pair_type;');
 END drop_util;
 ----------------------------------------
 PROCEDURE create_util
@@ -1082,6 +1066,22 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
 BEGIN
+   p('-- Setup Varray Structures for Name/Value Pair Storage');
+   p('create type pair_type as object');
+   p('   (name  varchar2(30)');
+   p('   ,data  varchar2(32767)');
+   p('   );');
+   p('/');
+   show_errors('TYPE', 'PAIR_TYPE');
+   ps('');
+   ps('grant execute on pair_type to '||abuff.abbr||'_dml;');
+   p('');
+   p('create type col_type as varray(100) of pair_type;');
+   p('/');
+   show_errors('TYPE', 'COL_TYPE');
+   ps('');
+   ps('grant execute on col_type to '||abuff.abbr||'_dml;');
+   p('');
    sp_type := 'package';
    sp_name := 'util';
    p('');
@@ -1542,8 +1542,6 @@ PROCEDURE drop_gd
 IS
 BEGIN
    p('drop synonym glob;');
-   p('drop synonym col_type;');
-   p('drop synonym pair_type;');
    p('drop database link '|| abuff.abbr ||'_db;');
 END drop_gd;
 ----------------------------------------
@@ -1557,10 +1555,6 @@ BEGIN
    p('create database link '||abuff.abbr||'_db');
    p('   ' || abuff.db_auth);
    p('   using ''' || abuff.dbid || ''';');
-   p('');
-   p('create synonym pair_type for pair_type@'||abuff.abbr||'_db;');
-   p('');
-   p('create synonym col_type for col_type@'||abuff.abbr||'_db;');
    p('');
    p('create synonym glob for glob@'||abuff.abbr||'_db;');
    p('');
@@ -1594,7 +1588,8 @@ END delete_tab;
 PROCEDURE create_tab_act
    --  For a tbuff, create the tables
 IS
-   tname  varchar2(30);
+   tname    varchar2(30);
+   col_cnt  number;
 BEGIN
    --  For a tbuff, create the sequence
    p('create sequence '||tbuff.name||'_seq;');
@@ -1615,11 +1610,20 @@ BEGIN
       -- Note: aud_beg_dtm and aud_end_dtm must be in nanoseconds
       p('   ,aud_beg_dtm   timestamp(9) with local time zone');
    end if;
+   col_cnt := 0;
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
+      col_cnt := col_cnt + 1;
+	  if col_cnt > 99
+	  then
+	     -- This is a constraint of the APEX GUI and the
+	     --    COL_TYPE varray.
+         raise_application_error(-20000, 'Error in table ' || tbuff.name ||
+            ', too many columns.  Reduce number of columns below 99.');
+	  end if;
       p('   ,'||buff.name||'   '||get_dtype_full(buff, 'DB'));
    end loop;
    if tbuff.ts_onln_data is not null
@@ -4455,7 +4459,7 @@ BEGIN
       p('alter view ' || sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || ' (id) disable;');
+                         get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_act;
@@ -4714,7 +4718,7 @@ BEGIN
          p('alter view ' || sp_name || ' add constraint ' ||
                             sp_name || '_' || 'fk' || fkseq);
          p('   foreign key (' || buff.name || ') references ' ||
-                             get_tabname(buff.fk_table_id) || ' (id) disable;');
+                            get_tabname(buff.fk_table_id) || '_act (id) disable;');
       end loop;
       p('');
    end if;
@@ -5097,7 +5101,7 @@ BEGIN
       p('alter view ' || sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || ' (id) disable;');
+                          get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_all;
@@ -5323,7 +5327,7 @@ BEGIN
          p('alter view ' || sp_name || ' add constraint ' ||
                             sp_name || '_' || 'fk' || fkseq);
          p('   foreign key (' || buff.name || ') references ' ||
-                             get_tabname(buff.fk_table_id) || ' (id) disable;');
+                             get_tabname(buff.fk_table_id) || '_act (id) disable;');
       end loop;
       p('');
    end if;
@@ -5588,7 +5592,7 @@ BEGIN
       p('alter view ' || sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || ' (id) disable;');
+                          get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_asof;
@@ -7253,8 +7257,6 @@ BEGIN
    p('');
    p('drop synonym glob;');
    p('drop synonym util;');
-   p('drop synonym col_type;');
-   p('drop synonym pair_type;');
    p('');
 END drop_gsyn;
 ----------------------------------------
@@ -7262,10 +7264,6 @@ PROCEDURE create_gsyn
    --  Create the user's global and package synonyms
 IS
 BEGIN
-   p('create synonym pair_type');
-   p('   for '||abuff.db_schema||'.pair_type;');
-   p('create synonym col_type');
-   p('   for '||abuff.db_schema||'.col_type;');
    p('create synonym util');
    p('   for '||abuff.db_schema||'.util;');
    p('create synonym util_log');
@@ -14816,7 +14814,7 @@ PROCEDURE create_oltp
 IS
 BEGIN
    fbuff.name           := 'create_oltp';
-   fbuff.description    := 'Create Online Data Store using generated code';
+   fbuff.description    := 'Create Online Transaction Processing using generated code';
    util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    open_file;
    p('');

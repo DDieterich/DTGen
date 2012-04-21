@@ -46,7 +46,7 @@ delete from files_act where applications_nk1 = 'DEMO3';
 delete from applications_act where abbr = 'DEMO3';
 
 prompt create a DEMO3 Schema in DTGEN
-insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen ASOF Demonstration', 'dtgen_mt_demo', 'XE', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Demonstrates history and audit capabilities of DTGen');
+insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'XE', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Demonstrates history and audit capabilities of DTGen');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO3', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO3', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -103,9 +103,6 @@ set serveroutput on size 1000000 format wrapped
 @install_db
 
 execute glob.db_constraints := FALSE
-
-prompt
-prompt ============================================================
 
 alter trigger dept_bi disable;
 
@@ -186,6 +183,21 @@ end;
 alter table emp enable constraint emp_fk1;
 alter trigger emp_bi enable;
 
+set linesize 120
+set pagesize 5000
+set echo on
+
+explain plan set statement_id = 'D3_E1_Q1'
+   into plan_table for select * from emp_act where empno = 7900;
+
+select plan_table_output from table (
+  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q1')
+                                    );
+
+set echo off
+set linesize 80
+set pagesize 24
+
 prompt
 prompt ============================================================
 
@@ -194,155 +206,19 @@ connect &MT_NAME./&MT_PASS.
 set serveroutput on size 1000000 format wrapped
 @install_mt
 
-exit
+set linesize 120
+set pagesize 5000
+set echo on
 
-explain plan to show tiered access
-file:///C:/OracleDocs/Oracle10gR2_DB_Docs/server.102/b14211/ex_plan.htm#i18300
+explain plan set statement_id = 'D3_E1_Q2'
+   into plan_table for select * from emp_act where empno = 7900;
 
-column column_name format A19
-column comments    format A60 word_wrapped
+select plan_table_output from table (
+  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q2')
+                                    );
 
-select column_name, comments
- from  user_col_comments
- where table_name  = 'DEPT_ACT'
-  and  column_name in ('ID', 'DEPTNO', 'DNAME', 'LOC', 'AUD_BEG_USR', 'AUD_BEG_DTM');
-
-column column_name clear
-column comments    clear
-
-column id           format 99
-column deptno       format 99999
-column dname        format A10
-column loc          format A8
-column aud_beg_usr  format A11
-column aud_beg_dtm  format A12   truncate
-
-select id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm from dept_act;
-
-column id           clear
-column deptno       clear
-column dname        clear
-column loc          clear
-column aud_beg_usr  clear
-column aud_beg_dtm  clear
-
-prompt
-prompt ============================================================
-
-column column_name format A19
-column comments    format A60 word_wrapped
-
-select column_name, comments
- from  user_col_comments
- where table_name  = 'EMP_ACT'
-  and  column_name in ('ID', 'EMPNO', 'ENAME', 'JOB', 'MGR_EMP_NK1',
-       'HIREDATE', 'SAL', 'DEPT_NK1', 'AUD_BEG_DTM', 'AUD_BEG_USR');
-
-column column_name clear
-column comments    clear
-
-column id           format 99
-column empno        format 9999
-column ename        format A6
-column job          format A9
-column mgr_emp_nk1  format 9999  heading MGR_
-column hiredate     format A9
-column sal          format 9999
-column dept_nk1     format 99999 heading DEPT_
-column aud_beg_usr  format A11
-column aud_beg_dtm  format A12   truncate
-
-select id, empno, ename, job, mgr_emp_nk1, hiredate,
-       sal, dept_nk1, aud_beg_usr, aud_beg_dtm
- from  emp_act
- order by empno;
-
-column id           clear
-column empno        clear
-column ename        clear
-column job          clear
-column mgr_emp_nk1  clear
-column hiredate     clear
-column sal          clear
-column dept_nk1     clear
-column aud_beg_usr  clear
-column aud_beg_dtm  clear
-
-prompt
-prompt ============================================================
-
-column column_name format A19
-column comments    format A60 word_wrapped
-
-select column_name, comments
- from  user_col_comments
- where table_name  = 'DEPT_AUD'
-  and  column_name in ('DEPT_ID', 'DEPTNO', 'DNAME', 'LOC',
-    'AUD_BEG_USR', 'AUD_BEG_DTM', 'AUD_END_USR', 'AUD_END_DTM');
-
-column column_name clear
-column comments    clear
-
-column dept_id      format 999999
-column deptno       format 99999
-column dname        format A10
-column loc          format A8
-column aud_beg_usr  format A8      truncate
-column aud_beg_dtm  format A9      truncate
-column aud_end_usr  format A8      truncate
-column aud_end_dtm  format A9      truncate
-
-select dept_id, deptno, dname, loc, aud_beg_usr,
-       aud_beg_dtm, aud_end_usr, aud_end_dtm
-  from dept_aud order by dept_id;
-
-column dept_id      clear
-column deptno       clear
-column dname        clear
-column loc          clear
-column aud_beg_usr  clear
-column aud_beg_dtm  clear
-column aud_end_usr  clear
-column aud_end_dtm  clear
-
-prompt
-prompt ============================================================
-
-column column_name format A19
-column comments    format A60 word_wrapped
-
-select column_name, comments
- from  user_col_comments
- where table_name  = 'EMP_HIST'
-  and  column_name in ('EMP_ID', 'EMPNO', 'ENAME', 'JOB', 'MGR_EMP_ID',
-       'AUD_BEG_DTM', 'AUD_BEG_USR', 'AUD_END_DTM', 'AUD_END_USR');
-
-column column_name clear
-column comments    clear
-
-column emp_id       format 99999
-column empno        format 9999
-column ename        format A8
-column job          format A9
-column mgr_emp_id   format 9999  heading MGR_
-column aud_beg_usr  format A8
-column aud_beg_dtm  format A9    truncate
-column aud_end_usr  format A8
-column aud_end_dtm  format A9    truncate
-
-select empno, emp_id, ename, job, mgr_emp_id,
-       aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
- from  emp_hist
- order by empno, emp_id, aud_beg_dtm;
-
-column emp_id       clear
-column empno        clear
-column ename        clear
-column job          clear
-column mgr_emp_id   clear
-column aud_beg_usr  clear
-column aud_beg_dtm  clear
-column aud_end_usr  clear
-column aud_end_dtm  clear
+set echo off
+set linesize 80
+set pagesize 24
 
 spool off
