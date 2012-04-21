@@ -74,39 +74,6 @@ grant create synonym to &USR_NAME.;
 grant &DB_NAME._app to &USR_NAME.;
 grant &MT_NAME._app to &USR_NAME.;
 
-prompt Create MT2 Schema Owner
-
-create user &MT2_NAME. identified by &MT2_PASS.
-   default tablespace &TSPACE.
-   temporary tablespace temp;
-
-alter user &MT2_NAME.
-   quota unlimited on &TSPACE.;
-
-grant connect to &MT2_NAME.;
-grant resource to &MT2_NAME.;
-grant create view to &MT2_NAME.;
-grant create database link to &MT2_NAME.;
-grant create materialized view to &MT2_NAME.;
-grant create synonym to &MT2_NAME.;
-grant DEBUG CONNECT SESSION to &MT2_NAME.;
-grant DEBUG ANY PROCEDURE to &MT2_NAME.;
-grant execute on DBMS_LOCK to &MT2_NAME.;
-
-create role &MT2_NAME._dml;
-create role &MT2_NAME._app;
-grant &MT2_NAME._app to &MT2_NAME._dml;
-
-prompt Create User2
-
-create user &USR2_NAME. identified by &USR2_PASS.
-   default tablespace &TSPACE.
-   temporary tablespace temp;
-grant connect to &USR2_NAME.;
-grant create synonym to &USR2_NAME.;
-grant &DB_NAME._app to &USR2_NAME.;
-grant &MT_NAME._app to &USR2_NAME.;
-
 spool off
 
 exit

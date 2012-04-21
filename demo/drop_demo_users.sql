@@ -23,20 +23,12 @@ set define on
 prompt
 prompt This will remove the following users from the database:
 prompt
-prompt   -) &USR2_NAME.
-prompt   -) &MT2_NAME.
 prompt   -) &USR_NAME.
 prompt   -) &MT_NAME.
 prompt   -) &DB_NAME.
 prompt
 prompt Press ENTER to continue
 accept junk
-
-drop user &USR2_NAME. cascade;
-
-drop role &MT2_NAME._app;
-drop role &MT2_NAME._dml;
-drop user &MT2_NAME. cascade;
 
 drop user &USR_NAME. cascade;
 

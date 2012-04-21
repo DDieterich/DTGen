@@ -34,3 +34,5 @@ sqlplus /nolog @e8
 sqlplus /nolog @e9
 cd ..
 sqlplus system/password @drop_demo_user
+
+NOTE: drop_demo_user may have to be run twice to successfully drop all users.
