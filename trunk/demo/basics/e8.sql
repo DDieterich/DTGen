@@ -85,6 +85,8 @@ end;
 select id, empno, ename, job, sal, mgr_emp_nk1, dept_nk1
   from emp_act where ename = 'BOGUS';
 
+describe emp_dml
+
 begin
    dbms_output.enable;
    glob.fold_strings := TRUE;

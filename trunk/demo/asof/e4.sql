@@ -92,7 +92,7 @@ declare
    emp_id  number;
 begin
    select id into emp_id from emp_act where empno = 7902;
-   emp_pop.at_server(emp_id);
+   emp_dml.pop(emp_id);
 end;
 /
 

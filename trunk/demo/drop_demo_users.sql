@@ -39,6 +39,9 @@ drop user &MT_NAME. cascade;
 drop role &DB_NAME._app;
 drop role &DB_NAME._dml;
 drop user &DB_NAME. cascade;
+prompt If the above statement failed with "user that is currently connected", then
+prompt    re-run this script
+prompt
 
 spool off
 

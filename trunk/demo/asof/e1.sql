@@ -79,6 +79,7 @@ begin
    generate.create_ods;
    generate.create_integ;
    generate.create_oltp;
+   generate.create_aa;
    generate.create_mods;
    commit;
 end;
