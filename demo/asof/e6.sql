@@ -118,25 +118,25 @@ end;
 
 commit;
 
-execute util.set_asof_dtm(to_timestamp('1983-01-01', 'YYYY-MM-DD'))
+execute glob.set_asof_dtm(to_timestamp('1983-01-01', 'YYYY-MM-DD'))
 
 select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
  from  emp_asof e, dept_asof d where e.dept_id = d.id
  order by empno;
 
-execute util.set_asof_dtm(to_timestamp('1982-01-01', 'YYYY-MM-DD'))
+execute glob.set_asof_dtm(to_timestamp('1982-01-01', 'YYYY-MM-DD'))
 
 select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
  from  emp_asof e, dept_asof d where e.dept_id = d.id
  order by empno;
 
-execute util.set_asof_dtm(to_timestamp('1981-09-01', 'YYYY-MM-DD'))
+execute glob.set_asof_dtm(to_timestamp('1981-09-01', 'YYYY-MM-DD'))
 
 select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
  from  emp_asof e, dept_asof d where e.dept_id = d.id
  order by empno;
 
-execute util.set_asof_dtm(to_timestamp('1981-06-01', 'YYYY-MM-DD'))
+execute glob.set_asof_dtm(to_timestamp('1981-06-01', 'YYYY-MM-DD'))
 
 select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
  from  emp_asof e, dept_asof d where e.dept_id = d.id

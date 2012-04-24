@@ -27,10 +27,10 @@ WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
 set define on
-
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
 set serveroutput on size 1000000 format wrapped
+set define off
 
 prompt Remove old DEMO3 Schema from DTGEN
 delete from exceptions_act where applications_nk1 = 'DEMO3';
@@ -46,7 +46,7 @@ delete from files_act where applications_nk1 = 'DEMO3';
 delete from applications_act where abbr = 'DEMO3';
 
 prompt create a DEMO3 Schema in DTGEN
-insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'XE', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Demonstrates history and audit capabilities of DTGen');
+insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'loopback', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Demonstrates history and audit capabilities of DTGen');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO3', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO3', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -81,6 +81,7 @@ begin
    generate.create_ods;
    generate.create_integ;
    generate.create_oltp;
+   generate.create_aa;
    generate.create_mods;
    commit;
 end;
@@ -94,13 +95,21 @@ execute assemble.install_script('DEMO3', 'DB');
 spool install_mt.sql
 execute assemble.install_script('DEMO3', 'MT');
 
+------------------------------------------------------------
+
 spool install
 set linesize 80
 set termout on
+set define on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 @install_db
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
+set define off
 
 execute glob.db_constraints := FALSE
 
@@ -188,7 +197,7 @@ set pagesize 5000
 set echo on
 
 explain plan set statement_id = 'D3_E1_Q1'
-   into plan_table for select * from emp_act where empno = 7900;
+   into plan_table for select * from emp where empno = 7900;
 
 select plan_table_output from table (
   dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q1')
@@ -196,22 +205,24 @@ select plan_table_output from table (
 
 set echo off
 set linesize 80
-set pagesize 24
+set pagesize 14
 
 prompt
 prompt ============================================================
 
+set define on
 prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.
 set serveroutput on size 1000000 format wrapped
-@install_mt
+@install_mt @1
+set define off
 
 set linesize 120
 set pagesize 5000
 set echo on
 
 explain plan set statement_id = 'D3_E1_Q2'
-   into plan_table for select * from emp_act where empno = 7900;
+   into plan_table for select * from emp where empno = 7900;
 
 select plan_table_output from table (
   dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q2')
@@ -220,5 +231,65 @@ select plan_table_output from table (
 set echo off
 set linesize 80
 set pagesize 24
+
+column id           format 99
+column deptno       format 99999
+column dname        format A10
+column loc          format A8
+column dept_id      format 999999
+column empno        format 9999
+column ename        format A8
+column job          format A9
+column mgr_emp_nk1  format 9999  heading MGR_
+column hiredate     format A9
+column sal          format 9999
+column dept_nk1     format 99999 heading DEPT_
+column emp_id       format 99999
+column mgr_emp_id   format 9999  heading MGR_
+column aud_beg_usr  format A8      truncate
+column aud_beg_dtm  format A9      truncate
+column aud_end_usr  format A8      truncate
+column aud_end_dtm  format A9      truncate
+
+set echo on
+
+select deptno, id, dname, loc, aud_beg_usr, aud_beg_dtm
+  from dept_act order by deptno, id;
+
+select deptno, dept_id, dname, loc, aud_beg_usr,
+       aud_beg_dtm, aud_end_usr, aud_end_dtm
+  from dept_aud
+ order by deptno, dept_id, aud_beg_dtm;
+
+select empno, id, ename, job, mgr_emp_nk1, hiredate,
+       sal, dept_nk1, aud_beg_usr, aud_beg_dtm
+ from  emp_act
+ order by empno, id;
+
+select empno, emp_id, ename, job, mgr_emp_id,
+       aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
+ from  emp_hist
+ order by empno, emp_id, aud_beg_dtm;
+
+set echo off
+
+column id           clear
+column deptno       clear
+column dname        clear
+column loc          clear
+column dept_id      clear
+column empno        clear
+column ename        clear
+column job          clear
+column mgr_emp_nk1  clear
+column hiredate     clear
+column sal          clear
+column dept_nk1     clear
+column emp_id       clear
+column mgr_emp_id   clear
+column aud_beg_usr  clear
+column aud_beg_dtm  clear
+column aud_end_usr  clear
+column aud_end_dtm  clear
 
 spool off

@@ -44,6 +44,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    -- Drop/Delete Scripts
    procedure drop_usyn;
    procedure drop_mods;
+   procedure drop_aa;
    procedure drop_oltp;
    procedure drop_dist;
    procedure drop_integ;
@@ -59,6 +60,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure create_integ;
    procedure create_dist;
    procedure create_oltp;
+   procedure create_aa;
    procedure create_mods;
    procedure create_usyn;
 

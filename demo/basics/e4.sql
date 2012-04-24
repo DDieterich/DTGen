@@ -76,7 +76,8 @@ update emp_act
 
 select empno, ename, job, mgr_emp_nk1, hiredate,
  sal, dept_nk1 from emp_act
- where dept_nk1 = 40;
+ where dept_nk1 = 40
+ order by empno;
 
 set echo off
 column sal clear
