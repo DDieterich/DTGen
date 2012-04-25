@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #1, Entity Based History and Audit
+REM ASOF Demonstration, Exercise #1, Entity Based History and Audit
 REM   (sqlplus /nolog @e1)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com

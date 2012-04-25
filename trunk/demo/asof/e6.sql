@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #6, Transportable ASOF Data
+REM ASOF Demonstration, Exercise #6, Transportable ASOF Data
 REM   (sqlplus /nolog @e6)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com

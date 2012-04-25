@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #1, Simple Mid-Tier
+REM Tiers Demonstration, Exercise #1, Simple Mid-Tier
 REM   (sqlplus /nolog @e1)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com
@@ -111,7 +111,7 @@ WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set define off
 
-execute glob.db_constraints := FALSE
+execute glob.set_db_constraints(FALSE);
 
 alter trigger dept_bi disable;
 
@@ -200,8 +200,7 @@ explain plan set statement_id = 'D3_E1_Q1'
    into plan_table for select * from emp where empno = 7900;
 
 select plan_table_output from table (
-  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q1')
-                                    );
+  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q1') );
 
 set echo off
 set linesize 80
@@ -225,8 +224,7 @@ explain plan set statement_id = 'D3_E1_Q2'
    into plan_table for select * from emp where empno = 7900;
 
 select plan_table_output from table (
-  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q2')
-                                    );
+  dbms_xplan.display('PLAN_TABLE', 'D3_E1_Q2') );
 
 set echo off
 set linesize 80

@@ -21,6 +21,12 @@ set feedback off
 set serveroutput on
 set define on
 
+prompt create_roles
+
+create role DEMO3_dml;
+create role DEMO3_app;
+grant DEMO3_app to DEMO3_dml;
+
 prompt Create DB Schema Owner
 
 create user &DB_NAME. identified by &DB_PASS.
@@ -38,10 +44,6 @@ grant DEBUG ANY PROCEDURE to &DB_NAME.;
 grant execute on DBMS_LOCK to &DB_NAME.;
 -- Required for Tiers Demonstration
 grant select on v_$database to dtgen;
-
-create role &DB_NAME._dml;
-create role &DB_NAME._app;
-grant &DB_NAME._app to &DB_NAME._dml;
 
 prompt Create MT Schema Owner
 
@@ -62,10 +64,6 @@ grant DEBUG CONNECT SESSION to &MT_NAME.;
 grant DEBUG ANY PROCEDURE to &MT_NAME.;
 grant execute on DBMS_LOCK to &MT_NAME.;
 
-create role &MT_NAME._dml;
-create role &MT_NAME._app;
-grant &MT_NAME._app to &MT_NAME._dml;
-
 prompt Create User
 
 create user &USR_NAME. identified by &USR_PASS.
@@ -73,8 +71,7 @@ create user &USR_NAME. identified by &USR_PASS.
    temporary tablespace temp;
 grant connect to &USR_NAME.;
 grant create synonym to &USR_NAME.;
-grant &DB_NAME._app to &USR_NAME.;
-grant &MT_NAME._app to &USR_NAME.;
+grant DEMO3_app to &USR_NAME.;
 
 spool off
 

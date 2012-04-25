@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #2, EFF vs. LOG Table Types
+REM ASOF Demonstration, Exercise #2, EFF vs. LOG Table Types
 REM   (sqlplus /nolog @e2)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com

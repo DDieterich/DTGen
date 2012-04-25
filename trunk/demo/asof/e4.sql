@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #4, Audited POP Functions
+REM ASOF Demonstration, Exercise #4, Audited POP Functions
 REM   (sqlplus /nolog @e4)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com

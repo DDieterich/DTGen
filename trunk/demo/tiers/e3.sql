@@ -1,6 +1,6 @@
 
 REM
-REM ASOF Demonstration, Exercise #3, Point-in-Time ASOF Views
+REM Tiers Demonstration, Exercise #3, User Security
 REM   (sqlplus /nolog @e3)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com
@@ -22,15 +22,48 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
 set define on
 
-prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+prompt Login to &OWNERNAME.
+connect &OWNERNAME./&OWNERPASS.
 set serveroutput on size 1000000 format wrapped
+
+prompt Generate DEMO3 Application
+begin
+   util.set_usr('DEMO3');
+   generate.init('DEMO3');
+   generate.create_usyn;
+   commit;
+end;
+/
+
+prompt Capture install_mt_sec.sql and install_usr.sql Scripts
+set termout off
+set linesize 5000
+
+spool install_mt_sec.sql
+execute assemble.install_script('DEMO3', 'MT', 'sec');
+spool install_usr.sql
+execute assemble.install_script('DEMO3', 'USR');
+spool install_mt_sec
+
+set linesize 80
+set termout on
+
+prompt Login to &MT_NAME.
+connect &MT_NAME./&MT_PASS.
+set serveroutput on size 1000000 format wrapped
+@install_mt_sec
+
+spool install_usr
+prompt Login to &USR_NAME.
+connect &USR_NAME./&USR_PASS.
+set serveroutput on size 1000000 format wrapped
+@install_usr
 
 column empno        format 9999
 column ename        format A8
@@ -42,26 +75,7 @@ column deptno       format 99999
 column dname        format A10
 column loc          format A8
 
-set feedback 1
 set echo on
-
-execute glob.set_asof_dtm(to_timestamp('1983-01-01', 'YYYY-MM-DD'))
-
-select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
- from  emp_asof e, dept_asof d where e.dept_id = d.id
- order by empno;
-
-execute glob.set_asof_dtm(to_timestamp('1982-01-01', 'YYYY-MM-DD'))
-
-select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
- from  emp_asof e, dept_asof d where e.dept_id = d.id
- order by empno;
-
-execute glob.set_asof_dtm(to_timestamp('1981-09-01', 'YYYY-MM-DD'))
-
-select empno, ename, job, mgr_emp_nk1, hiredate, sal, deptno, dname, loc
- from  emp_asof e, dept_asof d where e.dept_id = d.id
- order by empno;
 
 execute glob.set_asof_dtm(to_timestamp('1981-06-01', 'YYYY-MM-DD'))
 
