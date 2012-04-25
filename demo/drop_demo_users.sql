@@ -21,24 +21,24 @@ set serveroutput on
 set define on
 
 prompt
-prompt This will remove the following users from the database:
+prompt This will remove the following roles and users from the database:
 prompt
-prompt   -) &USR_NAME.
-prompt   -) &MT_NAME.
-prompt   -) &DB_NAME.
+prompt   -) DEMO3_app role
+prompt   -) DEMO3_dml role
+prompt   -) &USR_NAME. user
+prompt   -) &MT_NAME. user
+prompt   -) &DB_NAME. user
 prompt
 prompt Press ENTER to continue
 accept junk
 
+drop role DEMO3_app;
+drop role DEMO3_dml;
+
 drop user &USR_NAME. cascade;
-
-drop role &MT_NAME._app;
-drop role &MT_NAME._dml;
 drop user &MT_NAME. cascade;
-
-drop role &DB_NAME._app;
-drop role &DB_NAME._dml;
 drop user &DB_NAME. cascade;
+
 prompt If the above statement failed with "user that is currently connected", then
 prompt    re-run this script
 prompt

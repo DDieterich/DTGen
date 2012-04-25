@@ -1,6 +1,6 @@
 
 REM
-REM Basic Demonstration, Exercise #5, All Instances View
+REM ASOF Demonstration, Exercise #5, All Instances View
 REM   (sqlplus /nolog @e5)
 REM
 REM Copyright (c) 2012, Duane.Dieterich@gmail.com
