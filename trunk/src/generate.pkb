@@ -1170,7 +1170,8 @@ BEGIN
    p('      ,eff_dtm_in  in  timestamp);');
    p('');
    p('   function request_lock');
-   p('         (lockname_in  in  varchar2)');
+   p('         (lockname_in  in  varchar2');
+   p('         ,timeout_in   in  INTEGER  default null)');
    p('      return varchar2;');
    p('   function release_lock');
    p('      return varchar2;');
@@ -1198,12 +1199,8 @@ BEGIN
    p('fold_strings          boolean := true;');
    p('asof_dtm              timestamp with time zone := ');
    p('   to_timestamp_tz(''2010-01-01 00:00:00 UTC'',''YYYY-MM-DD HH24:MI:SS TZR'');');
-   p('st_expiration_specs   INTEGER;        -- Single Threaded DBMS_LOCK');
    p('st_lockhandle         varchar2(128);  -- Single Threaded DBMS_LOCK');
-   p('st_lockmode           INTEGER;        -- Single Threaded DBMS_LOCK');
    p('st_lockname           varchar2(128);  -- Single Threaded DBMS_LOCK');
-   p('st_release_on_commit  BOOLEAN;        -- Single Threaded DBMS_LOCK');
-   p('st_timeout            number;         -- Single Threaded DBMS_LOCK');
    p('');
    p('----------------------------------------');
    p('procedure set_db_constraints');
@@ -1264,8 +1261,18 @@ BEGIN
    p('   null;');
    p('end upd_early_eff;');
    p('----------------------------------------');
+   p('procedure allocate_lock');
+   p('is');
+   p('   PRAGMA AUTONOMOUS_TRANSACTION;');
+   p('begin');
+   p('   dbms_lock.allocate_unique(lockname        => st_lockname');
+   p('                            ,lockhandle      => st_lockhandle');
+   p('                            ,expiration_secs => 43200);');
+   p('end allocate_lock;');
+   p('----------------------------------------');
    p('function request_lock');
-   p('      (lockname_in  in  varchar2)');
+   p('      (lockname_in  in  varchar2');
+   p('      ,timeout_in   in  INTEGER  default null)');
    p('   return varchar2');
    p('is');
    p('   retcd number;');
@@ -1279,17 +1286,12 @@ BEGIN
    p('         return ''RELEASE ONLY'';');
    p('      end if;');
    p('   end if;');
-   p('   st_expiration_specs  := 3000;');
-   p('   st_lockmode          := DBMS_LOCK.X_MODE;');
-   p('   st_lockname          := lockname_in;');
-   p('   st_release_on_commit := FALSE;');
-   p('   st_timeout           := 1;');
-   p('   dbms_lock.allocate_unique(lockname_in');
-   p('                            ,st_lockhandle');
-   p('                            ,st_expiration_specs);');
-   p('   retcd := dbms_lock.request(st_lockhandle');
-   p('                             ,st_lockmode');
-   p('                             ,st_timeout);');
+   p('   st_lockname := lockname_in;');
+   p('   allocate_lock;');
+   p('   retcd := dbms_lock.request(lockhandle        => st_lockhandle');
+   p('                             ,lockmode          => DBMS_LOCK.X_MODE');
+   p('                             ,timeout           => nvl(timeout_in,DBMS_LOCK.MAXWAIT)');
+   p('                             ,release_on_commit => TRUE);');
    p('   case retcd');
    p('      when 0 then');
    p('         return ''SUCCESS'';');
@@ -1321,7 +1323,7 @@ BEGIN
    p('   then');
    p('      return ''SUCCESS'';');
    p('   end if;');
-   p('   retcd := dbms_lock.release(st_lockhandle);');
+   p('   retcd := dbms_lock.release(lockhandle => st_lockhandle);');
    p('   case retcd');
    p('      when 0 then');
    p('         st_lockname := null;');
@@ -1866,7 +1868,8 @@ BEGIN
    p('      ,eff_dtm_in  in  timestamp);');
    p('');
    p('   function request_lock');
-   p('         (lockname_in  in  varchar2)');
+   p('      (lockname_in  in  varchar2');
+   p('      ,timeout_in   in  INTEGER  default null)');
    p('      return varchar2;');
    p('   function release_lock');
    p('      return varchar2;');
@@ -1950,11 +1953,12 @@ BEGIN
    p('end upd_early_eff;');
    p('----------------------------------------');
    p('function request_lock');
-   p('      (lockname_in  in  varchar2)');
+   p('      (lockname_in  in  varchar2');
+   p('      ,timeout_in   in  INTEGER  default null)');
    p('   return varchar2');
    p('is');
    p('begin');
-   p('   return glob.request_lock@'||abuff.abbr||'_db(lockname_in);');
+   p('   return glob.request_lock@'||abuff.abbr||'_db(lockname_in, timeout_in);');
    p('end request_lock;');
    p('----------------------------------------');
    p('function release_lock');
@@ -2182,13 +2186,18 @@ BEGIN
    end if;
 END drop_pop;
 ----------------------------------------
---  NOTE: This package is somewhat duplicated
---    in the "create_rem" procedure below
+--  NOTE: The at_server function is somewhat
+--    duplicated in the "create_rem" procedure below
 PROCEDURE create_pop_spec
 IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
 BEGIN
+   if tbuff.type not in ('EFF', 'LOG')
+   then
+      --  There is nothing to POP
+	  return;
+   end if;
    sp_type := 'package';
    sp_name := tbuff.name||'_pop';
    p('create '||sp_type||' '||sp_name);
@@ -2201,14 +2210,8 @@ BEGIN
    p('   --    Generated by DTGen (http://code.google.com/p/dtgen)');
    p('   --    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('');
-   p('   function tab_to_col');
-   p('         (id_in  in  number)');
-   p('      return col_type;');
-   if tbuff.type in ('EFF', 'LOG')
-   then
-      p('   procedure at_server');
-      p('         (id_in  in  number);');
-   end if;
+   p('   procedure at_server');
+   p('         (id_in  in  number);');
    p('end '||sp_name||';');
    p('/');
    show_errors(sp_type, sp_name);
@@ -2225,6 +2228,11 @@ IS
    nkseq    number(2);
    tstr     varchar2(200);
 BEGIN
+   if tbuff.type not in ('EFF', 'LOG')
+   then
+      --  There is nothing to POP
+	  return;
+   end if;
    sp_type := 'package body';
    sp_name := tbuff.name||'_pop';
    p('create '||sp_type||' '||sp_name);
@@ -2242,6 +2250,7 @@ BEGIN
    p('      (id_in  in  number)');
    p('   return col_type');
    p('is');
+   p('   -- This function is duplicated in '||tbuff.name||'_DML');
    p('   cursor acur is');
    p('      select * from ' || tbuff.name);
    p('       where id = id_in;');
@@ -2287,259 +2296,256 @@ BEGIN
    p('   close acur;');
    p('   return rcol;');
    p('end tab_to_col;');
-   if tbuff.type in ('EFF', 'LOG')
+   p('----------------------------------------');
+   p('procedure at_server');
+   p('      (id_in  in  number)');
+   p('is');
+   p('   cursor acur is');
+   p('      select * from ' || tbuff.name);
+   p('       where id = id_in;');
+   p('   abuf   acur%ROWTYPE;');
+   p('   cursor hcur is');
+   p('      select * from ' || tbuff.name || HOA);
+   p('       where ' || tbuff.name || '_id = id_in');
+   p('       order by aud_end_dtm desc;');
+   p('   hbuf   hcur%ROWTYPE;');
+   p('   rcol      col_type;');
+   p('   orig_dbc  boolean;');
+   p('begin');
+   p('   -- Turn off trigger checks and history records');
+   p('   orig_dbc := glob.get_db_constraints;');
+   p('   glob.set_db_constraints(FALSE);');
+   p('   -- Check for a current record');
+   p('   open acur;');
+   p('   fetch acur into abuf;');
+   p('   if acur%NOTFOUND');
+   p('   then');
+   p('      -- No current record found');
+   p('      -- Check for any history/audit records');
+   p('      open hcur;');
+   p('      fetch hcur into hbuf;');
+   p('      -- if hcur%NOTFOUND');
+   p('      -- then');
+   p('      --    -- There are no history/audit records');
+   p('      --    ERROR: NOTHING TO POP');
+   p('      -- end if');
+   p('      if hcur%FOUND');
+   p('      then');
+   p('         -- Found history/audit records');
+   p('         -- Add the History/Audit record to the pop_audit table');
+   p('         insert into ' || tbuff.name || '_PDAT');
+   p('               (' || tbuff.name || '_id');
+   p('               ,pop_dml');
+   p('               ,pop_dtm');
+   p('               ,pop_usr');
+   if tbuff.type = 'EFF'
    then
-      p('----------------------------------------');
-      p('procedure at_server');
-      p('      (id_in  in  number)');
-      p('is');
-      p('   cursor acur is');
-      p('      select * from ' || tbuff.name);
-      p('       where id = id_in;');
-      p('   abuf   acur%ROWTYPE;');
-      p('   cursor hcur is');
-      p('      select * from ' || tbuff.name || HOA);
-      p('       where ' || tbuff.name || '_id = id_in');
-      p('       order by aud_end_dtm desc;');
-      p('   hbuf   hcur%ROWTYPE;');
-      p('   rcol      col_type;');
-      p('   orig_dbc  boolean;');
-      p('begin');
-      p('   -- Turn off trigger checks and history records');
-      p('   orig_dbc := glob.get_db_constraints;');
-      p('   glob.set_db_constraints(FALSE);');
-      p('   -- Check for a current record');
-      p('   open acur;');
-      p('   fetch acur into abuf;');
-      p('   if acur%NOTFOUND');
-      p('   then');
-      p('      -- No current record found');
-      p('      -- Check for any history/audit records');
-      p('      open hcur;');
-      p('      fetch hcur into hbuf;');
-      p('      -- if hcur%NOTFOUND');
-      p('      -- then');
-      p('      --    -- There are no history/audit records');
-      p('      --    ERROR: NOTHING TO POP');
-      p('      -- end if');
-      p('      if hcur%FOUND');
-      p('      then');
-      p('         -- Found history/audit records');
-      p('         -- Add the History/Audit record to the pop_audit table');
-      p('         insert into ' || tbuff.name || '_PDAT');
-      p('               (' || tbuff.name || '_id');
-      p('               ,pop_dml');
-      p('               ,pop_dtm');
-      p('               ,pop_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,eff_beg_dtm');
-         p('               ,eff_prev_beg_dtm');
-      end if;
-      p('               ,aud_beg_usr');
-      p('               ,aud_prev_beg_usr');
-      p('               ,aud_beg_dtm');
-      p('               ,aud_prev_beg_dtm)');
-      p('            values');
-      p('               (hbuf.' || tbuff.name || '_id');
-      p('               ,''DELETE''');
-      p('               ,systimestamp');
-      p('               ,util.get_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,hbuf.eff_end_dtm');
-         p('               ,hbuf.eff_beg_dtm');
-      end if;
-      p('               ,hbuf.aud_end_usr');
-      p('               ,hbuf.aud_beg_usr');
-      p('               ,hbuf.aud_end_dtm');
-      p('               ,hbuf.aud_beg_dtm);');
-      p('         -- Add the last history/audit record to the ' || tbuff.name || ' table');
-      p('         insert into ' || tbuff.name);
-      p('               (id');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,eff_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-         p('               ,'||buff.name);
-      end loop;
-      p('               ,aud_beg_dtm');
-      p('               ,aud_beg_usr');
-      p('               )');
-      p('            values');
-      p('               (hbuf.' || tbuff.name || '_id');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,hbuf.eff_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-         p('               ,hbuf.' || buff.name);
-      end loop;
-      p('               ,hbuf.aud_beg_dtm');
-      p('               ,hbuf.aud_beg_usr');
-      p('               );');
-      p('         -- Delete the last history/audit record from the history/audit table');
-      p('         delete from ' || tbuff.name || HOA);
-      p('          where ' || tbuff.name || '_id = id_in');
-      if tbuff.type = 'EFF'
-      then
-         p('           and  eff_beg_dtm = hbuf.eff_beg_dtm;');
-      else
-         p('           and  aud_beg_dtm = hbuf.aud_beg_dtm;');
-      end if;
-      p('      end if;');
-      p('      close hcur;');
-      p('   else');
-      p('      -- Found a current record');
-      p('      -- Build the ACTIVE record COL object');
-      p('      rcol := tab_to_col(id_in);');
-      p('      -- Check for any history/audit records');
-      p('      open hcur;');
-      p('      fetch hcur into hbuf;');
-      p('      if hcur%NOTFOUND');
-      p('      then');
-      p('         -- No history/audit records found');
-      p('         -- Add the Active record to the pop_audit table');
-      p('         insert into ' || tbuff.name || '_PDAT');
-      p('               (' || tbuff.name || '_id');
-      p('               ,pop_dml');
-      p('               ,pop_dtm');
-      p('               ,pop_usr');
-      p('               ,aud_beg_dtm');
-      p('               ,aud_beg_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,eff_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-            p('               ,' || buff.name);
-      end loop;
-      p('               )');
-      p('            values');
-      p('               (abuf.id');
-      p('               ,''INSERT''');
-      p('               ,systimestamp');
-      p('               ,util.get_usr');
-      p('               ,abuf.aud_beg_dtm');
-      p('               ,abuf.aud_beg_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,abuf.eff_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-            p('               ,abuf.' || buff.name);
-      end loop;
-      p('               );');
-      p('         delete from  ' || tbuff.name);
-      p('          where id = id_in;');
-      p('         -- util.log(''POPed insert of ' || tbuff.name || ' record: '' ||');
-      p('         --          substr(util.col_to_clob(rcol),1,32000));');
-      p('      else');
-      p('         -- Found history/audit records');
-      p('         -- Add the Active and History/Audit record to the pop_audit table');
-      p('         insert into ' || tbuff.name || '_PDAT');
-      p('               (' || tbuff.name || '_id');
-      p('               ,pop_dml');
-      p('               ,pop_dtm');
-      p('               ,pop_usr');
-      p('               ,aud_beg_dtm');
-      p('               ,aud_prev_beg_dtm');
-      p('               ,aud_beg_usr');
-      p('               ,aud_prev_beg_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,eff_beg_dtm');
-         p('               ,eff_prev_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-            p('               ,' || buff.name);
-      end loop;
-      p('               )');
-      p('            values');
-      p('               (abuf.id');
-      p('               ,''UPDATE''');
-      p('               ,systimestamp');
-      p('               ,util.get_usr');
-      p('               ,hbuf.aud_end_dtm');
-      p('               ,hbuf.aud_beg_dtm');
-      p('               ,hbuf.aud_end_usr');
-      p('               ,hbuf.aud_beg_usr');
-      if tbuff.type = 'EFF'
-      then
-         p('               ,hbuf.eff_end_dtm');
-         p('               ,hbuf.eff_beg_dtm');
-      end if;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-            p('               ,hbuf.' || buff.name);
-      end loop;
-      p('               );');
-      p('         -- Update ' || tbuff.name || ' table from the last history/audit record');
-      p('         update ' || tbuff.name);
-      nkseq := 1;
-      for buff in (
-         select * from tab_cols COL
-          where COL.table_id = tbuff.id
-          order by COL.seq )
-      loop
-         if nkseq = 1
-         then
-            p('           set  ' || buff.name || ' = hbuf.' || buff.name);
-            nkseq := 2;
-         else
-            p('               ,' || buff.name || ' = hbuf.' || buff.name);
-         end if;
-      end loop;
-      if tbuff.type = 'EFF'
-      then
-         p('               ,eff_beg_dtm = hbuf.eff_beg_dtm');
-      end if;
-      p('               ,aud_beg_usr = hbuf.aud_beg_usr');
-      p('               ,aud_beg_dtm = hbuf.aud_beg_dtm');
-      p('          where id = hbuf.' || tbuff.name || '_id;');
-      p('         -- Delete the last history/audit record from the history/audit table');
-      p('         delete from  ' || tbuff.name || HOA);
-      p('          where ' || tbuff.name || '_id = id_in');
-      if tbuff.type = 'EFF'
-      then
-         p('           and  eff_beg_dtm = hbuf.eff_beg_dtm;');
-      else
-         p('           and  aud_beg_dtm = hbuf.aud_beg_dtm;');
-      end if;
-      p('         -- util.log(''POPed insert of ' || tbuff.name || ' record: '' ||');
-      p('         --          substr(util.col_to_clob(rcol),1,32000));');
-      p('      end if;');
-      p('      close hcur;');
-      p('   end if;');
-      p('   close acur;');
-      p('   -- Restore trigger checks and history records');
-      p('   glob.set_db_constraints(orig_dbc);');
-      p('end at_server;');
+      p('               ,eff_beg_dtm');
+      p('               ,eff_prev_beg_dtm');
    end if;
+   p('               ,aud_beg_usr');
+   p('               ,aud_prev_beg_usr');
+   p('               ,aud_beg_dtm');
+   p('               ,aud_prev_beg_dtm)');
+   p('            values');
+   p('               (hbuf.' || tbuff.name || '_id');
+   p('               ,''DELETE''');
+   p('               ,systimestamp');
+   p('               ,util.get_usr');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,hbuf.eff_end_dtm');
+      p('               ,hbuf.eff_beg_dtm');
+   end if;
+   p('               ,hbuf.aud_end_usr');
+   p('               ,hbuf.aud_beg_usr');
+   p('               ,hbuf.aud_end_dtm');
+   p('               ,hbuf.aud_beg_dtm);');
+   p('         -- Add the last history/audit record to the ' || tbuff.name || ' table');
+   p('         insert into ' || tbuff.name);
+   p('               (id');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('               ,'||buff.name);
+   end loop;
+   p('               ,aud_beg_dtm');
+   p('               ,aud_beg_usr');
+   p('               )');
+   p('            values');
+   p('               (hbuf.' || tbuff.name || '_id');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,hbuf.eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('               ,hbuf.' || buff.name);
+   end loop;
+   p('               ,hbuf.aud_beg_dtm');
+   p('               ,hbuf.aud_beg_usr');
+   p('               );');
+   p('         -- Delete the last history/audit record from the history/audit table');
+   p('         delete from ' || tbuff.name || HOA);
+   p('          where ' || tbuff.name || '_id = id_in');
+   if tbuff.type = 'EFF'
+   then
+      p('           and  eff_beg_dtm = hbuf.eff_beg_dtm;');
+   else
+      p('           and  aud_beg_dtm = hbuf.aud_beg_dtm;');
+   end if;
+   p('      end if;');
+   p('      close hcur;');
+   p('   else');
+   p('      -- Found a current record');
+   p('      -- Build the ACTIVE record COL object');
+   p('      rcol := tab_to_col(id_in);');
+   p('      -- Check for any history/audit records');
+   p('      open hcur;');
+   p('      fetch hcur into hbuf;');
+   p('      if hcur%NOTFOUND');
+   p('      then');
+   p('         -- No history/audit records found');
+   p('         -- Add the Active record to the pop_audit table');
+   p('         insert into ' || tbuff.name || '_PDAT');
+   p('               (' || tbuff.name || '_id');
+   p('               ,pop_dml');
+   p('               ,pop_dtm');
+   p('               ,pop_usr');
+   p('               ,aud_beg_dtm');
+   p('               ,aud_beg_usr');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+         p('               ,' || buff.name);
+   end loop;
+   p('               )');
+   p('            values');
+   p('               (abuf.id');
+   p('               ,''INSERT''');
+   p('               ,systimestamp');
+   p('               ,util.get_usr');
+   p('               ,abuf.aud_beg_dtm');
+   p('               ,abuf.aud_beg_usr');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,abuf.eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+         p('               ,abuf.' || buff.name);
+   end loop;
+   p('               );');
+   p('         delete from  ' || tbuff.name);
+   p('          where id = id_in;');
+   p('         -- util.log(''POPed insert of ' || tbuff.name || ' record: '' ||');
+   p('         --          substr(util.col_to_clob(rcol),1,32000));');
+   p('      else');
+   p('         -- Found history/audit records');
+   p('         -- Add the Active and History/Audit record to the pop_audit table');
+   p('         insert into ' || tbuff.name || '_PDAT');
+   p('               (' || tbuff.name || '_id');
+   p('               ,pop_dml');
+   p('               ,pop_dtm');
+   p('               ,pop_usr');
+   p('               ,aud_beg_dtm');
+   p('               ,aud_prev_beg_dtm');
+   p('               ,aud_beg_usr');
+   p('               ,aud_prev_beg_usr');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,eff_beg_dtm');
+      p('               ,eff_prev_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+         p('               ,' || buff.name);
+   end loop;
+   p('               )');
+   p('            values');
+   p('               (abuf.id');
+   p('               ,''UPDATE''');
+   p('               ,systimestamp');
+   p('               ,util.get_usr');
+   p('               ,hbuf.aud_end_dtm');
+   p('               ,hbuf.aud_beg_dtm');
+   p('               ,hbuf.aud_end_usr');
+   p('               ,hbuf.aud_beg_usr');
+   if tbuff.type = 'EFF'
+   then
+      p('               ,hbuf.eff_end_dtm');
+      p('               ,hbuf.eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+         p('               ,hbuf.' || buff.name);
+   end loop;
+   p('               );');
+   p('         -- Update ' || tbuff.name || ' table from the last history/audit record');
+   p('         update ' || tbuff.name);
+   nkseq := 1;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      if nkseq = 1
+      then
+         p('           set  ' || buff.name || ' = hbuf.' || buff.name);
+         nkseq := 2;
+      else
+         p('               ,' || buff.name || ' = hbuf.' || buff.name);
+      end if;
+   end loop;
+   if tbuff.type = 'EFF'
+   then
+      p('               ,eff_beg_dtm = hbuf.eff_beg_dtm');
+   end if;
+   p('               ,aud_beg_usr = hbuf.aud_beg_usr');
+   p('               ,aud_beg_dtm = hbuf.aud_beg_dtm');
+   p('          where id = hbuf.' || tbuff.name || '_id;');
+   p('         -- Delete the last history/audit record from the history/audit table');
+   p('         delete from  ' || tbuff.name || HOA);
+   p('          where ' || tbuff.name || '_id = id_in');
+   if tbuff.type = 'EFF'
+   then
+      p('           and  eff_beg_dtm = hbuf.eff_beg_dtm;');
+   else
+      p('           and  aud_beg_dtm = hbuf.aud_beg_dtm;');
+   end if;
+   p('         -- util.log(''POPed insert of ' || tbuff.name || ' record: '' ||');
+   p('         --          substr(util.col_to_clob(rcol),1,32000));');
+   p('      end if;');
+   p('      close hcur;');
+   p('   end if;');
+   p('   close acur;');
+   p('   -- Restore trigger checks and history records');
+   p('   glob.set_db_constraints(orig_dbc);');
+   p('end at_server;');
    p('----------------------------------------');
    p('end '||sp_name||';');
    p('/');
@@ -4783,26 +4789,27 @@ BEGIN
    p('');
    tab_col_comments(tbuff.name);
    p('');
-   if tbuff.type in ('EFF', 'LOG')
+   if tbuff.type not in ('EFF', 'LOG')
    then
-      p('');
-      p('create view '||tbuff.name||HOA);
-      p('   as select * from '||tbuff.name||HOA||'@'||abuff.abbr||'_db;');
-      ps('');
-      ps('grant select on ' ||tbuff.name||HOA|| ' to ' || abuff.abbr || '_app;');
-      ps('-- audit rename on ' ||tbuff.name||HOA|| ' by access;');
-      p('');
-      hoa_col_comments(tbuff.name||HOA);
-      p('');
-      p('create view '||tbuff.name||'_PDAT');
-      p('   as select * from '||tbuff.name||'_PDAT@'||abuff.abbr||'_db;');
-      ps('');
-      ps('grant select on ' ||tbuff.name|| '_PDAT to ' || abuff.abbr || '_app;');
-      ps('-- audit rename on ' ||tbuff.name || '_PDAT by access;');
-      p('');
-      pdat_col_comments(tbuff.name||'_PDAT');
-      p('');
+      -- No need for any HOA or POP stuff
+	  return;
    end if;
+   p('create view '||tbuff.name||HOA);
+   p('   as select * from '||tbuff.name||HOA||'@'||abuff.abbr||'_db;');
+   ps('');
+   ps('grant select on ' ||tbuff.name||HOA|| ' to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||tbuff.name||HOA|| ' by access;');
+   p('');
+   hoa_col_comments(tbuff.name||HOA);
+   p('');
+   p('create view '||tbuff.name||'_PDAT');
+   p('   as select * from '||tbuff.name||'_PDAT@'||abuff.abbr||'_db;');
+   ps('');
+   ps('grant select on ' ||tbuff.name|| '_PDAT to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||tbuff.name || '_PDAT by access;');
+   p('');
+   pdat_col_comments(tbuff.name||'_PDAT');
+   p('');
    sp_type := 'package';
    sp_name := tbuff.name||'_pop';
    p('create '||sp_type||' '||sp_name);
@@ -4815,15 +4822,9 @@ BEGIN
    p('   --    Generated by DTGen (http://code.google.com/p/dtgen)');
    p('   --    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('');
-   p('   function tab_to_col');
-   p('         (id_in  in  number)');
-   p('      return col_type;');
-   if tbuff.type in ('EFF', 'LOG')
-   then
-      p('');
-      p('   procedure at_server');
-      p('         (id_in  in  number);');
-   end if;
+   p('');
+   p('   procedure at_server');
+   p('         (id_in  in  number);');
    p('end '||sp_name||';');
    p('/');
    show_errors(sp_type, sp_name);
@@ -4843,24 +4844,13 @@ BEGIN
    p('--    Generated by DTGen (http://code.google.com/p/dtgen)');
    p('--    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('');
-   p('function tab_to_col');
+   p('procedure at_server');
    p('      (id_in  in  number)');
-   p('   return col_type');
    p('is');
    p('begin');
-   p('   return '||sp_name||'.tab_to_col@'||abuff.abbr||'_db(id_in);');
-   p('end tab_to_col;');
+   p('   '||sp_name||'.at_server@'||abuff.abbr||'_db(id_in);');
+   p('end at_server;');
    p('');
-   if tbuff.type in ('EFF', 'LOG')
-   then
-      p('procedure at_server');
-      p('      (id_in  in  number)');
-      p('is');
-      p('begin');
-      p('   '||sp_name||'.at_server@'||abuff.abbr||'_db(id_in);');
-      p('end at_server;');
-      p('');
-   end if;
    p('end '||sp_name||';');
    p('/');
    show_errors(sp_type, sp_name);
@@ -6776,6 +6766,10 @@ BEGIN
       p('      ) return number;');
    end loop;
    p('');
+   p('   function tab_to_col');
+   p('         (id_in  in  number)');
+   p('      return col_type;');
+   p('');
    p('   procedure ins');
    p('      (n_id  in out  NUMBER');
    if tbuff.type = 'EFF'
@@ -6870,6 +6864,7 @@ PROCEDURE create_dp_body
 IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
+   tstr     varchar2(200);
    nkseq    number(2);
    nkfnd    boolean;
 BEGIN
@@ -7136,6 +7131,57 @@ BEGIN
       p('      raise;');
       p('end get_' || buff.fk_prefix || 'id_by_nk_path;');
    end loop;
+   p('----------------------------------------');
+   p('function tab_to_col');
+   p('      (id_in  in  number)');
+   p('   return col_type');
+   p('is');
+   p('   -- This function is duplicated in '||tbuff.name||'_POP');
+   p('   cursor acur is');
+   p('      select * from ' || tbuff.name);
+   p('       where id = id_in;');
+   p('   abuf   acur%ROWTYPE;');
+   p('   rcol      col_type;');
+   p('begin');
+   p('   open acur;');
+   p('   fetch acur into abuf;');
+   p('   if acur%NOTFOUND');
+   p('   then');
+   p('      rcol := COL_TYPE(null);');
+   p('      close acur;');
+   p('      return rcol;');
+   p('   end if;');
+   p('   rcol := COL_TYPE');
+   nkseq := 0;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      if buff.type like 'DATE%'   OR
+         buff.type like 'TIMESTAMP%'
+      then
+         tstr := ''', to_char(abuf.' || buff.name ||
+                   ', ''' || get_colformat(buff) || '''))';
+      elsif buff.type like 'NUMBER%' OR
+         buff.fk_table_id is not null
+      then
+         tstr := ''', to_char(abuf.' || buff.name || '))';
+      else
+         tstr := ''', abuf.' || buff.name || ')';
+      end if;
+      if nkseq = 0
+      then
+         p('             (PAIR_TYPE(''' || buff.name || tstr);
+         nkseq := 1;
+      else
+         p('             ,PAIR_TYPE(''' || buff.name || tstr);
+      end if;
+   end loop;
+   p('                );');
+   p('   close acur;');
+   p('   return rcol;');
+   p('end tab_to_col;');
    p('----------------------------------------');
    p('procedure ins');
    p('      (n_id  in out  NUMBER');

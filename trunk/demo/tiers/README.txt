@@ -11,7 +11,6 @@ e1.sql         - Exercise #1: Simple Mid-Tier
 e2.sql         - Exercise #2: Materialized Views
 e3.sql         - Exercise #3: User Security
 e4.sql         - Exercise #4: Global Locks
-e5.sql         - Exercise #5: DB Tier Streamlining
 
 
 Exercises that Modify Data
