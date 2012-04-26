@@ -83,17 +83,22 @@ begin
    generate.create_oltp;
    generate.create_aa;
    generate.create_mods;
+   generate.create_usyn;
    commit;
 end;
 /
 
-prompt Capture install_db.sql and install_mt.sql Scripts
+prompt Capture SQL Scripts
 set termout off
 set linesize 5000
 spool install_db.sql
 execute assemble.install_script('DEMO3', 'DB');
 spool install_mt.sql
 execute assemble.install_script('DEMO3', 'MT');
+spool install_mt_sec.sql
+execute assemble.install_script('DEMO3', 'MT', 'sec');
+spool install_usr.sql
+execute assemble.install_script('DEMO3', 'USR');
 
 ------------------------------------------------------------
 
@@ -214,6 +219,8 @@ prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.
 set serveroutput on size 1000000 format wrapped
 @install_mt @1
+@install_mt_sec
+
 set define off
 
 set linesize 120
