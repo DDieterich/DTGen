@@ -52,7 +52,7 @@ DTGen Installation:
    -) Login to APEX as Workspace User dtgen
    -) Click on "Application Builder"
    -) Click on "Import"
-   -) Click on "Browse" to open a "Chose File to Upload" window.
+   -) Click on "Browse" to open a "Choose File to Upload" window.
    -) Select "f900.sql" and click on "Open" to close the window.
    -) File Type: Database Application, Page or Component
    -) Click on "Next"
