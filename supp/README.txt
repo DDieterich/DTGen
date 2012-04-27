@@ -88,7 +88,7 @@ Create an application in APEX to use "create_flow.sql":
    -) Schema: (Use the "owner" for the application)
    -) Next button
    -) Page Type: Blank
-   -) Page Name: Page 1
+   -) Page Name: Home
    -) Add Page button
    -) Next button
    -) Tabs: One Level of Tabs

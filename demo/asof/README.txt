@@ -18,7 +18,7 @@ e6.sql        - Exercise #6: Transportable ASOF Data
 
 Exercises that Modify Data
 --------------------------
-There are 2 exercises that modify data in the database.  These exercises cannot be re-run without resetting the database.
+There are 4 exercises that modify data in the database.  These exercises cannot be re-run without resetting the database.
   -) e1.sql
   -) e4.sql
   -) e5.sql

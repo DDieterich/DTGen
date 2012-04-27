@@ -34,9 +34,10 @@ pnum2  number := 1200;  -- UTIL_LOG page
 pnum3  number := 1400;  -- OMNI Report Menu, DML Pages Follow
 pnum4  number := 1600;  -- ASOF Report Menu, DML Pages Follow
 HOA    varchar2(6);
-SQ2    CONSTANT varchar2(2) := CHR(39)||CHR(39);
+SQ1    CONSTANT varchar2(1) := CHR(39);
+SQ2    CONSTANT varchar2(2) := SQ1||SQ1;
 SQ4    CONSTANT varchar2(4) := SQ2||SQ2;
-SQ6    CONSTANT varchar2(6) := SQ2||SQ2||SQ2;
+SQ6    CONSTANT varchar2(6) := SQ4||SQ2;
 
 PROCEDURE p
       (text_in IN VARCHAR2)
@@ -869,7 +870,7 @@ begin
        order by COL.seq )
    loop
       p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
-         replace(buff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,SQ1,SQ2) || ''';');
    end loop;
 end def_col_comments;
 ----------------------------------------
@@ -946,7 +947,7 @@ begin
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
-               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,CHR(39),SQ2) || ''';');
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || ''';');
          end loop;
       end if;
    end loop;
@@ -997,7 +998,7 @@ begin
        order by COL.seq )
    loop
       p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
-         replace(buff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null and
          buff.fk_table_id != tbuff.id
       then
@@ -1007,7 +1008,7 @@ begin
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
-               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,CHR(39),SQ2) || ''';');
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || ''';');
          end loop;
       end if;
    end loop;
@@ -1027,7 +1028,7 @@ begin
        order by COL.seq )
    loop
       p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
-         replace(buff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null
       then
          if buff.fk_table_id = tbuff.id
@@ -1043,7 +1044,7 @@ begin
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
-               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,CHR(39),SQ2) || ''';');
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || ''';');
          end loop;
       end if;
    end loop;
@@ -1062,7 +1063,7 @@ begin
        order by COL.seq )
    loop
       p('comment on column ' ||tname_in||'.' || buff.name || ' is ''AS OF ' ||
-         replace(buff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null and
          buff.fk_table_id != tbuff.id
       then
@@ -1072,7 +1073,7 @@ begin
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
-               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,CHR(39),SQ2) || ''';');
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || ''';');
          end loop;
       end if;
    end loop;
@@ -1091,7 +1092,7 @@ begin
        order by COL.seq )
    loop
       p('comment on column ' ||tname_in||'.' || buff.name || ' is ''AS OF ' ||
-         replace(buff.description,CHR(39),SQ2) || ''';');
+         replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null
       then
          if buff.fk_table_id = tbuff.id
@@ -1107,7 +1108,7 @@ begin
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''AS OF ' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
-               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,CHR(39),SQ2) || ''';');
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || ''';');
          end loop;
       end if;
    end loop;
@@ -2055,7 +2056,7 @@ BEGIN
    ps('-- audit rename on ' || tname || ' by access;');
    p('');
    p('comment on table ' || tname || ' is ''' || 
-      replace(tbuff.description,CHR(39),SQ2) || ''';');
+      replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    tab_col_comments(tname);
    p('');
@@ -2129,7 +2130,7 @@ BEGIN
    ps('-- audit rename on ' || tname || ' by access;');
    p('');
    p('comment on table ' || tname || ' is ''' ||
-      replace(tbuff.description,CHR(39),SQ2) || ' (history)'';');
+      replace(tbuff.description,SQ1,SQ2) || ' (history)'';');
    p('');
    hoa_col_comments(tname);
    p('');
@@ -2170,7 +2171,7 @@ BEGIN
    ps('-- audit rename on ' || tname || ' by access;');
    p('');
    p('comment on table ' || tname || ' is ''' ||
-      replace(tbuff.description,CHR(39),SQ2) || ' (POP function audit log)'';');
+      replace(tbuff.description,SQ1,SQ2) || ' (POP function audit log)'';');
    p('');
    pdat_col_comments(tname);
    p('');
@@ -2777,7 +2778,7 @@ BEGIN
       p('   then');
       p('      raise_application_error(-20005, ''' || sp_name || '.check_rec' ||
                     '(): ' || buff.name || ' must be one of ' ||
-                    replace(get_domlist(buff.d_domain_id),'''','"') || '.'');');
+                    replace(get_domlist(buff.d_domain_id),SQ1,'"') || '.'');');
       p('   end if;');
    end loop;
    p('   -- Custom Constraint Checks');
@@ -2789,7 +2790,7 @@ BEGIN
       p('   if not (' || replace(buff.text,''',''''') || ')');
       p('   then');
       p('      raise_application_error(-20006, ''' || sp_name || '.check_rec' ||
-                    '(): ' || replace(buff.description,'''','"') || ''');');
+                    '(): ' || replace(buff.description,SQ1,'"') || ''');');
       p('   end if;');
    end loop;
    p('   --  Set eff_beg_dtm, if needed');
@@ -3783,7 +3784,7 @@ BEGIN
       p('           );');
    end if;
 /*
- Commenting out for removal od UNIQ column from indexes table
+ Commenting out for removal of UNIQ column from indexes table
    --  Check for UNIQ Flag Entry Errors
    for buf2 in (
       select tab_cols_nk2, tag, count(*) uniq_cnt
@@ -4775,13 +4776,13 @@ BEGIN
       p('   refresh next sysdate + '||tbuff.mv_refresh_hr||'/24');
       p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db;');
       p('comment on materialized view ' ||tbuff.name|| ' is ''' ||
-         replace(tbuff.description,CHR(39),SQ2) || ''';');
+         replace(tbuff.description,SQ1,SQ2) || ''';');
    else
       p('');
       p('create view '||tbuff.name);
       p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db;');
       p('comment on table ' ||tbuff.name|| ' is ''' ||
-         replace(tbuff.description,CHR(39),SQ2) || ''';');
+         replace(tbuff.description,SQ1,SQ2) || ''';');
    end if;
    ps('');
    ps('grant select on ' ||tbuff.name|| ' to ' || abuff.abbr || '_app;');
@@ -5463,7 +5464,7 @@ BEGIN
    ps('-- audit rename on '||sp_name||' by access;');
    p('');
    p('comment on table ' ||sp_name|| ' is ''' ||
-      replace(tbuff.description,CHR(39),SQ2) || ''';');
+      replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    act_col_comments(sp_name);
    p('');
@@ -5692,7 +5693,7 @@ BEGIN
       ps('-- audit rename on '||sp_name||' by access;');
       p('');
       p('comment on table ' ||sp_name|| ' is ''Active and Deleted ' ||
-         replace(tbuff.description,CHR(39),SQ2) ||
+         replace(tbuff.description,SQ1,SQ2) ||
         '.  NOTE: Deleted records in this view with missing FK data for a non-null FK ID cannot be "popped"'';');
       p('');
 	  l_col_comments(sp_name);
@@ -6040,7 +6041,7 @@ BEGIN
    ps('-- audit rename on '||sp_name||' by access;');
    p('');
    p('comment on table ' ||sp_name|| ' is ''Active and Deleted ' ||
-      replace(tbuff.description,CHR(39),SQ2) ||
+      replace(tbuff.description,SQ1,SQ2) ||
      '.  NOTE: Deleted records in this view with missing FK data for a non-null FK ID cannot be "popped"'';');
    p('');
    all_col_comments(sp_name);
@@ -6238,7 +6239,7 @@ BEGIN
       ps('-- audit rename on '||sp_name||' by access;');
       p('');
       p('comment on table ' ||sp_name|| ' is ''AS OF glob.get_asof_dtm ' ||
-         replace(tbuff.description,CHR(39),SQ2) || ''';');
+         replace(tbuff.description,SQ1,SQ2) || ''';');
       p('');
       f_col_comments(sp_name);
       p('');
@@ -6469,7 +6470,7 @@ BEGIN
    ps('-- audit rename on '||sp_name||' by access;');
    p('');
    p('comment on table ' ||sp_name|| ' is ''AS OF glob.get_asof_dtm ' ||
-      replace(tbuff.description,CHR(39),SQ2) || ''';');
+      replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    asof_col_comments(sp_name);
    p('');
@@ -7728,7 +7729,7 @@ BEGIN
       p('drop synonym '||tbuff.name||HOA||';');
    end if;
    p('drop synonym '||tbuff.name||';');
-   p('drop synonym '||tbuff.name||'_seq;');
+   p('--drop synonym '||tbuff.name||'_seq;');
    p('');
 END drop_tsyn;
 ----------------------------------------
@@ -7896,7 +7897,7 @@ BEGIN
    p('      p_ref_schema=> sch_name,');
    p('      p_ref_table_name=> ''' || upper(tbuff.name) || '_ACT'',');
    p('      p_ref_column_name=> ''' || upper(cbuff.name) || ''',');
-   p('      p_column_comment=>''' || replace(cbuff.description,'''','''''') || ''');');
+   p('      p_column_comment=>''' || replace(cbuff.description,SQ1,SQ2) || ''');');
    p('');
    p('   wwv_flow_api.create_region_rpt_cols (');
    p('      p_id     => wwv_flow_id.next_val,');
@@ -7908,7 +7909,7 @@ BEGIN
                                      when '_DATE_' then 'DATE_POPUP'
                                      else display_as
                                      end || ''',');
-   p('      p_column_comment=> ''' || replace(cbuff.description,'''','''''') || ''');');
+   p('      p_column_comment=> ''' || replace(cbuff.description,SQ1,SQ2) || ''');');
 END create_crc;
 ----------------------------------------
 PROCEDURE create_search_crc
@@ -7962,7 +7963,7 @@ BEGIN
       -- Called Recursively --
       colspan := 1;
       help_text := 'Search range for ' || upper(cbuff.name) ||
-                   ' (' || cbuff.description || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Numbers will be included in range.';
       pi_suffix := pi_suffix || '_MIN';
       prompt_txt := initcap(replace(upper(cbuff.name),'_',' ')) ||
@@ -7975,7 +7976,7 @@ BEGIN
       -- Called Recursively --
       colspan := 1;
       help_text := 'Search range for ' || upper(cbuff.name) ||
-                   ' (' || cbuff.description || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Numbers will be included in range.';
       item_seq := item_seq + 5;
       new_line := 'NO';
@@ -7987,7 +7988,7 @@ BEGIN
    elsif cbuff.type = 'VARCHAR2'
    then
       help_text  := 'Search string for ' || upper(cbuff.name) ||
-                   ' (' || replace(cbuff.description,'''','''''') || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                     ' Use "%" to wildcard one or more letters.' ||
                     ' Use "_" to wildcard only 1 letter.';
       prompt_txt := initcap(replace(upper(
@@ -8014,7 +8015,7 @@ BEGIN
       -- Called Recursively --
       colspan := 1;
       help_text := 'Search range for ' || upper(cbuff.name) ||
-                   ' (' || cbuff.description || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Dates may not be included in range.';
       pi_suffix := pi_suffix || '_MIN';
       prompt_txt := initcap(replace(upper(cbuff.name),'_',' ')) ||
@@ -8027,7 +8028,7 @@ BEGIN
       -- Called Recursively --
       colspan := 1;
       help_text := 'Search range for ' || upper(cbuff.name) ||
-                   ' (' || replace(cbuff.description,'''','''''') || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Dates may not be included in range.';
       item_seq := item_seq + 5;
       new_line := 'NO';
@@ -8042,7 +8043,7 @@ BEGIN
       attr_02   := 'Y';
       display_as := 'NATIVE_SELECT_LIST';
       help_text := 'Search list for ' || upper(cbuff.name) ||
-                   ' (' || replace(cbuff.description,'''','''''') || ').' ||
+                   ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' Select one or more values from the list.';
       prompt_txt := initcap(replace(upper(
                     cbuff.name),'_',' ')) ||
@@ -8115,7 +8116,7 @@ IS
    attr_05     varchar2(6);
    attr_07     varchar2(6);
    display_as  varchar2(50);
-   help_text   varchar2(1000) := replace(cbuff.description,'''','''''');
+   help_text   varchar2(1000) := replace(cbuff.description,SQ1,SQ2);
    item_seq    number         := cnum * 10;
    named_lov   varchar2(30);
    pi_suffix   varchar2(50)   := '_' || upper(cbuff.name);
@@ -8903,7 +8904,7 @@ BEGIN
          p('         p_lov_id=>lov_id,');
          p('         p_lov_disp_sequence=>' || (dseq * 10) || ',');
          p('         p_lov_disp_value=>''' || buf2.value || ' (' ||
-                                       replace(buf2.description,'''','''''') ||
+                                       replace(buf2.description,SQ1,SQ2) ||
                                        ')'',');
          p('         p_lov_return_value=>''' || buf2.value || ''',');
          p('         p_lov_data_comment=> '''');');
@@ -10514,7 +10515,7 @@ BEGIN
    p('      ,p_javascript_code => ');
    p('       ''var htmldb_delete_message=''''"DELETE_CONFIRM_MSG"'''';''');
    p('      ,p_cache_page_yn => ''N''');
-   p('      ,p_help_text => ''' || replace(tbuff.description,'''','''''') || '''');
+   p('      ,p_help_text => ''' || replace(tbuff.description,SQ1,SQ2) || '''');
    p('      ,p_last_updated_by => ws_name');
    p('      ,p_last_upd_yyyymmddhh24miss => ''' ||
                               to_char(sysdate,'YYYYMMDDHH24MISS') || '''');
@@ -12867,7 +12868,7 @@ BEGIN
    p('      ,p_cache_page_yn => ''N''');
    p('      ,p_cache_timeout_seconds => 21600');
    p('      ,p_cache_by_user_yn => ''N''');
-   p('      ,p_help_text => ''' || replace(tbuff.description,'''','''''') || '''');
+   p('      ,p_help_text => ''' || replace(tbuff.description,SQ1,SQ2) || '''');
    p('      ,p_last_updated_by => ws_name');
    p('      ,p_last_upd_yyyymmddhh24miss => ''' ||
                               to_char(sysdate,'YYYYMMDDHH24MISS') || '''');
@@ -13520,7 +13521,7 @@ BEGIN
    p('      ,p_javascript_code => ');
    p('       ''var htmldb_delete_message=''''"DELETE_CONFIRM_MSG"'''';''');
    p('      ,p_cache_page_yn => ''N''');
-   p('      ,p_help_text => ''' || replace(tbuff.description,'''','''''') || '''');
+   p('      ,p_help_text => ''' || replace(tbuff.description,SQ1,SQ2) || '''');
    p('      ,p_last_updated_by => ws_name');
    p('      ,p_last_upd_yyyymmddhh24miss => ''' ||
                               to_char(sysdate,'YYYYMMDDHH24MISS') || '''');
@@ -13961,7 +13962,7 @@ BEGIN
    p('      ,p_javascript_code => ');
    p('       ''var htmldb_delete_message=''''"DELETE_CONFIRM_MSG"'''';''');
    p('      ,p_cache_page_yn => ''N''');
-   p('      ,p_help_text => ''' || replace(tbuff.description,'''','''''') || '''');
+   p('      ,p_help_text => ''' || replace(tbuff.description,SQ1,SQ2) || '''');
    p('      ,p_last_updated_by => ws_name');
    p('      ,p_last_upd_yyyymmddhh24miss => ''' ||
                               to_char(sysdate,'YYYYMMDDHH24MISS') || '''');
@@ -14418,7 +14419,7 @@ BEGIN
    cnum := cnum + 1;
    p('   wwv_flow_hint.create_column_hint_priv(');
    p('      p_label => ''' || initcap(replace(cbuff.name,'_',' ')) || ''',');
-   p('      p_help_text => ''' || replace(cbuff.description,'''','''''') || ''',');
+   p('      p_help_text => ''' || replace(cbuff.description,SQ1,SQ2) || ''',');
    p('      p_display_seq_form => ' || cnum || ',');
    p('      p_display_seq_report => ' || cnum || ',');
    p('      p_display_in_form => ''' || dif_in || ''',');
@@ -14501,7 +14502,7 @@ BEGIN
       p('      p_id => wwv_flow_id.next_val,');
       p('      p_column_id => col_id,');
       p('      p_lov_disp_sequence => ' || nkseq || ',');
-      p('      p_lov_disp_value => ''' || replace(buff.description,'''','''''') || ''',');
+      p('      p_lov_disp_value => ''' || replace(buff.description,SQ1,SQ2) || ''',');
       p('      p_lov_return_value => ''' || buff.value || ''');');
    end loop;
 END create_column_hint;
