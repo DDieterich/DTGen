@@ -201,3 +201,4 @@ column mgr_id_path clear
 column mgr_nk_path clear
 
 spool off
+exit

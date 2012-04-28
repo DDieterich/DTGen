@@ -222,3 +222,4 @@ column aud_end_usr   clear
 column aud_end_dtm   clear
 
 spool off
+exit

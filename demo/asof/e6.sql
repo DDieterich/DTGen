@@ -155,3 +155,4 @@ column dname        clear
 column loc          clear
 
 spool off
+exit

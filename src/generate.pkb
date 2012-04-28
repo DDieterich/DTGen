@@ -9086,7 +9086,9 @@ BEGIN
       for buf2 in (
          select * from tables TAB
           where TAB.application_id = abuff.id
-           and  TAB.group_name     = buff.group_name
+           and  (   TAB.group_name = buff.group_name
+		         or (    TAB.group_name  is null
+				     and buff.group_name is null)  )
           order by TAB.seq )
       loop
          p('   s := ''' || initcap(replace(buf2.name,'_',' ')) || ' Maint'';');
@@ -9662,7 +9664,9 @@ BEGIN
       for buf2 in (
          select * from tables TAB
           where TAB.application_id = abuff.id
-           and  TAB.group_name     = buff.group_name
+           and  (    TAB.group_name = buff.group_name
+		         or (    TAB.group_name  is null
+				     and buff.group_name is null)  )
            and  TAB.type in ('EFF', 'LOG')
           order by TAB.seq )
       loop
@@ -9970,7 +9974,9 @@ BEGIN
       for buf2 in (
          select * from tables TAB
           where TAB.application_id = abuff.id
-           and  TAB.group_name     = buff.group_name
+           and  (    TAB.group_name = buff.group_name
+		         or (    TAB.group_name  is null
+				     and buff.group_name is null)  )
            and  TAB.type in ('EFF', 'LOG')
           order by TAB.seq )
       loop

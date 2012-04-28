@@ -77,3 +77,4 @@ set echo off
 column sal clear
 
 spool off
+exit

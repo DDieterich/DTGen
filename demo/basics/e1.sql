@@ -159,3 +159,4 @@ select empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_nk1
 column sal clear
 
 spool off
+exit

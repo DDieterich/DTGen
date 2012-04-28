@@ -95,3 +95,4 @@ column column_name     clear
 column index_name      clear
 
 spool off
+exit

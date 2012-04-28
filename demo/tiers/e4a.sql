@@ -41,5 +41,4 @@ execute dbms_output.put_line(glob.release_lock);
 set echo off
 
 spool off
-
 exit
