@@ -59,3 +59,4 @@ set linesize 80
 set pagesize 14
 
 spool off
+exit

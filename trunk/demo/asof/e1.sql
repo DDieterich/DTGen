@@ -46,7 +46,7 @@ delete from files_act where applications_nk1 = 'DEMO2';
 delete from applications_act where abbr = 'DEMO2';
 
 prompt create a DEMO2 Schema in DTGEN
-insert into applications_act (abbr, name, description) values ('DEMO2', 'DTGen ASOF Demonstration', 'Demonstrates history and audit capabilities of DTGen');
+insert into applications_act (abbr, name, description) values ('DEMO2', 'DTGen ASOF Demonstration', 'Based on the BASIC Demonstration, adds history and audit capabilities');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO2', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO2', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -330,3 +330,4 @@ column aud_end_usr  clear
 column aud_end_dtm  clear
 
 spool off
+exit

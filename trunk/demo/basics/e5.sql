@@ -75,3 +75,4 @@ column mgr_nk_path     clear
 column get_mgr_nk_path clear
 
 spool off
+exit

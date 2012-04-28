@@ -134,3 +134,4 @@ column pop_usr           clear
 column pop_dtm           clear
 
 spool off
+exit

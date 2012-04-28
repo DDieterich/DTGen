@@ -46,7 +46,7 @@ delete from files_act where applications_nk1 = 'DEMO3';
 delete from applications_act where abbr = 'DEMO3';
 
 prompt create a DEMO3 Schema in DTGEN
-insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'loopback', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Demonstrates history and audit capabilities of DTGen');
+insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'loopback', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Based on the ASOF Demonstration, adds muti-tier capabilities');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO3', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO3', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -298,3 +298,4 @@ column aud_end_usr  clear
 column aud_end_dtm  clear
 
 spool off
+exit

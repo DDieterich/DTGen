@@ -85,3 +85,4 @@ column sal clear
 commit;
 
 spool off
+exit

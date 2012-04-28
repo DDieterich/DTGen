@@ -46,7 +46,7 @@ delete from files_act where applications_nk1 = 'DEMO4';
 delete from applications_act where abbr = 'DEMO4';
 
 prompt create a DEMO4 Schema in DTGEN
-insert into applications_act (abbr, name, apex_schema, apex_ws_name, apex_app_name, description) values ('DEMO4', 'DTGen GUI Demonstration', 'dtgen_db_demo', 'dtgen_db_demo', 'GUI_DEMO', 'Demonstrates history and audit capabilities of DTGen');
+insert into applications_act (abbr, name, apex_schema, apex_ws_name, apex_app_name, description) values ('DEMO4', 'DTGen GUI Demonstration', 'dtgen_db_demo', 'dtgen_db_demo', 'GUI_DEMO', 'Based on the ASOF Demonstration, adds Graphical User Interface capabilities');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO4', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO4', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -106,9 +106,14 @@ set serveroutput on size 1000000 format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 @install_db
+@install_gui
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set define off
+set feedback off
+
+prompt
+prompt Loading data into database
 
 execute glob.set_db_constraints(FALSE);
 
@@ -116,7 +121,7 @@ alter trigger dept_bi disable;
 
 insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (1, 10, 'ACCOUNTING', 'NEW YORK', 'Dataload', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
 insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (2, 20, 'RESEARCH', 'DALLAS', 'Dataload', to_timestamp('1980-11-1', 'YYYY-MM-DD'));
-insert into dept_aud (dept_id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm) values (3, 20, 'SALES', 'ST LOUIS', 'Dataload', to_timestamp('1980-11-1', 'YYYY-MM-DD'), 'THOMPSON', to_timestamp('1982-8-17', 'YYYY-MM-DD'));
+insert into dept_aud (dept_id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm) values (3, 30, 'SALES', 'ST LOUIS', 'Dataload', to_timestamp('1980-11-1', 'YYYY-MM-DD'), 'THOMPSON', to_timestamp('1982-8-17', 'YYYY-MM-DD'));
 insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (3, 30, 'SALES', 'CHICAGO', 'THOMPSON', to_timestamp('1982-8-17', 'YYYY-MM-DD'));
 insert into dept_aud (dept_id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm) values (4, 40, 'OPERATIONS', 'BUFFALO', 'Dataload', to_timestamp('1980-11-1', 'YYYY-MM-DD'), 'JAMES', to_timestamp('1982-2-12', 'YYYY-MM-DD'));
 insert into dept (id, deptno, dname, loc, aud_beg_usr, aud_beg_dtm) values (4, 40, 'OPERATIONS', 'BOSTON', 'JAMES', to_timestamp('1982-2-12', 'YYYY-MM-DD'));
@@ -191,4 +196,6 @@ end;
 alter table emp enable constraint emp_fk1;
 alter trigger emp_bi enable;
 
+set feedback on
 spool off
+exit
