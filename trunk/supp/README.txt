@@ -75,6 +75,7 @@ drop_usyn.sql        - Drops synonyms for the application user
 
 Create an application in APEX to use "create_flow.sql":
 -------------------------------------------------------
+NOTE: Most of this procedure is displayed graphically in the "demo/gui/gui_demo.pdf" file.
 1) Create the APEX application
    -) Login to APEX as an administrator
    -) Create a workspace using the "apex_ws_name" for the application

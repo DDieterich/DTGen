@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   01:35 Thursday April 12, 2012
+--   Date and Time:   10:29 Monday April 30, 2012
 --   Exported By:     DTGEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -26,10 +26,10 @@ prompt  APPLICATION 900 - DTGen
  
 -- Application Statistics:
 --   Pages:                   38
---     Items:                394
+--     Items:                395
 --     Computations:          26
 --     Validations:            0
---     Processes:            142
+--     Processes:            143
 --     Regions:              123
 --     Buttons:              151
 --     Dynamic Actions:        0
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 91833365296068322 + wwv_flow_api.g_id_offset,
   p_error_template=> 91829667765068300 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120412013544',
+  p_checksum_salt_last_reset => '20120430102951',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -168,7 +168,7 @@ wwv_flow_api.create_flow(
   p_cust_authentication_process=> '.'||to_char(91838984254068400 + wwv_flow_api.g_id_offset)||'.',
   p_cust_authentication_page=> '',
   p_custom_auth_login_url=> '',
-  p_flow_version=> 'DTGen_0.8',
+  p_flow_version=> 'DTGen_0.9',
   p_flow_status=> 'AVAILABLE_W_EDIT_LINK',
   p_flow_unavailable_text=> 'This application is currently unavailable at this time.',
   p_build_status=> 'RUN_AND_BUILD',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 91832266353068321 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 91832968948068321 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'DTGEN',
-  p_last_upd_yyyymmddhh24miss=> '20120412013544',
+  p_last_upd_yyyymmddhh24miss=> '20120430102951',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -1581,8 +1581,8 @@ wwv_flow_api.create_page (
  ,p_cache_by_user_yn => 'N'
  ,p_help_text => 
 'No help is available for this page.'
- ,p_last_updated_by => 'GEN'
- ,p_last_upd_yyyymmddhh24miss => '20120328104455'
+ ,p_last_updated_by => 'DTGEN'
+ ,p_last_upd_yyyymmddhh24miss => '20120419233826'
   );
 null;
  
@@ -1930,6 +1930,47 @@ wwv_flow_api.create_page_branch(
   p_branch_sequence=> 1,
   p_save_state_before_branch_yn=>'Y',
   p_branch_comment=> '');
+ 
+ 
+end;
+/
+
+declare
+    h varchar2(32767) := null;
+begin
+wwv_flow_api.create_page_item(
+  p_id=>31901306337773131 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_flow_step_id=> 1,
+  p_name=>'P1_DELETE_ALL',
+  p_data_type=> 'VARCHAR',
+  p_is_required=> false,
+  p_accept_processing=> 'REPLACE_EXISTING',
+  p_item_sequence=> 130,
+  p_item_plug_id => 91840772659068444+wwv_flow_api.g_id_offset,
+  p_use_cache_before_default=> 'NO',
+  p_item_default=> 'DELETE_ALL',
+  p_prompt=>'Delete Entire Application',
+  p_source=>'DELETE_ALL',
+  p_source_type=> 'STATIC',
+  p_display_as=> 'BUTTON',
+  p_lov_display_null=> 'NO',
+  p_lov_translated=> 'N',
+  p_cSize=> null,
+  p_cMaxlength=> 2000,
+  p_cHeight=> null,
+  p_tag_attributes  => 'template:'||to_char(91830771117068311 + wwv_flow_api.g_id_offset),
+  p_begin_on_new_line=> 'NO',
+  p_begin_on_new_field=> 'YES',
+  p_colspan=> 1,
+  p_rowspan=> 1,
+  p_label_alignment=> 'LEFT',
+  p_field_alignment=> 'LEFT',
+  p_display_when=>'P1_APP_ID',
+  p_display_when_type=>'ITEM_IS_NOT_NULL',
+  p_is_persistent=> 'N',
+  p_button_execute_validations=>'Y',
+  p_item_comment => '');
  
  
 end;
@@ -2306,8 +2347,8 @@ wwv_flow_api.create_page_item(
   p_display_as=> 'NATIVE_TEXT_FIELD',
   p_lov_display_null=> 'NO',
   p_lov_translated=> 'N',
-  p_cSize=> 5,
-  p_cMaxlength=> 8,
+  p_cSize=> 60,
+  p_cMaxlength=> 2000,
   p_cHeight=> 1,
   p_tag_attributes  => 'class="dtgen-tab-app-format"',
   p_begin_on_new_line=> 'NO',
@@ -2356,7 +2397,7 @@ wwv_flow_api.create_page_item(
   p_lov_display_null=> 'NO',
   p_lov_translated=> 'N',
   p_cSize=> 50,
-  p_cMaxlength=> 100,
+  p_cMaxlength=> 200,
   p_cHeight=> 1,
   p_tag_attributes  => 'class="dtgen-tab-app-format"',
   p_begin_on_new_line=> 'NO',
@@ -2592,6 +2633,63 @@ declare
   l_clob clob;
   l_length number := 1;
 begin
+p:=p||'DECLARE'||chr(10)||
+'   DEL_APP_ABBR  applications.abbr%TYPE  := applications_dml.get_nk(:P1_APP_ID);'||chr(10)||
+'BEGIN'||chr(10)||
+'   delete from apex_application_files'||chr(10)||
+'    where flow_id = :APP_ID'||chr(10)||
+'     and  title   in ('||chr(10)||
+'          select title'||chr(10)||
+'           from apex_application_files'||chr(10)||
+'           where flow_id     = :APP_ID'||chr(10)||
+'            and  description like DEL_APP_ABBR || '' %'');'||chr(10)||
+'   delete from exceptions_act where applications_nk1 = DEL';
+
+p:=p||'_APP_ABBR;'||chr(10)||
+'   delete from programs_act where applications_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from check_cons_act where tables_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from indexes_act where tab_cols_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from tab_cols_act where tables_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from tables_act where applications_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from domain_values_act where domains_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   d';
+
+p:=p||'elete from domains_act where applications_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from file_lines_act where files_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from files_act where applications_nk1 = DEL_APP_ABBR;'||chr(10)||
+'   delete from applications_act where abbr = DEL_APP_ABBR;'||chr(10)||
+'   commit;'||chr(10)||
+'END;';
+
+wwv_flow_api.create_page_process(
+  p_id     => 31901502098790851 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_flow_step_id => 1,
+  p_process_sequence=> 30,
+  p_process_point=> 'AFTER_SUBMIT',
+  p_process_type=> 'PLSQL',
+  p_process_name=> 'DELETE_ALL',
+  p_process_sql_clob => p, 
+  p_process_error_message=> '',
+  p_process_when=>'DELETE_ALL',
+  p_process_when_type=>'REQUEST_EQUALS_CONDITION',
+  p_process_success_message=> '',
+  p_process_is_stateful_y_n=>'N',
+  p_process_comment=>'');
+end;
+null;
+ 
+end;
+/
+
+ 
+begin
+ 
+declare
+  p varchar2(32767) := null;
+  l_clob clob;
+  l_length number := 1;
+begin
 p:=p||'#OWNER#:APPLICATIONS_ACT:P1_APP_ID:ID|IUD';
 
 wwv_flow_api.create_page_process(
@@ -2702,7 +2800,8 @@ wwv_flow_api.create_page_process(
   p_process_name=> 'Update APP_ID After Delete',
   p_process_sql_clob => p, 
   p_process_error_message=> 'Unable to retrieve max(application.id) in "Update APP_ID After Delete"',
-  p_process_when_button_id=>92003684391082029 + wwv_flow_api.g_id_offset,
+  p_process_when=>'(''DELETE'',''DELETE_ALL'')',
+  p_process_when_type=>'REQUEST_IN_CONDITION',
   p_process_success_message=> '',
   p_process_is_stateful_y_n=>'N',
   p_process_comment=>'');
