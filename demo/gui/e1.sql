@@ -55,7 +55,7 @@ insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO4', 'JOB', 40, 'SALESMAN', 'Company Salesman');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO4', 'JOB', 50, 'CLERK', 'Department Clerk');
 
-insert into tables_act (applications_nk1, abbr, seq, name, type, mv_refresh_hr, description) values ('DEMO4', 'DEPT', 10, 'dept', 'LOG', 24, 'Department Information');
+insert into tables_act (applications_nk1, abbr, seq, name, type, description) values ('DEMO4', 'DEPT', 10, 'dept', 'LOG', 'Department Information');
 insert into tab_cols_act (tables_nk1, tables_nk2, name, seq, nk, type, len, description) values ('DEMO4', 'DEPT', 'deptno', 10, 1, 'NUMBER', 2, 'Department Number');
 insert into tab_cols_act (tables_nk1, tables_nk2, name, seq, req, type, len, description) values ('DEMO4', 'DEPT', 'dname', 20, 'X', 'VARCHAR2', 14, 'Name of the Department');
 insert into tab_cols_act (tables_nk1, tables_nk2, name, seq, req, type, len, description) values ('DEMO4', 'DEPT', 'loc', 30, 'X', 'VARCHAR2', 13, 'Location for the Department');
