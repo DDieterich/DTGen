@@ -47,8 +47,8 @@ set feedback off
 prompt
 begin
    dbms_output.enable(1000000);
-   dbms_output.put_line('glob.fold_strings := TRUE;');
-                         glob.fold_strings := TRUE;
+   dbms_output.put_line('glob.set_fold_strings(TRUE);');
+                         glob.set_fold_strings (TRUE);
 end;
 /
 prompt
@@ -70,8 +70,8 @@ set feedback off
 
 prompt
 begin
-   dbms_output.put_line('glob.fold_strings := FALSE;');
-                         glob.fold_strings := FALSE;
+   dbms_output.put_line('glob.set_fold_strings(FALSE);');
+                         glob.set_fold_strings (FALSE);
 end;
 /
 prompt
@@ -91,7 +91,7 @@ select empno, ename
 set echo off
 
 begin
-   glob.fold_strings := TRUE;
+   glob.set_fold_strings (TRUE);
    commit;
 end;
 /
