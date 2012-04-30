@@ -71,8 +71,8 @@ column comm format 99999
 prompt
 begin
    dbms_output.enable(1000000);
-   dbms_output.put_line('glob.db_constraints := TRUE;');
-                         glob.db_constraints := TRUE;
+   dbms_output.put_line('glob.set_db_constraints(TRUE);');
+                         glob.set_db_constraints(TRUE);
 end;
 /
 prompt
@@ -93,8 +93,8 @@ set feedback off
 prompt
 begin
    dbms_output.enable(1000000);
-   dbms_output.put_line('glob.db_constraints := FALSE;');
-                         glob.db_constraints := FALSE;
+   dbms_output.put_line('glob.set_db_constraints(FALSE);');
+                         glob.set_db_constraints(FALSE);
 end;
 /
 prompt

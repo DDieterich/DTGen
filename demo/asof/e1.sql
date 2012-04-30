@@ -99,7 +99,7 @@ connect &DB_NAME./&DB_PASS.
 set serveroutput on size 1000000 format wrapped
 @install_db
 
-execute glob.db_constraints := FALSE
+execute glob.set_db_constraints(FALSE)
 
 prompt
 prompt ============================================================

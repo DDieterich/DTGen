@@ -89,7 +89,7 @@ describe emp_dml
 
 begin
    dbms_output.enable;
-   glob.fold_strings := TRUE;
+   glob.set_fold_strings(TRUE);
    for buff in (
       select * from emp
        where ename = 'BOGUS' )
@@ -164,7 +164,7 @@ declare
    buff emp%rowtype;
 begin
    dbms_output.enable;
-   glob.fold_strings := TRUE;
+   glob.set_fold_strings(TRUE);
    open c1 for
       select * from emp
        where empno = 21;

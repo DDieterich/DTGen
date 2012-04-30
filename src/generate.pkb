@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 lo_opname      varchar2(64);  -- Operation Name for LongOps
 lo_num_tables  number;        -- Number of Tables for LongOps
 
-ver  varchar2(20) := 'DTGen_0.9';
+ver  varchar2(20) := 'DTGen_0.10';
 sec_lines  sec_lines_type;
 sec_line0  sec_lines_type;  -- Used to reset the sec_lines array
 sec_line   number;
@@ -10130,6 +10130,30 @@ BEGIN
    p('         p_list_item_owner=> '''');');
    p('   end if;');
    p('');
+
+--   This process is done by each OMNI page, instead of in the Menu, because
+--   the Home Page Navigation Tree Allows a jump directly to each OMNI page
+--   pseq := 0;
+--                              --  ...Create Page Processing'');');
+--   p('   dbms_output.put_line(''  ...Create Page Processing'');');
+--   p('');
+--   pseq := pseq + 1;
+--   p('');
+--   p('   wwv_flow_api.create_page_process(');
+--   p('      p_id     => wwv_flow_id.next_val,');
+--   p('      p_flow_id=> wwv_flow.g_flow_id,');
+--   p('      p_flow_step_id => pnum,');
+--   p('      p_process_sequence=> ' || (pseq * 10) || ',');
+--   p('      p_process_point=> ''AFTER_SUBMIT'',');
+--   p('      p_process_type=> ''PLSQL'',');
+--   p('      p_process_name=> ''SET_ASOF_DTM'',');
+--   p('      p_process_sql_clob => ''glob.set_asof_dtm(:P'' || pnum || ''_ASOF_DTM);'',');
+--   p('      p_process_error_message=> ''Global ASOF Date/Time failed to set.'',');
+--   p('      p_process_success_message=> ''Global ASOF Date/Time has been set.',');
+--   p('      p_process_is_stateful_y_n=>''N'',');
+--   p('      p_process_comment=>'''');');
+--   p('');
+
    p('   ----------------------------------------');
    p('');
    p('   --application/shared_components/navigation/breadcrumbs');
@@ -10253,12 +10277,14 @@ BEGIN
    p('   ----------------------------------------');
    p('');
    p('   s := ''OMNI Reports Menu'';');
+   p('   bcp_id := get_menu_option_id(mnu_id, s);');
    p('');
-   p('   if get_menu_option_id(mnu_id, s) is null');
+   p('   if bcp_id is null');
    p('   then');
    p('');
    p('      dbms_output.put_line(''  ...Create BREADCRUMB ENTRY "'' || s || ''"'');');
    p('      p := ' || pnum3 || ' + page_os;');
+   p('      bcp_id := wwv_flow_id.next_val;');
    p('');
    p('      wwv_flow_api.create_menu_option (');
    p('         p_id=> wwv_flow_id.next_val,');
@@ -10306,12 +10332,14 @@ BEGIN
    p('   ----------------------------------------');
    p('');
    p('   s := ''ASOF Reports Menu'';');
+   p('   bcp_id := get_menu_option_id(mnu_id, s);');
    p('');
-   p('   if get_menu_option_id(mnu_id, s) is null');
+   p('   if bcp_id is null');
    p('   then');
    p('');
    p('      dbms_output.put_line(''  ...Create BREADCRUMB ENTRY "'' || s || ''"'');');
    p('      p := ' || pnum4 || ' + page_os;');
+   p('      bcp_id := wwv_flow_id.next_val;');
    p('');
    p('      wwv_flow_api.create_menu_option (');
    p('         p_id=> wwv_flow_id.next_val,');
