@@ -5,11 +5,12 @@
 
   [http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.11.zip Pre-Release 0.11 Available for Download]
 
-  Release 0.11 included the following:
-  * Reorganize (Done)
-  * Finalize Release (Working)
-  * Code Uploads (Working)
-  * Demo Code
+= Release 0.11 Includes =
+
+  * Reorganize
+  * Finalize Release
+  * Code Uploads
+  * Demo Code and Documentation
 
 = Next Release =
 
