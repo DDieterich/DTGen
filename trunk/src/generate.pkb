@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 lo_opname      varchar2(64);  -- Operation Name for LongOps
 lo_num_tables  number;        -- Number of Tables for LongOps
 
-ver  varchar2(20) := 'DTGen_0.10';
+ver  varchar2(20) := 'DTGen_0.11';
 sec_lines  sec_lines_type;
 sec_line0  sec_lines_type;  -- Used to reset the sec_lines array
 sec_line   number;
@@ -10287,7 +10287,7 @@ BEGIN
    p('      bcp_id := wwv_flow_id.next_val;');
    p('');
    p('      wwv_flow_api.create_menu_option (');
-   p('         p_id=> wwv_flow_id.next_val,');
+   p('         p_id=> bcp_id,');
    p('         p_menu_id=> mnu_id,');
    p('         p_parent_id=> null,');
    p('         p_option_sequence=>' || pnum3 || ',');
@@ -10342,7 +10342,7 @@ BEGIN
    p('      bcp_id := wwv_flow_id.next_val;');
    p('');
    p('      wwv_flow_api.create_menu_option (');
-   p('         p_id=> wwv_flow_id.next_val,');
+   p('         p_id=> bcp_id,');
    p('         p_menu_id=> mnu_id,');
    p('         p_parent_id=> null,');
    p('         p_option_sequence=>' || pnum4 || ',');
