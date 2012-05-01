@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   17:35 Monday April 30, 2012
+--   Date and Time:   19:34 Monday April 30, 2012
 --   Exported By:     DTGEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 91833365296068322 + wwv_flow_api.g_id_offset,
   p_error_template=> 91829667765068300 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20120430173517',
+  p_checksum_salt_last_reset => '20120430193428',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -168,7 +168,7 @@ wwv_flow_api.create_flow(
   p_cust_authentication_process=> '.'||to_char(91838984254068400 + wwv_flow_api.g_id_offset)||'.',
   p_cust_authentication_page=> '',
   p_custom_auth_login_url=> '',
-  p_flow_version=> 'DTGen_0.10',
+  p_flow_version=> 'DTGen_0.11',
   p_flow_status=> 'AVAILABLE_W_EDIT_LINK',
   p_flow_unavailable_text=> 'This application is currently unavailable at this time.',
   p_build_status=> 'RUN_AND_BUILD',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 91832266353068321 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 91832968948068321 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'DTGEN',
-  p_last_upd_yyyymmddhh24miss=> '20120430173517',
+  p_last_upd_yyyymmddhh24miss=> '20120430193428',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
