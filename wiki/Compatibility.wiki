@@ -2,23 +2,27 @@
 
 = Introduction =
 
- * An Oracle database requires an operating system (i.e. Windows, Linux, OS X etc...).  In general, everything in this project should work in all operating systems that run an Oracle database.
- * DTGen requires an Oracle database (i.e. Oracle 10gXE, Oracle 11gEE, etc...).  In general, DTGen requires an Oracle 10g or higher.
- * The DTGen GUI requires Oracle's Application Express installed in an Oracle database and a web browser (i.e. Internet Explorer, Firefox, Chrome, etc).  In general, the DTGen GUI should work on all browsers supported by Oracle's Application Express.
+ * An Oracle database requires an operating system (i.e. Windows, Linux, OS X etc...).
+ * DTGen requires an Oracle database (i.e. Oracle 10gXE, Oracle 11gEE, etc...).
+ * The DTGen GUI requires Oracle's Application Express installed in an Oracle database and a web browser (i.e. Internet Explorer, Firefox, Chrome, etc).
 
 = Minimum Requirements =
 
-|| *Database* || *Database<br>Edition* || *APEX<br>Vers* ||
-|| Oracle10g || Any^1^ || 4.0 ||
+|| *Operating System* || Examples ||
+|| Any^1^ || Windows, Linux, OS X ||
 
-|| *Browser* || Vers^2^ ||
+|| *Database* || *Database<br>Edition* || *APEX<br>Vers* ||
+|| Oracle10g || Any^2^ || 4.0 ||
+
+|| *Browser* || Vers^3^ ||
 || Microsoft Internet Explorer || 7.0 ||
 || Mozilla Firefox || 3.5 ||
 || Google Chrome || 4.0 ||
 || Apple Safari || 4.0 ||
 
-Note ^1^: Oracle Express Edition does not support Materialized View Logs<br>
-Note ^2^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
+Note ^1^: Any Operating Systems that runs the needed Oracle database.<br>
+Note ^2^: Oracle Express Edition does not support Materialized View Logs<br>
+Note ^3^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
 
 = Tested Installations =
 
