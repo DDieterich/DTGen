@@ -2,7 +2,9 @@
 
 = Introduction =
 
-DTGen requires an Oracle database. DTGen GUI requires Oracle's Application Express on an Oracle database and a web browser.
+ * An Oracle database requires an operating system (i.e. Windows, Linux, OS X etc...).  In general, everything in this project should work in all operating systems that run an Oracle database.
+ * DTGen requires an Oracle database (i.e. Oracle 10gXE, Oracle 11gEE, etc...).  In general, DTGen requires an Oracle 10g or higher.
+ * The DTGen GUI requires Oracle's Application Express installed in an Oracle database and a web browser (i.e. Internet Explorer, Firefox, Chrome, etc).  In general, the DTGen GUI should work on all browsers supported by Oracle's Application Express.
 
 = Minimum Requirements =
 
