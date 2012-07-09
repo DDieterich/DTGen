@@ -26,11 +26,11 @@ Note ^3^: To view or develop Oracle Application Express applications, Web browse
 
 = Tested Installations =
 
-|| *Operating<br>System* || Rev || *Operating System<br>Edition* || Bits || *Database* || Rev || *Database<br>Edition* || Bits || *APEX<br>Vers* ||
+|| *Operating<br>System* || Rev || *Operating System<br>Edition* || Bits || *Database* || Rev || *Database<br>Edition* || Bits || *APEX<br>Version* ||
 || Windows 7 || SP1 || Home Premium || 64 || Oracle10g || R2 || Express || 32 || 4.0 ||
 || Windows XP || SP3 || Professional || 32 || Oracle11g || R2 || Express || 32 || 4.0 ||
 
-|| *Browser* || Vers ||
+|| *Web Browser* || Version ||
 || Google Chrome || 18.0 ||
 || Microsoft Internet Explorer || 8.0 ||
 
