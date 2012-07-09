@@ -4,14 +4,14 @@
 
  * DTGen requires an Oracle database.
  * An Oracle database requires an operating system.
- * The DTGen GUI requires 1) Oracle's Application Express installed in an Oracle database and 2) a web browser.
+ * The DTGen GUI requires 1) Oracle's Application Express (APEX) installed in an Oracle database and 2) a web browser.
 
 = Minimum Requirements =
 
 || *Operating System* || *Examples* ||
 || Any^1^ || Windows, Linux, OS X ||
 
-|| *Database* || *Database<br>Edition* || *APEX<br>Version* ||
+|| *Database<br>Version* || *Database<br>Edition* || *APEX<br>Version* ||
 || Oracle10g || Any^2^ || 4.0 ||
 
 || *Browser* || *Version^3^* ||
@@ -21,7 +21,7 @@
 || Apple Safari || 4.0 ||
 
 Note ^1^: Any Operating Systems that runs the needed Oracle database.<br>
-Note ^2^: Oracle Express Edition does not support Materialized View Logs<br>
+Note ^2^: Oracle Express Edition (XE) does not support Materialized View Logs<br>
 Note ^3^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
 
 = Tested Installations =
