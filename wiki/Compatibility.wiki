@@ -20,7 +20,7 @@
 || Google Chrome || 4.0 ||
 || Apple Safari || 4.0 ||
 
-Note ^1^: Any Operating Systems that runs the needed Oracle database.<br>
+Note ^1^: Any Operating Systems that runs the required Oracle database.<br>
 Note ^2^: Oracle Express Edition (XE) does not support Materialized View Logs<br>
 Note ^3^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
 
