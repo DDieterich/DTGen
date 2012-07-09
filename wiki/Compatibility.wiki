@@ -14,7 +14,7 @@
 || *Database<br>Version* || *Database<br>Edition* || *APEX<br>Version* ||
 || Oracle10g || Any^2^ || 4.0 ||
 
-|| *Browser* || *Version^3^* ||
+|| *Web Browser* || *Version^3^* ||
 || Microsoft Internet Explorer || 7.0 ||
 || Mozilla Firefox || 3.5 ||
 || Google Chrome || 4.0 ||
