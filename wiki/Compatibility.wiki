@@ -11,10 +11,10 @@
 || *Operating System* || *Examples* ||
 || Any^1^ || Windows, Linux, OS X ||
 
-|| *Database* || *Database<br>Edition* || *APEX<br>Vers* ||
+|| *Database* || *Database<br>Edition* || *APEX<br>Version* ||
 || Oracle10g || Any^2^ || 4.0 ||
 
-|| *Browser* || *Vers^3^* ||
+|| *Browser* || *Version^3^* ||
 || Microsoft Internet Explorer || 7.0 ||
 || Mozilla Firefox || 3.5 ||
 || Google Chrome || 4.0 ||
