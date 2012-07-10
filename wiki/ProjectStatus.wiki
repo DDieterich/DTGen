@@ -16,14 +16,14 @@
 
 Note: See [https://code.google.com/p/dtgen/issues/list Issue] Milestones for list of changes in each release.
 
-|| *Release* || *Est. Date* || *Weeks* ||
-|| 0.12 || 27-July      || 3 ||
-|| 0.13 || 31-August    || 5 ||
-|| 0.14 || 28-September || 4 ||
-|| 0.15 || 19-October   || 3 ||
-|| 0.16 || 9-November   || 3 ||
-|| 0.17 || 14-December  || 4 ||
-|| 0.18 || 18-January   || 4 ||
-||  1.0 || 25-January   || 1 ||
-||  1.1 || 15-February  || 4 ||
-||  1.2 || 22-March     || 4 ||
+|| *Rel* || *Est Date* || *Wks* ||
+|| 0.12 || 27-Jul-2012 || 3 ||
+|| 0.13 || 31-Aug-2012 || 5 ||
+|| 0.14 || 28-Sep-2012 || 4 ||
+|| 0.15 || 19-Oct-2012 || 3 ||
+|| 0.16 || 09-Nov-2012 || 3 ||
+|| 0.17 || 14-Dec-2012 || 4 ||
+|| 0.18 || 18-Jan-2013 || 4 ||
+||  1.0 || 25-Jan-2013 || 1 ||
+||  1.1 || 15-Feb-2013 || 4 ||
+||  1.2 || 22-Mar-2013 || 4 ||
