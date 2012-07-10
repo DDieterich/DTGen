@@ -1,19 +1,28 @@
-#summary Status of DTGen Project AS/OF 30-Apr-2012.
+#summary Status of DTGen Project AS/OF 10-Jul-2012.
 #labels Featured,Phase-ProjectManage
 
 = Current Release =
 
   [http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.11.zip Pre-Release 0.11 Available for Download]
 
-= Release 0.11 Includes =
+= Pre-Release 0.11 Includes =
 
   * Project Reorganization
   * Finalized Release Process
   * Code Archives and Uploads
   * Demonstration Code and Documentation
 
-= Next Release =
+= Release Schedule =
 
-  * Automated Release Testing
-  * Documentation (Working)
-  * Community Feedback
+Note: See Issue Milestones for list of changes in each release.
+
+  * Pre-Release 0.12: 27-July
+  * Pre-Release 0.13: 31-August
+  * Pre-Release 0.14: 28-September
+  * Pre-Release 0.15: 19-October
+  * Pre-Release 0.16: 9-November
+  * Pre-Release 0.17: 14-December
+  * Pre-Release 0.18: 18-January
+  * Release 1.0: 25-January
+  * Release 1.1: 15-February
+  * Release 1.2: 22-March
