@@ -14,7 +14,7 @@
 
 = Release Schedule =
 
-Note: See Issues Milestones for list of changes in each release.
+Note: See [Issues|https://code.google.com/p/dtgen/issues/list] Milestones for list of changes in each release.
 
   * Pre-Release 0.12: 27-July
   * Pre-Release 0.13: 31-August
