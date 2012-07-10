@@ -16,7 +16,7 @@
 
 Note: See [https://code.google.com/p/dtgen/issues/list Issue] Milestones for list of changes in each release.
 
-|| *Rel.* || Description || *Est. Date* || *Wks* ||
+|| *Rel.* || *Description* || *Est. Date* || *Wks* ||
 || 0.12 || || 27-Jul-2012 || 3 ||
 || 0.13 || || 31-Aug-2012 || 5 ||
 || 0.14 || || 28-Sep-2012 || 4 ||
