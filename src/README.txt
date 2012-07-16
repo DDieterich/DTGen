@@ -12,7 +12,8 @@ generate.pkb       - Used by install.sql
 generate.pks       - Used by install.sql
 install.sql        - Installs DTGen in an Oracle database
 install_db.sql     - Used by install.sql
-uninstall.sql      - Uninstalls DTGen
+obj_uninstall.sql  - Uninstalls DTGen's Database Objects
+uninstall.sql      - Uninstalls the DTGen User
 
 
 DTGen Installation:
