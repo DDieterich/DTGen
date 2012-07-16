@@ -16,7 +16,7 @@
 
 Note: See [https://code.google.com/p/dtgen/issues/list Issue] Milestones for list of changes in each release.
 
-Current AsOf: 13-Jul-2012	
+Current AsOf 13-Jul-2012	
 
 ||*Rel.*||*Wks*||*Est. Del.*||*Description*||
 ||0.12||3||03-Aug-2012||Minor/Simple Defects Repair||
