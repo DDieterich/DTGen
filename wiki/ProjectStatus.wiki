@@ -16,7 +16,21 @@
 
 Note: See [https://code.google.com/p/dtgen/issues/list Issue] Milestones for list of changes in each release.
 
-The release schedule is available in the  [https://code.google.com/p/dtgen/source/browse/trunk/docs/Release%20Schedule.pdf Release Schedule.pdf]
+Current AsOf: 13-Jul-2012	
+
+||*Rel.*||*Wks*||*Est. Del.*||*Description*||
+||0.12||3||03-Aug-2012||Minor/Simple Defects Repair||
+||0.13||5||07-Sep-2012||QA1: Unit Testing||
+||0.14||4||05-Oct-2012||QA2: Integration Testing and Critical Fixes||
+||0.15||3||26-Oct-2012||Added Datatypes||
+||0.16||3||16-Nov-2012||High Priority Fixes||
+||0.17||4||14-Dec-2012||Capacity Increases||
+||0.18||4||11-Jan-2013||Low Priority Fixes||
+||1.0 ||3||01-Feb-2013||Cleanup and Documentation||
+||1.1 ||3||22-Feb-2013||Developer Friendly Enhancements||
+||1.2 ||5||29-Mar-2013||Performance Test Data Generation||
+
+The release schedule is also available in the  [https://code.google.com/p/dtgen/source/browse/trunk/docs/Release%20Schedule.pdf Release Schedule.pdf]
 
 || *Rel.* || *Wks* || *Est. Date* || *Description* ||
 || 0.12 || 3 || 27-Jul-2012 || Minor/Simple Defects Repair ||
