@@ -16,6 +16,8 @@
 
 Note: See [https://code.google.com/p/dtgen/issues/list Issue] Milestones for list of changes in each release.
 
+The release schedule is available in the  [https://code.google.com/p/dtgen/source/browse/trunk/docs/Release%20Schedule.pdf Release Schedule.pdf]
+
 || *Rel.* || *Wks* || *Est. Date* || *Description* ||
 || 0.12 || 3 || 27-Jul-2012 || Minor/Simple Defects Repair ||
 || 0.13 || 5 || 31-Aug-2012 || QA1: Unit Testing ||
