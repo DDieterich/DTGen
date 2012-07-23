@@ -1,10 +1,10 @@
 
 REM
-REM DTGEN Un-Installation Script
+REM DTGEN Sys(tem) Un-Installation Script
 REM (Must be run as the "system" or "sys as sysdba" user)
 REM
 
-spool uninstall
+spool sys_uninstall
 
 REM Initialize Variables
 REM

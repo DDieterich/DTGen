@@ -10,10 +10,10 @@ assemble.pks       - Used by install.sql
 f900.sql           - APEX export of the GUI source for DTGen
 generate.pkb       - Used by install.sql
 generate.pks       - Used by install.sql
-install.sql        - Installs DTGen in an Oracle database
 install_db.sql     - Used by install.sql
-obj_uninstall.sql  - Uninstalls DTGen's Database Objects
-uninstall.sql      - Uninstalls the DTGen User
+sys_install.sql    - Installs DTGen User and DTGen Database Objects
+sys_uninstall.sql  - Uninstalls the DTGen User
+uninstall_db.sql   - Uninstalls DTGen's Database Objects
 
 
 DTGen Installation:
@@ -24,11 +24,11 @@ DTGen Installation:
    -) Confirm SQL*Plus command line connection
       (sqlplus sys/password as sysdba)
 2) Install DTGen objects in database
-   -) Review and optionally edit "install.sql"
+   -) Review and optionally edit "sys_install.sql"
       (Values for variables OWNERNAME, OWNERPASS, and TSPACE)
    -) Run the database installation script in SQL*Plus
-      (sqlplus sys/password as sysdba @install)
-   -) Review the output in the install.LST file.
+      (sqlplus sys/password as sysdba @sys_install)
+   -) Review the output in the sys_install.LST file.
       (The output from a successful installation is below)
 3) Install DTGen application in APEX (optional)
    -) If APEX is not installed, install 4.0 or better.
@@ -85,10 +85,10 @@ DTGen Un-install:
    -) Remove the DTGen application from APEX
    -) Remove the DTGEN workspace from APEX
       (May need to login as "ADMIN" using workspace "INTERNAL")
-   -) Review and optionally edit "uninstall.sql"
+   -) Review and optionally edit "sys_uninstall.sql"
       (Values for variables OWNERNAME, OWNERPASS, and TSPACE)
-   -) sqlplus system/password @uninstall
-      (Document the uninstall.sql output)
+   -) sqlplus system/password @sys_uninstall
+      (Document the sys_uninstall.sql output)
 
 
 ==================================================
