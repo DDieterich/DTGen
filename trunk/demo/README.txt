@@ -3,8 +3,8 @@ DTGen "demo" (Demonstration Exercises) README File
    Developed by DMSTEX (http://dmstex.com)
 
 
-File Descriptions in this directory:
-------------------------------------
+Files and Directories:
+----------------------
 asof                   - Directory for ASOF Demonstration Exercises
 basics                 - Directory for Basic Demonstration Exercises
 create_demo_users.sql  - Script to create Database users for Exercises

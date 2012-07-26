@@ -3,8 +3,8 @@ DTGen ASOF Demonstration
    Developed by DMSTEX (http://dmstex.com)
 
 
-File Descriptions in this directory:
-------------------------------------
+Files and Directories:
+----------------------
 asof_demo.odt - Demonstration Documentation (OpenOffice format)
 asof_demo.pdf - Demonstration Documentation (Acrobat format)
 data.ods      - Exercise #1: Data Load Spreadsheet (OpenOffice)

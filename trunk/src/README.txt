@@ -1,19 +1,25 @@
 
-DTGen "dev" (Development) README File
+DTGen "src" (Source) README File
    Developed by DMSTEX (http://dmstex.com)
 
 
-File descriptions in this directory
------------------------------------
-comp_file.sql      - Used by an alternaitve path in fullgen.sql
-create_user.sql    - Script to create an application user
-                     (Must be run by sys or system)
-                     (Creates the user and synonyms and grants permissions)
-dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
-fullgen.sql        - Script to generate all scripts for an application
-                     (The ABBR of the application is the first parameter)
-rebuild.sql        - Script to rebuild DTGen after making modifications
-select_file.sql    - Used by an alternative path in fullgen.sql
+Files and Directories:
+----------------------
+dtgen  - DTGen source code directory
+comp_file.sql     - Used by an alternaitve path in fullgen.sql
+create_owner.sql  - Used by install.sql to create the DTGen owner and roles
+                    (Must be run as sys or system)
+                    (New Schema Owner Name is the first parameter)
+                    (New Schema Owner Password is the second parameter)
+                    (New Schema Owner Default Tablespace is the third parameter)
+                    (New Schema Owner Temporary Tablespace is the fourth parameter)
+create_user.sql   - Script to create an application user
+                    (Must be run by sys or system)
+                    (Creates the user and synonyms and grants permissions)
+fullgen.sql       - Script to generate all scripts for an application
+                    (The ABBR of the application is the first parameter)
+rebuild.sql       - Script to rebuild DTGen after making modifications
+select_file.sql   - Used by an alternative path in fullgen.sql
 
 
 Scripts created by fullgen.sql:
@@ -68,9 +74,11 @@ drop_oltp.sql        - Drops the OLTP objects
 drop_usyn.sql        - Drops synonyms for the application user
 
 
-Create an application in APEX to use "create_flow.sql":
--------------------------------------------------------
+How to create an application in APEX that uses the generateed GUI:
+------------------------------------------------------------------
+
 NOTE: Most of this procedure is displayed graphically in the "demo/gui/gui_demo.pdf" file.
+
 1) Create the APEX application
    -) Login to APEX as an administrator
    -) Create a workspace using the "apex_ws_name" for the application
@@ -99,12 +107,15 @@ NOTE: Most of this procedure is displayed graphically in the "demo/gui/gui_demo.
    -) Theme 21
    -) Save this definition as a design model for reuse
    -) Create button
+
 2) Load the Maintenance GUI with Menu, LOVs, and Prefs
+   (Note: This will also work with the "create_flow.sql" alternative to "install_gui")
    -) In another window, run the command:
       sqlplus (owner)/(password)
       SQL> spool install_gui
-	  SQL> @install_gui
-	  SQL> exit
+      SQL> @install_gui
+      SQL> exit
+
 3) Add the Navigation List to Page 1
    -) Edit Page 1
    -) Click "Shared Components" (It's the gear icon on the toolbar)
@@ -113,6 +124,7 @@ NOTE: Most of this procedure is displayed graphically in the "demo/gui/gui_demo.
       (Note: "Page 1" should be displayed in the toolbar next to the "stoplight" icon)
    -) Click the "Add this list to the current page" at the bottom of the page.
    -) Click "Next" and "Create List Region" (All the defaults work correctly).
+
 4) Add Page 1 to the Breadcrumb
    -) Edit Page 1
    -) Click "Shared Components" (It's the gear icon on the toolbar)
