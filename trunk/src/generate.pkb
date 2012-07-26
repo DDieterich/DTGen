@@ -3740,7 +3740,7 @@ BEGIN
    p('/***  ACTIVE Audit Foreign Key ***/');
    p('-- alter table ' || tname || ' add constraint ' ||
                        tname || '_fa1');
-   p('--    foreign key beg_aud_usr references sys.usr$ (name);');
+   p('--    foreign key (beg_aud_usr) references sys.usr$ (name);');
    p('');
 END create_fk;
 ----------------------------------------
@@ -4429,28 +4429,71 @@ BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
       p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                             tbuff.name || '_PDAT_au1;');
+                          tbuff.name || '_PDAT_la1');
+      p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_au1;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnp3;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnp2;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnp1;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnh6;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnh5;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnh4;');
+      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                          tbuff.name || '_PDAT_nnh3;');
       if tbuff.type = 'EFF'
       then
+         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                             tbuff.name || '_PDAT_nnh2;');
+         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                             tbuff.name || '_PDAT_nnh1;');
          p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                                tbuff.name || '_PDAT_ef1;');
+                             tbuff.name || '_PDAT_ef1;');
       end if;
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nn3;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nn2;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nn1;');
-      --
+      for buff in (
+         select * from tab_cols COL
+          where COL.req     is not null
+           and  COL.table_id = tbuff.id
+          order by COL.seq desc)
+      loop
+         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
+                             tbuff.name || '_PDAT_nn' || buff.seq || ';');
+      end loop;
       p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
                           tbuff.name || HOA || '_la1;');
       p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
                           tbuff.name || HOA || '_au1;');
+      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                          tbuff.name || HOA || '_nnh6;');
+      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                          tbuff.name || HOA || '_nnh5;');
+      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                          tbuff.name || HOA || '_nnh4;');
+      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                          tbuff.name || HOA || '_nnh3;');
       if tbuff.type = 'EFF'
       then
          p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                             tbuff.name || HOA || '_nnh2;');
+         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                             tbuff.name || HOA || '_nnh1;');
+         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
                              tbuff.name || HOA || '_ef1;');
       end if;
+      for buff in (
+         select * from tab_cols COL
+          where COL.req     is not null
+           and  COL.table_id = tbuff.id
+          order by COL.seq desc)
+      loop
+         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
+                             tbuff.name || HOA || '_nn' || buff.seq || ';');
+      end loop;
    end if;
    -- Drop the domain check constraints
    for buff in (
@@ -4460,7 +4503,7 @@ BEGIN
        from  tab_cols  COL
        where d_domain_id is not null
         and  COL.table_id = tbuff.id
-       order by COL.seq)
+       order by COL.seq desc)
    loop
       p('alter table ' || tbuff.name || ' drop constraint ' ||
                           tbuff.name || '_dm' || buff.rnum || ';');
@@ -4473,7 +4516,7 @@ BEGIN
        from  tab_cols  COL
        where fold is not null
         and  COL.table_id = tbuff.id
-       order by COL.seq )
+       order by COL.seq desc)
    loop
       p('alter table ' || tbuff.name || ' drop constraint ' ||
                           tbuff.name || '_fld' || buff.rnum || ';');
@@ -4488,6 +4531,18 @@ BEGIN
                           tbuff.name || '_ck' || buff.seq || ';');
    end loop;
    -- Drop the not null check constraints
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('alter table ' || tbuff.name || ' drop constraint ' ||
+                          tbuff.name || '_nnh5;');
+      p('alter table ' || tbuff.name || ' drop constraint ' ||
+                          tbuff.name || '_nnh3;');
+      if tbuff.type = 'EFF'
+      then
+         p('alter table ' || tbuff.name || ' drop constraint ' ||
+                             tbuff.name || '_nnh1;');
+      end if;
+   end if;
    for buff in (
       select * from tab_cols COL
        where (   COL.nk   is not null
@@ -4509,21 +4564,37 @@ begin
    -- Not Null Check Constraints
    for buff in (
       select * from tab_cols COL
-       where (   COL.nk   is not null
-              or COL.req  is not null )
+       where COL.req     is not null
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_nn' || buff.seq);
-      p('   check (' || buff.name || ' is not null);');
+      p('alter table ' || tname || ' modify ' || buff.name);
+      p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
    end loop;
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      if tbuff.type = 'EFF'
+      then
+         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('   constraint ' || tname || '_nnh1 not null;');
+      end if;
+      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('   constraint ' || tname || '_nnh3 not null;');
+      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('   constraint ' || tname || '_nnh5 not null;');
+   end if;
    -- Custom Check Constraints
    for buff in (
       select * from check_cons CK
        where CK.table_id = tbuff.id
        order by CK.seq )
    loop
+      -- A complete implementation of Issue 48 "Need to Change Single
+      --   Column Table Constraints to Column Constraints" might need
+      --   to include a conversion of this table constraint to a column
+      --   constraint after checking for one, and only one, column name
+      --   in buff.text.  However, it may not make a difference to the
+      --   optimizer.
       p('alter table ' || tname || ' add constraint ' ||
                           tname || '_ck' || buff.seq);
       p('   check (' || replace(buff.text,''',''''') || ');');
@@ -4568,30 +4639,74 @@ begin
    if tbuff.type in ('EFF', 'LOG')
    then
       tname := tbuff.name || HOA;
+      for buff in (
+         select * from tab_cols COL
+          where COL.req     is not null
+           and  COL.table_id = tbuff.id
+          order by COL.seq )
+      loop
+         p('alter table ' || tname || ' modify ' || buff.name);
+         p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
+      end loop;
       if tbuff.type = 'EFF'
       then
          p('alter table ' || tname || ' add constraint ' || tname || '_ef1');
          p('      check (eff_beg_dtm < eff_end_dtm);');
+         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('   constraint ' || tname || '_nnh1 not null;');
+         p('alter table ' || tname || ' modify eff_end_dtm');
+         p('   constraint ' || tname || '_nnh2 not null;');
       end if;
+      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('   constraint ' || tname || '_nnh3 not null;');
+      p('alter table ' || tname || ' modify aud_end_usr');
+      p('   constraint ' || tname || '_nnh4 not null;');
+      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('   constraint ' || tname || '_nnh5 not null;');
+      p('alter table ' || tname || ' modify aud_end_dtm');
+      p('   constraint ' || tname || '_nnh6 not null;');
       p('alter table ' || tname || ' add constraint ' || tname || '_au1');
       p('      check (aud_beg_dtm < aud_end_dtm);');
       p('alter table ' || tname || ' add constraint ' || tname || '_la1');
       p('      check (last_active = ''Y'');');
       p('');
       tname := tbuff.name || '_PDAT';
-      p('alter table ' || tname || ' add constraint ' || tname || '_nn1');
-      p('      check (pop_dml is not null);');
-      p('alter table ' || tname || ' add constraint ' || tname || '_nn2');
-      p('      check (pop_dtm is not null);');
-      p('alter table ' || tname || ' add constraint ' || tname || '_nn3');
-      p('      check (pop_usr is not null);');
+      for buff in (
+         select * from tab_cols COL
+          where COL.req     is not null
+           and  COL.table_id = tbuff.id
+          order by COL.seq )
+      loop
+         p('alter table ' || tname || ' modify ' || buff.name);
+         p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
+      end loop;
       if tbuff.type = 'EFF'
       then
          p('-- alter table ' || tname || ' add constraint ' || tname || '_ef1');
          p('--       check (eff_beg_dtm < eff_prev_beg_dtm);');
+         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('   constraint ' || tname || '_nnh1 not null;');
+         p('alter table ' || tname || ' modify eff_end_dtm');
+         p('   constraint ' || tname || '_nnh2 not null;');
       end if;
+      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('   constraint ' || tname || '_nnh3 not null;');
+      p('alter table ' || tname || ' modify aud_end_usr');
+      p('   constraint ' || tname || '_nnh4 not null;');
+      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('   constraint ' || tname || '_nnh5 not null;');
+      p('alter table ' || tname || ' modify aud_end_dtm');
+      p('   constraint ' || tname || '_nnh6 not null;');
+      p('alter table ' || tname || ' modify pop_dml');
+      p('   constraint ' || tname || '_nnp1 not null;');
+      p('alter table ' || tname || ' modify pop_dtm');
+      p('   constraint ' || tname || '_nnp2 not null;');
+      p('alter table ' || tname || ' modify pop_usr');
+      p('   constraint ' || tname || '_nnp3 not null;');
       p('-- alter table ' || tname || ' add constraint ' || tname || '_au1');
       p('--       check (aud_beg_dtm < aud_prev_beg_dtm);');
+      p('-- alter table ' || tname || ' add constraint ' || tname || '_la1');
+      p('--       check (last_active = ''Y'');');
       p('');
    end if;
 END create_cons;

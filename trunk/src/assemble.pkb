@@ -378,7 +378,7 @@ begin
       ,'ods'
       ,'integ'
       ,'oltp'
-	  ,'aa'
+      ,'aa'
       ,'mods');
    aa_vc2('MT') := vc2_list_type
       ('gdst'

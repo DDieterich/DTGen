@@ -15,8 +15,10 @@ prompt prompt
 prompt prompt === Compile Stored Program Units ===
 prompt
 prompt set define off
+prompt
 
 begin
+   dbms_output.put_line('');
    dbms_output.put_line('-- Package Specs');
    for buff in (
       select * from programs_act
@@ -24,9 +26,14 @@ begin
         and  type = 'PACKAGE'
 	    order by name )
    loop
+      dbms_output.put_line('prompt');
+      dbms_output.put_line('prompt '||buff.name||'.pks');
       dbms_output.put_line('@'||buff.name||'.pks');
+      dbms_output.put_line('/');
       dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('');
    end loop;
+   dbms_output.put_line('');
    dbms_output.put_line('-- Functions');
    for buff in (
       select * from programs_act
@@ -34,9 +41,14 @@ begin
         and  type = 'FUNCTION'
 	    order by name )
    loop
+      dbms_output.put_line('prompt');
+      dbms_output.put_line('prompt '||buff.name||'.fnc');
       dbms_output.put_line('@'||buff.name||'.fnc');
+      dbms_output.put_line('/');
       dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('');
    end loop;
+   dbms_output.put_line('');
    dbms_output.put_line('-- Procedures');
    for buff in (
       select * from programs_act
@@ -44,9 +56,14 @@ begin
         and  type = 'PROCEDURE'
 	    order by name )
    loop
+      dbms_output.put_line('prompt');
+      dbms_output.put_line('prompt '||buff.name||'.prc');
       dbms_output.put_line('@'||buff.name||'.prc');
+      dbms_output.put_line('/');
       dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('');
    end loop;
+   dbms_output.put_line('');
    dbms_output.put_line('-- Package Bodies');
    for buff in (
       select * from programs_act
@@ -54,12 +71,18 @@ begin
         and  type = 'PACKAGE'
 	    order by name )
    loop
+      dbms_output.put_line('prompt');
+      dbms_output.put_line('prompt '||buff.name||'.pkb');
       dbms_output.put_line('@'||buff.name||'.pkb');
+      dbms_output.put_line('/');
       dbms_output.put_line('show errors PACKAGE BODY '||buff.name);
+      dbms_output.put_line('');
    end loop;
 end;
 /
 
+prompt
+prompt prompt
 prompt set define on
 prompt
 

@@ -1,23 +1,19 @@
 
-DTGen "supp" (Supplemental Materials) README File
+DTGen "dev" (Development) README File
    Developed by DMSTEX (http://dmstex.com)
 
 
 File descriptions in this directory
 -----------------------------------
-create_owner.sql - Sample script to creates the application schema owner with roles
-                   (The name of the schema owner is the first parameter)
-                   (schema owner is the "apex_app_name" for the application)
-                   (The initial password is the same as the schema owner)
-create_user.sql  - Sample script create the application user login with synonyms
-                   (The name of the schema owner is the first parameter)
-                   (The user login is the second parameter)
-                   (The initial password is the same as the user login)
-comp_file.sql    - Used by an alternaitve path in fullgen.sql
-delete_ods.sql   - Sample script to delete all data from DTGen tables
-fullgen.sql      - Sample script to generate all scripts for an application
-                   (The ABBR of the application is the first parameter)
-select_file.sql  - Used by an alternaitve path in fullgen.sql
+comp_file.sql      - Used by an alternaitve path in fullgen.sql
+create_user.sql    - Script to create an application user
+                     (Must be run by sys or system)
+                     (Creates the user and synonyms and grants permissions)
+dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
+fullgen.sql        - Script to generate all scripts for an application
+                     (The ABBR of the application is the first parameter)
+rebuild.sql        - Script to rebuild DTGen after making modifications
+select_file.sql    - Used by an alternative path in fullgen.sql
 
 
 Scripts created by fullgen.sql:
@@ -28,7 +24,6 @@ install_db.sql     - Creates the schema objects needed for the database (data-ti
 					  -) INTEGrity objects (Table Constraints/Triggers and TAB Packages)
 					  -) OLTP objects (Views, View Packages, and DML Packages)
 					  -) MODuleS objects (Place holder for Tailored Packages)
-dtgen_dataload.ctl - SQL*Loader control file to load data that will generate DTGen
 install_db_sec.sql - Creates security for the schema objects needed for the database
 install_mt.sql     - Creates the schema objects needed for the mid-tier
                       -) Global DIST objects (Global Synonyms, UTIL_LOG, and UTIL Package)

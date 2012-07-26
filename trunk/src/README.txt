@@ -5,14 +5,23 @@ DTGen "src" (Source Code) README File
 
 File Descriptions in this directory:
 ------------------------------------
-assemble.pkb     - Used by install.sql
-assemble.pks     - Used by install.sql
+assemble.pkb     - Used by comp.sql to create the DTGen Assemble package body
+assemble.pks     - Used by comp.sql to create the DTGen Assemble package spec
+comp.sql         - Used by install.sql to create the DTGen packages
+create_owner.sql - Used by install.sql to create the DTGen owner and roles
+                   (Must be run as sys or system)
+                   (New Schema Owner Name is the first parameter)
+                   (New Schema Owner Password is the second parameter)
+                   (New Schema Owner Default Tablespace is the third parameter)
+                   (New Schema Owner Temporary Tablespace is the fourth parameter)
 f900.sql         - APEX export of the GUI source for DTGen
-generate.pkb     - Used by install.sql
-generate.pks     - Used by install.sql
-install.sql      - Installs DTGen User and DTGen's Database Objects
-install_db.sql   - Used by install.sql
-uninstall.sql    - Uninstalls the DTGen User
+generate.pkb     - Used by comp.sql to create the DTGen Generate package body
+generate.pks     - Used by comp.sql to create the DTGen Generate package spec
+install.sql      - Installs DTGen Schema
+                   (Must be run by sys or system)
+install_db.sql   - Used by install.sql to create DTGen's Database Objects
+uninstall.sql    - Uninstalls the DTGen Schema Owner
+                   (Must be run by sys or system)
 uninstall_db.sql - Uninstalls DTGen's Database Objects
 
 
