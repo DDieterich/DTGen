@@ -3,18 +3,22 @@ REM
 REM  fullgen.sql - Sample script to generate all scripts for an application
 REM
 
+spool fullgen
+
+prompt
+prompt Running fullgen ...
+
 set trimspool on
 set serveroutput on size 1000000 format wrapped
 set define '&'
 set verify off
 
-define APP_ID = DTGEN   -- APPLICATIONS.ABBR for the Application
+define APP_ID = &1.   -- APPLICATIONS.ABBR for the Application
 
-spool fullgen
 BEGIN
    util.set_usr('Initial Load');  -- Any string will work for this parameter
    generate.init('&APP_ID.');
-   -- Drop/Delete Scripts
+   /*  Drop/Delete Scripts  */
    generate.drop_usyn;
    generate.drop_mods;
    generate.drop_oltp;
@@ -24,7 +28,7 @@ BEGIN
    generate.drop_ods;
    generate.drop_gdst;
    generate.drop_glob;
-   -- Create Scripts
+   /*  Create Scripts  */
    generate.create_glob;
    generate.create_gdst;
    generate.create_ods;
@@ -33,20 +37,31 @@ BEGIN
    generate.create_oltp;
    generate.create_mods;
    generate.create_usyn;
-   -- Create GUI Script
+   /*  Create GUI Script  */
    generate.create_flow;
    commit;
 END;
 /
-spool off
+
+prompt
+prompt Creating SQL Scripts ...
 
 set linesize 4000
 set pagesize 0
 set feedback off
 set termout off
 
-spool install_db.sql
+REM
+REM  These scripts go into the install directory
+REM
+spool ../install/install_db.sql
 execute assemble.install_script('&APP_ID.','DB');
+spool ../install/uninstall_db.sql
+execute assemble.uninstall_script('&APP_ID.','DB');
+
+REM
+REM  These scripts do not go into the src directory
+REM
 spool install_db_sec.sql
 execute assemble.install_script('&APP_ID.','DB','sec');
 spool install_mt.sql
@@ -61,8 +76,6 @@ spool uninstall_mt.sql
 execute assemble.uninstall_script('&APP_ID.','MT');
 spool uninstall_usr.sql
 execute assemble.uninstall_script('&APP_ID.','USR');
-spool uninstall_db.sql
-execute assemble.uninstall_script('&APP_ID.','DB');
 spool dtgen_dataload.ctl
 execute assemble.data_script('&APP_ID.')
 spool off
@@ -80,8 +93,8 @@ REM  The folowing creates individual files for each script
 REM
 REM  NOTE: This approach is an advanced option and requires
 REM     proper assembly of the install and uninstall files
-REM     that are created.  Use of the ASSEMBLE package above
-REM     is preferred.
+REM     that are created.  Use of the ASSEMBLE package as 
+REM     shown above is preferred.
 REM
 REM 
 REM @select_file &APP_ID. drop_usyn
