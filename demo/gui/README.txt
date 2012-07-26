@@ -3,8 +3,8 @@ DTGen Graphical User Interface (GUI) Demonstration
    Developed by DMSTEX (http://dmstex.com)
 
 
-File Descriptions in this directory:
-------------------------------------
+Files and Directories:
+----------------------
 cleanup.sql        - Removes GUI Demonstration from APEX
 gui_demo.odt       - Demonstration Documentation (OpenOffice format)
 gui_demo.pdf       - Demonstration Documentation (Acrobat format)

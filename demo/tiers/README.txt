@@ -3,8 +3,8 @@ DTGen Tiers Demonstration
    Developed by DMSTEX (http://dmstex.com)
 
 
-File Descriptions in this directory:
-------------------------------------
+Files and Directories:
+----------------------
 tiers_demo.odt - Demonstration Documentation (OpenOffice format)
 tiers_demo.pdf - Demonstration Documentation (Acrobat format)
 e1.sql         - Exercise #1: Simple Mid-Tier
