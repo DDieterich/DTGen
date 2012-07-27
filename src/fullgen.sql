@@ -51,17 +51,8 @@ set pagesize 0
 set feedback off
 set termout off
 
-REM
-REM  These scripts go into the install directory
-REM
-spool ../install/install_db.sql
+spool install_db.sql
 execute assemble.install_script('&APP_ID.','DB');
-spool ../install/uninstall_db.sql
-execute assemble.uninstall_script('&APP_ID.','DB');
-
-REM
-REM  These scripts do not go into the src directory
-REM
 spool install_db_sec.sql
 execute assemble.install_script('&APP_ID.','DB','sec');
 spool install_mt.sql
@@ -72,6 +63,8 @@ spool install_usr.sql
 execute assemble.install_script('&APP_ID.','USR');
 spool install_gui.sql
 execute assemble.install_script('&APP_ID.','GUI');
+spool uninstall_db.sql
+execute assemble.uninstall_script('&APP_ID.','DB');
 spool uninstall_mt.sql
 execute assemble.uninstall_script('&APP_ID.','MT');
 spool uninstall_usr.sql
