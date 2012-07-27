@@ -1,10 +1,10 @@
 
 spool rebuild
 
-@fullgen DTGEN
-@../install/uninstall_db
-@../install/install_db
-@../install/comp
+@../fullgen DTGEN
+@uninstall_db
+@install_db
+@comp
 
 spool off
 
