@@ -1,16 +1,7 @@
 #summary DTGen release compatibility.
 
-= Introduction =
-
- * DTGen requires an Oracle database.
- * An Oracle database requires an operating system.
- * The DTGen Graphical User Interface (GUI) requires^1^
-   # Oracle's Application Express (APEX) installed in an Oracle database
-   # a web browser.
-
-Note ^1^: DTGen can be run entirely in command line mode, without any GUI, APEX, or Web Browser.
-
  * See PreRelease12Compatibility for Pre-Release 0.12 Compatibility
+
  * See PreRelease11Compatibility for Pre-Release 0.11 Compatibility
 
 ----
