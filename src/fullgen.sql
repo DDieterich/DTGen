@@ -3,42 +3,42 @@ REM
 REM  fullgen.sql - Sample script to generate all scripts for an application
 REM
 
-spool fullgen
-
-prompt
-prompt Running fullgen ...
-
+set define '&'
 set trimspool on
 set serveroutput on size 1000000 format wrapped
-set define '&'
 set verify off
 
 define APP_ID = &1.   -- APPLICATIONS.ABBR for the Application
+
+spool fullgen_&APP_ID.
+
+prompt
+prompt Running fullgen ...
 
 BEGIN
    util.set_usr('Initial Load');  -- Any string will work for this parameter
    generate.init('&APP_ID.');
    /*  Drop/Delete Scripts  */
-   generate.drop_usyn;
+   --generate.drop_usyn;
    generate.drop_mods;
    generate.drop_oltp;
-   generate.drop_dist;
+   --generate.drop_dist;
    generate.drop_integ;
-   generate.delete_ods;
+   --generate.delete_ods;
    generate.drop_ods;
-   generate.drop_gdst;
+   --generate.drop_gdst;
    generate.drop_glob;
    /*  Create Scripts  */
    generate.create_glob;
-   generate.create_gdst;
+   --generate.create_gdst;
    generate.create_ods;
    generate.create_integ;
-   generate.create_dist;
+   --generate.create_dist;
    generate.create_oltp;
    generate.create_mods;
-   generate.create_usyn;
+   --generate.create_usyn;
    /*  Create GUI Script  */
-   generate.create_flow;
+   --generate.create_flow;
    commit;
 END;
 /
@@ -53,22 +53,22 @@ set termout off
 
 spool install_db.sql
 execute assemble.install_script('&APP_ID.','DB');
-spool install_db_sec.sql
-execute assemble.install_script('&APP_ID.','DB','sec');
-spool install_mt.sql
-execute assemble.install_script('&APP_ID.','MT');
-spool install_mt_sec.sql
-execute assemble.install_script('&APP_ID.','MT','sec');
-spool install_usr.sql
-execute assemble.install_script('&APP_ID.','USR');
-spool install_gui.sql
-execute assemble.install_script('&APP_ID.','GUI');
+--spool install_db_sec.sql
+--execute assemble.install_script('&APP_ID.','DB','sec');
+--spool install_mt.sql
+--execute assemble.install_script('&APP_ID.','MT');
+--spool install_mt_sec.sql
+--execute assemble.install_script('&APP_ID.','MT','sec');
+--spool install_usr.sql
+--execute assemble.install_script('&APP_ID.','USR');
+--spool install_gui.sql
+--execute assemble.install_script('&APP_ID.','GUI');
 spool uninstall_db.sql
 execute assemble.uninstall_script('&APP_ID.','DB');
-spool uninstall_mt.sql
-execute assemble.uninstall_script('&APP_ID.','MT');
-spool uninstall_usr.sql
-execute assemble.uninstall_script('&APP_ID.','USR');
+--spool uninstall_mt.sql
+--execute assemble.uninstall_script('&APP_ID.','MT');
+--spool uninstall_usr.sql
+--execute assemble.uninstall_script('&APP_ID.','USR');
 spool dtgen_dataload.ctl
 execute assemble.data_script('&APP_ID.')
 spool off

@@ -7,21 +7,28 @@ REM
 set define '&'
 set verify off
 set trimspool on
+set feedback on
 
-spool create_user_&1._&2.
+REM Initialize Variables
+REM
+define OWNERNAME = &1.   -- New Schema Owner Name
+define OWNERPASS = &2.   -- New Schema Owner Password
+define USERNAME  = &3.   -- New Application User Name
+define USERPASS  = &4.   -- New Application User Password
 
-create user &2. identified by &2.
+spool create_&OWNERNAME._user_&USERNAME.
+
+create user &USERNAME. identified by &USERPASS.
    default tablespace users
    temporary tablespace temp;
 
-grant connect to &2.;
-grant create synonym to &2.;
-grant &1._app to &2.;
+grant connect to &USERNAME.;
+grant create synonym to &USERNAME.;
+grant &OWNERNAME._app to &USERNAME.;
 
-connect &2./&2.
-@create_usyn &1.
+connect &OWNERNAME./&OWNERPASS.
+@create_usyn &OWNERNAME.
 
 spool off
 
 set verify on
-set feedback on
