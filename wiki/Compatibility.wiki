@@ -5,9 +5,9 @@
  * DTGen requires an Oracle database.
  * An Oracle database requires an operating system.
  * The DTGen Graphical User Interface (GUI) requires
- ** Oracle's Application Express (APEX) installed in an Oracle database
- ** a web browser.
- ** Note: DTGen can be run entirely in command line mode, without any GUI.
+   # Oracle's Application Express (APEX) installed in an Oracle database
+   # a web browser.
+   # Note: DTGen can be run entirely in command line mode, without any GUI.
 
 = Minimum Requirements =
 
