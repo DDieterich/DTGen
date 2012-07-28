@@ -11,13 +11,13 @@ prompt
 prompt assemble.pks
 @assemble.pks
 /
-show errors assemble
+show errors PACKAGE assemble
 
 prompt
 prompt generate.pks
 @generate.pks
 /
-show errors generate
+show errors PACKAGE generate
 
 
 -- Functions

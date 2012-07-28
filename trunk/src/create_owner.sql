@@ -15,6 +15,8 @@ define OWNERPASS = &2.   -- New Schema Owner Password
 define DEF_SPACE = &3.   -- New Schema Owner Default Tablespace
 define TMP_SPACE = &4.   -- New Schema Owner Temporary Tablespace
 
+spool create_&OWNERNAME.
+
 REM Create New Schema Owner
 REM
 create user &OWNERNAME. identified by &OWNERPASS.
@@ -39,3 +41,8 @@ REM
 create role &OWNERNAME._dml;
 create role &OWNERNAME._app;
 grant &OWNERNAME._app to &OWNERNAME._dml;
+
+spool off
+
+set verify on
+set feedback on

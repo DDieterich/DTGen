@@ -30,7 +30,7 @@ begin
       dbms_output.put_line('prompt '||buff.name||'.pks');
       dbms_output.put_line('@'||buff.name||'.pks');
       dbms_output.put_line('/');
-      dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('show errors PACKAGE '||buff.type||' '||buff.name);
       dbms_output.put_line('');
    end loop;
    dbms_output.put_line('');
@@ -45,7 +45,7 @@ begin
       dbms_output.put_line('prompt '||buff.name||'.fnc');
       dbms_output.put_line('@'||buff.name||'.fnc');
       dbms_output.put_line('/');
-      dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('show errors FUNCTION '||buff.type||' '||buff.name);
       dbms_output.put_line('');
    end loop;
    dbms_output.put_line('');
@@ -60,7 +60,7 @@ begin
       dbms_output.put_line('prompt '||buff.name||'.prc');
       dbms_output.put_line('@'||buff.name||'.prc');
       dbms_output.put_line('/');
-      dbms_output.put_line('show errors '||buff.type||' '||buff.name);
+      dbms_output.put_line('show errors PROCEDURE '||buff.type||' '||buff.name);
       dbms_output.put_line('');
    end loop;
    dbms_output.put_line('');
