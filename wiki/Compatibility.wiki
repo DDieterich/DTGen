@@ -3,6 +3,3 @@
  * See PreRelease12Compatibility for Pre-Release 0.12 Compatibility
 
  * See PreRelease11Compatibility for Pre-Release 0.11 Compatibility
-
-----
-Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
