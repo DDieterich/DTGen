@@ -10,31 +10,8 @@
 
 Note ^1^: DTGen can be run entirely in command line mode, without any GUI, APEX, or Web Browser.
 
-= Minimum Requirements =
-
-|| *Operating System* || *Examples* ||
-|| Any^2^ || Windows, Linux, OS X ||
-
-|| *Database<br>Version* || *Database<br>Edition* || *APEX<br>Version* ||
-|| Oracle11g || Any^3^ || 4.0 ||
-
-|| *Web Browser* || *Version^4^* ||
-|| Microsoft Internet Explorer || 7.0 ||
-|| Mozilla Firefox || 3.5 ||
-|| Google Chrome || 4.0 ||
-|| Apple Safari || 4.0 ||
-
-Note ^2^: Any Operating Systems that runs the required Oracle database.<br>
-Note ^3^: Oracle Express Edition (XE) does not support Materialized View Logs<br>
-Note ^4^: To view or develop Oracle Application Express applications, Web browsers must support Java Script and the HTML 4.0 and CSS 1.0 standards.
-
-= Tested Installations =
-
-|| *Operating<br>System* || Rev || *Operating System<br>Edition* || Bits || *Database* || Rev || *Database<br>Edition* || Bits || *APEX<br>Version* ||
-|| Windows XP || SP3 || Professional || 32 || Oracle11g || R2 || XE || 32 || 4.0 ||
-
-|| *Web Browser* || *Version* ||
-|| Google Chrome || 18.0 ||
+ * See PreRelease12Compatibility for Pre-Release 0.12 Compatibility
+ * See PreRelease11Compatibility for Pre-Release 0.11 Compatibility
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
