@@ -8,3 +8,5 @@ spool rebuild
 @comp
 
 spool off
+
+exit
