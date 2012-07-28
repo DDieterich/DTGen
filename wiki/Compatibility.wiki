@@ -31,7 +31,6 @@ Note ^3^: To view or develop Oracle Application Express applications, Web browse
 
 || *Web Browser* || *Version* ||
 || Google Chrome || 18.0 ||
-|| Microsoft Internet Explorer || 8.0 ||
 
 ----
 Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
