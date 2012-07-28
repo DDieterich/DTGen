@@ -8,7 +8,7 @@
    # Oracle's Application Express (APEX) installed in an Oracle database
    # a web browser.
 
-Note: DTGen can be run entirely in command line mode, without any GUI.
+Note: DTGen can be run entirely in command line mode, without any GUI/APEX/Web Browser.
 
 = Minimum Requirements =
 
