@@ -19,8 +19,7 @@ define USERPASS  = &4.   -- New Application User Password
 spool create_&OWNERNAME._user_&USERNAME.
 
 create user &USERNAME. identified by &USERPASS.
-   default tablespace users
-   temporary tablespace temp;
+   default tablespace users;
 
 grant connect to &USERNAME.;
 grant create synonym to &USERNAME.;

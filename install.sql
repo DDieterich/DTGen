@@ -20,7 +20,7 @@ define PASS = dtgen   -- New Schema Owner Password
 -- New Schema Owner Default Tablespace:   users
 -- New Schema Owner Temporary Tablespace: temp
 --
-@src/create_owner &NAME. &PASS. users temp
+@supp/create_owner &NAME. &PASS. users
 
 set trimspool on
 set serveroutput on
@@ -32,8 +32,8 @@ spool install
 -- Create DTGen Schema Objects
 --
 connect &NAME./&PASS.
-@src/dtgen/install_db
-@src/dtgen/comp
+@src/install_db
+@src/comp
 
 spool off
 
