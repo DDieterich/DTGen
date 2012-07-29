@@ -1,41 +1,40 @@
 
-DTGen "src" (Source) README File
+DTGen "supp" (Supplemental Install and Sample) README File
    Developed by DMSTEX (http://dmstex.com)
 
 
 Files and Directories:
 ----------------------
-dtgen  - DTGen source code directory
 comp_file.sql     - Used by an alternaitve path in fullgen.sql
 create_owner.sql  - Used by install.sql to create the DTGen owner and roles
-                    (Must be run as sys or system)
-                    (New Schema Owner Name is the first parameter)
-                    (New Schema Owner Password is the second parameter)
-                    (New Schema Owner Default Tablespace is the third parameter)
-                    (New Schema Owner Temporary Tablespace is the fourth parameter)
-create_user.sql   - Script to create an application user
-                    (Must be run by sys or system)
-                    (Creates the user and synonyms and grants permissions)
-fullgen.sql       - Script to generate all scripts for an application
-                    (The ABBR of the application is the first parameter)
-rebuild.sql       - Script to rebuild DTGen after making modifications
+                     -) Must be run as sys or system
+                     -) New Schema Owner Name is the first parameter
+                     -) New Schema Owner Password is the second parameter
+                     -) New Schema Owner Default Tablespace is the third parameter
+                     -) New Schema Owner Temporary Tablespace is the fourth parameter
+create_user.sql   - Sample script to create an application user
+                     -) Must be run by sys or system
+                     -) Creates the user and synonyms and grants permissions
+fullgen.sql       - Sample script to generate scripts for an application
+                     -) The ABBR of the application is the first parameter
 select_file.sql   - Used by an alternative path in fullgen.sql
 
 
 Scripts created by fullgen.sql:
 -------------------------------
+dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 install_db.sql     - Creates the schema objects needed for the database (data-tier)
                       -) GLOBal objects (Global Types, UTIL_LOG, and UTIL & GLOB Package)
                       -) ODS objects (Sequences, Tables, Indexes, and POP Packages)
-					  -) INTEGrity objects (Table Constraints/Triggers and TAB Packages)
-					  -) OLTP objects (Views, View Packages, and DML Packages)
-					  -) MODuleS objects (Place holder for Tailored Packages)
+                      -) INTEGrity objects (Table Constraints/Triggers and TAB Packages)
+                      -) OLTP objects (Views, View Packages, and DML Packages)
+                      -) MODuleS objects (Place holder for Tailored Packages)
 install_db_sec.sql - Creates security for the schema objects needed for the database
 install_mt.sql     - Creates the schema objects needed for the mid-tier
                       -) Global DIST objects (Global Synonyms, UTIL_LOG, and UTIL Package)
-					  -) DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
-					  -) OLTP objects (Views, View Packages, and DML Packages)
-					  -) MODuleS objects (Place holder for Tailored Packages)
+                      -) DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
+                      -) OLTP objects (Views, View Packages, and DML Packages)
+                      -) MODuleS objects (Place holder for Tailored Packages)
 install_mt_sec.sql - Creates security for the schema objects needed for the mid-tier
 install_usr.sql    - Creates synonyms for the application user
 install_gui.sql    - Creates the Maintenance GUI (Forms, Reports, Menus, LOVs, and Preferences)
@@ -76,7 +75,6 @@ drop_usyn.sql        - Drops synonyms for the application user
 
 How to create an application in APEX that uses the generateed GUI:
 ------------------------------------------------------------------
-
 NOTE: Most of this procedure is displayed graphically in the "demo/gui/gui_demo.pdf" file.
 
 1) Create the APEX application

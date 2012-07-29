@@ -30,7 +30,7 @@ set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 set echo on
 select seq, name, type, mv_refresh_hr from tables_act
@@ -40,7 +40,7 @@ set echo off
 prompt
 prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 set linesize 120
 set pagesize 5000

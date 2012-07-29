@@ -30,7 +30,7 @@ set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column value        format A5
 column description  format A74 word_wrapped
@@ -48,7 +48,7 @@ select seq, name, type from tables_act
 prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column systimestamp  format A18   truncate
 column id            format 99

@@ -29,7 +29,7 @@ set trimspool on
 set define on
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 set define off
 
 prompt Remove old DEMO3 Schema from DTGEN
@@ -108,7 +108,7 @@ set termout on
 set define on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 @install_db
@@ -217,7 +217,7 @@ prompt ============================================================
 set define on
 prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 @install_mt @1
 @install_mt_sec
 

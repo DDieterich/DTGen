@@ -24,7 +24,7 @@ WHENEVER OSERROR EXIT
 set linesize 80
 set termout on
 set define on
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 declare
    UNAME  varchar2(30) := 'DTGEN_DB_DEMO';

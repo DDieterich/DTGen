@@ -1396,7 +1396,6 @@ BEGIN
    p('      junk := 1 / 0;');
    p('   end;');
    p('begin');
-   p('   dbms_output.enable;');
    p('   util.set_usr(''Testor1'');');
    p('   insert into util_log (dtm, usr, txt)');
    p('      values (systimestamp, ''Testor1'', ''Testing Commit'');');
@@ -1807,7 +1806,6 @@ BEGIN
    p('end col_data;');
    p('----------------------------------------');
    p('begin');
-   p('   dbms_output.enable(1048576);');
    p('   lo_rindex := dbms_application_info.set_session_longops_nohint;');
    p('end ' || sp_name || ';');
    p('/');
