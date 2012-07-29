@@ -30,14 +30,14 @@ set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 set echo on
 select name, db_schema from applications where abbr = 'DEMO3';
 set echo off
 
 prompt Login to &USR_NAME.
 connect &USR_NAME./&USR_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 @install_usr
 
 set linesize 120

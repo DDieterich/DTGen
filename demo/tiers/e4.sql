@@ -30,7 +30,7 @@ set define on
 
 prompt Login to &USR_NAME.
 connect &USR_NAME./&USR_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 set echo on
 

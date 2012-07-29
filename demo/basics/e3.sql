@@ -30,7 +30,7 @@ set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column column_name format A19
 column comments    format A60 word_wrapped
@@ -71,7 +71,7 @@ column fk_tables_nk2 clear
 prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column constraint_name format A15
 column table_name      format A15

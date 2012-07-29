@@ -30,7 +30,7 @@ set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column column_name     format A19
 column comments        format A60

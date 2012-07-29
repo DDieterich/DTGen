@@ -31,7 +31,7 @@ set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
-set serveroutput on size 1000000 format wrapped
+set serveroutput on format wrapped
 
 column id          format 999
 column empno       format 99999

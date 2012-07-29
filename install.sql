@@ -1,24 +1,25 @@
 
-REM
-REM DTGen Database Installation Script
-REM (Must be run as the "sys as sysdba" user)
-REM
+--
+-- DTGen Database Installation Script
+-- (Must be run as the "sys as sysdba" user)
+--
 
-REM Configure SQL*Plus
-REM
+-- Configure SQL*Plus
+--
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set define '&'
 
-REM Initialize Variables
-REM
+-- Initialize Variables
+--
 define NAME = dtgen   -- New Schema Owner Name
 define PASS = dtgen   -- New Schema Owner Password
 
-REM Create New Schema Owner
-REM
+-- Create New Schema Owner
+--
 -- New Schema Owner Default Tablespace:   users
 -- New Schema Owner Temporary Tablespace: temp
+--
 @src/create_owner &NAME. &PASS. users temp
 
 set trimspool on
@@ -28,8 +29,8 @@ set verify off
 
 spool install
 
-REM Create DTGen Schema Objects
-REM
+-- Create DTGen Schema Objects
+--
 connect &NAME./&PASS.
 @src/dtgen/install_db
 @src/dtgen/comp

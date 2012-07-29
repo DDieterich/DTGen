@@ -1,17 +1,17 @@
 
-REM
-REM DTGEN Un-Installation Script
-REM (Must be run as the "system" or "sys as sysdba" user)
-REM
+--
+-- DTGEN Un-Installation Script
+-- (Must be run as the "system" or "sys as sysdba" user)
+--
 
 spool uninstall
 
-REM Initialize Variables
-REM
-define OWNERNAME = dtgen     -- Schema Owner to be removed
+-- Initialize Variables
+--
+define OWNERNAME = dtgen     -- Schema Owner to be --oved
 
-REM Configure SQL*Plus
-REM
+-- Configure SQL*Plus
+--
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set trimspool on

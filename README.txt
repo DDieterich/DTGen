@@ -4,12 +4,13 @@ Welcome to DTGen
 
 Files and Directories:
 ----------------------
-demo  - Demonstration files and scripts directory
-docs  - DTGen documentation directory
-src   - Source code and installation scripts directory
+demo           - Directory of demonstration files and scripts directory
+docs           - Directory of DTGen documentation directory
 f900.sql       - APEX export of the GUI source for DTGen
 install.sql    - Installs DTGen Schema. Run as sys or system.
-uninstall.sql  - Uninstalls the DTGen Schema Owner. Run as sys or system.
+src            - Direcotry of source code for DTGen
+supp           - Directory of supplemental installation and sample scripts
+uninstall.sql  - Uninstalls the DTGen Schema Owner. Run as sys or system
 
 
 DTGen Installation:

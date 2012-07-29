@@ -66,7 +66,6 @@ procedure install_script
 is
    nk2  varchar2(100);
 begin
-   dbms_output.enable(1000000);
    rclob := '';
    begin
       vc2_list := aa_vc2(upper(aa_key_in));
@@ -142,7 +141,6 @@ procedure uninstall_script
 is
    nk2  varchar2(100);
 begin
-   dbms_output.enable(1000000);
    rclob := '';
    begin
       vc2_list := aa_vc2(upper(aa_key_in));
@@ -257,7 +255,6 @@ is
    cs         varchar2(32767);   -- Column String
    ss         varchar2(32767);   -- SQL String
 begin
-   dbms_output.enable(1000000);
    rclob := '';
    p('--');
    p('-- DTGen SQL*Loader Control File');
@@ -307,6 +304,8 @@ begin
       for cbuff in column_cursor(tbuff.name)
       loop
          case cbuff.type
+            when 'CLOB' then
+               ss := ss || cbuff.name;
             when 'DATE' then
                ss := ss || 'to_char(' || cbuff.name ||
                           ',''DD-MON-YY HH24:MI:SS'')';
@@ -347,10 +346,29 @@ begin
             raise_application_error (-20000, 'assemble.data_script(): '||
                'Unknown Table Name "' || tbuff.name || '"');
       end case;
+      ss := ss || app_abbr_in || ''' order by ';
       -- For a table with a Self-Referencing Foreign Key,
-      --   This ORDER_BY will not necessarily load parent data first.
-      ss := ss || app_abbr_in || ''' order by id';
-      --p(ss);
+      --   Use the PATH to load parent data first.
+      -- This order by clause is table specific
+      case tbuff.name
+         -- Level 1
+         when 'APPLICATIONS'  then ss := ss || 'abbr';
+         -- Level 2
+         when 'DOMAINS'       then ss := ss || 'applications_nk1, abbr';
+         when 'EXCEPTIONS'    then ss := ss || 'applications_nk1, code';
+         when 'PROGRAMS'      then ss := ss || 'applications_nk1, name';
+         when 'TABLES'        then ss := ss || 'applications_nk1, seq';
+         -- Level 3
+         when 'DOMAIN_VALUES' then ss := ss || 'domains_nk1, domains_nk2, seq';
+         when 'CHECK_CONS'    then ss := ss || 'tables_nk1, tables_nk2, seq';
+         when 'TAB_COLS'      then ss := ss || 'tables_nk1, tables_nk2, seq';
+         -- Level 4
+         when 'INDEXES'       then ss := ss || 'tab_cols_nk1, tab_cols_nk2, tag, seq';
+         else
+            raise_application_error (-20000, 'assemble.data_script(): '||
+               'Unknown Table Name "' || tbuff.name || '"');
+      end case;
+      -- p(ss);
       execute immediate ss bulk collect into db_list;
       for i in 1 .. db_list.count
       loop
