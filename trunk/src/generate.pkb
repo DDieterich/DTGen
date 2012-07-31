@@ -33,7 +33,8 @@ pnum2  number := 1200;  -- UTIL_LOG page
 -- DML Forms  := 1201;  -- DML Maintenance Forms use this empty space
 pnum3  number := 1400;  -- OMNI Report Menu, DML Pages Follow
 pnum4  number := 1600;  -- ASOF Report Menu, DML Pages Follow
-HOA    varchar2(6);
+HOA    varchar2(6);     -- HISTory or AUDit flag
+sown   varchar2(31);    -- Schema Owner Name with following period
 SQ1    CONSTANT varchar2(1) := CHR(39);
 SQ2    CONSTANT varchar2(2) := SQ1||SQ1;
 SQ4    CONSTANT varchar2(4) := SQ2||SQ2;
@@ -143,14 +144,32 @@ procedure show_errors
 is
 begin
    p('select ''' || upper(name_in) || ''' as "' || initcap(type_in) || ':"');
-   p(' from  user_errors');
-   p(' where name = '''||upper(name_in)||'''');
-   p('  and  type = '''||upper(type_in)||'''');
+   if sown is not null
+   then
+      p(' from  all_errors');
+   else
+      p(' from  user_errors');
+   end if;
+   p(' where name  = '''||upper(name_in)||'''');
+   p('  and  type  = '''||upper(type_in)||'''');
+   if sown is not null
+   then
+      p('  and  owner = '''||sown||'''');
+   end if;
    p('  and  rownum = 1;');
    p('select ''(''||line||''/''||position||'') ''||text as error');
-   p(' from  user_errors');
+   if sown is not null
+   then
+      p(' from  all_errors');
+   else
+      p(' from  user_errors');
+   end if;
    p(' where name = '''||upper(name_in)||'''');
    p('  and  type = '''||upper(type_in)||'''');
+   if sown is not null
+   then
+      p('  and  owner = '''||sown||'''');
+   end if;
    p(' order by sequence;');
 end show_errors;
 ----------------------------------------
@@ -869,7 +888,7 @@ begin
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
+      p('comment on column ' || sown||tname_in || '.' || buff.name || ' is ''' ||
          replace(buff.description,SQ1,SQ2) || ''';');
    end loop;
 end def_col_comments;
@@ -879,19 +898,19 @@ PROCEDURE pdat_col_comments
    --  POP Data Table Column Comments
 IS
 begin
-   p('comment on column ' || tname_in || '.' || tbuff.name || '_id is ''Surrogate Primary Key from the ACTIVE table'';');
-   p('comment on column ' || tname_in || '.pop_dml is ''Original DML that was popped: INSERT, UPDATE, or DELETE'';');
-   p('comment on column ' || tname_in || '.pop_dtm is ''Date/Time this record was popped'';');
-   p('comment on column ' || tname_in || '.pop_usr is ''User that ran the POP'';');
+   p('comment on column ' || sown||tname_in || '.' || tbuff.name || '_id is ''Surrogate Primary Key from the ACTIVE table'';');
+   p('comment on column ' || sown||tname_in || '.pop_dml is ''Original DML that was popped: INSERT, UPDATE, or DELETE'';');
+   p('comment on column ' || sown||tname_in || '.pop_dtm is ''Date/Time this record was popped'';');
+   p('comment on column ' || sown||tname_in || '.pop_usr is ''User that ran the POP'';');
    if tbuff.type = 'EFF'
    then
-      p('comment on column ' || tname_in || '.eff_beg_dtm is ''Date/Time this record was effective before being POPed'';');
-      p('comment on column ' || tname_in || '.eff_prev_beg_dtm is ''Date/Time the previous record was effective before it was POPed back to active'';');
+      p('comment on column ' || sown||tname_in || '.eff_beg_dtm is ''Date/Time this record was effective before being POPed'';');
+      p('comment on column ' || sown||tname_in || '.eff_prev_beg_dtm is ''Date/Time the previous record was effective before it was POPed back to active'';');
    end if;
-   p('comment on column ' || tname_in || '.aud_beg_usr is ''User that committed this record before it was POPed'';');
-   p('comment on column ' || tname_in || '.aud_prev_beg_usr is ''User that committed the previous record before before it was POPed back to active'';');
-   p('comment on column ' || tname_in || '.aud_beg_dtm is ''Date/Time this record was committed before it was POPed'';');
-   p('comment on column ' || tname_in || '.aud_prev_beg_dtm is ''Date/Time the previous record was committed before being POPed back to active'';');
+   p('comment on column ' || sown||tname_in || '.aud_beg_usr is ''User that committed this record before it was POPed'';');
+   p('comment on column ' || sown||tname_in || '.aud_prev_beg_usr is ''User that committed the previous record before before it was POPed back to active'';');
+   p('comment on column ' || sown||tname_in || '.aud_beg_dtm is ''Date/Time this record was committed before it was POPed'';');
+   p('comment on column ' || sown||tname_in || '.aud_prev_beg_dtm is ''Date/Time the previous record was committed before being POPed back to active'';');
    def_col_comments(tname_in);
 end pdat_col_comments;
 ----------------------------------------
@@ -904,10 +923,10 @@ begin
    then
       if tbuff.type = 'EFF'
       then
-         p('comment on column ' || tname_in || '.eff_beg_dtm is ''Date/Time this record became effective'';');
+         p('comment on column ' || sown||tname_in || '.eff_beg_dtm is ''Date/Time this record became effective'';');
       end if;
-      p('comment on column ' || tname_in || '.aud_beg_usr is ''User that created this record'';');
-      p('comment on column ' || tname_in || '.aud_beg_dtm is ''Date/Time this record was created (must be in nanoseconds)'';');
+      p('comment on column ' || sown||tname_in || '.aud_beg_usr is ''User that created this record'';');
+      p('comment on column ' || sown||tname_in || '.aud_beg_dtm is ''Date/Time this record was created (must be in nanoseconds)'';');
    end if;
    def_col_comments(tname_in);
 end col_comments;
@@ -917,7 +936,7 @@ PROCEDURE tab_col_comments
    --  Standard Column Comments
 IS
 begin
-   p('comment on column ' || tname_in || '.id is ''Surrogate Primary Key for these ' || tname_in || ''';');
+   p('comment on column ' || sown||tname_in || '.id is ''Surrogate Primary Key for these ' || tname_in || ''';');
    col_comments(tname_in);
 end tab_col_comments;
 ----------------------------------------
@@ -936,14 +955,14 @@ begin
       then
          if buff.fk_table_id = tbuff.id
          then
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'id_path is ''Path of ancestor IDs hierarchy for this record'';');
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'nk_path is ''Path of ancestor Natural Key Sets hierarchy for this record'';');
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-            p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.' || buff.fk_prefix ||
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
@@ -958,15 +977,15 @@ PROCEDURE hoa_col_comments
    --  History or Audit Table Column Comments
 IS
 begin
-   p('comment on column ' || tname_in || '.' || tbuff.name || '_id is ''Surrogate Primary Key from the ACTIVE table'';');
+   p('comment on column ' || sown||tname_in || '.' || tbuff.name || '_id is ''Surrogate Primary Key from the ACTIVE table'';');
    if tbuff.type = 'EFF'
    then
-      p('comment on column ' || tname_in || '.eff_end_dtm is ''Date/Time this record was no longer effective'';');
+      p('comment on column ' || sown||tname_in || '.eff_end_dtm is ''Date/Time this record was no longer effective'';');
    end if;
-   p('comment on column ' || tname_in || '.aud_end_usr is ''User that modified/deleted this record'';');
-   p('comment on column ' || tname_in || '.aud_end_dtm is ''Date/Time this record was modified/deleted (must be in nanoseconds)'';');
+   p('comment on column ' || sown||tname_in || '.aud_end_usr is ''User that modified/deleted this record'';');
+   p('comment on column ' || sown||tname_in || '.aud_end_dtm is ''Date/Time this record was modified/deleted (must be in nanoseconds)'';');
    col_comments(tname_in);
-   p('comment on column ' || tname_in || '.last_active is ''Flag to indicate this as the last active record'';');
+   p('comment on column ' || sown||tname_in || '.last_active is ''Flag to indicate this as the last active record'';');
 end hoa_col_comments;
 ----------------------------------------
 PROCEDURE aa_col_comments
@@ -976,13 +995,13 @@ IS
 begin
    if tbuff.type = 'EFF'
    then
-      p('comment on column ' ||tname_in|| '.eff_beg_dtm is ''Date/Time this record became effective'';');
-      p('comment on column ' ||tname_in|| '.eff_end_dtm is ''Date/Time this record was no longer effective'';');
+      p('comment on column ' || sown||tname_in || '.eff_beg_dtm is ''Date/Time this record became effective'';');
+      p('comment on column ' || sown||tname_in || '.eff_end_dtm is ''Date/Time this record was no longer effective'';');
    end if;
-   p('comment on column ' ||tname_in|| '.aud_beg_usr is ''User that created this record'';');
-   p('comment on column ' ||tname_in|| '.aud_end_usr is ''User that deleted this record'';');
-   p('comment on column ' ||tname_in|| '.aud_beg_dtm is ''Date/Time this record was created (must be in nanoseconds)'';');
-   p('comment on column ' ||tname_in|| '.aud_end_dtm is ''Date/Time this record was deleted (must be in nanoseconds)'';');
+   p('comment on column ' || sown||tname_in || '.aud_beg_usr is ''User that created this record'';');
+   p('comment on column ' || sown||tname_in || '.aud_end_usr is ''User that deleted this record'';');
+   p('comment on column ' || sown||tname_in || '.aud_beg_dtm is ''Date/Time this record was created (must be in nanoseconds)'';');
+   p('comment on column ' || sown||tname_in || '.aud_end_dtm is ''Date/Time this record was deleted (must be in nanoseconds)'';');
 end aa_col_comments;
 ----------------------------------------
 PROCEDURE l_col_comments
@@ -990,21 +1009,21 @@ PROCEDURE l_col_comments
    --  All Entities Helper View Column Comments
 IS
 begin
-   p('comment on column ' ||tname_in|| '.' || tbuff.name || '_id is ''Surrogate Primary Key for this table'';');
-   p('comment on column ' ||tname_in|| '.stat is ''ACT for active records, DEL for deleted records'';');
+   p('comment on column ' || sown||tname_in || '.' || tbuff.name || '_id is ''Surrogate Primary Key for this table'';');
+   p('comment on column ' || sown||tname_in || '.stat is ''ACT for active records, DEL for deleted records'';');
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
+      p('comment on column ' || sown||tname_in || '.' || buff.name || ' is ''' ||
          replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null and
          buff.fk_table_id != tbuff.id
       then
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-            p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.' || buff.fk_prefix ||
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
@@ -1020,27 +1039,27 @@ PROCEDURE all_col_comments
    --  All Entities View Column Comments
 IS
 begin
-   p('comment on column ' ||tname_in|| '.id is ''Surrogate Primary Key for this table'';');
-   p('comment on column ' ||tname_in|| '.stat is ''ACT for active records, DEL for deleted records'';');
+   p('comment on column ' || sown||tname_in || '.id is ''Surrogate Primary Key for this table'';');
+   p('comment on column ' || sown||tname_in || '.stat is ''ACT for active records, DEL for deleted records'';');
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
+      p('comment on column ' || sown||tname_in || '.' || buff.name || ' is ''' ||
          replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null
       then
          if buff.fk_table_id = tbuff.id
          then
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'id_path is ''Path of ancestor IDs hierarchy for this record'';');
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'nk_path is ''Path of ancestor Natural Key Sets hierarchy for this record'';');
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-            p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.' || buff.fk_prefix ||
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
@@ -1056,20 +1075,20 @@ PROCEDURE f_col_comments
    --  ASOF Helper View Column Comments
 IS
 begin
-   p('comment on column ' ||tname_in|| '.' || tbuff.name ||'_id is ''Surrogate Primary Key for this table'';');
+   p('comment on column ' || sown||tname_in || '.' || tbuff.name ||'_id is ''Surrogate Primary Key for this table'';');
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('comment on column ' ||tname_in||'.' || buff.name || ' is ''AS OF ' ||
+      p('comment on column ' || sown||tname_in ||'.' || buff.name || ' is ''AS OF ' ||
          replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null and
          buff.fk_table_id != tbuff.id
       then
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-             p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+             p('comment on column ' || sown||tname_in || '.' || buff.fk_prefix ||
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
@@ -1085,26 +1104,26 @@ PROCEDURE asof_col_comments
    --  ASOF View Column Comments
 IS
 begin
-   p('comment on column ' ||tname_in|| '.id is ''Surrogate Primary Key for this table'';');
+   p('comment on column ' || sown||tname_in || '.id is ''Surrogate Primary Key for this table'';');
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('comment on column ' ||tname_in||'.' || buff.name || ' is ''AS OF ' ||
+      p('comment on column ' || sown||tname_in ||'.' || buff.name || ' is ''AS OF ' ||
          replace(buff.description,SQ1,SQ2) || ''';');
       if buff.fk_table_id is not null
       then
          if buff.fk_table_id = tbuff.id
          then
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'id_path is ''AS OF Path of ancestor IDs hierarchy for this record'';');
-            p('comment on column ' ||tname_in|| '.'|| buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.'|| buff.fk_prefix ||
                'nk_path is ''AS OF Path of ancestor Natural Key Sets hierarchy for this record'';');
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-            p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+            p('comment on column ' || sown||tname_in || '.' || buff.fk_prefix ||
                get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''AS OF ' ||
                upper(get_tabname(buff.fk_table_id)) ||
                ' Natural Key Value ' || i || ': ' ||
@@ -1134,7 +1153,7 @@ IS
 BEGIN
    sp_type := 'package';
    sp_name := 'glob';
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1186,7 +1205,7 @@ BEGIN
    p('');
    sp_type := 'package body';
    sp_name := 'glob';
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('-- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1353,10 +1372,10 @@ PROCEDURE drop_util
    --  Drop the Utility Package
 IS
 BEGIN
-   p('drop package util;');
-   p('drop table util_log;');
-   p('drop type col_type;');
-   p('drop type pair_type;');
+   p('drop package '|| sown||'util;');
+   p('drop table '|| sown||'util_log;');
+   p('drop type '|| sown||'col_type;');
+   p('drop type '|| sown||'pair_type;');
 END drop_util;
 ----------------------------------------
 PROCEDURE create_util
@@ -1366,22 +1385,22 @@ IS
    sp_name  user_errors.name%type;
 BEGIN
    p('-- Setup Varray Structures for Name/Value Pair Storage');
-   p('create type pair_type as object');
+   p('create type ' || sown||'pair_type as object');
    p('   (name  varchar2(30)');
    p('   ,data  varchar2(32767)');
    p('   );');
    p('/');
    show_errors('TYPE', 'PAIR_TYPE');
    ps('');
-   ps('grant execute on pair_type to '||abuff.abbr||'_dml;');
-   ps('---- audit rename on pair_type by access;');
+   ps('grant execute on ' || sown||'pair_type to '||abuff.abbr||'_dml;');
+   ps('---- audit rename on ' || sown||'pair_type by access;');
    p('');
-   p('create type col_type as varray(100) of pair_type;');
+   p('create type ' || sown||'col_type as varray(100) of pair_type;');
    p('/');
    show_errors('TYPE', 'COL_TYPE');
    ps('');
-   ps('grant execute on col_type to '||abuff.abbr||'_dml;');
-   ps('---- audit rename on col_type by access;');
+   ps('grant execute on ' || sown||'col_type to '||abuff.abbr||'_dml;');
+   ps('---- audit rename on ' || sown||'col_type by access;');
    p('');
    sp_type := 'package';
    sp_name := 'util';
@@ -1411,29 +1430,29 @@ BEGIN
    p('*/');
    p('');
    p('-- Table of debug and error messages.');
-   p('create table ' || sp_name || '_log');
+   p('create table ' || sown||sp_name || '_log');
    p('   (dtm              timestamp with local time zone');
    p('   ,usr              varchar2(30)');
    p('   ,txt              varchar2(4000)');
    p('   ,loc              varchar2(2000)');
    p('   );');
    p('');
-   p('create index ' || sp_name || '_log_ix1 on ' || sp_name || '_log (dtm, usr);');
+   p('create index ' || sown||sp_name || '_log_ix1 on ' || sp_name || '_log (dtm, usr);');
    p('');
-   p('comment on table ' || sp_name || '_log is ''Error and Debug Messages'';');
+   p('comment on table ' || sown||sp_name || '_log is ''Error and Debug Messages'';');
    p('');
-   p('comment on column ' || sp_name || '_log.dtm is ''System time when message was logged'';');
-   p('comment on column ' || sp_name || '_log.usr is ''Username from ' || sp_name || '.get_usr function'';');
-   p('comment on column ' || sp_name || '_log.txt is ''Error or Debug message text'';');
-   p('comment on column ' || sp_name || '_log.loc is ''Location in the source code where the message as logged'';');
+   p('comment on column ' || sown||sp_name || '_log.dtm is ''System time when message was logged'';');
+   p('comment on column ' || sown||sp_name || '_log.usr is ''Username from ' || sp_name || '.get_usr function'';');
+   p('comment on column ' || sown||sp_name || '_log.txt is ''Error or Debug message text'';');
+   p('comment on column ' || sown||sp_name || '_log.loc is ''Location in the source code where the message as logged'';');
    ps('');
-   ps('grant insert on ' || sp_name || '_log to ' || abuff.abbr || '_app;');
-   ps('-- grant update on ' || sp_name || '_log to ' || abuff.abbr || '_app;');
-   ps('grant delete on ' || sp_name || '_log to ' || abuff.abbr || '_app;');
-   ps('grant select on ' || sp_name || '_log to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' || sp_name || '_log by access;');
+   ps('grant insert on ' || sown||sp_name || '_log to ' || abuff.abbr || '_app;');
+   ps('-- grant update on ' || sown||sp_name || '_log to ' || abuff.abbr || '_app;');
+   ps('grant delete on ' || sown||sp_name || '_log to ' || abuff.abbr || '_app;');
+   ps('grant select on ' || sown||sp_name || '_log to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' || sown||sp_name || '_log by access;');
    p('');
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1521,12 +1540,12 @@ BEGIN
    p('/');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant execute on ' || sp_name || ' to '||abuff.abbr||'_app;');
-   ps('---- audit rename on ' || sp_name || ' by access;');
+   ps('grant execute on ' || sown||sp_name || ' to '||abuff.abbr||'_app;');
+   ps('---- audit rename on ' || sown||sp_name || ' by access;');
    p('');
    sp_type := 'package body';
    sp_name := 'util';
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('-- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1817,8 +1836,8 @@ PROCEDURE drop_gd
    --  Drop the Distributed Globals
 IS
 BEGIN
-   p('drop package glob;');
-   p('drop database link '|| abuff.abbr ||'_db;');
+   p('drop package ' || sown||'glob;');
+   p('drop database link '|| sown||abuff.abbr||'_db;');
 END drop_gd;
 ----------------------------------------
 PROCEDURE create_gd
@@ -1828,13 +1847,13 @@ IS
    sp_name  user_errors.name%type;
 BEGIN
    p('-- Database Link to Centralized Database Server.');
-   p('create database link '||abuff.abbr||'_db');
+   p('create database link '|| sown||abuff.abbr||'_db');
    p('   ' || abuff.db_auth);
    p('   using ''' || abuff.dbid || ''';');
    p('');
    sp_type := 'package';
    sp_name := 'glob';
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('   -- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1882,7 +1901,7 @@ BEGIN
    p('');
    sp_type := 'package body';
    sp_name := 'glob';
-   p('CREATE ' || sp_type || ' ' || sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('is');
    p('');
    p('-- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -1979,11 +1998,11 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop table '||tbuff.name||'_PDAT;');
-      p('drop table '||tbuff.name||HOA||';');
+      p('drop table '|| sown||tbuff.name||'_PDAT;');
+      p('drop table '|| sown||tbuff.name||HOA||';');
    end if;
-   p('drop table '||tbuff.name||';');
-   p('drop sequence '||tbuff.name||'_seq;');
+   p('drop table '|| sown||tbuff.name||';');
+   p('drop sequence '|| sown||tbuff.name||'_seq;');
 END drop_tab;
 ----------------------------------------
 PROCEDURE delete_tab
@@ -1992,10 +2011,10 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('delete from '||tbuff.name||'_PDAT;');
-      p('delete from '||tbuff.name||HOA||';');
+      p('delete from '|| sown||tbuff.name||'_PDAT;');
+      p('delete from '|| sown||tbuff.name||HOA||';');
    end if;
-   p('delete from '||tbuff.name||';');
+   p('delete from '|| sown||tbuff.name||';');
 END delete_tab;
 ----------------------------------------
 PROCEDURE create_tab_act
@@ -2005,14 +2024,14 @@ IS
    col_cnt  number;
 BEGIN
    --  For a tbuff, create the sequence
-   p('create sequence '||tbuff.name||'_seq;');
+   p('create sequence '|| sown||tbuff.name||'_seq;');
    ps('');
-   ps('grant select on '||tbuff.name||'_seq to '||abuff.abbr||'_app;');
-   ps('-- audit rename on '||tbuff.name||'seq by access;');
+   ps('grant select on '|| sown||tbuff.name||'_seq to '||abuff.abbr||'_app;');
+   ps('-- audit rename on '|| sown||tbuff.name||'_seq by access;');
    p('');
    --  Create the ACTIVE table
    tname := tbuff.name;
-   p('create table ' || tname);
+   p('create table ' || sown||tname);
    p('   (id   NUMBER(38)');
    if tbuff.type in ('EFF', 'LOG')
    then
@@ -2047,19 +2066,19 @@ BEGIN
       p('   );');
    end if;
    ps('');
-   ps('grant select on ' || tname|| ' to ' || abuff.abbr || '_app;');
-   ps('grant insert on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('grant update on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('grant delete on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('-- audit rename on ' || tname || ' by access;');
+   ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
+   ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('grant update on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('grant delete on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('-- audit rename on ' || sown||tname || ' by access;');
    p('');
-   p('comment on table ' || tname || ' is ''' || 
+   p('comment on table ' || sown||tname || ' is ''' || 
       replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    tab_col_comments(tname);
    p('');
    --  Primary Key
-   p('alter table ' || tname || ' add constraint ' || tname || '_pk');
+   p('alter table ' || sown||tname || ' add constraint ' || tname || '_pk');
    if tbuff.ts_onln_indx is not null
    then
       p('   primary key (id) using index tablespace ' || tbuff.ts_onln_indx || ';');
@@ -2073,10 +2092,10 @@ BEGIN
       p('--  Oracle11g eXpress Edition does not allow materialized view logs');
       if tbuff.ts_onln_data is not null
       then
-         p('create materialized view log on '||tname);
+         p('create materialized view log on '|| sown||tname);
          p('   tablespace '||tbuff.ts_onln_data||';');
       else
-         p('create materialized view log on '||tname||';');
+         p('create materialized view log on '|| sown||tname||';');
       end if;
       p('');
    end if;
@@ -2094,7 +2113,7 @@ BEGIN
    end if;
    --  Create the HIST Table
    tname := tbuff.name || HOA;
-   p('create table ' || tname);
+   p('create table ' || sown||tname);
    p('   (' || tbuff.name || '_id   NUMBER(38)');
    if tbuff.type = 'EFF'
    then
@@ -2121,20 +2140,20 @@ BEGIN
       p('   );');
    end if;
    ps('');
-   ps('grant select on ' || tname|| ' to ' || abuff.abbr || '_app;');
-   ps('grant insert on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('-- grant update on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('grant delete on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('-- audit rename on ' || tname || ' by access;');
+   ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
+   ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('-- grant update on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('grant delete on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('-- audit rename on ' || sown||tname || ' by access;');
    p('');
-   p('comment on table ' || tname || ' is ''' ||
+   p('comment on table ' || sown||tname || ' is ''' ||
       replace(tbuff.description,SQ1,SQ2) || ' (history)'';');
    p('');
    hoa_col_comments(tname);
    p('');
    --  Create the POP Table
    tname := tbuff.name || '_PDAT';
-   p('create table ' || tname);
+   p('create table ' || sown||tname);
    p('   (' || tbuff.name || '_id       NUMBER(38)');
    p('   ,pop_dml              varchar2(6)');
    p('   ,pop_dtm              timestamp(9)');
@@ -2162,13 +2181,13 @@ BEGIN
       p('   );');
    end if;
    ps('');
-   ps('grant select on ' || tname|| ' to ' || abuff.abbr || '_app;');
-   ps('grant insert on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('-- grant update on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('grant delete on ' || tname|| ' to ' || abuff.abbr || '_dml;');
-   ps('-- audit rename on ' || tname || ' by access;');
+   ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
+   ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('-- grant update on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('grant delete on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
+   ps('-- audit rename on ' || sown||tname || ' by access;');
    p('');
-   p('comment on table ' || tname || ' is ''' ||
+   p('comment on table ' || sown||tname || ' is ''' ||
       replace(tbuff.description,SQ1,SQ2) || ' (POP function audit log)'';');
    p('');
    pdat_col_comments(tname);
@@ -2181,7 +2200,7 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop package '||tbuff.name||'_pop;');
+      p('drop package '|| sown||tbuff.name||'_pop;');
    end if;
 END drop_pop;
 ----------------------------------------
@@ -2199,7 +2218,7 @@ BEGIN
    end if;
    sp_type := 'package';
    sp_name := tbuff.name||'_pop';
-   p('create '||sp_type||' '||sp_name);
+   p('create '|| sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -2215,8 +2234,8 @@ BEGIN
    p('/');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant execute on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('---- audit rename on ' || sp_name || ' by access;');
+   ps('grant execute on ' || sown||sp_name || ' to '||abuff.abbr||'_app;');
+   ps('---- audit rename on ' || sown||sp_name || ' by access;');
    p('');
 END create_pop_spec;
 ----------------------------------------
@@ -2234,7 +2253,7 @@ BEGIN
    end if;
    sp_type := 'package body';
    sp_name := tbuff.name||'_pop';
-   p('create '||sp_type||' '||sp_name);
+   p('create ' || sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('-- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -2556,7 +2575,7 @@ PROCEDURE drop_tp
    --  For a tbuff, drop the tab package
 IS
 BEGIN
-   p('drop package '||tbuff.name||'_tab;');
+   p('drop package ' || sown||tbuff.name||'_tab;');
 END drop_tp;
 ----------------------------------------
 PROCEDURE create_tp_spec
@@ -2566,7 +2585,7 @@ IS
 BEGIN
    sp_type := 'package';
    sp_name := tbuff.name||'_tab';
-   p('create '||sp_type||' '||sp_name);
+   p('create ' || sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -2658,7 +2677,7 @@ IS
 BEGIN
    sp_type := 'package body';
    sp_name := tbuff.name||'_tab';
-   p('create '||sp_type||' '||sp_name);
+   p('create ' || sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('-- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -3113,7 +3132,7 @@ PROCEDURE drop_sh
    --  For a tbuff, drop the sh package
 IS
 BEGIN
-   p('drop package '||tbuff.name||'_sh;');
+   p('drop package ' || sown||tbuff.name||'_sh;');
 END drop_sh;
 ----------------------------------------
 PROCEDURE create_sh_spec
@@ -3131,7 +3150,7 @@ BEGIN
    end if;
    sp_type := 'package';
    sp_name := tbuff.name||'_sh';
-   p('create '||sp_type||' '||sp_name);
+   p('create ' || sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -3235,7 +3254,7 @@ BEGIN
    end if;
    sp_type := 'package body';
    sp_name := tbuff.name||'_sh';
-   p('create '||sp_type||' '||sp_name);
+   p('create ' || sp_type || ' ' || sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -3730,14 +3749,14 @@ BEGIN
        order by COL.seq )
    loop
       fkseq := fkseq + 1;
-      p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_' || 'fk' || fkseq);
+      p('alter table ' || sown||tname || ' add constraint ' ||
+                                tname || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || ' (id);');
+                       sown||get_tabname(buff.fk_table_id) || ' (id);');
    end loop;
    p('/***  ACTIVE Audit Foreign Key ***/');
-   p('-- alter table ' || tname || ' add constraint ' ||
-                       tname || '_fa1');
+   p('-- alter table ' || sown||tname || ' add constraint ' ||
+                                tname || '_fa1');
    p('--    foreign key (beg_aud_usr) references sys.usr$ (name);');
    p('');
 END create_fk;
@@ -3755,7 +3774,7 @@ BEGIN
    p('/***  ACTIVE Indexes  ***/');
    tname := tbuff.name;
    --  Natural Keys
-   p('alter table ' || tname || ' add constraint ' || tname || '_nk');
+   p('alter table ' || sown||tname || ' add constraint ' || tname || '_nk');
    for buff in (
       select COL.name
             ,COL.nk
@@ -3812,7 +3831,7 @@ BEGIN
        group by IND.tag
        order by IND.tag )
    loop
-      p('alter table ' || tname || ' add constraint ' || tname || '_' || buf2.tag);
+      p('alter table ' || sown||tname || ' add constraint ' || tname || '_' || buf2.tag);
       for buff in (
          select COL.name
                ,IND.seq
@@ -3891,12 +3910,12 @@ BEGIN
          else
             if tbuff.ts_onln_indx is not null
             then
-               p('create index ' || tname || '_' || 'fx' || fkseq || ' on ' ||
-                                    tname || '(' || buff.name || ')');
+               p('create index ' || sown||tname || '_' || 'fx' || fkseq || ' on ' ||
+                                    sown||tname || '(' || buff.name || ')');
                p('      tablespace ' || tbuff.ts_onln_indx || ';');
             else
-               p('create index ' || tname || '_' || 'fx' || fkseq || ' on ' ||
-                                    tname || '(' || buff.name || ');');
+               p('create index ' || sown||tname || '_' || 'fx' || fkseq || ' on ' ||
+                                    sown||tname || '(' || buff.name || ');');
             end if;
          end if;
       end if;
@@ -3913,8 +3932,8 @@ BEGIN
        group by IND.tag
        order by IND.tag )
    loop
-      p('create index ' || tname || '_' || buf2.tag);
-      p('    on ' || tname);
+      p('create index ' || sown||tname || '_' || buf2.tag);
+      p('    on ' || sown||tname);
       for buff in (
          select COL.name
                ,IND.seq
@@ -3955,29 +3974,29 @@ BEGIN
       p('/***  ACTIVE Effectivity Indexes  ***/');
       if tbuff.ts_onln_indx is not null
       then
-         p('create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm)');
+         p('create index ' || sown||tname || '_it1 on ' ||
+                              sown||tname || '(eff_beg_dtm)');
          p('      tablespace ' || tbuff.ts_onln_indx || ';');
       else
-         p('create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm);');
+         p('create index ' || sown||tname || '_it1 on ' ||
+                              sown||tname || '(eff_beg_dtm);');
       end if;
    end if;
    p('');
    p('/***  ACTIVE Audit Foreign Key Indexes  ***/');
    if tbuff.ts_onln_indx is not null
    then
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr)');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                                    tname || '(aud_beg_usr)');
       p('--       tablespace ' || tbuff.ts_onln_indx || ';');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                                    tname || '(aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_onln_indx || ';');
    else
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr);');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                                    tname || '(aud_beg_usr);');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                                    tname || '(aud_beg_dtm);');
    end if;
    p('');
 END create_ind_act;
@@ -3999,7 +4018,7 @@ BEGIN
    tname := tbuff.name || HOA;
    p('/***  HISTORY Foreign Keys and Indexes  ***/');
    --  Primary Key Index
-   p('alter table ' || tname || ' add constraint ' || tname || '_pk');
+   p('alter table ' || sown||tname || ' add constraint ' || tname || '_pk');
    p('   primary key (' || tbuff.name || '_id');
    if tbuff.type = 'EFF'
    then
@@ -4014,8 +4033,8 @@ BEGIN
       p('               );');
    end if;
    --  Natural Keys - No unique indexes in history
-   p('create index ' || tname || '_nk');
-   p('   on ' || tname);
+   p('create index ' || sown||tname || '_nk');
+   p('   on ' || sown||tname);
    for buff in (
       select COL.name
             ,COL.nk
@@ -4087,8 +4106,8 @@ BEGIN
          then
             p('--  Skipping duplicate FK index on ' || tname || ' NK');
          else
-            p('create index ' || tname || '_' || 'fx' || fkseq);
-            p('   on ' || tname);
+            p('create index ' || sown||tname || '_' || 'fx' || fkseq);
+            p('   on ' || sown||tname);
             p('           (' || buff.name);
             if tbuff.type = 'EFF'
             then
@@ -4117,8 +4136,8 @@ BEGIN
        group by IND.tag
        order by IND.tag )
    loop
-      p('create index ' || tname || '_' || buf2.tag);
-      p('    on ' || tname);
+      p('create index ' || sown||tname || '_' || buf2.tag);
+      p('    on ' || sown||tname);
       for buff in (
          select COL.name
                ,IND.seq
@@ -4161,47 +4180,47 @@ BEGIN
       p('/***  HISTORY Effectivity Indexes  ***/');
       if tbuff.ts_hist_indx is not null
       then
-         p('-- create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm)');
+         p('-- create index ' || sown||tname || '_it1 on ' ||
+                                 sown||tname || '(eff_beg_dtm)');
          p('--       tablespace ' || tbuff.ts_onln_indx || ';');
-         p('-- create index ' || tname || '_it2 on ' ||
-                              tname || '(eff_end_dtm)');
+         p('-- create index ' || sown||tname || '_it2 on ' ||
+                                 sown||tname || '(eff_end_dtm)');
          p('--       tablespace ' || tbuff.ts_onln_indx || ';');
       else
-         p('-- create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm);');
-         p('-- create index ' || tname || '_it2 on ' ||
-                              tname || '(eff_end_dtm);');
+         p('-- create index ' || sown||tname || '_it1 on ' ||
+                                 sown||tname || '(eff_beg_dtm);');
+         p('-- create index ' || sown||tname || '_it2 on ' ||
+                                 sown||tname || '(eff_end_dtm);');
       end if;
    end if;
    p('');
    p('/***  HISTORY Audit Foreign Keys and Indexes  ***/');
-   p('-- alter table ' || tname || ' add constraint ' ||
-                       tname || '_fa1');
+   p('-- alter table ' || sown||tname || ' add constraint ' ||
+                          sown||tname || '_fa1');
    p('--    foreign key beg_aud_usr references sys.usr$ (name);');
    if tbuff.ts_hist_indx is not null
    then
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr, aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                              sown||tname || '(aud_beg_usr, aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                              sown||tname || '(aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia3 on ' ||
-                           tname || '(aud_end_usr, aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia3 on ' ||
+                              sown||tname || '(aud_end_usr, aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia4 on ' ||
-                           tname || '(aud_end_dtm)');
+      p('-- create index ' || sown||tname || '_ia4 on ' ||
+                              sown||tname || '(aud_end_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
    else
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr, aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia3 on ' ||
-                           tname || '(aud_end_usr, aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia4 on ' ||
-                           tname || '(aud_end_dtm);');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                              sown||tname || '(aud_beg_usr, aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                              sown||tname || '(aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia3 on ' ||
+                              sown||tname || '(aud_end_usr, aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia4 on ' ||
+                              sown||tname || '(aud_end_dtm);');
    end if;
    p('');
 END create_ind_hoa;
@@ -4223,7 +4242,7 @@ BEGIN
    tname := tbuff.name || '_PDAT';
    p('/***  POP Foreign Keys and Indexes  ***/');
    --  Primary Key Index
-   p('alter table ' || tname || ' add constraint ' || tname || '_pk');
+   p('alter table ' || sown||tname || ' add constraint ' || tname || '_pk');
    p('   primary key (' || tbuff.name || '_id');
    p('               ,aud_beg_dtm');
    if tbuff.ts_hist_indx is not null
@@ -4233,8 +4252,8 @@ BEGIN
       p('               );');
    end if;
    --  Natural Keys - No unique indexes in POP
-   p('create index ' || tname || '_nk');
-   p('   on ' || tname);
+   p('create index ' || sown||tname || '_nk');
+   p('   on ' || sown||tname);
    for buff in (
       select COL.name
             ,COL.nk
@@ -4301,8 +4320,8 @@ BEGIN
          then
             p('--  Skipping duplicate FK index on ' || tname || ' NK');
          else
-            p('create index ' || tname || '_' || 'fx' || fkseq);
-            p('   on ' || tname);
+            p('create index ' || sown||tname || '_' || 'fx' || fkseq);
+            p('   on ' || sown||tname);
             p('           (' || buff.name);
             if tbuff.type = 'EFF'
             then
@@ -4331,8 +4350,8 @@ BEGIN
        group by IND.tag
        order by IND.tag )
    loop
-      p('create index ' || tname || '_' || buf2.tag);
-      p('    on ' || tname);
+      p('create index ' || sown||tname || '_' || buf2.tag);
+      p('    on ' || sown||tname);
       for buff in (
          select COL.name
                ,IND.seq
@@ -4375,47 +4394,47 @@ BEGIN
       p('/***  HISTORY Effectivity Indexes  ***/');
       if tbuff.ts_hist_indx is not null
       then
-         p('-- create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm)');
+         p('-- create index ' || sown||tname || '_it1 on ' ||
+                                 sown||tname || '(eff_beg_dtm)');
          p('--       tablespace ' || tbuff.ts_onln_indx || ';');
-         p('-- create index ' || tname || '_it2 on ' ||
-                              tname || '(eff_prev_beg_dtm)');
+         p('-- create index ' || sown||tname || '_it2 on ' ||
+                                 sown||tname || '(eff_prev_beg_dtm)');
          p('--       tablespace ' || tbuff.ts_onln_indx || ';');
       else
-         p('-- create index ' || tname || '_it1 on ' ||
-                              tname || '(eff_beg_dtm);');
-         p('-- create index ' || tname || '_it2 on ' ||
-                              tname || '(eff_prev_beg_dtm);');
+         p('-- create index ' || sown||tname || '_it1 on ' ||
+                                 sown||tname || '(eff_beg_dtm);');
+         p('-- create index ' || sown||tname || '_it2 on ' ||
+                                 sown||tname || '(eff_prev_beg_dtm);');
       end if;
    end if;
    p('');
    p('/***  HISTORY Audit Foreign Keys and Indexes  ***/');
-   p('-- alter table ' || tname || ' add constraint ' ||
+   p('-- alter table ' || sown||tname || ' add constraint ' ||
                        tname || '_fa1');
    p('--    foreign key beg_aud_usr references sys.usr$ (name);');
    if tbuff.ts_hist_indx is not null
    then
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr, aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                              sown||tname || '(aud_beg_usr, aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                              sown||tname || '(aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia3 on ' ||
-                           tname || '(aud_prev_beg_usr, aud_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia3 on ' ||
+                              sown||tname || '(aud_prev_beg_usr, aud_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
-      p('-- create index ' || tname || '_ia4 on ' ||
-                           tname || '(aud_prev_beg_dtm)');
+      p('-- create index ' || sown||tname || '_ia4 on ' ||
+                              sown||tname || '(aud_prev_beg_dtm)');
       p('--       tablespace ' || tbuff.ts_hist_indx || ';');
    else
-      p('-- create index ' || tname || '_ia1 on ' ||
-                           tname || '(aud_beg_usr, aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia2 on ' ||
-                           tname || '(aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia3 on ' ||
-                           tname || '(aud_prev_beg_usr, aud_beg_dtm);');
-      p('-- create index ' || tname || '_ia4 on ' ||
-                           tname || '(aud_prev_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia1 on ' ||
+                              sown||tname || '(aud_beg_usr, aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia2 on ' ||
+                              sown||tname || '(aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia3 on ' ||
+                              sown||tname || '(aud_prev_beg_usr, aud_beg_dtm);');
+      p('-- create index ' || sown||tname || '_ia4 on ' ||
+                              sown||tname || '(aud_prev_beg_dtm);');
    end if;
    p('');
 END create_ind_pdat;
@@ -4426,32 +4445,32 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_la1');
-      p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_au1;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnp3;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnp2;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnp1;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnh6;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnh5;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnh4;');
-      p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                          tbuff.name || '_PDAT_nnh3;');
+      p('-- alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                   tbuff.name || '_PDAT_la1');
+      p('-- alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                   tbuff.name || '_PDAT_au1;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnp3;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnp2;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnp1;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnh6;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnh5;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnh4;');
+      p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                tbuff.name || '_PDAT_nnh3;');
       if tbuff.type = 'EFF'
       then
-         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                             tbuff.name || '_PDAT_nnh2;');
-         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                             tbuff.name || '_PDAT_nnh1;');
-         p('-- alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                             tbuff.name || '_PDAT_ef1;');
+         p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                   tbuff.name || '_PDAT_nnh2;');
+         p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                   tbuff.name || '_PDAT_nnh1;');
+         p('-- alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                      tbuff.name || '_PDAT_ef1;');
       end if;
       for buff in (
          select * from tab_cols COL
@@ -4459,29 +4478,29 @@ BEGIN
            and  COL.table_id = tbuff.id
           order by COL.seq desc)
       loop
-         p('alter table ' || tbuff.name || '_PDAT drop constraint ' ||
-                             tbuff.name || '_PDAT_nn' || buff.seq || ';');
+         p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
+                                   tbuff.name || '_PDAT_nn' || buff.seq || ';');
       end loop;
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_la1;');
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_au1;');
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_nnh6;');
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_nnh5;');
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_nnh4;');
-      p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                          tbuff.name || HOA || '_nnh3;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_la1;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_au1;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_nnh6;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_nnh5;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_nnh4;');
+      p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                tbuff.name || HOA || '_nnh3;');
       if tbuff.type = 'EFF'
       then
-         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                             tbuff.name || HOA || '_nnh2;');
-         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                             tbuff.name || HOA || '_nnh1;');
-         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                             tbuff.name || HOA || '_ef1;');
+         p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                   tbuff.name || HOA || '_nnh2;');
+         p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                   tbuff.name || HOA || '_nnh1;');
+         p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                   tbuff.name || HOA || '_ef1;');
       end if;
       for buff in (
          select * from tab_cols COL
@@ -4489,8 +4508,8 @@ BEGIN
            and  COL.table_id = tbuff.id
           order by COL.seq desc)
       loop
-         p('alter table ' || tbuff.name || HOA || ' drop constraint ' ||
-                             tbuff.name || HOA || '_nn' || buff.seq || ';');
+         p('alter table ' || sown||tbuff.name || HOA || ' drop constraint ' ||
+                                   tbuff.name || HOA || '_nn' || buff.seq || ';');
       end loop;
    end if;
    -- Drop the domain check constraints
@@ -4503,8 +4522,8 @@ BEGIN
         and  COL.table_id = tbuff.id
        order by COL.seq desc)
    loop
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_dm' || buff.rnum || ';');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_dm' || buff.rnum || ';');
    end loop;
    -- Drop the case fold checking
    for buff in (
@@ -4516,8 +4535,8 @@ BEGIN
         and  COL.table_id = tbuff.id
        order by COL.seq desc)
    loop
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_fld' || buff.rnum || ';');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_fld' || buff.rnum || ';');
    end loop;
    -- Drop the custom check constraints
    for buff in (
@@ -4525,20 +4544,20 @@ BEGIN
        where CK.table_id = tbuff.id
        order by CK.seq desc)
    loop
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_ck' || buff.seq || ';');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_ck' || buff.seq || ';');
    end loop;
    -- Drop the not null check constraints
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_nnh5;');
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_nnh3;');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_nnh5;');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_nnh3;');
       if tbuff.type = 'EFF'
       then
-         p('alter table ' || tbuff.name || ' drop constraint ' ||
-                             tbuff.name || '_nnh1;');
+         p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                   tbuff.name || '_nnh1;');
       end if;
    end if;
    for buff in (
@@ -4548,8 +4567,8 @@ BEGIN
         and  COL.table_id = tbuff.id
        order by COL.seq desc )
    loop
-      p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_nn' || buff.seq || ';');
+      p('alter table ' || sown||tbuff.name || ' drop constraint ' ||
+                                tbuff.name || '_nn' || buff.seq || ';');
    end loop;
 END drop_cons;
 ----------------------------------------
@@ -4566,19 +4585,19 @@ begin
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('alter table ' || tname || ' modify ' || buff.name);
+      p('alter table ' || sown||tname || ' modify ' || buff.name);
       p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
    end loop;
    if tbuff.type in ('EFF', 'LOG')
    then
       if tbuff.type = 'EFF'
       then
-         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('alter table ' || sown||tname || ' modify eff_beg_dtm');
          p('   constraint ' || tname || '_nnh1 not null;');
       end if;
-      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('alter table ' || sown||tname || ' modify aud_beg_usr');
       p('   constraint ' || tname || '_nnh3 not null;');
-      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('alter table ' || sown||tname || ' modify aud_beg_dtm');
       p('   constraint ' || tname || '_nnh5 not null;');
    end if;
    -- Custom Check Constraints
@@ -4593,8 +4612,8 @@ begin
       --   constraint after checking for one, and only one, column name
       --   in buff.text.  However, it may not make a difference to the
       --   optimizer.
-      p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_ck' || buff.seq);
+      p('alter table ' || sown||tname || ' add constraint ' ||
+                                tname || '_ck' || buff.seq);
       p('   check (' || replace(buff.text,''',''''') || ');');
    end loop;
    -- Check case
@@ -4607,8 +4626,8 @@ begin
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_fld' || buff.rnum);
+      p('alter table ' || sown||tname || ' add constraint ' ||
+                                tname || '_fld' || buff.rnum);
       case buff.fold
       when 'U' then
          p('   check (' || buff.name || ' = upper(' || buff.name || '));');
@@ -4628,8 +4647,8 @@ begin
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_dm' || buff.rnum);
+      p('alter table ' || sown||tname || ' add constraint ' ||
+                                tname || '_dm' || buff.rnum);
       p('   check (' || buff.name || ' in ' ||
             get_domlist(buff.d_domain_id) || ');');
    end loop;
@@ -4643,29 +4662,29 @@ begin
            and  COL.table_id = tbuff.id
           order by COL.seq )
       loop
-         p('alter table ' || tname || ' modify ' || buff.name);
+         p('alter table ' || sown||tname || ' modify ' || buff.name);
          p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
       end loop;
       if tbuff.type = 'EFF'
       then
-         p('alter table ' || tname || ' add constraint ' || tname || '_ef1');
+         p('alter table ' || sown||tname || ' add constraint ' || tname || '_ef1');
          p('      check (eff_beg_dtm < eff_end_dtm);');
-         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('alter table ' || sown||tname || ' modify eff_beg_dtm');
          p('   constraint ' || tname || '_nnh1 not null;');
-         p('alter table ' || tname || ' modify eff_end_dtm');
+         p('alter table ' || sown||tname || ' modify eff_end_dtm');
          p('   constraint ' || tname || '_nnh2 not null;');
       end if;
-      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('alter table ' || sown||tname || ' modify aud_beg_usr');
       p('   constraint ' || tname || '_nnh3 not null;');
-      p('alter table ' || tname || ' modify aud_end_usr');
+      p('alter table ' || sown||tname || ' modify aud_end_usr');
       p('   constraint ' || tname || '_nnh4 not null;');
-      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('alter table ' || sown||tname || ' modify aud_beg_dtm');
       p('   constraint ' || tname || '_nnh5 not null;');
-      p('alter table ' || tname || ' modify aud_end_dtm');
+      p('alter table ' || sown||tname || ' modify aud_end_dtm');
       p('   constraint ' || tname || '_nnh6 not null;');
-      p('alter table ' || tname || ' add constraint ' || tname || '_au1');
+      p('alter table ' || sown||tname || ' add constraint ' || tname || '_au1');
       p('      check (aud_beg_dtm < aud_end_dtm);');
-      p('alter table ' || tname || ' add constraint ' || tname || '_la1');
+      p('alter table ' || sown||tname || ' add constraint ' || tname || '_la1');
       p('      check (last_active = ''Y'');');
       p('');
       tname := tbuff.name || '_PDAT';
@@ -4675,35 +4694,35 @@ begin
            and  COL.table_id = tbuff.id
           order by COL.seq )
       loop
-         p('alter table ' || tname || ' modify ' || buff.name);
+         p('alter table ' || sown||tname || ' modify ' || buff.name);
          p('   constraint ' || tname || '_nn' || buff.seq || ' not null;');
       end loop;
       if tbuff.type = 'EFF'
       then
-         p('-- alter table ' || tname || ' add constraint ' || tname || '_ef1');
+         p('-- alter table ' || sown||tname || ' add constraint ' || tname || '_ef1');
          p('--       check (eff_beg_dtm < eff_prev_beg_dtm);');
-         p('alter table ' || tname || ' modify eff_beg_dtm');
+         p('alter table ' || sown||tname || ' modify eff_beg_dtm');
          p('   constraint ' || tname || '_nnh1 not null;');
-         p('alter table ' || tname || ' modify eff_end_dtm');
+         p('alter table ' || sown||tname || ' modify eff_end_dtm');
          p('   constraint ' || tname || '_nnh2 not null;');
       end if;
-      p('alter table ' || tname || ' modify aud_beg_usr');
+      p('alter table ' || sown||tname || ' modify aud_beg_usr');
       p('   constraint ' || tname || '_nnh3 not null;');
-      p('alter table ' || tname || ' modify aud_end_usr');
+      p('alter table ' || sown||tname || ' modify aud_end_usr');
       p('   constraint ' || tname || '_nnh4 not null;');
-      p('alter table ' || tname || ' modify aud_beg_dtm');
+      p('alter table ' || sown||tname || ' modify aud_beg_dtm');
       p('   constraint ' || tname || '_nnh5 not null;');
-      p('alter table ' || tname || ' modify aud_end_dtm');
+      p('alter table ' || sown||tname || ' modify aud_end_dtm');
       p('   constraint ' || tname || '_nnh6 not null;');
-      p('alter table ' || tname || ' modify pop_dml');
+      p('alter table ' || sown||tname || ' modify pop_dml');
       p('   constraint ' || tname || '_nnp1 not null;');
-      p('alter table ' || tname || ' modify pop_dtm');
+      p('alter table ' || sown||tname || ' modify pop_dtm');
       p('   constraint ' || tname || '_nnp2 not null;');
-      p('alter table ' || tname || ' modify pop_usr');
+      p('alter table ' || sown||tname || ' modify pop_usr');
       p('   constraint ' || tname || '_nnp3 not null;');
-      p('-- alter table ' || tname || ' add constraint ' || tname || '_au1');
+      p('-- alter table ' || sown||tname || ' add constraint ' || tname || '_au1');
       p('--       check (aud_beg_dtm < aud_prev_beg_dtm);');
-      p('-- alter table ' || tname || ' add constraint ' || tname || '_la1');
+      p('-- alter table ' || sown||tname || ' add constraint ' || tname || '_la1');
       p('--       check (last_active = ''Y'');');
       p('');
    end if;
@@ -4713,9 +4732,9 @@ PROCEDURE drop_ttrig
    --  For a tbuff, drop the table triggers
 IS
 BEGIN
-   p('drop TRIGGER ' || tbuff.name || '_bi;');
-   p('drop TRIGGER ' || tbuff.name || '_bu;');
-   p('drop TRIGGER ' || tbuff.name || '_bd;');
+   p('drop TRIGGER ' || sown||tbuff.name || '_bi;');
+   p('drop TRIGGER ' || sown||tbuff.name || '_bu;');
+   p('drop TRIGGER ' || sown||tbuff.name || '_bd;');
 END drop_ttrig;
 ----------------------------------------
 PROCEDURE create_ttrig
@@ -4725,9 +4744,9 @@ IS
 BEGIN
    sp_type := 'TRIGGER';
    sp_name := tbuff.name||'_bi';
-   p('CREATE '||sp_type||' '||sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('   BEFORE INSERT');
-   p('   ON '||tbuff.name||' FOR EACH ROW');
+   p('   ON ' || sown||tbuff.name || ' FOR EACH ROW');
    p('begin');
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -4764,9 +4783,9 @@ BEGIN
    p('');
    sp_type := 'TRIGGER';
    sp_name := tbuff.name||'_bu';
-   p('CREATE '||sp_type||' '||sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('   BEFORE UPDATE');
-   p('   ON '||tbuff.name||' FOR EACH ROW');
+   p('   ON ' || sown||tbuff.name || ' FOR EACH ROW');
    p('begin');
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -4807,9 +4826,9 @@ BEGIN
    p('');
    sp_type := 'TRIGGER';
    sp_name := tbuff.name||'_bd';
-   p('CREATE '||sp_type||' '||sp_name);
+   p('CREATE ' || sp_type || ' ' || sown||sp_name);
    p('   BEFORE DELETE');
-   p('   ON '||tbuff.name||' FOR EACH ROW');
+   p('   ON ' || sown||tbuff.name || ' FOR EACH ROW');
    if tbuff.type = 'EFF'
    then
       p('declare');
@@ -4858,17 +4877,17 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop package '||tbuff.name||'_pop;');
-      p('drop view '||tbuff.name||'_PDAT;');
-      p('drop view '||tbuff.name||HOA||';');
+      p('drop package '||sown||tbuff.name||'_pop;');
+      p('drop view '||sown||tbuff.name||'_PDAT;');
+      p('drop view '||sown||tbuff.name||HOA||';');
    end if;
    if tbuff.mv_refresh_hr IS NOT NULL
    then
-      p('drop materialized view '||tbuff.name||';');
+      p('drop materialized view '||sown||tbuff.name||';');
    else
-      p('drop view '||tbuff.name||';');
+      p('drop view '||sown||tbuff.name||';');
    end if;
-   p('drop synonym '||tbuff.name||'_seq;');
+   p('drop synonym '||sown||tbuff.name||'_seq;');
 END drop_rem;
 ----------------------------------------
 PROCEDURE create_rem
@@ -4878,28 +4897,28 @@ IS
    sp_name  user_errors.name%type;
 BEGIN
    p('');
-   p('create synonym '||tbuff.name||'_seq');
+   p('create synonym '||sown||tbuff.name||'_seq');
    p('   for '||tbuff.name||'_seq@'||abuff.abbr||'_db;');
    ps('');
-   ps('-- audit rename on '||tbuff.name||'_seq by access;');
+   ps('-- audit rename on '||sown||tbuff.name||'_seq by access;');
    if tbuff.mv_refresh_hr IS NOT NULL
    then
       p('');
-      p('create materialized view '||tbuff.name);
+      p('create materialized view '||sown||tbuff.name);
       p('   refresh next sysdate + '||tbuff.mv_refresh_hr||'/24');
       p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db;');
-      p('comment on materialized view ' ||tbuff.name|| ' is ''' ||
+      p('comment on materialized view ' ||sown||tbuff.name|| ' is ''' ||
          replace(tbuff.description,SQ1,SQ2) || ''';');
    else
       p('');
-      p('create view '||tbuff.name);
+      p('create view '||sown||tbuff.name);
       p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db;');
-      p('comment on table ' ||tbuff.name|| ' is ''' ||
+      p('comment on table ' ||sown||tbuff.name|| ' is ''' ||
          replace(tbuff.description,SQ1,SQ2) || ''';');
    end if;
    ps('');
-   ps('grant select on ' ||tbuff.name|| ' to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' ||tbuff.name || ' by access;');
+   ps('grant select on ' ||sown||tbuff.name|| ' to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||sown||tbuff.name || ' by access;');
    p('');
    tab_col_comments(tbuff.name);
    p('');
@@ -4908,25 +4927,25 @@ BEGIN
       -- No need for any HOA or POP stuff
 	  return;
    end if;
-   p('create view '||tbuff.name||HOA);
+   p('create view '||sown||tbuff.name||HOA);
    p('   as select * from '||tbuff.name||HOA||'@'||abuff.abbr||'_db;');
    ps('');
-   ps('grant select on ' ||tbuff.name||HOA|| ' to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' ||tbuff.name||HOA|| ' by access;');
+   ps('grant select on ' ||sown||tbuff.name||HOA|| ' to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||sown||tbuff.name||HOA|| ' by access;');
    p('');
    hoa_col_comments(tbuff.name||HOA);
    p('');
-   p('create view '||tbuff.name||'_PDAT');
+   p('create view '||sown||tbuff.name||'_PDAT');
    p('   as select * from '||tbuff.name||'_PDAT@'||abuff.abbr||'_db;');
    ps('');
-   ps('grant select on ' ||tbuff.name|| '_PDAT to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' ||tbuff.name || '_PDAT by access;');
+   ps('grant select on ' ||sown||tbuff.name|| '_PDAT to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||sown||tbuff.name || '_PDAT by access;');
    p('');
    pdat_col_comments(tbuff.name||'_PDAT');
    p('');
    sp_type := 'package';
    sp_name := tbuff.name||'_pop';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p('   -- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -4943,12 +4962,12 @@ BEGIN
    p('/');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant execute on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('---- audit rename on ' || sp_name || ' by access;');
+   ps('grant execute on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('---- audit rename on ' || sown||sp_name || ' by access;');
    p('');
    sp_type := 'package body';
    sp_name := tbuff.name||'_pop';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p('-- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -4981,16 +5000,16 @@ BEGIN
       return;
    end if;
    p('');
-   p('drop view '||tbuff.name||'_ASOF;');
-   p('drop view '||tbuff.name||'_ALL;');
+   p('drop view '||sown||tbuff.name||'_ASOF;');
+   p('drop view '||sown||tbuff.name||'_ALL;');
    if table_self_ref(tbuff.id)
    then
       -- Tables with self-referencing foreign keys must
       -- have this intermediate view "_L" and "_F" to compute
       -- the ALL and ASOF data before the self-referencing can
       -- be accomplished in the main "_ALL" and "_ASOF" views.
-      p('drop view '||tbuff.name||'_F;');
-      p('drop view '||tbuff.name||'_L;');
+      p('drop view '||sown||tbuff.name||'_F;');
+      p('drop view '||sown||tbuff.name||'_L;');
    end if;
 END drop_rem_all_asof;
 ----------------------------------------
@@ -5004,27 +5023,27 @@ BEGIN
       return;
    end if;
    p('');
-   p('create view '||tbuff.name||'_ALL');
+   p('create view '||sown||tbuff.name||'_ALL');
    p('   as select * from '||tbuff.name||'_all@'||abuff.abbr||'_db;');
    p('');
    all_col_comments(tbuff.name||'_all');
    ps('');
-   ps('grant select on ' ||tbuff.name|| '_ALL to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' ||tbuff.name || '_ALL by access;');
-   p('create view '||tbuff.name||'_ASOF');
+   ps('grant select on ' ||sown||tbuff.name|| '_ALL to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||sown||tbuff.name || '_ALL by access;');
+   p('create view '||sown||tbuff.name||'_ASOF');
    p('   as select * from '||tbuff.name||'_asof@'||abuff.abbr||'_db;');
    p('');
    asof_col_comments(tbuff.name||'_asof');
    ps('');
-   ps('grant select on ' ||tbuff.name|| '_ASOF to ' || abuff.abbr || '_app;');
-   ps('-- audit rename on ' ||tbuff.name || '_ASOF by access;');
+   ps('grant select on ' ||sown||tbuff.name|| '_ASOF to ' || abuff.abbr || '_app;');
+   ps('-- audit rename on ' ||sown||tbuff.name || '_ASOF by access;');
 END create_rem_all_asof;
 ----------------------------------------
 PROCEDURE drop_vp
    --  For a tbuff, drop the view package
 IS
 BEGIN
-   p('drop package '||tbuff.name||'_view;');
+   p('drop package '||sown||tbuff.name||'_view;');
 END drop_vp;
 ----------------------------------------
 PROCEDURE create_vp_spec
@@ -5034,7 +5053,7 @@ IS
 BEGIN
    sp_type := 'package';
    sp_name := tbuff.name||'_view';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -5164,7 +5183,7 @@ IS
 BEGIN
    sp_type := 'package body';
    sp_name := tbuff.name||'_view';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p('-- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -5473,7 +5492,7 @@ PROCEDURE drop_act
    --  For a tbuff, drop the active view
 IS
 BEGIN
-   p('drop view '||tbuff.name||'_act;');
+   p('drop view '||sown||tbuff.name||'_act;');
 END drop_act;
 ----------------------------------------
 PROCEDURE create_act
@@ -5484,7 +5503,7 @@ IS
 BEGIN
    sp_type := 'view';
    sp_name := tbuff.name||'_act';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('      (id');
    if tbuff.type = 'EFF'
    then
@@ -5570,18 +5589,18 @@ BEGIN
    p(' ;');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant select on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('grant insert on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('grant update on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('grant delete on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('-- audit rename on '||sp_name||' by access;');
+   ps('grant select on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('grant insert on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('grant update on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('grant delete on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('-- audit rename on '||sown||sp_name||' by access;');
    p('');
-   p('comment on table ' ||sp_name|| ' is ''' ||
+   p('comment on table ' ||sown||sp_name|| ' is ''' ||
       replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    act_col_comments(sp_name);
    p('');
-   p('alter view '||sp_name||' add constraint '||sp_name||'_pk');
+   p('alter view '||sown||sp_name||' add constraint '||sp_name||'_pk');
    p('   primary key (id) disable;');
    p('');
    fkseq := 0;
@@ -5592,10 +5611,10 @@ BEGIN
        order by COL.seq )
    loop
       fkseq := fkseq + 1;
-      p('alter view ' || sp_name || ' add constraint ' ||
+      p('alter view ' || sown||sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                         get_tabname(buff.fk_table_id) || '_act (id) disable;');
+                         sown||get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_act;
@@ -5606,10 +5625,10 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop view '||tbuff.name||'_all;');
+      p('drop view '||sown||tbuff.name||'_all;');
       if table_self_ref(tbuff.id)
       then
-         p('drop view '||tbuff.name||'_L;');
+         p('drop view '||sown||tbuff.name||'_L;');
       end if;
    end if;
 END drop_all;
@@ -5633,7 +5652,7 @@ BEGIN
       -- be accomplished in the main "_ALL" view.
       sp_type := 'view';
       sp_name := tbuff.name||'_L';
-      p('create '||sp_type||' '||sp_name);
+      p('create '||sp_type||' '||sown||sp_name);
       p('      (' || tbuff.name || '_id');
       p('      ,stat');
       -- Generate a column list for the view
@@ -5802,16 +5821,16 @@ BEGIN
       p(' ;');
       show_errors(sp_type, sp_name);
       ps('');
-      ps('grant select on '||sp_name||' to '||abuff.abbr||'_app;');
-      ps('-- audit rename on '||sp_name||' by access;');
+      ps('grant select on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+      ps('-- audit rename on '||sown||sp_name||' by access;');
       p('');
-      p('comment on table ' ||sp_name|| ' is ''Active and Deleted ' ||
+      p('comment on table ' ||sown||sp_name|| ' is ''Active and Deleted ' ||
          replace(tbuff.description,SQ1,SQ2) ||
         '.  NOTE: Deleted records in this view with missing FK data for a non-null FK ID cannot be "popped"'';');
       p('');
 	  l_col_comments(sp_name);
       p('');
-      p('alter view '||sp_name||' add constraint '||sp_name||'_pk');
+      p('alter view '||sown||sp_name||' add constraint '||sp_name||'_pk');
       p('   primary key (' || tbuff.name || '_id) disable;');
       p('');
 	  fkseq := 0;
@@ -5822,16 +5841,16 @@ BEGIN
           order by COL.seq )
       loop
 	     fkseq := fkseq + 1;
-         p('alter view ' || sp_name || ' add constraint ' ||
-                            sp_name || '_' || 'fk' || fkseq);
+         p('alter view ' || sown||sp_name || ' add constraint ' ||
+                            sown||sp_name || '_' || 'fk' || fkseq);
          p('   foreign key (' || buff.name || ') references ' ||
-                            get_tabname(buff.fk_table_id) || '_act (id) disable;');
+                            sown||get_tabname(buff.fk_table_id) || '_act (id) disable;');
       end loop;
       p('');
    end if;
    sp_type := 'view';
    sp_name := tbuff.name||'_all';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('      (id');
    p('      ,stat');
    -- Generate a column list for the view
@@ -6150,16 +6169,16 @@ BEGIN
    p(' ;');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant select on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('-- audit rename on '||sp_name||' by access;');
+   ps('grant select on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('-- audit rename on '||sown||sp_name||' by access;');
    p('');
-   p('comment on table ' ||sp_name|| ' is ''Active and Deleted ' ||
+   p('comment on table ' ||sown||sp_name|| ' is ''Active and Deleted ' ||
       replace(tbuff.description,SQ1,SQ2) ||
      '.  NOTE: Deleted records in this view with missing FK data for a non-null FK ID cannot be "popped"'';');
    p('');
    all_col_comments(sp_name);
    p('');
-   p('alter view '||sp_name||' add constraint '||sp_name||'_pk');
+   p('alter view '||sown||sp_name||' add constraint '||sp_name||'_pk');
    p('   primary key (id) disable;');
    p('');
    fkseq := 0;
@@ -6170,10 +6189,10 @@ BEGIN
        order by COL.seq )
    loop
       fkseq := fkseq + 1;
-      p('alter view ' || sp_name || ' add constraint ' ||
+      p('alter view ' || sown||sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || '_act (id) disable;');
+                          sown||get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_all;
@@ -6184,10 +6203,10 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop view '||tbuff.name||'_asof;');
+      p('drop view '||sown||tbuff.name||'_asof;');
       if table_self_ref(tbuff.id)
       then
-         p('drop view '||tbuff.name||'_F;');
+         p('drop view '||sown||tbuff.name||'_F;');
       end if;
    end if;
 END drop_asof;
@@ -6216,7 +6235,7 @@ BEGIN
       -- be accomplished in the main "_ASOF" view.
       sp_type := 'view';
       sp_name := tbuff.name||'_F';
-      p('create '||sp_type||' '||sp_name);
+      p('create '||sp_type||' '||sown||sp_name);
       p('      (' || tbuff.name || '_id');
       p('      ,stat');
       -- Generate a column list for the view
@@ -6579,15 +6598,15 @@ BEGIN
    p(' ;');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant select on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('-- audit rename on '||sp_name||' by access;');
+   ps('grant select on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('-- audit rename on '||sown||sp_name||' by access;');
    p('');
-   p('comment on table ' ||sp_name|| ' is ''AS OF glob.get_asof_dtm ' ||
+   p('comment on table ' ||sown||sp_name|| ' is ''AS OF glob.get_asof_dtm ' ||
       replace(tbuff.description,SQ1,SQ2) || ''';');
    p('');
    asof_col_comments(sp_name);
    p('');
-   p('alter view '||sp_name||' add constraint '||sp_name||'_pk');
+   p('alter view '||sown||sp_name||' add constraint '||sp_name||'_pk');
    p('   primary key (id) disable;');
    p('');
    fkseq := 0;
@@ -6598,10 +6617,10 @@ BEGIN
        order by COL.seq )
    loop
       fkseq := fkseq + 1;
-      p('alter view ' || sp_name || ' add constraint ' ||
+      p('alter view ' || sown||sp_name || ' add constraint ' ||
                          sp_name || '_' || 'fk' || fkseq);
       p('   foreign key (' || buff.name || ') references ' ||
-                          get_tabname(buff.fk_table_id) || '_act (id) disable;');
+                          sown||get_tabname(buff.fk_table_id) || '_act (id) disable;');
    end loop;
    p('');
 END create_asof;
@@ -6614,8 +6633,8 @@ IS
 BEGIN
    sp_type := 'TRIGGER';
    sp_name := tbuff.name||'_ioi';
-   p('create '||sp_type||' '||sp_name);
-   p('   instead of insert on '||tbuff.name||'_act');
+   p('create '||sp_type||' '||sown||sp_name);
+   p('   instead of insert on '||sown||tbuff.name||'_act');
    p('   for each row');
    p('declare');
    p('   n_id  NUMBER(38);');
@@ -6685,8 +6704,8 @@ BEGIN
    p('');
    /****************************************************************/
    sp_name := tbuff.name||'_iou';
-   p('create '||sp_type||' '||sp_name);
-   p('   instead of update on '||tbuff.name||'_act');
+   p('create '||sp_type||' '||sown||sp_name);
+   p('   instead of update on '||sown||tbuff.name||'_act');
    p('   for each row');
    p('declare');
    if tbuff.type = 'EFF'
@@ -6774,8 +6793,8 @@ BEGIN
    p('');
    /****************************************************************/
    sp_name := tbuff.name||'_iod';
-   p('create '||sp_type||' '||sp_name);
-   p('   instead of delete on '||tbuff.name||'_act');
+   p('create '||sp_type||' '||sown||sp_name);
+   p('   instead of delete on '||sown||tbuff.name||'_act');
    p('   for each row');
    if tbuff.type = 'EFF'
    then
@@ -6819,7 +6838,7 @@ PROCEDURE drop_dp
    --  For a tbuff, drop the dml package
 IS
 BEGIN
-   p('drop package '||tbuff.name||'_dml;');
+   p('drop package '||sown||tbuff.name||'_dml;');
 END drop_dp;
 ----------------------------------------
 PROCEDURE create_dp_spec
@@ -6830,7 +6849,7 @@ IS
 BEGIN
    sp_type := 'package';
    sp_name := tbuff.name||'_dml';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p('   -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -6969,8 +6988,8 @@ BEGIN
    p('/');
    show_errors(sp_type, sp_name);
    ps('');
-   ps('grant execute on '||sp_name||' to '||abuff.abbr||'_app;');
-   ps('---- audit rename on '||sp_name||' by access;');
+   ps('grant execute on '||sown||sp_name||' to '||abuff.abbr||'_app;');
+   ps('---- audit rename on '||sown||sp_name||' by access;');
    p('');
 END create_dp_spec;
 ----------------------------------------
@@ -6984,7 +7003,7 @@ IS
 BEGIN
    sp_type := 'package body';
    sp_name := tbuff.name||'_dml';
-   p('create '||sp_type||' '||sp_name);
+   p('create '||sp_type||' '||sown||sp_name);
    p('is') ;
    p('');
    p(' -- ' || initcap(sp_type) || ' ' || initcap(sp_name));
@@ -7753,7 +7772,7 @@ BEGIN
        where PRG.application_id = abuff.id
        order by PRG.name desc)
    LOOP
-      p('drop '||buff.type||' '||buff.name||';');
+      p('drop '||buff.type||' '||sown||buff.name||';');
    END LOOP;
 END drop_prg;
 ----------------------------------------
@@ -7766,7 +7785,7 @@ BEGIN
        where PRG.application_id = abuff.id
        order by PRG.name)
    LOOP
-      p('create ' || buff.type || ' ' || buff.name);
+      p('create ' || buff.type || ' ' || sown||buff.name);
       if buff.type = 'FUNCTION'
       then
          p('   return varchar2');
@@ -7779,8 +7798,8 @@ BEGIN
       p('end ' || buff.name || ';');
       p('/');
    ps('');
-   ps('grant execute on ' || buff.name || ' to '|| abuff.abbr || '_app;');
-   ps('---- audit rename on ' || buff.name || ' by access;');
+   ps('grant execute on ' || sown||buff.name || ' to '|| abuff.abbr || '_app;');
+   ps('---- audit rename on ' || sown||buff.name || ' by access;');
    p('');
    END LOOP;
 END create_prg;
@@ -7794,11 +7813,12 @@ BEGIN
        where PRG.application_id = abuff.id
        order by PRG.name desc)
    LOOP
-      p('drop synonym '||buff.name||';');
+      p('drop synonym '||sown||buff.name||';');
    END LOOP;
    p('');
-   p('drop synonym glob;');
-   p('drop synonym util;');
+   p('drop synonym ' || sown||'glob;');
+   p('drop synonym ' || sown||'util_log;');
+   p('drop synonym ' || sown||'util;');
    p('');
 END drop_gsyn;
 ----------------------------------------
@@ -7806,11 +7826,11 @@ PROCEDURE create_gsyn
    --  Create the user's global and package synonyms
 IS
 BEGIN
-   p('create synonym util');
+   p('create synonym ' || sown||'util');
    p('   for '||abuff.db_schema||'.util;');
-   p('create synonym util_log');
+   p('create synonym ' || sown||'util_log');
    p('   for '||abuff.db_schema||'.util_log;');
-   p('create synonym glob');
+   p('create synonym ' || sown||'glob');
    p('   for '||abuff.db_schema||'.glob;');
    p('');
    for buff in (
@@ -7818,7 +7838,7 @@ BEGIN
        where PRG.application_id = abuff.id
        order by PRG.name)
    LOOP
-      p('create synonym '||buff.name);
+      p('create synonym '||sown||buff.name);
       p('   for '||abuff.db_schema||'.'||buff.name||';');
    END LOOP;
    p('');
@@ -7830,19 +7850,19 @@ IS
 BEGIN
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop synonym '||tbuff.name||'_asof;');
-      p('drop synonym '||tbuff.name||'_all;');
+      p('drop synonym '||sown||tbuff.name||'_asof;');
+      p('drop synonym '||sown||tbuff.name||'_all;');
    end if;
-   p('drop synonym '||tbuff.name||'_act;');
-   p('drop synonym '||tbuff.name||'_dml;');
+   p('drop synonym '||sown||tbuff.name||'_act;');
+   p('drop synonym '||sown||tbuff.name||'_dml;');
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('drop synonym '||tbuff.name||'_pop;');
-      p('drop synonym '||tbuff.name||'_PDAT;');
-      p('drop synonym '||tbuff.name||HOA||';');
+      p('drop synonym '||sown||tbuff.name||'_pop;');
+      p('drop synonym '||sown||tbuff.name||'_PDAT;');
+      p('drop synonym '||sown||tbuff.name||HOA||';');
    end if;
-   p('drop synonym '||tbuff.name||';');
-   p('--drop synonym '||tbuff.name||'_seq;');
+   p('drop synonym '||sown||tbuff.name||';');
+   p('--drop synonym '||sown||tbuff.name||'_seq;');
    p('');
 END drop_tsyn;
 ----------------------------------------
@@ -7851,29 +7871,29 @@ PROCEDURE create_tsyn
 IS
 BEGIN
    p('');
-   p('--  Must use "'||tbuff.name||'_dml.get_next_id" instead of sequence');
-   p('--create synonym '||tbuff.name||'_seq');
+   p('--  Must use "'||sown||tbuff.name||'_dml.get_next_id" instead of sequence');
+   p('--create synonym '||sown||tbuff.name||'_seq');
    p('--   for '||abuff.db_schema||'.'||tbuff.name||'_seq;');
-   p('create synonym '||tbuff.name);
+   p('create synonym '||sown||tbuff.name);
    p('   for '||abuff.db_schema||'.'||tbuff.name||';');
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('create synonym '||tbuff.name||HOA);
+      p('create synonym '||sown||tbuff.name||HOA);
       p('   for '||abuff.db_schema||'.'||tbuff.name||HOA||';');
-      p('create synonym '||tbuff.name||'_PDAT');
+      p('create synonym '||sown||tbuff.name||'_PDAT');
       p('   for '||abuff.db_schema||'.'||tbuff.name||'_PDAT;');
-      p('create synonym '||tbuff.name||'_pop');
+      p('create synonym '||sown||tbuff.name||'_pop');
       p('   for '||abuff.db_schema||'.'||tbuff.name||'_pop;');
    end if;
-   p('create synonym '||tbuff.name||'_dml');
+   p('create synonym '||sown||tbuff.name||'_dml');
    p('   for '||abuff.db_schema||'.'||tbuff.name||'_dml;');
-   p('create synonym '||tbuff.name||'_act');
+   p('create synonym '||sown||tbuff.name||'_act');
    p('   for '||abuff.db_schema||'.'||tbuff.name||'_act;');
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('create synonym '||tbuff.name||'_all');
+      p('create synonym '||sown||tbuff.name||'_all');
       p('   for '||abuff.db_schema||'.'||tbuff.name||'_all;');
-      p('create synonym '||tbuff.name||'_asof');
+      p('create synonym '||sown||tbuff.name||'_asof');
       p('   for '||abuff.db_schema||'.'||tbuff.name||'_asof;');
    end if;
    p('');
@@ -7998,11 +8018,8 @@ BEGIN
    else
       p('      p_column_width=> ''' || to_char(least(trunc((get_collen(cbuff)*0.5)+1),50)) || ''',');
    end if;
-   if display_as in ()
-   then
-      p('      p_cattributes=> ''onfocus=''''this.setAttribute("maxLength","' ||
+   p('      p_cattributes=> ''onfocus=''''this.setAttribute("maxLength","' ||
                                     get_collen(cbuff) || '")'''''',');
-   end if;
    p('      p_is_required=> false,');
    p('      p_pk_col_source=> null,');
    if cbuff.default_value is not null
@@ -15070,6 +15087,13 @@ BEGIN
     where APP.abbr = upper(app_abbr_in);
    fbuff.application_id := abuff.id;
    fbuff.type           := 'SQL';
+   if abuff.db_schema_exp is not null and
+      abuff.db_schema     is not null
+   then
+      sown := abuff.db_schema || '.';
+   else
+      sown := '';
+   end if;
    load_nk_aa;
    lo_opname := 'DTGen ' || abuff.abbr || ' File Generation';
    select count(id) + 1  -- Add one for util.end_longops
