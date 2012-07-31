@@ -7998,6 +7998,11 @@ BEGIN
    else
       p('      p_column_width=> ''' || to_char(least(trunc((get_collen(cbuff)*0.5)+1),50)) || ''',');
    end if;
+   if display_as in ()
+   then
+      p('      p_cattributes=> ''onfocus=''''this.setAttribute("maxLength","' ||
+                                    get_collen(cbuff) || '")'''''',');
+   end if;
    p('      p_is_required=> false,');
    p('      p_pk_col_source=> null,');
    if cbuff.default_value is not null
@@ -10763,13 +10768,13 @@ BEGIN
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'id_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 5;
+            cbuff.len         := 1000;   --5;
             cbuff.description := 'Path of ancestor IDs hierarchy';
             create_search_where;
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'nk_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 20;
+            cbuff.len         := 4000;   --20;
             cbuff.description := 'Path of ancestor Natural Key Sets';
             create_search_where;
          end if;
@@ -10989,6 +10994,7 @@ BEGIN
       p('      p_hidden_column=> ''N'',');
       p('      p_display_as=>''TEXT'',');
       p('      p_column_width=> ''15'',');
+      p('      p_cattributes=> ''onfocus=''''this.setAttribute("maxLength","30")'''''',');
       p('      p_is_required=> false,');
       p('      p_pk_col_source=> null,');
       p('      p_column_default=> ''systimestamp'',');
@@ -11025,14 +11031,14 @@ BEGIN
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'id_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 5;
+            cbuff.len         := 1000;   --5;
             cbuff.description := 'Path of ancestor IDs hierarchy';
             create_crc;
             cnum := cnum + 1;
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'nk_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 20;
+            cbuff.len         := 4000;   --20;
             cbuff.description := 'Path of ancestor Natural Key Sets';
             create_crc;
          end if;
@@ -11500,14 +11506,14 @@ BEGIN
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'id_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 5;
+            cbuff.len         := 1000;   --5;
             cbuff.description := 'Path of ancestor IDs hierarchy';
             create_search_crc('');
             cnum := cnum + 1;
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'nk_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 20;
+            cbuff.len         := 4000;   --20;
             cbuff.description := 'Path of ancestor Natural Key Sets';
             create_search_crc('');
          end if;
@@ -12239,13 +12245,13 @@ BEGIN
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'id_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 5;
+            cbuff.len         := 1000;   --5;
             cbuff.description := 'Path of ancestor IDs hierarchy';
             create_search_where;
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'nk_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 20;
+            cbuff.len         := 4000;   --20;
             cbuff.description := 'Path of ancestor Natural Key Sets';
             create_search_where;
          end if;
@@ -12407,14 +12413,14 @@ BEGIN
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'ID_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 5;
+            cbuff.len  := 1000;   --5;
             create_ws_col;
             p('');
             cnum       := cnum + 1;
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'NK_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 20;
+            cbuff.len  := 4000;   --20;
             create_ws_col;
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
@@ -14205,13 +14211,13 @@ BEGIN
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'id_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 5;
+            cbuff.len         := 1000;   --5;
             cbuff.description := 'Path of ancestor IDs hierarchy';
             create_search_where;
             cbuff             := cbuf0;
             cbuff.name        := buff.fk_prefix || 'nk_path';
             cbuff.type        := 'VARCHAR2';
-            cbuff.len         := 20;
+            cbuff.len         := 4000;   --20;
             cbuff.description := 'Path of ancestor Natural Key Sets';
             create_search_where;
          end if;
@@ -14369,14 +14375,14 @@ BEGIN
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'ID_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 5;
+            cbuff.len  := 1000;   --5;
             create_ws_col;
             p('');
             cnum       := cnum + 1;
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'NK_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 20;
+            cbuff.len  := 4000;   --20;
             create_ws_col;
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
@@ -14720,14 +14726,14 @@ BEGIN
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'ID_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 5;
+            cbuff.len  := 1000;   --5;
             create_column_hint('Y');
             p('');
             cnum       := cnum + 1;
             cbuff      := cbuf0;
             cbuff.name := upper(buff.fk_prefix) || 'NK_PATH';
             cbuff.type := 'VARCHAR2';
-            cbuff.len  := 20;
+            cbuff.len  := 4000;   --20;
             create_column_hint('Y');
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT

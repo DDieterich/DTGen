@@ -73,6 +73,8 @@ set termout on
 set feedback 6
 set pagesize 20
 set linesize 80
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 
 spool rebuild_reload
 
