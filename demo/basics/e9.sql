@@ -70,7 +70,7 @@ column comm format 99999
 
 prompt
 begin
-   dbms_output.enable(1000000);
+   dbms_output.enable;
    dbms_output.put_line('glob.set_db_constraints(TRUE);');
                          glob.set_db_constraints(TRUE);
 end;
@@ -92,7 +92,7 @@ set feedback off
 
 prompt
 begin
-   dbms_output.enable(1000000);
+   dbms_output.enable;
    dbms_output.put_line('glob.set_db_constraints(FALSE);');
                          glob.set_db_constraints(FALSE);
 end;

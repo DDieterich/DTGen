@@ -7,7 +7,7 @@ Files and Directories:
 ----------------------
 comp_file.sql     - Used by an alternaitve path in fullgen.sql
 create_owner.sql  - Used by install.sql to create the DTGen owner and roles
-                     -) Must be run as sys or system
+                     -) Must be run as sys (to grant DBMS_LOCK)
                      -) New Schema Owner Name is the first parameter
                      -) New Schema Owner Password is the second parameter
                      -) New Schema Owner Default Tablespace is the third parameter

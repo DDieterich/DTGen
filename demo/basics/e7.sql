@@ -46,7 +46,7 @@ set feedback off
 
 prompt
 begin
-   dbms_output.enable(1000000);
+   dbms_output.enable;
    dbms_output.put_line('glob.set_fold_strings(TRUE);');
                          glob.set_fold_strings (TRUE);
 end;
