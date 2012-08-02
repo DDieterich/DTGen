@@ -1,6 +1,10 @@
 
 Welcome to DTGen
 
+NOTE: The APEX GUI "f900.sql" creates database objects with the prefix
+  "GUI_".  Use of this prefix for database objects in an application
+  may cause problems/error with APEX GUI objects in the database.
+
 
 Files and Directories:
 ----------------------
