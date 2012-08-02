@@ -5,7 +5,7 @@ set pagesize 0
 set feedback off
 set termout off
 set verify off
-set serveroutput on
+set serveroutput on format wrapped
 set define on
 
 spool comp.sql

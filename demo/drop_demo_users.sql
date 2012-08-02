@@ -17,7 +17,7 @@ REM
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set trimspool on
-set serveroutput on
+set serveroutput on format wrapped
 set define on
 
 prompt

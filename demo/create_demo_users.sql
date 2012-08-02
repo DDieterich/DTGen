@@ -18,7 +18,7 @@ WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set trimspool on
 set feedback off
-set serveroutput on
+set serveroutput on format wrapped
 set define on
 
 prompt create_roles

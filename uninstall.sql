@@ -15,7 +15,7 @@ define OWNERNAME = dtgen     -- Schema Owner to be --oved
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set trimspool on
-set serveroutput on
+set serveroutput on format wrapped
 set feedback off
 set define on
 

@@ -23,7 +23,7 @@ define PASS = dtgen   -- New Schema Owner Password
 @supp/create_owner &NAME. &PASS. users
 
 set trimspool on
-set serveroutput on
+set serveroutput on format wrapped
 set feedback off
 set verify off
 
