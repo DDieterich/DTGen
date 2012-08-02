@@ -109,7 +109,7 @@ BEGIN
    if abuff.copyright is not null
    then
       p('--');
-      p('-- ' || abuff.copyright);
+      p('-- ' || replace(abuff.copyright,CHR(10),CHR(10)||'-- '));
       p('--');
       p('');
    end if;
@@ -352,16 +352,26 @@ function get_storage_size
 is
 begin
    case datatype_in
+   when 'VARCHAR2' then
+      -- select vsize('ABCD') from dual;
+      return ceil(len_in);
    when 'NUMBER' then
       -- select vsize(1234) from dual;
       -- Numbers are stored roughly 2 digits per byte plus a sign/exponent byte
       return ceil(nvl(len_in,38)/2) + 1;
-   when 'VARCHAR2' then
-      -- select vsize('ABCD') from dual;
-      return ceil(len_in);
    when 'DATE' then
       -- select vsize(systimestamp) from dual;
       return 7;
+   when 'TIMESTAMP WITH LOCAL TIME ZONE' then
+      -- select vsize(cast (systimestamp as timestamp(0) with local time zone)) from dual; = 7
+      -- select vsize(cast (systimestamp as timestamp(1) with local time zone)) from dual; = 11
+      -- select vsize(cast (systimestamp as timestamp(9) with local time zone)) from dual; = 11
+      if len_in is not null and len_in = 0
+      then
+         return 7;
+      else
+         return 11;
+      end if;
    when 'TIMESTAMP' then
       -- select vsize(cast (systimestamp as timestamp(0))) from dual; = 7
       -- select vsize(cast (systimestamp as timestamp(1))) from dual; = 11
@@ -376,16 +386,13 @@ begin
       -- select vsize(cast (systimestamp as timestamp(0) with time zone)) from dual; = 13
       -- select vsize(cast (systimestamp as timestamp(9) with time zone)) from dual; = 13
       return 13;
-   when 'TIMESTAMP WITH LOCAL TIME ZONE' then
-      -- select vsize(cast (systimestamp as timestamp(0) with local time zone)) from dual; = 7
-      -- select vsize(cast (systimestamp as timestamp(1) with local time zone)) from dual; = 11
-      -- select vsize(cast (systimestamp as timestamp(9) with local time zone)) from dual; = 11
-      if len_in is not null and len_in = 0
-      then
-         return 7;
-      else
-         return 11;
-      end if;
+   when 'CLOB' then
+      -- Oracle® Database SecureFiles and Large Objects Developer's Guide
+      --     11g Release 2 (11.2)  Part Number E18294-01
+      --   LOB Storage Parameters: Inline and Out-of-Line LOB Storage
+      -- Row storage of a LOB is limited to 4000 bytee of data.  If a LOB is
+      --   larger, the entire LOB is stored in LOB storage.
+      return 4000;
    else
       raise_application_error (-20000, 'DATATYPE_IN is invalid for get_storage_size(): ' ||
                                         datatype_in);
@@ -443,7 +450,7 @@ begin
           where COL.table_id = tbuff.id
           order by COL.seq )
       loop
-         tmp := get_storage_size(get_dtype(buff), get_collen(buff));
+         tmp := get_storage_size(get_dtype(buff, 'DB'), get_collen(buff));
          num := num + tmp;
          if buff.upd_res_pct is not null
          then
@@ -457,7 +464,7 @@ begin
             end if;
          end if;
       end loop;
-      pctf := least(greatest(ceil(tot/num),0),80);
+      pctf := least(greatest(ceil(tot/num),1),80);
    else
       raise_application_error(-20000,'Unknown onln_hist_pdat_in in get_pctfree: ' ||
             onln_hist_pdat_in );
@@ -476,35 +483,32 @@ is
 begin
    if abuff.ts_null_override is null
    then
-      ts_str := '';
-   else
-      case upper(onln_hist_pdat_in || '_' || data_indx_in)
-      when 'HIST_INDX' then
-         ts_str := nvl(tbuff.ts_hist_indx, abuff.ts_onln_indx);
-      when 'PDAT_INDX' then
-         ts_str := nvl(tbuff.ts_hist_indx, abuff.ts_onln_indx);
-      when 'ONLN_INDX' then
-         ts_str := nvl(tbuff.ts_onln_indx, abuff.ts_onln_indx);
-      when 'HIST_DATA' then
-         ts_str := nvl(tbuff.ts_hist_data, abuff.ts_onln_data);
-      when 'PDAT_DATA' then
-         ts_str := nvl(tbuff.ts_hist_data, abuff.ts_onln_data);
-      when 'ONLN_DATA' then
-         ts_str := nvl(tbuff.ts_onln_data, abuff.ts_onln_data);
-      else
-         raise_application_error(-20000,'Unknown Parameters to get_tspace: ' ||
-               upper(onln_hist_pdat_in || '_' || data_indx_in));
-      end case;
-      if ts_str is not null
-      then
-         ts_str := ' tablespace ' || ts_str;
-      end if;
+      return '';
    end if;
-   ts_str := get_pctfree(onln_hist_pdat_in, data_indx_in) || ts_str;
-   if ts_str is not null and
-      add_using_index_in
+   case upper(onln_hist_pdat_in || '_' || data_indx_in)
+   when 'HIST_INDX' then
+      ts_str := nvl(tbuff.ts_hist_indx, abuff.ts_onln_indx);
+   when 'PDAT_INDX' then
+      ts_str := nvl(tbuff.ts_hist_indx, abuff.ts_onln_indx);
+   when 'ONLN_INDX' then
+      ts_str := nvl(tbuff.ts_onln_indx, abuff.ts_onln_indx);
+   when 'HIST_DATA' then
+      ts_str := nvl(tbuff.ts_hist_data, abuff.ts_onln_data);
+   when 'PDAT_DATA' then
+      ts_str := nvl(tbuff.ts_hist_data, abuff.ts_onln_data);
+   when 'ONLN_DATA' then
+      ts_str := nvl(tbuff.ts_onln_data, abuff.ts_onln_data);
+   else
+      raise_application_error(-20000,'Unknown Parameters to get_tspace: ' ||
+            upper(onln_hist_pdat_in || '_' || data_indx_in));
+   end case;
+   if ts_str is not null
    then
-      ts_str := ' using index' || ts_str;
+      ts_str := ' tablespace ' || ts_str;
+      if add_using_index_in
+      then
+         ts_str := ' using index' || ts_str;
+      end if;
    end if;
    return ts_str;
 end get_tspace;
@@ -2187,7 +2191,6 @@ PROCEDURE create_tab_act
    --  For a tbuff, create the tables
 IS
    tname    varchar2(30);
-   col_cnt  number;
 BEGIN
    --  For a tbuff, create the sequence
    p('create sequence '|| sown||tbuff.name||'_seq;');
@@ -2209,23 +2212,31 @@ BEGIN
       -- Note: aud_beg_dtm and aud_end_dtm must be in nanoseconds
       p('   ,aud_beg_dtm   timestamp(9) with local time zone');
    end if;
-   col_cnt := 0;
    for buff in (
       select * from tab_cols COL
        where COL.table_id = tbuff.id
        order by COL.seq )
    loop
-      col_cnt := col_cnt + 1;
-	  if col_cnt > 99
-	  then
-	     -- This is a constraint of the APEX GUI and the
-	     --    COL_TYPE varray.
-         raise_application_error(-20000, 'Error in table ' || tbuff.name ||
-            ', too many columns.  Reduce number of columns below 99.');
-	  end if;
       p('   ,'||buff.name||'   '||get_dtype_full(buff, 'DB'));
    end loop;
-   p('   )' || get_tspace('ONLN','DATA') || ';');
+   p('   )' || get_pctfree('ONLN','DATA') || get_tspace('ONLN','DATA'));
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      if get_dtype(buff, 'DB') like '%LOB'
+      then
+         -- Oracle® Database SecureFiles and Large Objects Developer's Guide
+         --   11g Release 2 (11.2)   Part Number E18294-01
+         --   LOB Storage Parameters: Defining Tablespace and Storage
+         --                           Characteristics for Persistent LOBs
+         p('   LOB (' || buff.name || ') STORE AS BASICFILE ' || tbuff.name ||
+                   '_' || substr(get_dtype(buff,'DB'),1,2) || buff.seq );
+         p('       (CACHE LOGGING' || get_tspace('ONLN','DATA') || ')');
+      end if;
+   end loop;
+   p('   ;');
    ps('');
    ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
    ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
@@ -2240,14 +2251,15 @@ BEGIN
    p('');
    --  Primary Key
    p('alter table ' || sown||tname || ' add constraint ' || tname || '_pk');
-   p('   primary key (id)' || get_tspace('ONLN','INDX',TRUE) || ';');
+   p('   primary key (id)' || get_pctfree('ONLN','INDX') ||
+                              get_tspace('ONLN','INDX',TRUE) || ';');
    p('');
    --  Create the Materialized View Log
    if tbuff.mv_refresh_hr IS NOT NULL
    then
       p('--  Oracle11g eXpress Edition does not allow materialized view logs');
       p('create materialized view log on '|| sown||tname||
-            get_tspace('ONLN','DATA') || ';');
+            get_pctfree('ONLN','DATA') || get_tspace('ONLN','DATA') || ';');
       p('');
    end if;
 END create_tab_act;
@@ -2284,7 +2296,7 @@ BEGIN
       p('   ,'||buff.name||'   '||get_dtype_full(buff, 'DB'));
    end loop;
    p('   ,last_active  varchar2(1)');
-   p('   )' || get_tspace('HIST','DATA') || ';');
+   p('   )' || get_pctfree('HIST','DATA') || get_tspace('HIST','DATA') || ';');
    ps('');
    ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
    ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
@@ -2320,7 +2332,7 @@ BEGIN
    loop
       p('   ,'||buff.name||'     '||get_dtype_full(buff, 'DB'));
    end loop;
-   p('   )' || get_tspace('PDAT','DATA') || ';');
+   p('   )' || get_pctfree('PDAT','DATA') || get_tspace('PDAT','DATA') || ';');
    ps('');
    ps('grant select on ' || sown||tname|| ' to ' || abuff.abbr || '_app;');
    ps('grant insert on ' || sown||tname|| ' to ' || abuff.abbr || '_dml;');
@@ -3939,7 +3951,8 @@ BEGIN
          p('           ,' || buff.name);
       end if;
    end loop;
-   p('           )' || get_tspace('ONLN','INDX',TRUE) || ';');
+   p('           )' || get_pctfree('ONLN','INDX') ||
+                       get_tspace('ONLN','INDX',TRUE) || ';');
 /*
  Commenting out for removal of UNIQ column from indexes table
    --  Check for UNIQ Flag Entry Errors
@@ -4001,7 +4014,8 @@ BEGIN
             p('           ,' || buff.name);
          end if;
       end loop;
-      p('           )' || get_tspace('ONLN','INDX',TRUE) || ';');
+      p('           )' || get_pctfree('ONLN','INDX') ||
+                          get_tspace('ONLN','INDX',TRUE) || ';');
    end loop;
    fkseq := 0;
    --  Foreign Key Indexes
@@ -4045,6 +4059,7 @@ BEGIN
          else
             p('create index ' || sown||tname || '_' || 'fx' || fkseq || ' on ' ||
                                  sown||tname || '(' || buff.name || ')' ||
+                                 get_pctfree('ONLN','INDX') ||
                                  get_tspace('ONLN','INDX') || ';');
          end if;
       end if;
@@ -4090,7 +4105,8 @@ BEGIN
             p('           ,' || buff.name);
          end if;
       end loop;
-      p('           )' || get_tspace('ONLN','INDX') || ';');
+      p('           )' || get_pctfree('ONLN','INDX') ||
+                          get_tspace('ONLN','INDX') || ';');
    end loop;
    p('');
    if tbuff.type = 'EFF'
@@ -4098,15 +4114,18 @@ BEGIN
       p('/***  ACTIVE Effectivity Indexes  ***/');
       p('create index ' || sown||tname || '_it1 on ' ||
                            sown||tname || '(eff_beg_dtm)' ||
+                           get_pctfree('ONLN','INDX') ||
                            get_tspace('ONLN','INDX') || ';');
    end if;
    p('');
    p('/***  ACTIVE Audit Foreign Key Indexes  ***/');
    p('-- create index ' || sown||tname || '_ia1 on ' ||
                                  tname || '(aud_beg_usr)' ||
+                                 get_pctfree('ONLN','INDX') ||
                                  get_tspace('ONLN','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia2 on ' ||
                                  tname || '(aud_beg_dtm)' ||
+                                 get_pctfree('ONLN','INDX') ||
                                  get_tspace('ONLN','INDX') || ';');
    p('');
 END create_ind_act;
@@ -4136,7 +4155,8 @@ BEGIN
    else
       p('               ,aud_beg_dtm');
    end if;
-   p('               )' || get_tspace('HIST','INDX',TRUE) || ';');
+   p('               )' || get_pctfree('HIST','INDX') ||
+                           get_tspace('HIST','INDX',TRUE) || ';');
    --  Natural Keys - No unique indexes in history
    p('create index ' || sown||tname || '_nk');
    p('   on ' || sown||tname);
@@ -4165,7 +4185,8 @@ BEGIN
    else
       p('           ,aud_beg_dtm');
    end if;
-   p('           )' || get_tspace('HIST','INDX') || ';');
+   p('           )' || get_pctfree('HIST','INDX') ||
+                       get_tspace('HIST','INDX') || ';');
    --  Foreign Key Indexes
    fkseq := 0;
    for buff in (
@@ -4215,7 +4236,8 @@ BEGIN
             else
                p('           ,aud_beg_dtm');
             end if;
-            p('           )' || get_tspace('HIST','INDX') || ';');
+            p('           )' || get_pctfree('HIST','INDX') ||
+                                get_tspace('HIST','INDX') || ';');
          end if;
       end if;
    end loop;
@@ -4262,7 +4284,8 @@ BEGIN
       else
          p('           ,aud_beg_dtm');
       end if;
-      p('           )' || get_tspace('HIST','INDX') || ';');
+      p('           )' || get_pctfree('HIST','INDX') ||
+                          get_tspace('HIST','INDX') || ';');
    end loop;
    p('');
    if tbuff.type = 'EFF'
@@ -4270,9 +4293,11 @@ BEGIN
       p('/***  HISTORY Effectivity Indexes  ***/');
       p('-- create index ' || sown||tname || '_it1 on ' ||
                               sown||tname || '(eff_beg_dtm)' ||
+                              get_pctfree('HIST','INDX') ||
                               get_tspace('HIST','INDX') || ';');
       p('-- create index ' || sown||tname || '_it2 on ' ||
                               sown||tname || '(eff_end_dtm)' ||
+                              get_pctfree('HIST','INDX') ||
                               get_tspace('HIST','INDX') || ';');
    end if;
    p('');
@@ -4286,15 +4311,19 @@ BEGIN
    end if;
    p('-- create index ' || sown||tname || '_ia1 on ' ||
                            sown||tname || '(aud_beg_usr, aud_beg_dtm)' ||
+                           get_pctfree('HIST','INDX') ||
                            get_tspace('HIST','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia2 on ' ||
                            sown||tname || '(aud_beg_dtm)' ||
+                           get_pctfree('HIST','INDX') ||
                            get_tspace('HIST','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia3 on ' ||
                            sown||tname || '(aud_end_usr, aud_beg_dtm)' ||
+                           get_pctfree('HIST','INDX') ||
                            get_tspace('HIST','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia4 on ' ||
                            sown||tname || '(aud_end_dtm)' ||
+                           get_pctfree('HIST','INDX') ||
                            get_tspace('HIST','INDX') || ';');
    p('');
 END create_ind_hoa;
@@ -4319,7 +4348,8 @@ BEGIN
    p('alter table ' || sown||tname || ' add constraint ' || tname || '_pk');
    p('   primary key (' || tbuff.name || '_id');
    p('               ,aud_beg_dtm');
-   p('               )' || get_tspace('PDAT','INDX',TRUE) || ';');
+   p('               )' || get_pctfree('PDAT','INDX') ||
+                           get_tspace('PDAT','INDX',TRUE) || ';');
    --  Natural Keys - No unique indexes in POP
    p('create index ' || sown||tname || '_nk');
    p('   on ' || sown||tname);
@@ -4343,7 +4373,8 @@ BEGIN
       end if;
    end loop;
    p('           ,aud_beg_dtm');
-   p('           )' || get_tspace('PDAT','INDX') || ';');
+   p('           )' || get_pctfree('PDAT','INDX') ||
+                       get_tspace('PDAT','INDX') || ';');
    --  Foreign Key Indexes
    fkseq := 0;
    for buff in (
@@ -4393,7 +4424,8 @@ BEGIN
             else
                p('           ,aud_beg_dtm');
             end if;
-            p('           )' || get_tspace('PDAT','INDX') || ';');
+            p('           )' || get_pctfree('PDAT','INDX') ||
+                                get_tspace('PDAT','INDX') || ';');
          end if;
       end if;
    end loop;
@@ -4440,7 +4472,8 @@ BEGIN
       else
          p('           ,aud_beg_dtm');
       end if;
-      p('           )' || get_tspace('PDAT','INDX') || ';');
+      p('           )' || get_pctfree('PDAT','INDX') ||
+                          get_tspace('PDAT','INDX') || ';');
    end loop;
    p('');
    if tbuff.type = 'EFF'
@@ -4448,9 +4481,11 @@ BEGIN
       p('/***  HISTORY Effectivity Indexes  ***/');
       p('-- create index ' || sown||tname || '_it1 on ' ||
                               sown||tname || '(eff_beg_dtm)' ||
+                              get_pctfree('PDAT','INDX') ||
                               get_tspace('PDAT','INDX') || ';');
       p('-- create index ' || sown||tname || '_it2 on ' ||
                               sown||tname || '(eff_prev_beg_dtm)' ||
+                              get_pctfree('PDAT','INDX') ||
                               get_tspace('PDAT','INDX') || ';');
    end if;
    p('');
@@ -4464,15 +4499,19 @@ BEGIN
    end if;
    p('-- create index ' || sown||tname || '_ia1 on ' ||
                            sown||tname || '(aud_beg_usr, aud_beg_dtm)' ||
+                           get_pctfree('PDAT','INDX') ||
                            get_tspace('PDAT','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia2 on ' ||
                            sown||tname || '(aud_beg_dtm)' ||
+                           get_pctfree('PDAT','INDX') ||
                            get_tspace('PDAT','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia3 on ' ||
                            sown||tname || '(aud_prev_beg_usr, aud_beg_dtm)' ||
+                           get_pctfree('PDAT','INDX') ||
                            get_tspace('PDAT','INDX') || ';');
    p('-- create index ' || sown||tname || '_ia4 on ' ||
                            sown||tname || '(aud_prev_beg_dtm)' ||
+                           get_pctfree('PDAT','INDX') ||
                            get_tspace('PDAT','INDX') || ';');
    p('');
 END create_ind_pdat;
@@ -6941,6 +6980,11 @@ BEGIN
    p('         (id_in  in  number)');
    p('      return col_type;');
    p('');
+   p('   procedure clear');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
+   p('   procedure clear');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   p('');
    p('   procedure ins');
    p('      (n_id  in out  NUMBER');
    if tbuff.type = 'EFF'
@@ -6972,6 +7016,11 @@ BEGIN
       end if;
    end loop;
    p('      );');
+   p('   procedure ins');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
+   p('   procedure ins');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   p('');
    p('   procedure upd');
    p('      (o_id_in  in  NUMBER');
    if tbuff.type = 'EFF'
@@ -7009,6 +7058,11 @@ BEGIN
       p('      ,nkdata_provided_in  in   VARCHAR2  default null');
    end if;
    p('      );');
+   p('   procedure upd');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
+   p('   procedure upd');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   p('');
    p('   procedure del');
    p('      (o_id_in  in  NUMBER');
    if tbuff.type = 'EFF'
@@ -7018,10 +7072,11 @@ BEGIN
    p('      );');
    if tbuff.type in ('EFF', 'LOG')
    then
+      p('');
       p('   procedure pop');
-      p('      (id_in  in  number');
-      p('      );');
+      p('      (id_in  in  number);');
    end if;
+   p('');
    p('end '||sp_name||';');
    p('/');
    show_errors(sp_type, sp_name);
@@ -7354,6 +7409,60 @@ BEGIN
    p('   return rcol;');
    p('end tab_to_col;');
    p('----------------------------------------');
+   p('procedure clear');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE)');
+   p('   -- Clear a %ROWTYPE buffer');
+   p('is');
+   p('begin');
+   p('   n_buff.id := null;');
+   if tbuff.type = 'EFF'
+   then
+      p('   n_buff.eff_beg_dtm := null;');
+   end if;
+   -- Setup DML package insert columns
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('   n_buff.'||buff.name||' := null;');
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('   n_buff.'|| buff.fk_prefix || 'id_path := null;');
+            p('   n_buff.'|| buff.fk_prefix || 'nk_path := null;');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('   n_buff.' || buff.fk_prefix ||
+                  get_tabname(buff.fk_table_id) ||
+                  '_nk' || i || ' := null;');
+         end loop;
+      end if;
+   end loop;
+   p('end clear;');
+   p('----------------------------------------');
+   p('procedure clear');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+   p('   -- Clear a %ROWTYPE buffer');
+   p('is');
+   p('begin');
+   p('   n_buff.id := null;');
+   if tbuff.type = 'EFF'
+   then
+      p('   n_buff.eff_beg_dtm := null;');
+   end if;
+   -- Setup DML package insert columns
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('   n_buff.'||buff.name||' := null;');
+   end loop;
+   p('end clear;');
+   p('----------------------------------------');
    p('procedure ins');
    p('      (n_id  in out  NUMBER');
    if tbuff.type = 'EFF'
@@ -7415,6 +7524,63 @@ BEGIN
                      '_nk' || i || '_in');
          end loop;
       end if;
+   end loop;
+   p('      );');
+   p('end ins;') ;
+   p('----------------------------------------');
+   p('procedure ins');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE)');
+   p('   -- Application Insert procedure with %ROWTYPE');
+   p('is');
+   p('begin');
+   p('   ' || tbuff.name || '_dml.ins');
+   p('      (n_buff.id');
+   if tbuff.type = 'EFF'
+   then
+      p('      ,n_buff.eff_beg_dtm');
+   end if;
+   -- Setup DML package insert columns
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('      ,n_buff.'||buff.name);
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('      ,n_buff.'||buff.fk_prefix||'id_path');
+            p('      ,n_buff.'||buff.fk_prefix||'nk_path');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('      ,n_buff.'||buff.fk_prefix||get_tabname(buff.fk_table_id)||
+                        '_nk'||i);
+         end loop;
+      end if;
+   end loop;
+   p('      );');
+   p('end ins;') ;
+   p('----------------------------------------');
+   p('procedure ins');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+   p('   -- Application Insert procedure with %ROWTYPE');
+   p('is');
+   p('begin');
+   p('   ' || tbuff.name || '_dml.ins');
+   p('      (n_id => n_buff.id');
+   if tbuff.type = 'EFF'
+   then
+      p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+   end if;
+   -- Setup DML package insert columns
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('      ,n_'||buff.name||' => n_buff.'||buff.name);
    end loop;
    p('      );');
    p('end ins;') ;
@@ -7679,6 +7845,67 @@ BEGIN
       p('      ,o_aud_beg_usr');
       p('      ,o_aud_beg_dtm');
    end if;
+   p('      );') ;
+   p('end upd;') ;
+   p('----------------------------------------');
+   p('procedure upd');
+   p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE)');
+   p('is');
+   p('begin');
+   p('   ' || tbuff.name || '_dml.upd');
+   p('      (n_buff.id');
+   if tbuff.type = 'EFF'
+   then
+      p('      ,n_buff.eff_beg_dtm');
+   end if;
+   nkfnd := FALSE;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('      ,n_buff.'||buff.name);
+      if buff.fk_table_id is not null
+      then
+         nkfnd := TRUE;
+         if buff.fk_table_id = tbuff.id
+         then
+            p('      ,n_buff.'|| buff.fk_prefix || 'id_path_in');
+            p('      ,n_buff.'|| buff.fk_prefix || 'nk_path_in');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('      ,n_buff.' || buff.fk_prefix ||
+                     get_tabname(buff.fk_table_id) ||
+                     '_nk' || i);
+         end loop;
+      end if;
+   end loop;
+   if nkfnd
+   then
+      p('      ,''Y''');
+   end if;
+   p('      );') ;
+   p('end upd;') ;
+   p('----------------------------------------');
+   p('procedure upd');
+   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+   p('is');
+   p('begin');
+   p('   ' || tbuff.name || '_dml.upd');
+   p('      (o_id_in => n_buff.id');
+   if tbuff.type = 'EFF'
+   then
+      p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+   end if;
+   nkfnd := FALSE;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('      ,n_'||buff.name||' => n_buff.'||buff.name);
+   end loop;
    p('      );') ;
    p('end upd;') ;
    p('----------------------------------------');
@@ -15555,9 +15782,9 @@ BEGIN
       next_table;
       p('');
       create_vp_spec;
-      create_dp_spec;
       create_act;
       create_vtrig;
+      create_dp_spec;  -- Must be after the "create view"
       create_vp_body;
       create_dp_body;
       util.add_longops (1);

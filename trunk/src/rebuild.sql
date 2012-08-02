@@ -19,7 +19,7 @@ WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set define '&'
 set trimspool on
-set serveroutput on
+set serveroutput on format wrapped
 set verify off
 
 define APP_ID = DTGEN   -- APPLICATIONS.ABBR for the Application

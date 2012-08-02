@@ -5,7 +5,7 @@
 
 set define '&'
 set trimspool on
-set serveroutput on
+set serveroutput on format wrapped
 set verify off
 
 define APP_ID = &1.   -- APPLICATIONS.ABBR for the Application
