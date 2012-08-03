@@ -22,15 +22,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    FUNCTION exception_lines
       RETURN line_t_type PIPELINED;
 
-   TYPE tab_col_va_type IS VARRAY(10)
+   TYPE tab_col_va_type IS VARRAY(10)   -- Array of 10 TAB_COLS%ROWTYPE
       OF tab_cols%rowtype;
 
-   TYPE nk_aa_rec_type IS RECORD
+   TYPE nk_aa_rec_type IS RECORD   -- A TABLES%ROWTYPE with 10 TAB_COLS%ROWTYPE
       (tbuff     tables%rowtype
       ,cbuff_va  tab_col_va_type
       );
-   TYPE nk_aa_type IS TABLE
-      OF nk_aa_rec_type
+   TYPE nk_aa_type IS TABLE       -- Associative Array of TABLES%ROWTYPE
+      OF nk_aa_rec_type           --   Each of which have 10 TAB_COLS%ROWTYPE
       INDEX BY PLS_INTEGER;
 
    nk_aa  nk_aa_type;

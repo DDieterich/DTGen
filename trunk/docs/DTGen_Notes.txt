@@ -400,3 +400,53 @@ FIN_FLOW:
   1) commit
   2) set nls_numeric_characters
   3) SQL*Plus cleanup
+
+
+============================================================
+Requirement for Table Hierarchy:
+--------------------------------
+
+Tables must be defined in a top-down hierarchy.  Only 2 circular foreign key references are allowed in DTGen:
+
+   1) Self-referencing tables
+   2) _USR Audit Table Reference
+
+Any other circular references between tables does not allow the ACTIVE view to determine the datatatypes of the columns in any of the views.  The following demonstrates the difficulty with circular foreign key references:
+
+-- v2_col is a foreign key to v2
+create table v1
+  (col     varchar2(1)
+  ,v2_col  varchar2(1));
+-- v3_col is a foreign key to v3
+create table v2
+  (col     varchar2(1)
+  ,v3_col  varchar2(1));
+-- v1_col is a foreign key to v1
+create table v3
+  (col     varchar2(1)
+  ,v1_col  varchar2(1));
+
+-- The natural keys are references in the ACTIVE views
+
+drop table v1;
+create view v1 as
+  select bt.dummy col, v2.col v2_col
+   from  dual bt inner join v2 on v2.v3_col = bt.dummy;
+describe v1
+
+drop table v2;
+create view v2 as
+  select bt.dummy col, v3.col v3_col
+   from  dual bt inner join v3 on v3.v1_col = bt.dummy;
+describe v2
+
+drop table v3;  -- This causes an error in the V2 view
+-- The V2 view error will not allow view V3 to be created
+create force view v3 as
+  select bt.dummy col, v1.col v1_col
+   from  dual bt inner join v1 on v1.v2_col = bt.dummy;
+describe v3
+
+drop view v1;
+drop view v2;
+drop view v3;

@@ -75,27 +75,30 @@ BEGIN
        from  files  F
        where F.application_id = fbuff.application_id
         and  F.name           = fbuff.name;
-      fbuff.created_dt := sysdate;
+   exception
+      when no_data_found then
+         fbuff.id := null;
+      when others then
+         raise;
+   end;
+   fbuff.created_dt := sysdate;
+   if fbuff.id = null
+   then
+      files_dml.ins
+            (n_id                  => fbuff.id
+            ,n_application_id      => fbuff.application_id
+            ,n_applications_nk1_in => null
+            ,n_name                => fbuff.name
+            ,n_type                => fbuff.type
+            ,n_created_dt          => fbuff.created_dt
+            ,n_description         => fbuff.description);
+   else
       update files_act
         set  created_dt = fbuff.created_dt
        where id = fbuff.id;
       delete from file_lines_act
        where file_id = fbuff.id;
-   exception
-      when no_data_found then
-         fbuff.id         := null;
-         fbuff.created_dt := sysdate;
-         files_dml.ins
-               (n_id                  => fbuff.id
-               ,n_application_id      => fbuff.application_id
-               ,n_applications_nk1_in => null
-               ,n_name                => fbuff.name
-               ,n_type                => fbuff.type
-               ,n_created_dt          => fbuff.created_dt
-               ,n_description         => fbuff.description);
-      when others then
-         raise;
-   end;
+   end if;
    lbuff.file_id := fbuff.id;
    lbuff.seq     := 0;
    lbuff.value   := '';
@@ -722,6 +725,7 @@ begin
                   buff.abbr || ' in ascending table sequence.');
             end if;
             -- Populate the Foreign Key Table's Natural Keys
+            -- Note: the original foreign key ID is added as well
             for i in 1 .. nk_aa(buf2.fk_table_id).cbuff_va.COUNT
             loop
                if nknum = 0
@@ -734,6 +738,7 @@ begin
                end if;
                nknum := nknum + 1;
                nk_aa(buff.id).cbuff_va(nknum) := nk_aa(buf2.fk_table_id).cbuff_va(i);
+               nk_aa(buff.id).cbuff_va(nknum).fk_table_id := buf2.fk_table_id;
             end loop;
          else
             -- Populate the Table's next Natural Key Column
@@ -751,24 +756,24 @@ begin
          end if;
       end loop;
    end loop;
-   /*
    nknum := nk_aa.FIRST;
    loop
       for i in 1 .. nk_aa(nknum).cbuff_va.COUNT
       loop
-         util.log(get_tabname(nknum) || '_nk' || i ||
+         dbms_output.put_line(get_tabname(nknum) || '_nk' || i ||
           ': ' || get_tabname(nk_aa(nknum).cbuff_va(i).table_id) ||
-                       '.' || nk_aa(nknum).cbuff_va(i).name);
+                       '.' || nk_aa(nknum).cbuff_va(i).name ||
+                       ';' || nk_aa(nknum).cbuff_va(i).fk_table_id);
       end loop;
       exit when nknum = nk_aa.LAST;
-      util.log('-');
+      dbms_output.put_line('-');
       nknum := nk_aa.NEXT(nknum);
    end loop;
-   */
 end load_nk_aa;
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
+/*
 procedure nk_tabs
       (tabid_in  in  tab_cols.fk_table_id%type
       ,spc_in    in  varchar2
@@ -810,6 +815,7 @@ BEGIN
              ,fkpre_in || tababbr||'.'||buff.name);
    end loop;
 END nk_tabs;
+*/
 ----------------------------------------
 PROCEDURE vtrig_fksets
       (sp_name  in  varchar
@@ -3885,6 +3891,35 @@ BEGIN
    p('');
 END create_sh_body;
 ----------------------------------------
+PROCEDURE drop_fk
+   --  For a tbuff, drop foreign keys on active table
+IS
+   tname    varchar2(30);
+   fkseq    number(2);
+BEGIN
+   p('/***  ACTIVE Foreign Keys  ***/');
+   tname := tbuff.name;
+   --  Foreign Keys
+   if abuff.usr_frgn_key is not null
+   then
+      p('/***  ACTIVE Audit Foreign Key ***/');
+      p('alter table ' || sown||tname || ' drop constraint ' ||
+                                tname || '_fa1;');
+   end if;
+   fkseq := 0;
+   for buff in (
+      select * from tab_cols COL
+       where COL.fk_table_id is not null
+        and  COL.table_id = tbuff.id
+       order by COL.seq desc)
+   loop
+      fkseq := fkseq + 1;
+      p('alter table ' || sown||tname || ' drop constraint ' ||
+                                tname || '_' || 'fk' || fkseq || ';');
+   end loop;
+   p('');
+END drop_fk;
+----------------------------------------
 PROCEDURE create_fk
    --  For a tbuff, create foreign keys on active table
 IS
@@ -5574,9 +5609,13 @@ END drop_act;
 ----------------------------------------
 PROCEDURE create_act
 IS
-   sp_type  user_errors.type%type;
-   sp_name  user_errors.name%type;
-   fkseq    number(2);
+   sp_type   user_errors.type%type;
+   sp_name   user_errors.name%type;
+   fkseq     number(2);
+   tababbr   tables.abbr%type;
+   join_txt  varchar2(30);
+   fk_tid    number;
+   nkseq     number;
 BEGIN
    sp_type := 'view';
    sp_name := tbuff.name||'_act';
@@ -5638,12 +5677,38 @@ BEGIN
             p('      ,' || tbuff.name || '_dml.get_'|| buff.fk_prefix || 'nk_path(' ||
                            tbuff.abbr || '.id)');
          end if;
+         fk_tid := -1;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            if nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id is null
+            then
+               p('      ,' || buff.fk_prefix ||
+                              get_tababbr(buff.fk_table_id) ||
+                       '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
+               fk_tid := -1;  -- The same Foriegn Key Table may be referenced
+                              --   twice, back-to-back, in column order
+            else
+               if fk_tid != nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id
+               then
+                  fk_tid := nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id;
+                  nkseq := 1;
+               else
+                  nkseq := nkseq + 1;
+               end if;
+               p('      ,' || buff.fk_prefix ||
+                              get_tababbr(buff.fk_table_id) ||
+                       '.' || get_tabname(nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id) ||
+                     '_nk' || nkseq);
+            end if;
+         end loop;
+/*
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
             p('      ,' || buff.fk_prefix ||
-            get_tababbr(nk_aa(buff.fk_table_id).cbuff_va(i).table_id) ||
+               get_tababbr(nk_aa(buff.fk_table_id).cbuff_va(i).table_id) ||
                     '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
          end loop;
+*/
       end if;
    end loop;
    if tbuff.type in ('EFF', 'LOG')
@@ -5659,9 +5724,22 @@ BEGIN
         and  COL.table_id    = tbuff.id
        order by COL.seq )
    loop
+      tababbr := get_tababbr(buff.fk_table_id);
+      if nvl(buff.req, buff.nk) is null
+      then
+         join_txt := '  left outer join ';
+      else
+         join_txt := '       inner join ';
+      end if;
+      p(join_txt || get_tabname(buff.fk_table_id) || '_act ' ||
+          buff.fk_prefix || tababbr || ' on ' ||
+          buff.fk_prefix || tababbr || '.id = ' ||
+          tbuff.abbr || '.' || buff.name);
+/*
       -- nk_tabs is a recursive procedure
       nk_tabs(buff.fk_table_id, '  ', nvl(buff.req,buff.nk), buff.fk_prefix,
               tbuff.abbr || '.' || buff.name);
+*/
    end loop;
    p(' ;');
    show_errors(sp_type, sp_name);
@@ -15426,10 +15504,18 @@ PROCEDURE init
       (app_abbr_in  in  varchar2)
 IS
 BEGIN
-   select *
-    into  abuff
-    from  applications  APP
-    where APP.abbr = upper(app_abbr_in);
+   BEGIN
+      select *
+       into  abuff
+       from  applications  APP
+       where APP.abbr = upper(app_abbr_in);
+   EXCEPTION
+      when NO_DATA_FOUND then
+         raise_application_error(-20000, 'There is no application for abbr "' ||
+             app_abbr_in || '"');
+      when others then
+         raise;
+   END;
    fbuff.application_id := abuff.id;
    fbuff.type           := 'SQL';
    if abuff.db_schema_exp is not null and
@@ -15450,12 +15536,6 @@ BEGIN
     where application_id = abuff.id;
    sec_lines := sec_line0;
    sec_line  := 0;
-EXCEPTION
-   when NO_DATA_FOUND then
-      raise_application_error(-20000, 'There is no application for abbr "' ||
-          app_abbr_in || '"');
-   when others then
-      raise;
 END init;
 ----------------------------------------
 PROCEDURE next_table
@@ -15559,6 +15639,7 @@ BEGIN
       next_table;
       drop_tp;
       drop_pop;
+      drop_fk;    -- Required to prevent circular FK reference error
       drop_tab;
       p('');
    END LOOP;
