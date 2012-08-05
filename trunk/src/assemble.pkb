@@ -237,6 +237,7 @@ is
    cursor column_cursor (tab_name varchar2) is
       select vc.column_name  name
             ,vc.data_type    type
+            ,vc.data_length  len
        from  user_tab_columns  vc
        where vc.table_name = tab_name || '_ACT'
         and  vc.column_name not like '%ID_PATH'
@@ -277,16 +278,18 @@ begin
       loop
          cs := cs ||', ' || lower(cbuff.name) || ' ' ||
             case cbuff.type
-               when 'DATE' then
-                  'DATE "DD-MON-YY HH24:MI:SS"'
+               when 'VARCHAR2' then
+                  'CHAR (' || cbuff.len || ')'
                when 'NUMBER' then
                   'FLOAT EXTERNAL'
-               when 'VARCHAR2' then
-                  'CHAR'
+               when 'DATE' then
+                  'DATE "DD-MON-YY HH24:MI:SS"'
                when 'TIMESTAMP WITH TIME ZONE' then
                   'TIMESTAMP(9) WITH TIME ZONE "DD-MON-YYYY HH24:MI:SS.FFFFFFFFF TZR"'
                when 'TIMESTAMP WITH LOCAL TIME ZONE' then
                   'TIMESTAMP(9) WITH LOCAL TIME ZONE "DD-MON-YYYY HH24:MI:SS.FFFFFFFFF TZR"'
+               when 'CLOB' then
+                  'CHAR (32000)'
                else 'Datatype Error'
             end;
       end loop;
