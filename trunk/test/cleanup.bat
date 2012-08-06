@@ -1,2 +1,0 @@
-
-sqlplus /nolog @cleanup
