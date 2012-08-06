@@ -7,19 +7,19 @@
 echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 exit
 
-sqlplus /nolog @test > test.log 2>&1 <<EOF
+sqlplus /nolog @test > ${logfile} 2>&1 <<EOF
    WHENEVER SQLERROR EXIT SQL.SQLCODE
    WHENEVER OSERROR EXIT -1
    set define '&'
    set trimspool on
    set serveroutput on format wrapped
    set verify off
-   connect dtgen/dtgen@${TNS_ALIAS}
+   connect ${GENNAME}/${GENPASS}@${TNS_ALIAS}
    prompt
    prompt Generating DTGEN ...
    @../../supp/fullgen DTGEN
    @../../supp/fullasm DTGEN
-   connect dtgen_test/dtgen_test@${TNS_ALIAS}
+   connect ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS}
    prompt
    prompt Running installation ...
    @install_db
@@ -27,17 +27,17 @@ sqlplus /nolog @test > test.log 2>&1 <<EOF
 EOF
 if [ ${?} != 0 ]
 then
-   tail -20 test.log
+   tail -20 ${logfile}
    exit ${?}
 fi
-if [ `fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- test.log |
+if [ `fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} |
          tee /dev/tty | wc -l` != 0 ]
 then
-   tail -20 test.log
+   tail -20 ${logfile}
    exit -1
 fi
 
-sqlldr dtgen_test/dtgen_test@${TNS_ALIAS} CONTROL=dtgen_dataload.ctl >> test.log 2>&1
+sqlldr ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS} CONTROL=dtgen_dataload.ctl >> ${logfile} 2>&1
 if [ ${?} != 0 ]
 then
    tail -20 dtgen_dataload.log
