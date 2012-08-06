@@ -12959,8 +12959,8 @@ is
 
    procedure clear
       (n_buff  in out  indexes_ACT%ROWTYPE);
-   procedure clear
-      (n_buff  in out  indexes%ROWTYPE);
+--   procedure clear
+--      (n_buff  in out  indexes%ROWTYPE);
 
    procedure ins
       (n_id  in out  NUMBER
@@ -12973,8 +12973,8 @@ is
       );
    procedure ins
       (n_buff  in out  indexes_ACT%ROWTYPE);
-   procedure ins
-      (n_buff  in out  indexes%ROWTYPE);
+--   procedure ins
+--      (n_buff  in out  indexes%ROWTYPE);
 
    procedure upd
       (o_id_in  in  NUMBER
@@ -12988,8 +12988,8 @@ is
       );
    procedure upd
       (n_buff  in out  indexes_ACT%ROWTYPE);
-   procedure upd
-      (n_buff  in out  indexes%ROWTYPE);
+--   procedure upd
+--      (n_buff  in out  indexes%ROWTYPE);
 
    procedure del
       (o_id_in  in  NUMBER
@@ -13288,6 +13288,7 @@ begin
    n_buff.seq := null;
 end clear;
 ----------------------------------------
+/*
 procedure clear
       (n_buff  in out  indexes%ROWTYPE)
    -- Clear a %ROWTYPE buffer
@@ -13298,6 +13299,7 @@ begin
    n_buff.tag := null;
    n_buff.seq := null;
 end clear;
+*/
 ----------------------------------------
 procedure ins
       (n_id  in out  NUMBER
@@ -13338,6 +13340,7 @@ begin
       );
 end ins;
 ----------------------------------------
+/*
 procedure ins
       (n_buff  in out  indexes%ROWTYPE)
    -- Application Insert procedure with %ROWTYPE
@@ -13350,6 +13353,7 @@ begin
       ,n_seq => n_buff.seq
       );
 end ins;
+*/
 ----------------------------------------
 procedure upd
       (o_id_in  in  NUMBER
@@ -13435,6 +13439,7 @@ begin
       );
 end upd;
 ----------------------------------------
+/*
 procedure upd
       (n_buff  in out  indexes%ROWTYPE)
 is
@@ -13446,6 +13451,7 @@ begin
       ,n_seq => n_buff.seq
       );
 end upd;
+*/
 ----------------------------------------
 procedure del
       (o_id_in  in  NUMBER
