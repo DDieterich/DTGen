@@ -15,12 +15,20 @@ export GENPASS=dtgen
 DIR_LIST="dtgen"
 
 function show_usage () {
-   echo "Use the form: t.sh (setup|test|cleanup|remove)"
+   echo "Use the form: t.sh (setup|test|cleanup|remove) {test directory}"
    }
 
+function run_script () {
+   echo
+   echo "${2} ..."
+   cd "${2}"
+   # Some scripts need the sys login
+   ./${1}.sh sys oracle7
+   cd ..
+   }
 # Check Parameters
 #
-if [ ${#} != 1 ]
+if [ ${#} -ne 1 -a ${#} -ne 2 ]
 then
    show_usage;
    exit -1
@@ -28,15 +36,20 @@ fi
 if [ ${1} != "setup" -a ${1} != "test" -a ${1} != "cleanup" -a ${1} != "remove" ]
 then
    show_usage;
-   exit -1
+   exit -2
 fi
-
-for TDIR in ${DIR_LIST}
-do
-   echo
-   echo "${TDIR} ..."
-   cd "${TDIR}"
-   # Some scripts need the sys login
-   ./${1}.sh sys oracle7
-   cd ..
-done
+if [ ${#} -eq 1 ]
+then
+   for TDIR in ${DIR_LIST}
+   do
+      run_script ${1} ${TDIR}
+   done
+else
+   if [ ! -d ${2} ]
+   then
+      show_usage;
+      exit -3
+   else
+      run_script ${1} ${2}
+   fi
+fi
