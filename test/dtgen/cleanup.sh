@@ -8,8 +8,10 @@
 echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 exit
 
-sqlplus dtgen/dtgen@${TNS_ALIAS} @uninstall_db > cleanup.log 2>&1
+. ./t.env
 
-fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- cleanup.log
+sqlplus ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS} @uninstall_db > ${logfile} 2>&1
+
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
 echo "$0 Complete"

@@ -8,6 +8,8 @@
 #export oracle_home=
 #export oracle_sid=
 export TNS_ALIAS="XE2"
+export GENNAME=dtgen
+export GENPASS=dtgen
 
 # Set directory list
 DIR_LIST="dtgen"
