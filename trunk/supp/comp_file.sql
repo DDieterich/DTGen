@@ -1,13 +1,13 @@
 
-set linesize 4000
-set trimspool on
-set pagesize 0
+-- SPOOL script to create PL/SQL component script files
+-- &1. is the DTGEN application abbreviation
+set define '&'
 set feedback off
-set termout off
-set verify off
+set linesize 4000
+set pagesize 0
 set serveroutput on format wrapped
-set define on
-
+set trimspool on
+set verify off
 spool comp.sql
 
 prompt
@@ -87,9 +87,7 @@ prompt set define on
 prompt
 
 spool off
-
 set verify on
-set termout on
-set feedback 6
 set pagesize 20
 set linesize 80
+set feedback on

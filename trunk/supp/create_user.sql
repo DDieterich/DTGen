@@ -1,33 +1,26 @@
 
-REM
-REM Create User Sample Script
-REM (Must be run as the "system" or "sys as sysdba" user)
-REM
-
-set define '&'
-set verify off
-set trimspool on
-set feedback on
-
-REM Initialize Variables
-REM
+--
+-- Create User Sample Script
+-- (Must be run as the "system" or "sys as sysdba" user)
+--
 define OWNERNAME = &1.   -- New Schema Owner Name
 define OWNERPASS = &2.   -- New Schema Owner Password
 define USERNAME  = &3.   -- New Application User Name
 define USERPASS  = &4.   -- New Application User Password
+--
 
-spool create_&OWNERNAME._user_&USERNAME.
+set define '&'
+set serveroutput on format wrapped
 
-create user &USERNAME. identified by &USERPASS.
+-- Initialize Variables
+--
+
+create user &3. identified by &4.
    default tablespace users;
 
-grant connect to &USERNAME.;
-grant create synonym to &USERNAME.;
-grant &OWNERNAME._app to &USERNAME.;
+grant connect to &3.;
+grant create synonym to &3.;
+grant &1._app to &3.;
 
-connect &OWNERNAME./&OWNERPASS.
-@create_usyn &OWNERNAME.
-
-spool off
-
-set verify on
+connect &3./&4.
+@install_usyn

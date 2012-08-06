@@ -1,46 +1,36 @@
 
-REM
-REM Create Schema Owner Script
-REM (Must be run as the "sys as sysdba" user)
-REM
+--
+-- Create Schema Owner Script
+-- (Must be run as the "sys as sysdba" user)
+--
+-- &1. - New Schema Owner Name
+-- &2. - New Schema Owner Password
+-- &3. - New Schema Owner Default Tablespace
+--
 
 set define '&'
-set verify off
-set trimspool on
+set serveroutput on format wrapped
 
-REM Initialize Variables
-REM
-define OWNERNAME = &1.   -- New Schema Owner Name
-define OWNERPASS = &2.   -- New Schema Owner Password
-define DEF_SPACE = &3.   -- New Schema Owner Default Tablespace
+-- Create New Schema Owner
+--
+create user &1. identified by &2.
+   default tablespace &3.;
 
-spool create_&OWNERNAME.
+alter user &1.
+   quota unlimited on &3.;
 
-REM Create New Schema Owner
-REM
-create user &OWNERNAME. identified by &OWNERPASS.
-   default tablespace &DEF_SPACE.;
+grant connect to &1.;
+grant resource to &1.;
+grant create view to &1.;
+grant create database link to &1.;
+grant create materialized view to &1.;
+grant create synonym to &1.;
+grant DEBUG CONNECT SESSION to &1.;
+grant DEBUG ANY PROCEDURE to &1.;
+grant execute on DBMS_LOCK to &1.;
 
-alter user &OWNERNAME.
-   quota unlimited on &DEF_SPACE.;
-
-grant connect to &OWNERNAME.;
-grant resource to &OWNERNAME.;
-grant create view to &OWNERNAME.;
-grant create database link to &OWNERNAME.;
-grant create materialized view to &OWNERNAME.;
-grant create synonym to &OWNERNAME.;
-grant DEBUG CONNECT SESSION to &OWNERNAME.;
-grant DEBUG ANY PROCEDURE to &OWNERNAME.;
-grant execute on DBMS_LOCK to &OWNERNAME.;
-
-REM Create New Schema Roles
-REM
-create role &OWNERNAME._dml;
-create role &OWNERNAME._app;
-grant &OWNERNAME._app to &OWNERNAME._dml;
-
-spool off
-
-set verify on
-set feedback on
+-- Create New Schema Roles
+--
+create role &1._dml;
+create role &1._app;
+grant &1._app to &1._dml;

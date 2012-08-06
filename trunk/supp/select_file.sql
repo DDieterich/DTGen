@@ -1,13 +1,14 @@
 
-set linesize 4000
-set trimspool on
-set pagesize 0
-set feedback off
-set termout off
-set verify off
-set define '&'
-
+-- SPOOL script to create DTGEN SQL script files
+-- &1. is the DTGEN application abbreviation
+-- &2. is the name of the DTGEN SQL script file
 spool &2..sql
+set define '&'
+set feedback off
+set linesize 4000
+set pagesize 0
+set trimspool on
+set verify off
 
 prompt
 prompt select '=== &1. &2. ===' as SCRIPT_NAME from dual;;
@@ -24,10 +25,8 @@ select FL.value
                where APP.abbr = '&1.' ) )
  order by seq;
 
-spool off
-
 set verify on
-set termout on
-set feedback 6
 set pagesize 20
 set linesize 80
+set feedback 6
+spool off

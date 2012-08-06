@@ -5,23 +5,55 @@ DTGen "supp" (Supplemental Install and Sample) README File
 
 Files and Directories:
 ----------------------
-comp_file.sql     - Used by an alternaitve path in fullgen.sql
+comp_file.sql     - SPOOL script used by an alternaitve path in fullgen.sql
 create_owner.sql  - Used by install.sql to create the DTGen owner and roles
                      -) Must be run as sys (to grant DBMS_LOCK)
                      -) New Schema Owner Name is the first parameter
                      -) New Schema Owner Password is the second parameter
                      -) New Schema Owner Default Tablespace is the third parameter
                      -) New Schema Owner Temporary Tablespace is the fourth parameter
-create_user.sql   - Sample script to create an application user
+create_user.sql   - Sample script used to create an application user
                      -) Must be run by sys or system
                      -) Creates the user and synonyms and grants permissions
-fullgen.sql       - Sample script to generate scripts for an application
+fullasm.sql       - SPOOL script used to assemble scripts for an application
                      -) The ABBR of the application is the first parameter
-select_file.sql   - Used by an alternative path in fullgen.sql
+                     NOTE: must be run after fullgen.sql
+fullgen.sql       - Script used to generate scripts for an application
+                     -) The ABBR of the application is the first parameter
+select_file.sql   - SPOOL script used by an alternative path in fullgen.sql
 
 
-Scripts created by fullgen.sql:
--------------------------------
+SQL Script Settings:
+--------------------
+SPOOL scripts
+   Require the following settings before running
+   -) WHENEVER OSERROR
+   -) WHENEVER SQLERROR
+   -) set termout
+   -) connect
+   Set and reset the following attributes:
+   -) spool             - Reset to "off"
+   -) set define        - Reset to "&"
+   -) set feedback      - Reset to "6"
+   -) set linesize      - Reset to "80"
+   -) set pagesize      - Reset to "20"
+   -) set serveroutput  - Reset to "on format wrapped"
+   -) set trimspool     - Reset to "on"
+   -) set verify        - Reset to "on"
+NON-SPOOL scripts
+   Require the following settings before running
+   -) spool
+   -) WHENEVER OSERROR
+   -) WHENEVER SQLERROR
+   -) set termout
+   -) set trimspool
+   -) connect
+   Set and reset the following attributes:
+   -) set define        - Reset to "&"
+   -) set serveroutput  - Reset to "on format wrapped"
+
+Script files created by fullasm.sql:
+------------------------------------
 dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 install_db.sql     - Creates the schema objects needed for the database (data-tier)
                       -) GLOBal objects (Global Types, UTIL_LOG, and UTIL & GLOB Package)
@@ -43,8 +75,8 @@ uninstall_mt.sql   - Drops the schema objects needed for the mid-tier
 uninstall_db.sql   - Drops the schema objects needed for the database (data-tier)
 
 
-Scripts created by an alternaitve path in fullgen.sql:
-------------------------------------------------------
+Script files created by an alternaitve path in fullasm.sql:
+-----------------------------------------------------------
 comp.sql             - Creates application specific COMPiled packages, functions, and procedures
 create_dist.sql      - Creates the DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
 create_dist_sec.sql  - Creates security for the DIST objects
