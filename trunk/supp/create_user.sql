@@ -23,4 +23,5 @@ grant create synonym to &3.;
 grant &1._app to &3.;
 
 connect &3./&4.
+set serveroutput on format wrapped
 @install_usyn

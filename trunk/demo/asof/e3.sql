@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
 
 column empno        format 9999

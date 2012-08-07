@@ -31,7 +31,6 @@ set define on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on format wrapped
-
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 

@@ -31,6 +31,8 @@ set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
+WHENEVER OSERROR EXIT ROLLBACK
 set serveroutput on format wrapped
 
 column id          format 999

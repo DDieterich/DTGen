@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
 
 column value        format A5
@@ -48,6 +48,8 @@ select seq, name, type from tables_act
 prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
 
 column systimestamp  format A18   truncate

@@ -11,11 +11,11 @@ echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set define '&'
    set trimspool on
-   set serveroutput on format wrapped
    set verify off
    connect ${GENNAME}/${GENPASS}@${TNS_ALIAS}
    WHENEVER SQLERROR EXIT SQL.SQLCODE
    WHENEVER OSERROR EXIT -1
+   set serveroutput on format wrapped
    prompt
    prompt Generating DTGEN ...
    @../../supp/fullgen DTGEN
@@ -23,6 +23,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS}
    WHENEVER SQLERROR EXIT SQL.SQLCODE
    WHENEVER OSERROR EXIT -1
+   set serveroutput on format wrapped
    prompt
    prompt Running installation ...
    @install_db

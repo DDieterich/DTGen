@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 
 prompt Remove old DEMO2 Schema from DTGEN
@@ -96,6 +96,8 @@ set linesize 80
 set termout on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 @install_db
 

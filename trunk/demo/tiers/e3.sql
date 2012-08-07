@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 set echo on
 select name, db_schema from applications where abbr = 'DEMO3';
@@ -37,6 +37,8 @@ set echo off
 
 prompt Login to &USR_NAME.
 connect &USR_NAME./&USR_PASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 @install_usr
 
