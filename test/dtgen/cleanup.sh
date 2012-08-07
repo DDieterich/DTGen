@@ -6,11 +6,12 @@
 #
 
 echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
-exit
 
 . ./t.env
 
-sqlplus ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS} @uninstall_db > ${logfile} 2>&1
+sqlplus ${OWNERNAME}/${OWNERPASS}@${TNS_ALIAS} > ${logfile} 2>&1 <<EOF
+   @uninstall_db
+EOF
 
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 

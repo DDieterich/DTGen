@@ -32,6 +32,8 @@ define PASS = dtgen   -- New Schema Owner Password
 -- Create DTGen Schema Objects
 --
 connect &NAME./&PASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 @src/install_db
 @src/comp
 
