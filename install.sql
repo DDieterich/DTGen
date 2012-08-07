@@ -34,6 +34,7 @@ define PASS = dtgen   -- New Schema Owner Password
 connect &NAME./&PASS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
+set serveroutput on format wrapped
 @src/install_db
 @src/comp
 

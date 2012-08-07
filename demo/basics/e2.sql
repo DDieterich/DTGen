@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
-WHENEVER OSERROR EXIT ROLLBACK
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE ROLLBACK
+WHENEVER OSERROR EXIT ROLLBACK
 set serveroutput on format wrapped
 
 select sequence_name from user_sequences;

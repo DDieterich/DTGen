@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 
 column column_name format A19
@@ -61,7 +61,6 @@ prompt
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.
 set serveroutput on format wrapped
-
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 

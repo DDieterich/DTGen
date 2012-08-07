@@ -22,14 +22,14 @@ REM
 
 REM Configure SQL*Plus
 REM
-WHENEVER SQLERROR CONTINUE
-WHENEVER OSERROR CONTINUE
 set feedback off
 set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
 
 set echo on
@@ -40,6 +40,8 @@ set echo off
 prompt
 prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.
+WHENEVER SQLERROR CONTINUE
+WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
 
 set linesize 120
