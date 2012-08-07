@@ -82,7 +82,7 @@ BEGIN
          raise;
    end;
    fbuff.created_dt := sysdate;
-   if fbuff.id = null
+   if fbuff.id is null
    then
       files_dml.ins
             (n_id                  => fbuff.id

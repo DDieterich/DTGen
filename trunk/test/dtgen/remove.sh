@@ -6,7 +6,6 @@
 #
 
 echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
-exit
 
 . ./t.env
 
