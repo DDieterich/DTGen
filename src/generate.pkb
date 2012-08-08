@@ -763,7 +763,8 @@ begin
          dbms_output.put_line(get_tabname(nknum) || '_nk' || i ||
           ': ' || get_tabname(nk_aa(nknum).cbuff_va(i).table_id) ||
                        '.' || nk_aa(nknum).cbuff_va(i).name ||
-                       ';' || nk_aa(nknum).cbuff_va(i).fk_table_id);
+                       '(' || get_dtype(nk_aa(nknum).cbuff_va(i)) ||
+                      ');' || nk_aa(nknum).cbuff_va(i).fk_table_id);
       end loop;
       exit when nknum = nk_aa.LAST;
       dbms_output.put_line('-');
