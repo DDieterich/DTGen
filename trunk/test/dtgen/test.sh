@@ -27,14 +27,16 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    prompt
    prompt Running installation ...
    @install_db
-   @comp
+   @../../src/comp
 EOF
 if [ ${?} != 0 ]
 then
+   echo "SQL*Plus did not return a 0: ${?}"
    tail -20 ${logfile}
    exit ${?}
 fi
 if [ `fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} |
+         fgrep -v "The letter case of a string has failed to meet the requirement listed." |
          tee /dev/tty | wc -l` != 0 ]
 then
    tail -20 ${logfile}

@@ -4011,7 +4011,7 @@ BEGIN
    for buf2 in (
       select IND.tag
        from  tab_cols  COL
-            ,indexes   IND
+            ,tab_inds  IND
        where COL.table_id = tbuff.id
         and  COL.id       = IND.tab_col_id
        -- and  IND.uniq     is not null
@@ -4025,14 +4025,14 @@ BEGIN
                ,IND.seq
                ,(select min(IND2.seq)
                   from  tab_cols COL2
-                       ,indexes  IND2
+                       ,tab_inds IND2
                   where COL2.table_id = tbuff.id
                    and  COL2.id       = IND2.tab_col_id
                   -- This is not needed because buf2.tag is unique 
                   -- and  IND2.uniq     is not null
                    and  IND2.tag      = buf2.tag  ) min_seq
           from  tab_cols COL
-               ,indexes  IND
+               ,tab_inds IND
           where COL.table_id = tbuff.id
            and  COL.id       = IND.tab_col_id
           -- This is not needed because buf2.tag is unique 
@@ -4064,11 +4064,11 @@ BEGIN
       -- Don't create a duplicate index on this foreign key
       select count(IND.id)
        into  dup_ind
-       from  indexes IND
+       from  tab_inds IND
        where IND.tab_col_id = buff.id
         and  seq = (
              select min(IND2.seq)
-              from  indexes IND2
+              from  tab_inds IND2
               where IND2.tab_col_id in (
                     select COL.id
                      from  tab_cols COL
@@ -4103,7 +4103,7 @@ BEGIN
    for buf2 in (
       select IND.tag
        from  tab_cols  COL
-            ,indexes   IND
+            ,tab_inds  IND
        where COL.table_id = tbuff.id
         and  COL.id       = IND.tab_col_id
         and  lower(substr(IND.tag,1,1)) != 'u'
@@ -4117,15 +4117,15 @@ BEGIN
          select COL.name
                ,IND.seq
                ,(select min(IND2.seq)
-                  from  tab_cols COL2
-                       ,indexes  IND2
+                  from  tab_cols  COL2
+                       ,tab_inds  IND2
                   where COL2.table_id = tbuff.id
                    and  COL2.id       = IND2.tab_col_id
                   -- This is not needed because buf2.tag is not unique
                   -- and  IND2.uniq     is null
                    and  IND2.tag      = buf2.tag )  min_seq
-          from  tab_cols COL
-               ,indexes  IND
+          from  tab_cols  COL
+               ,tab_inds  IND
           where COL.table_id = tbuff.id
            and  COL.id       = IND.tab_col_id
           -- This is not needed because buf2.tag is not unique
@@ -4234,11 +4234,11 @@ BEGIN
       -- Don't create a duplicate index on this foreign key
       select count(IND.id)
        into  dup_ind
-       from  indexes IND
+       from  tab_inds  IND
        where IND.tab_col_id = buff.id
         and  seq = (
              select min(IND2.seq)
-              from  indexes IND2
+              from  tab_inds  IND2
               where IND2.tab_col_id in (
                     select COL.id
                      from  tab_cols COL
@@ -4280,7 +4280,7 @@ BEGIN
    for buf2 in (
       select IND.tag
        from  tab_cols  COL
-            ,indexes   IND
+            ,tab_inds  IND
        where COL.table_id = tbuff.id
         and  COL.id       = IND.tab_col_id
         and  lower(substr(IND.tag,1,1)) != 'u'
@@ -4294,13 +4294,13 @@ BEGIN
          select COL.name
                ,IND.seq
                ,(select min(IND2.seq)
-                  from  tab_cols COL2
-                       ,indexes  IND2
+                  from  tab_cols  COL2
+                       ,tab_inds  IND2
                   where COL2.table_id = tbuff.id
                    and  COL2.id       = IND2.tab_col_id
                    and  IND2.tag      = buf2.tag  )  min_seq
-          from  tab_cols COL
-               ,indexes  IND
+          from  tab_cols  COL
+               ,tab_inds  IND
           where COL.table_id = tbuff.id
            and  COL.id       = IND.tab_col_id
            and  IND.tag      = buf2.tag
@@ -4422,11 +4422,11 @@ BEGIN
       -- Don't create a duplicate index on this foreign key
       select count(IND.id)
        into  dup_ind
-       from  indexes IND
+       from  tab_inds  IND
        where IND.tab_col_id = buff.id
         and  seq = (
              select min(IND2.seq)
-              from  indexes IND2
+              from  tab_inds  IND2
               where IND2.tab_col_id in (
                     select COL.id
                      from  tab_cols COL
@@ -4468,7 +4468,7 @@ BEGIN
    for buf2 in (
       select IND.tag
        from  tab_cols  COL
-            ,indexes   IND
+            ,tab_inds  IND
        where COL.table_id = tbuff.id
         and  COL.id       = IND.tab_col_id
         and  lower(substr(IND.tag,1,1)) != 'u'
@@ -4482,13 +4482,13 @@ BEGIN
          select COL.name
                ,IND.seq
                ,(select min(IND2.seq)
-                  from  tab_cols COL2
-                       ,indexes  IND2
+                  from  tab_cols  COL2
+                       ,tab_inds  IND2
                   where COL2.table_id = tbuff.id
                    and  COL2.id       = IND2.tab_col_id
                    and  IND2.tag      = buf2.tag  )  min_seq
-          from  tab_cols COL
-               ,indexes  IND
+          from  tab_cols  COL
+               ,tab_inds  IND
           where COL.table_id = tbuff.id
            and  COL.id       = IND.tab_col_id
            and  IND.tag      = buf2.tag
