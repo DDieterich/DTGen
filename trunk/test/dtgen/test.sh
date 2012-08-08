@@ -63,5 +63,14 @@ then
    tail -20 dtgen_dataload.log
    exit -1
 fi
+if [ `grep -e "^Total logical records skipped:" \
+           -e "^Total logical records rejected:" \
+           -e "^Total logical records discarded:" \
+            dtgen_dataload.log 2>&1 |
+         grep -v '        0$' 2>&1 | tee /dev/tty | wc -l` != 0 ]
+then
+   tail -20 dtgen_dataload.log
+   exit -1
+fi
 
 echo "$0 Complete"

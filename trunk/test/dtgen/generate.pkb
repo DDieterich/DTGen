@@ -731,24 +731,28 @@ begin
                if nknum = 0
                then
                   -- Initialize the array
-                  nk_aa(buff.id).cbuff_va := tab_col_va_type(null);
+                  nk_aa(buff.id).cbuff_va       := tab_col_va_type(null);
+                  nk_aa(buff.id).lvl1_fk_tid_va := fk_tid_va_type(null);
                else
                   -- Extend the array
                   nk_aa(buff.id).cbuff_va.extend;
+                  nk_aa(buff.id).lvl1_fk_tid_va.extend;
                end if;
                nknum := nknum + 1;
                nk_aa(buff.id).cbuff_va(nknum) := nk_aa(buf2.fk_table_id).cbuff_va(i);
-               nk_aa(buff.id).cbuff_va(nknum).fk_table_id := buf2.fk_table_id;
+               nk_aa(buff.id).lvl1_fk_tid_va(nknum) := buf2.fk_table_id;
             end loop;
          else
             -- Populate the Table's next Natural Key Column
             if nknum = 0
             then
                -- Initialize the array
-               nk_aa(buff.id).cbuff_va := tab_col_va_type(null);
+               nk_aa(buff.id).cbuff_va       := tab_col_va_type(null);
+               nk_aa(buff.id).lvl1_fk_tid_va := fk_tid_va_type(null);
             else
                -- Extend the array
                nk_aa(buff.id).cbuff_va.extend;
+               nk_aa(buff.id).lvl1_fk_tid_va.extend;
             end if;
             nknum := nknum + 1;
             select * into nk_aa(buff.id).cbuff_va(nknum)
@@ -763,7 +767,8 @@ begin
          dbms_output.put_line(get_tabname(nknum) || '_nk' || i ||
           ': ' || get_tabname(nk_aa(nknum).cbuff_va(i).table_id) ||
                        '.' || nk_aa(nknum).cbuff_va(i).name ||
-                       ';' || nk_aa(nknum).cbuff_va(i).fk_table_id);
+                       '(' || get_dtype(nk_aa(nknum).cbuff_va(i)) ||
+                      ');' || nk_aa(nknum).lvl1_fk_tid_va(i));
       end loop;
       exit when nknum = nk_aa.LAST;
       dbms_output.put_line('-');
@@ -5680,7 +5685,7 @@ BEGIN
          fk_tid := -1;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
-            if nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id is null
+            if nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i) is null
             then
                p('      ,' || buff.fk_prefix ||
                               get_tababbr(buff.fk_table_id) ||
@@ -5688,16 +5693,16 @@ BEGIN
                fk_tid := -1;  -- The same Foriegn Key Table may be referenced
                               --   twice, back-to-back, in column order
             else
-               if fk_tid != nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id
+               if fk_tid != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
                then
-                  fk_tid := nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id;
+                  fk_tid := nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i);
                   nkseq := 1;
                else
                   nkseq := nkseq + 1;
                end if;
                p('      ,' || buff.fk_prefix ||
                               get_tababbr(buff.fk_table_id) ||
-                       '.' || get_tabname(nk_aa(buff.fk_table_id).cbuff_va(i).fk_table_id) ||
+                       '.' || get_tabname(nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)) ||
                      '_nk' || nkseq);
             end if;
          end loop;
