@@ -43,7 +43,7 @@ Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen"
 
 The above listed Program/Module Sources can be compiled and tested against the New DTGen installation in the test environment.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the New DTGen should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
 
-With this step complete, commit changes to SubVersion.
+With this step complete, commit changes to Sub-Version.
 
 
 == Update Demo Directory ==
