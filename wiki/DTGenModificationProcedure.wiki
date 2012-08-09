@@ -77,8 +77,6 @@ Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen"
 
 The above listed Program/Module Sources can be compiled and tested against the New DTGen installation in the test environment.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the New DTGen should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
 
-With this step complete, commit changes to Sub-Version.
-
 
 == Update APEX GUI ==
 
@@ -91,7 +89,7 @@ Switch the compile schema for APEX application 900 to the test environment.  Ins
 
 Open the DTGen APEX application (f900) in the APEX editor and review the page numbers below 1000 for changes.
 
-Export the application to trunk/test/dtgen and commit changes to Sub-Version.
+Export the "f900" application to "trunk/test/dtgen".
 
 
 == Update Demo Directory ==
