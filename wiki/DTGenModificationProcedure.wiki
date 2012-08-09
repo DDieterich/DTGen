@@ -37,6 +37,7 @@ Review and modify as necessary the following scripts:
   * trunk/test/dtgen/test.sh
   * trunk/test/dtgen/cleanup.sh
   * trunk/test/dtgen/remove.sh
+  * trunk/test/dtgen/dtgen_dataload2.ctl
   * trunk/test/????
 
 Run this command in the "trunk/test" directory to setup the test environment.
@@ -55,6 +56,8 @@ Run the DTGen GUI and change the "Schema Name" for the DTGen application to the 
 This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.  The command for performing this first test is run from the "trunk/test" directory:
 
   * ./t.sh test dtgen
+
+Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite this file.  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.
 
 
 == Copy Program/Module Source to New DTGen ==
