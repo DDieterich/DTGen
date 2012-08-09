@@ -141,4 +141,18 @@ Review and update as needed the documents in "trunk/docs"
 == Perform a Test Installation ==
 
 
-== 
+== Cleanup ==
+
+Copy the following files from "trunk/test/dtgen" to "trunk/supp":
+  * comp.sql
+  * dtgen_util.pkb
+  * dtgen_util.pks
+  * generate.pkb
+  * generate.pks
+  * gui_app_tree_vw.sql
+  * gui_util.pkb
+  * gui_util.pks
+
+Copy f900.sql from "trunk/test/dtgen" to "trunk/supp"
+
+Remove "trunk/test/dtgen/dtgen_dataload2.*", if it exists
