@@ -37,7 +37,6 @@ Review and modify as necessary the following scripts:
   * trunk/test/dtgen/test.sh
   * trunk/test/dtgen/cleanup.sh
   * trunk/test/dtgen/remove.sh
-  * trunk/test/dtgen/dtgen_dataload2.ctl
   * trunk/test/????
 
 Run this command in the "trunk/test" directory to setup the test environment.
@@ -49,7 +48,8 @@ Run this command in the "trunk/test" directory to setup the test environment.
 
 Run APEX and add the test environment schema (dtgen_test) to the workspace that contains the DTGen APEX application (ID 900).
 
-Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to ?????????
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  (With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to the "@install_gui" as the first parameter.)
+
 
 == Test Generate the New DTGen ==
 
