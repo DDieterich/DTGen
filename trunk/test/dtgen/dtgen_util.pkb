@@ -1,7 +1,7 @@
-create or replace package body assemble as
+create or replace package body dtgen_util as
 
 /************************************************************
-DTGEN "assemble" Package Body
+DTGEN "utility" Package Body
 
 Copyright (c) 2011, Duane.Dieterich@gmail.com
 All rights reserved.
@@ -393,6 +393,36 @@ begin
    return rclob;
 end data_script;
 ----------------------------------------
+function delete_app
+      (app_abbr_in  in  varchar2)
+   return number
+is
+   retnum  number;
+begin
+   delete from exceptions_act where applications_nk1 = app_abbr_in;
+   retnum := SQL%ROWCOUNT;
+   delete from programs_act where applications_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from check_cons_act where tables_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from tab_inds_act where tab_cols_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from tab_cols_act where tables_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from tables_act where applications_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from domain_values_act where domains_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from domains_act where applications_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from file_lines_act where files_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from files_act where applications_nk1 = app_abbr_in;
+   retnum := retnum + SQL%ROWCOUNT;
+   delete from applications_act where abbr = app_abbr_in;
+   return retnum;
+end delete_app;
+----------------------------------------
 begin
    aa_vc2('DB') := vc2_list_type
       ('glob'
@@ -410,4 +440,4 @@ begin
       ('flow');
    aa_vc2('USR') := vc2_list_type
       ('usyn');
-END assemble;
+END dtgen_util;

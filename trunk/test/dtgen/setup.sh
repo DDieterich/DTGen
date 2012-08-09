@@ -11,7 +11,7 @@ echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 
 # Must be run as the "sys as sysdba" user
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
-   connect ${1}/${2}@${TNS_ALIAS} as sysdba
+   connect ${SYSNAME}/${SYSPASS}@${TNS_ALIAS} as sysdba
    @../../supp/create_owner ${OWNERNAME} ${OWNERPASS} users
 EOF
 
