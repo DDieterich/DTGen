@@ -16,7 +16,7 @@ The following procedure is a way to accomplish that effort.
 
 Ensure that the changes to Old DTGen are as complete as possible.  Do not make any changes to Old DTGen that will cause it not to work.  The Old DTGen will be copied to a new location.  Any changes to Old DTGen, after the copy is made, will need to be duplicated in the New DTGen
 
-With this step complete, commit changes to "SubVersion".
+With this step complete, commit changes to Sub-Version.
 
 
 == Test Generate the New DTGen ==
