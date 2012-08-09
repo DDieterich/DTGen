@@ -10,7 +10,7 @@ echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 . ./t.env
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
-   connect ${1}/${2}@${TNS_ALIAS} as sysdba
+   connect ${SYSNAME}/${SYSPASS}@${TNS_ALIAS} as sysdba
    drop role ${OWNERNAME}_app;
    drop role ${OWNERNAME}_dml;
    drop user ${OWNERNAME} cascade;

@@ -1,7 +1,7 @@
-create or replace package assemble as
+create package dtgen_util as
 
 /************************************************************
-DTGEN "assmble" Package Specification
+DTGEN "utility" Package Specification
 
 Copyright (c) 2011, Duane.Dieterich@gmail.com
 All rights reserved.
@@ -49,4 +49,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
          (app_abbr_in  in  varchar2)
       return clob;
 
-end assemble;
+   function delete_app
+      (app_abbr_in  in  varchar2)
+   return number;
+
+end dtgen_util;

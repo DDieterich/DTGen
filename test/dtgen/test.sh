@@ -27,7 +27,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    prompt
    prompt Running installation ...
    @install_db
-   @../../src/comp
+   @comp
 EOF
 if [ ${?} != 0 ]
 then
