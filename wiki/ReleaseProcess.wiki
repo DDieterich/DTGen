@@ -23,7 +23,7 @@ http://subversion.apache.org/docs/release-notes/1.6.html
 
 = DTGen Development/Modification =
 
-  * DTGenModificationProcedure
+Since DTGen generates DTGen, the development/modification of DTGen requires a more complicated procedure.  An example procedure can be found at DTGenModificationProcedure DTGenModificationProcedure.
 
 = Integration Testing =
 
