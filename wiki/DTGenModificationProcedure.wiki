@@ -57,7 +57,7 @@ This is the first test of the New DTGen.  It is likely that the "compl.sql" scri
 
   * ./t.sh test dtgen
 
-Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.
+Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "trunk/dtgen/test.sh" will use "dtgen_dataload2.ctl".
 
 
 == Copy Program/Module Source to New DTGen ==
