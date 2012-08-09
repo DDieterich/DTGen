@@ -48,7 +48,7 @@ Run this command in the "trunk/test" directory to setup the test environment.
 
 Run APEX and add the test environment schema (dtgen_test) to the workspace that contains the DTGen APEX application (ID 900).
 
-Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  (With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to the "@install_gui" as the first parameter.)
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  _(With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to the "@install_gui" as the first parameter.)_
 
 
 == Test Generate the New DTGen ==
@@ -57,9 +57,9 @@ This is the first test of the New DTGen.  It is likely that the "compl.sql" scri
 
   * ./t.sh test dtgen
 
-Note: If this command needs to be run repeatedly, run "./t.sh cleanup dtgen" from the "trunk/test" directory to remove the DTGen database test objects before re-running "./t.sh test dtgen"
+_Note: If this command needs to be run repeatedly, run "./t.sh cleanup dtgen" from the "trunk/test" directory to remove the DTGen database test objects before re-running "./t.sh test dtgen"_
 
-Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "trunk/dtgen/test.sh" will use "dtgen_dataload2.ctl".
+_Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "trunk/dtgen/test.sh" will use "dtgen_dataload2.ctl"._
 
 
 == Copy Program/Module Source to New DTGen ==
