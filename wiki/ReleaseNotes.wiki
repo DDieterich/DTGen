@@ -1,15 +1,6 @@
-#summary DTGen Release Notes
+#summary DTGen Release Notes.
 #labels Phase-Deploy
 
-= Release 1.0 =
+ * See PreRelease12ReleaseNotes for Pre-Release 0.12 Release Notes
 
-== New Features ==
-
-No previous releases
-
-== Bugs ==
-
- * Issue #2
- * Issue #11
- * Issue #12
- * Issue #13
+ * See PreRelease11ReleaseNotes for Pre-Release 0.11 Release Notes
