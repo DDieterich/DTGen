@@ -86,6 +86,10 @@ Switch the compile schema for APEX application 900 to the test environment.  Ins
   * SQL> @install_gui
   * SQL> exit
 
+Open the DTGen APEX application (f900) in the APEX editor and review the page numbers below 1000 for changes.
+
+Export the application to trunk/test/dtgen and commit changes to Sub-Version.
+
 
 == Update Demo Directory ==
 
