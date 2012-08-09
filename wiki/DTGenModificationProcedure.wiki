@@ -12,11 +12,17 @@ The following procedure is a way to accomplish that effort.
 
 = Details =
 
+== Test Generate the New DTGen ==
+
+This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.
+
+
 == Complete Changes to Old DTGen ==
 
 Ensure that the changes to Old DTGen are as complete as possible.  Do not make any changes to Old DTGen that will cause it not to work.  The Old DTGen will be copied to a new location.  Any changes to Old DTGen, after the copy is made, will need to be duplicated in the New DTGen
 
-== Copy Program/Module Source ==
+
+== Copy Program/Module Source to New DTGen ==
 
 Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen":
 
@@ -28,3 +34,7 @@ Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen"
   * gui_app_tree_vw.sql
   * gui_util.pkb
   * gui_util.pks
+
+== Complete Changes to New DTGen ==
+
+The 
