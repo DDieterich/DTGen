@@ -29,7 +29,17 @@ If a previous test environment remains, run this command in the "trunk/test" dir
 
   * ./t.sh remove
 
-Run this command in the "trunk/test" directory.
+Review and modify as necessary the following scripts:
+
+  * trunk/test/t.sh
+  * trunk/test/dtgen/t.env
+  * trunk/test/dtgen/setup.sh
+  * trunk/test/dtgen/test.sh
+  * trunk/test/dtgen/cleanup.sh
+  * trunk/test/dtgen/remove.sh
+  * trunk/test/????
+
+Run this command in the "trunk/test" directory to setup the test environment.
 
   * ./t.sh setup
 
