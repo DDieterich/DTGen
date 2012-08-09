@@ -25,10 +25,9 @@ With this step complete, commit changes to Sub-Version.
 
 == Setup the Test Environment ==
 
-If a
-run this command in the "trunk/test" directory.
+If a previous test environment remains, run this command in the "trunk/test" directory to remove it.
 
-  * ./t.sh setup
+  * ./t.sh remove
 
 Run this command in the "trunk/test" directory.
 
