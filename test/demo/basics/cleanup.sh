@@ -9,8 +9,8 @@ echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
 
 . ./t.env
 
-sqlplus ${TESTNAME}/${TESTPASS}@${TNS_ALIAS} > ${logfile} 2>&1 <<EOF
-   @uninstall_db
+sqlplus ${DEMONAME}/${DEMOPASS}@${TNS_ALIAS} > ${logfile} 2>&1 <<EOF
+   @???
 EOF
 
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}

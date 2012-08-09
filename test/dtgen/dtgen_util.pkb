@@ -344,9 +344,9 @@ begin
          when 'CHECK_CONS'    then ss := ss || 'tables_nk1 = ''';
          when 'TAB_COLS'      then ss := ss || 'tables_nk1 = ''';
          -- Level 4
-         when 'INDEXES'       then ss := ss || 'tab_cols_nk1 = ''';
+         when 'TAB_INDS'       then ss := ss || 'tab_cols_nk1 = ''';
          else
-            raise_application_error (-20000, 'assemble.data_script(): '||
+            raise_application_error (-20000, 'dtgen_util.data_script(): '||
                'Unknown Table Name "' || tbuff.name || '"');
       end case;
       ss := ss || app_abbr_in || ''' order by ';
@@ -366,9 +366,9 @@ begin
          when 'CHECK_CONS'    then ss := ss || 'tables_nk1, tables_nk2, seq';
          when 'TAB_COLS'      then ss := ss || 'tables_nk1, tables_nk2, seq';
          -- Level 4
-         when 'INDEXES'       then ss := ss || 'tab_cols_nk1, tab_cols_nk2, tag, seq';
+         when 'TAB_INDS'       then ss := ss || 'tab_cols_nk1, tab_cols_nk2, tag, seq';
          else
-            raise_application_error (-20000, 'assemble.data_script(): '||
+            raise_application_error (-20000, 'dtgen_util.data_script(): '||
                'Unknown Table Name "' || tbuff.name || '"');
       end case;
       -- p(ss);

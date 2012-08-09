@@ -1,4 +1,4 @@
-create package dtgen_util as
+create or replace package dtgen_util as
 
 /************************************************************
 DTGEN "utility" Package Specification
