@@ -7,7 +7,11 @@ Since DTGen generates DTGen, there is a need for 2 DTGen(s) during development:
   * Old DTGen to generate the new DTGen
   * New DTGen to test prior to overwriting the old DTGen
 
-The following procedure is a way to accomplish that effort.
+The following procedure is a way to accomplish that effort.  The following environment is assumed for the procedure:
+
+  * The "trunk" directory is up-to-date from Sub-Version
+  * DTGen is installed in schema "dtgen" in an Oracle database
+  * The DTGen GUI (f900) is installed in the same Oracle database.
 
 
 = Details =
@@ -19,12 +23,23 @@ Ensure that the changes to Old DTGen are as complete as possible.  Do not make a
 With this step complete, commit changes to Sub-Version.
 
 
+== Setup the Test Environment ==
+
+If a
+run this command in the "trunk/test" directory.
+
+  * ./t.sh setup
+
+Run this command in the "trunk/test" directory.
+
+  * ./t.sh setup
+
+
 == Set the APEX Configuration for Testing ==
 
 Run APEX and add the test environment schema (dtgen_test) to the workspace that contains the DTGen APEX application (ID 900).
 
-Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to 
-
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to ?????????
 
 == Test Generate the New DTGen ==
 
