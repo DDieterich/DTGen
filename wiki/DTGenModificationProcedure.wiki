@@ -19,6 +19,13 @@ Ensure that the changes to Old DTGen are as complete as possible.  Do not make a
 With this step complete, commit changes to Sub-Version.
 
 
+== Set the APEX Configuration for Testing ==
+
+Run APEX and add the test environment schema (dtgen_test) to the workspace that contains the DTGen APEX application (ID 900).
+
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to 
+
+
 == Test Generate the New DTGen ==
 
 This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.  The command for performing this first test is run from the "trunk/test" directory:
@@ -46,9 +53,63 @@ The above listed Program/Module Sources can be compiled and tested against the N
 With this step complete, commit changes to Sub-Version.
 
 
+== Update APEX GUI ==
+
+Switch the compile schema for APEX application 900 to the test environment.  Install the new APEX GUI forms:
+
+  * sqlplus (owner)/(password)
+  * SQL> spool install_gui
+  * SQL> @install_gui
+  * SQL> exit
+
+
 == Update Demo Directory ==
 
 ???
+
+
+== Overwrite Old DTGen Program/Module Source ==
+
+Copy the following Program/Module Sources from "trunk/test/dtgen" to "trunk/src":
+
+  * comp.sql
+  * dtgen_util.pkb
+  * dtgen_util.pks
+  * generate.pkb
+  * generate.pks
+  * gui_app_tree_vw.sql
+  * gui_util.pkb
+  * gui_util.pks
+
+Additionally, the following Supplemental Scripts may need to be updated in the "trunk/supp" directory:
+
+  * create_owner.sql
+  * create_user.sql
+  * fullasm.sql
+  * fullgen.sql
+
+Additionally, the following Supplemental Scripts may need to be updated in the "trunk" directory:
+
+  * install.sql
+  * uninstall.sql
+
+
+== Update Documentation ==
+
+Review and update as needed the "README.txt" documents in the following directories:
+
+  * trunk
+  * trunk/src
+  * demo
+  * demo/asof
+  * demo/basics
+  * demo/gui
+  * demo/tiers
+
+Review and update as needed the documents in "trunk/docs"
+
+
+== Perform a Test Installation ==
 
 
 == 
