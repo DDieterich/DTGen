@@ -12,14 +12,16 @@ The following procedure is a way to accomplish that effort.
 
 = Details =
 
-== Test Generate the New DTGen ==
-
-This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.
-
-
 == Complete Changes to Old DTGen ==
 
 Ensure that the changes to Old DTGen are as complete as possible.  Do not make any changes to Old DTGen that will cause it not to work.  The Old DTGen will be copied to a new location.  Any changes to Old DTGen, after the copy is made, will need to be duplicated in the New DTGen
+
+
+== Test Generate the New DTGen ==
+
+This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.  The command for performing this first test is run from the "trunk/test" directory:
+
+  * ./t.sh dtgen
 
 
 == Copy Program/Module Source to New DTGen ==
@@ -37,4 +39,11 @@ Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen"
 
 == Complete Changes to New DTGen ==
 
-The 
+The above listed Program/Module Sources can be compiled and tested against the New DTGen installation in the test environment.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the New DTGen should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
+
+== Update Demo Directory ==
+
+???
+
+
+== 
