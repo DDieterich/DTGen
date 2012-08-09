@@ -1,0 +1,30 @@
+#summary Procedure for Modifying Basic DTGen Structure.
+
+= Introduction =
+
+Since DTGen generates DTGen, there is a need for 2 DTGen(s) during development:
+
+  * Old DTGen to generate the new DTGen
+  * New DTGen to test prior to overwriting the old DTGen
+
+The following procedure is a way to accomplish that effort.
+
+
+= Details =
+
+== Complete Changes to Old DTGen ==
+
+Ensure that the changes to Old DTGen are as complete as possible.  Do not make any changes to Old DTGen that will cause it not to work.  The Old DTGen will be copied to a new location.  Any changes to Old DTGen, after the copy is made, will need to be duplicated in the New DTGen
+
+== Copy Program/Module Source ==
+
+Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen":
+
+  * comp.sql
+  * dtgen_util.pkb
+  * dtgen_util.pks
+  * generate.pkb
+  * generate.pks
+  * gui_app_tree_vw.sql
+  * gui_util.pkb
+  * gui_util.pks
