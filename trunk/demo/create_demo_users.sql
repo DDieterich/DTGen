@@ -42,8 +42,8 @@ grant create view to &DB_NAME.;
 grant DEBUG CONNECT SESSION to &DB_NAME.;
 grant DEBUG ANY PROCEDURE to &DB_NAME.;
 grant execute on DBMS_LOCK to &DB_NAME.;
--- Required for Tiers Demonstration
-grant select on v_$database to dtgen;
+-- Required for Tiers Demonstration ????
+-- grant select on v_$database to dtgen;
 
 prompt Create MT Schema Owner
 
