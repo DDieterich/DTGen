@@ -40,6 +40,31 @@ Integration testing covers 4 environments.  The InstallPackage environment is a 
   * Create and test ThreeTier environment
   * Create and test PerfFocus environment
 
+
+
+== Review and Test Demo ==
+
+If a previous version of the demo is installed, remove it with the "drop_demo_users.sql" script in the "trunk/demo" directory.
+
+Review and test all demonstration scripts in the "trunk/demo" directory.
+
+
+== Update Documentation ==
+
+Review and update as needed the "README.txt" documents in the following directories:
+
+  * trunk
+  * trunk/src
+  * demo
+  * demo/asof
+  * demo/basics
+  * demo/gui
+  * demo/tiers
+
+Review and update as needed the documents in "trunk/docs"
+
+
+
 = Release Procedure =
 
 {{{
