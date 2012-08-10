@@ -37,7 +37,13 @@ Review and modify as necessary the following scripts:
   * trunk/test/dtgen/test.sh
   * trunk/test/dtgen/cleanup.sh
   * trunk/test/dtgen/remove.sh
-  * trunk/test/????
+
+Review the following Supplemental Scripts for required changes in the "trunk/supp" directory:
+
+  * create_owner.sql
+  * create_user.sql
+  * fullasm.sql
+  * fullgen.sql
 
 Run this command in the "trunk/test" directory to setup the test environment.
 
@@ -59,7 +65,7 @@ This is the first test of the New DTGen.  It is likely that the "compl.sql" scri
 
 _Note: If this command needs to be run repeatedly, run "./t.sh cleanup dtgen" from the "trunk/test" directory to remove the DTGen database test objects before re-running "./t.sh test dtgen"_
 
-_Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "trunk/dtgen/test.sh" file will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "trunk/dtgen/test.sh" will use "dtgen_dataload2.ctl"._
+_Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "./t.sh test" command will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "./t.sh test" will use "dtgen_dataload2.ctl"._
 
 
 == Copy Program/Module Source to New DTGen ==
@@ -94,11 +100,6 @@ Open the DTGen APEX application (f900) in the APEX editor and review the page nu
 Export the "f900" application to "trunk/test/dtgen".
 
 
-== Update Demo Directory ==
-
-???
-
-
 == Overwrite Old DTGen Program/Module Source ==
 
 Copy the following Program/Module Sources from "trunk/test/dtgen" to "trunk/src":
@@ -112,17 +113,26 @@ Copy the following Program/Module Sources from "trunk/test/dtgen" to "trunk/src"
   * gui_util.pkb
   * gui_util.pks
 
-Additionally, the following Supplemental Scripts may need to be updated in the "trunk/supp" directory:
-
-  * create_owner.sql
-  * create_user.sql
-  * fullasm.sql
-  * fullgen.sql
-
 Additionally, the following Supplemental Scripts may need to be updated in the "trunk" directory:
 
+  * comp_file.sql
   * install.sql
-  * uninstall.sql
+  * select_file.sql
+
+NOTE: Wait until the next step to review and modify "trunk/uninstall.sql"
+
+== Re-Install DTGen ==
+
+Un-Install the "old" DTgen by running the "uninstall.sql" script in the "trunk" directory.
+
+After a successful uninstall, review and update this "uninstall.sql" file so it is compatible with the "new" DTGen.
+
+
+== Review and Test Demo ==
+
+If a precious version of the demo is installed, remove it with the "drop_demo_users.sql" script in the "trunk/demo" directory.
+
+Review and test all demonstration scripts in the "trunk/demo" directory.
 
 
 == Update Documentation ==
@@ -140,23 +150,6 @@ Review and update as needed the "README.txt" documents in the following director
 Review and update as needed the documents in "trunk/docs"
 
 
-== Perform a Test Installation ==
-
-
 == Cleanup ==
 
-Copy the following files from "trunk/test/dtgen" to "trunk/supp":
-  * comp.sql
-  * dtgen_util.pkb
-  * dtgen_util.pks
-  * generate.pkb
-  * generate.pks
-  * gui_app_tree_vw.sql
-  * gui_util.pkb
-  * gui_util.pks
-
-Copy f900.sql from "trunk/test/dtgen" to "trunk/supp"
-
-Remove "trunk/test/dtgen/dtgen_dataload2.", if it exists
-
-Run ./t.sh remove to remove testing objects from the database.
+Run "./t.sh" from the "trunk/test" directory to remove testing objects from the database and file system.
