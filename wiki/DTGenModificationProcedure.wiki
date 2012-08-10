@@ -11,6 +11,7 @@ The following procedure is a way to accomplish that effort.  The following envir
 
   * The "trunk" directory is up-to-date from Sub-Version
   * DTGen is installed in schema "dtgen" in an Oracle database
+  * "dtgen_dataload.ctl" has been loaded into the "dtgen" schema.
   * The DTGen GUI (f900) is installed in the same Oracle database.
 
 
@@ -126,6 +127,15 @@ NOTE: Wait until the next step to review and modify "trunk/uninstall.sql"
 Un-Install the "old" DTgen by running the "uninstall.sql" script in the "trunk" directory.
 
 After a successful uninstall, review and update this "uninstall.sql" file so it is compatible with the "new" DTGen.
+
+Load the DTGen data into the new installation using the following command in the "trunk/supp" directory:
+
+  * sqlldr dtgen/dtgen CONTROL=dtgen_dataload.ctl
+
+
+== Reset the APEX Configuration ==
+
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the normal environment (dtgen).
 
 
 == Review and Test Demo ==
