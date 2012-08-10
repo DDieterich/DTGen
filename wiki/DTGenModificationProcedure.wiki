@@ -114,11 +114,16 @@ Copy the following Program/Module Sources from "trunk/test/dtgen" to "trunk/src"
   * gui_util.pkb
   * gui_util.pks
 
-Additionally, the following Supplemental Scripts may need to be updated in the "trunk" directory:
+Copy one of the following SQL*Loader control files from "trunk/test/dtgen" to "trunk/supp/dtgen_dataload.ctl":
 
-  * comp_file.sql
-  * install.sql
-  * select_file.sql
+  * dtgen_dataload.ctl
+  * dtgen_dataload2.ctl (This is usually the choice, if it exists)
+
+Review and update the following scripts::
+
+  * trunk/install.sql
+  * trunk/supp/comp_file.sql
+  * trunk/supp/select_file.sql
 
 NOTE: Wait until the next step to review and modify "trunk/uninstall.sql"
 
@@ -126,7 +131,9 @@ NOTE: Wait until the next step to review and modify "trunk/uninstall.sql"
 
 Un-Install the "old" DTgen by running the "uninstall.sql" script in the "trunk" directory.
 
-After a successful uninstall, review and update this "uninstall.sql" file so it is compatible with the "new" DTGen.
+After a successful uninstall, review and update the "uninstall.sql" file so it is compatible with the "new" DTGen.
+
+Install the "new" DTgen by running the "install.sql" script in the "trunk" directory.
 
 Load the DTGen data into the new installation using the following command in the "trunk/supp" directory:
 
@@ -140,7 +147,7 @@ Run the DTGen GUI and change the "Schema Name" for the DTGen application to the 
 
 == Review and Test Demo ==
 
-If a precious version of the demo is installed, remove it with the "drop_demo_users.sql" script in the "trunk/demo" directory.
+If a previous version of the demo is installed, remove it with the "drop_demo_users.sql" script in the "trunk/demo" directory.
 
 Review and test all demonstration scripts in the "trunk/demo" directory.
 
