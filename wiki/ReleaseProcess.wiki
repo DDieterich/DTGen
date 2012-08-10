@@ -25,7 +25,9 @@ http://subversion.apache.org/docs/release-notes/1.6.html
 
 Since DTGen generates DTGen, the development/modification of DTGen requires a more complicated procedure.  An example procedure can be found at [DTGenModificationProcedure DTGen Modification Procedure].
 
-= Integration Testing =
+= Pre-Release Procedures =
+
+== Integration Testing ==
 
 Integration testing covers 4 environments.  The InstallPackage environment is a basic install of DTGEN.  The integration testing for this environment is a simple installation log file comparison with a known good installation file.  The other environments (SmallOffice, ThreeTier, and PerfFocus) are potential deployment environments from applications generated with DTGen.  The integration testing for these environments consists of feature set UnitTesting and APEX GUI integration testing.  The complete set of unit tests is run during release to assist in pin-pointing specific problems with the release.  APEX GUI testing is the most complete, end-to-end integration testing of DTGen.
 
