@@ -29,25 +29,11 @@ Since DTGen generates DTGen, the development/modification of DTGen requires a mo
 
 Integration testing covers 4 environments.  The InstallPackage environment is a basic install of DTGEN.  The integration testing for this environment is a simple installation log file comparison with a known good installation file.  The other environments (SmallOffice, ThreeTier, and PerfFocus) are potential deployment environments from applications generated with DTGen.  The integration testing for these environments consists of feature set UnitTesting and APEX GUI integration testing.  The complete set of unit tests is run during release to assist in pin-pointing specific problems with the release.  APEX GUI testing is the most complete, end-to-end integration testing of DTGen.
 
-= Release Test Procedure =
-
-  * Reset test environment
-  * Load from "src" (glob, integ, mods, ods, oltp, comp)
-  * Load "GEN" data and generate
-  * Create and test InstallPackage
-  * Load "TST" data and generate
-  * Create and test SmallOffice environment
-  * Create and test ThreeTier environment
-  * Create and test PerfFocus environment
-
-
-
 == Review and Test Demo ==
 
 If a previous version of the demo is installed, remove it with the "drop_demo_users.sql" script in the "trunk/demo" directory.
 
 Review and test all demonstration scripts in the "trunk/demo" directory.
-
 
 == Update Documentation ==
 
@@ -62,8 +48,6 @@ Review and update as needed the "README.txt" documents in the following director
   * demo/tiers
 
 Review and update as needed the documents in "trunk/docs"
-
-
 
 = Release Procedure =
 
