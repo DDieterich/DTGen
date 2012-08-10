@@ -5,22 +5,23 @@ DTGen "supp" (Supplemental Install and Sample) README File
 
 Files and Directories:
 ----------------------
-comp_file.sql     - SPOOL script used by an alternaitve path in fullgen.sql
-create_owner.sql  - Used by install.sql to create the DTGen owner and roles
+comp_file.sql      - SPOOL script used by an alternaitve path in fullgen.sql
+create_owner.sql   - Used by install.sql to create the DTGen owner and roles
                      -) Must be run as sys (to grant DBMS_LOCK)
                      -) New Schema Owner Name is the first parameter
                      -) New Schema Owner Password is the second parameter
                      -) New Schema Owner Default Tablespace is the third parameter
                      -) New Schema Owner Temporary Tablespace is the fourth parameter
-create_user.sql   - Sample script used to create an application user
+create_user.sql    - Sample script used to create an application user
                      -) Must be run by sys or system
                      -) Creates the user and synonyms and grants permissions
-fullasm.sql       - SPOOL script used to assemble scripts for an application
+dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
+fullasm.sql        - SPOOL script used to assemble scripts for an application
                      -) The ABBR of the application is the first parameter
-                     NOTE: must be run after fullgen.sql
-fullgen.sql       - Script used to generate scripts for an application
+                        NOTE: must be run after fullgen.sql
+fullgen.sql        - Script used to generate scripts for an application
                      -) The ABBR of the application is the first parameter
-select_file.sql   - SPOOL script used by an alternative path in fullgen.sql
+select_file.sql    - SPOOL script used by an alternative path in fullgen.sql
 
 
 SQL Script Settings:
@@ -54,25 +55,26 @@ NON-SPOOL scripts
 
 Script files created by fullasm.sql:
 ------------------------------------
-dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 install_db.sql     - Creates the schema objects needed for the database (data-tier)
-                      -) GLOBal objects (Global Types, UTIL_LOG, and UTIL & GLOB Package)
-                      -) ODS objects (Sequences, Tables, Indexes, and POP Packages)
-                      -) INTEGrity objects (Table Constraints/Triggers and TAB Packages)
-                      -) OLTP objects (Views, View Packages, and DML Packages)
-                      -) MODuleS objects (Place holder for Tailored Packages)
+                     -) GLOBal objects (Global Types, UTIL_LOG, and UTIL & GLOB Package)
+                     -) ODS objects (Sequences, Tables, Indexes, and POP Packages)
+                     -) INTEGrity objects (Table Constraints/Triggers and TAB Packages)
+                     -) OLTP objects (Views, View Packages, and DML Packages)
+                     -) MODuleS objects (Place holder for Tailored Packages)
 install_db_sec.sql - Creates security for the schema objects needed for the database
 install_mt.sql     - Creates the schema objects needed for the mid-tier
-                      -) Global DIST objects (Global Synonyms, UTIL_LOG, and UTIL Package)
-                      -) DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
-                      -) OLTP objects (Views, View Packages, and DML Packages)
-                      -) MODuleS objects (Place holder for Tailored Packages)
+                     -) Global DIST objects (Global Synonyms, UTIL_LOG, and UTIL Package)
+                     -) DISTribution objects (Distributed Synonyms, MVs, and TAB Packages)
+                     -) OLTP objects (Views, View Packages, and DML Packages)
+                     -) MODuleS objects (Place holder for Tailored Packages)
 install_mt_sec.sql - Creates security for the schema objects needed for the mid-tier
 install_usr.sql    - Creates synonyms for the application user
 install_gui.sql    - Creates the Maintenance GUI (Forms, Reports, Menus, LOVs, and Preferences)
 uninstall_usr.sql  - Drops synonyms for the application user
 uninstall_mt.sql   - Drops the schema objects needed for the mid-tier
 uninstall_db.sql   - Drops the schema objects needed for the database (data-tier)
+(AID)_dataload.ctl - SQL*Loader control file with data that will generate AID
+                     -) NOTE: (AID) is a placeholder for an actual application ID like "dtgen"
 
 
 Script files created by an alternaitve path in fullasm.sql:

@@ -18,15 +18,26 @@ EOF
 
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
-for SQLFILE in install_db_sec \
-               install_gui \
-               install_mt \
-               install_mt_sec \
-               install_usr \
-               uninstall_mt \
-               uninstall_usr \
+for FILE in setup.log \
+            test.log \
+            install_db_sec.sql \
+            install_gui.sql \
+            install_mt.sql \
+            install_mt_sec.sql \
+            install_usr.sql \
+            uninstall_mt.sql \
+            uninstall_usr.sql \
+            comp.LST \
+            dtgen_dataload.log \
+            dtgen_dataload.bad \
+            dtgen_dataload2.ctl \
+            dtgen_dataload2.log \
+            dtgen_dataload2.bad \
+            install_gui.LST \
+            cleanup.log \
 do
-   rm ${SQLFILE}.sql
+   echo "Removing ${FILE} ..."
+   rm ${FILE}
 done >> ${logfile} 2>&1
 
 echo "$0 Complete"

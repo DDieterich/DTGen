@@ -8,7 +8,6 @@ Files and Directories:
 assemble.pkb       - Used by comp.sql to create the DTGen Assemble package body
 assemble.pks       - Used by comp.sql to create the DTGen Assemble package spec
 comp.sql           - Used by install.sql to create the DTGen packages
-dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 g.sql              - Sample script to create the DTGen GUI Maintenance Forms Script
 generate.pkb       - Used by comp.sql to create the DTGen Generate package body
 generate.pks       - Used by comp.sql to create the DTGen Generate package spec
