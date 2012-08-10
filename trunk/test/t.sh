@@ -77,7 +77,7 @@ then
 fi
 
 # Set directory list
-DIR_LIST="dtgen demo_basics"
+DIR_LIST="dtgen"
 
 function run_script () {
    echo
