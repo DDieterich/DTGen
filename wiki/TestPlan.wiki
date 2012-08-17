@@ -1,10 +1,6 @@
 #summary Test Plan
 
  = Feature Set Testing =
-  * Natural Key Update-able Views
-  * Sequences and Surrogate Primary Keys (PK)
-  * Indexed Foreign Keys (FK) and Natural Keys (NK)
-  * Custom Check Constraints
   * Enforced Discrete Domains (no FK)
   * Enforced Case Folding
   * Full Procedural APIs for each Entity
