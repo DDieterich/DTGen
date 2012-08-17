@@ -21,6 +21,13 @@
   * Natural Key Update-able Views
   * Indexed Foreign Keys (FK) and Natural Keys (NK)
   * Custom Check Constraints
+    * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
+    * ANY, SOME, ANY (List Comparisons)
+    * NOT, AND, OR (Logical Conditions)
+    * LIKE, REGEXP_LIKE (Pattern Matching)
+    * IS NULL, IS NOT NULL (NULL Conditions)
+    * (, ) (Compound Conditions)
+    * BETWEEN, EXISTS, IN (Misc. Conditions)
   * Enforced Discrete Domains (no FK)
   * Enforced Case Folding
   * Full Procedural APIs for each Entity
