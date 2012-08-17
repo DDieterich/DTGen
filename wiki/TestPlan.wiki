@@ -1,0 +1,28 @@
+#summary Test Plan
+
+= Feature Set Testing =
+  * Natural Key Update-able Views
+  * Sequences and Surrogate Primary Keys (PK)
+  * Indexed Foreign Keys (FK) and Natural Keys (NK)
+  * Custom Check Constraints
+  * Enforced Discrete Domains (no FK)
+  * Enforced Case Folding
+  * Full Procedural APIs for each Entity
+  * Full Path Hierarchical Data (PK and NK)
+  * Entity Based History and Audit
+  * Point-in-Time ASOF Views
+  * Audited POP Functions
+  * Comprehensive OMNI View Forms
+  * Global Locks for Single Threaded Logic
+
+  * Default Maintenance User Interface (APEX)
+  * Includes Data Domain Filterable Grid Edit (APEX)
+  * Includes Generated PL/SQL for CLOB DML (APEX)
+  * Query-able ASOF and OMNI Reporting (APEX)
+
+= Boundary Condition Testing =
+  * Number of Columns in a Table
+     #   0 - Too Few
+     #   1 - Lower Bound
+     #  99 - Upper Bound
+     # 100 - Too Many
