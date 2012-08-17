@@ -10,14 +10,6 @@
   * Automatic Indexes
     * Foreign Keys
     * Natural Keys
-  * Custom Check Constraints
-    * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-    * ANY, SOME, ANY (List Comparisons)
-    * NOT, AND, OR (Logical Conditions)
-    * LIKE, REGEXP_LIKE (Pattern Matching)
-    * IS NULL, IS NOT NULL (NULL Conditions)
-    * (, ) (Compound Conditions)
-    * BETWEEN, EXISTS, IN (Misc. Conditions)
   * Enforced Discrete Domains (no FK)
   * Enforced Case Folding
     * UPPER
@@ -30,26 +22,10 @@
   * Full Path Hierarchical Data
     * Primary Key Full Path
     * Natural Key Full Path
-  * Datatype Support
-    * NUMBER
-    * VARCHAR2
-    * VARCHAR2(4001) conversion to CLOB
-    * DATE
-    * TIMESTAMP WITH TIME ZONE
-    * TIMESTAMP WITH LOCAL TIME ZONE
   * Calculated PCTFREE
     * Datatype storage size
     * Default PCTFREE for required columns
     * Default PCTFREE for non-required columns
-  * Tablespace Storage
-    * Application Default Tablespace for ACTIVE tables
-    * Application Default Tablespace for History/Audit tables
-    * Application Default Tablespace for ACTIVE indexes
-    * Application Default Tablespace for History/Audit indexes
-    * Entity Specific Tablespace for ACTIVE tables
-    * Entity Specific Tablespace for History/Audit tables
-    * Entity Specific Tablespace for ACTIVE indexes
-    * Entity Specific Tablespace for History/Audit indexes
 
  == Cross-Cutting Concerns ==
   * Global Lock Helper Function for Single Threaded Logic
@@ -67,6 +43,7 @@
   * Copyright in File Header
   * Separate security files
   * Database object compilation results reporting
+  * Automatic Comment Generation
 
  == Default Maintenance User Interface ==
   * Data Domain Filterable Grid Edit (APEX)
@@ -82,6 +59,33 @@
   * Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement)
   * Simultaneous Data Access from DB and MT Servers
   * Generated Materialized Views for MT Deployment of Selected Entities
+
+ = Fundamental Database Features =
+  * Custom Check Constraints
+    * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
+    * ANY, SOME, ANY (List Comparisons)
+    * NOT, AND, OR (Logical Conditions)
+    * LIKE, REGEXP_LIKE (Pattern Matching)
+    * IS NULL, IS NOT NULL (NULL Conditions)
+    * (, ) (Compound Conditions)
+    * BETWEEN, EXISTS, IN (Misc. Conditions)
+  * Datatype Support
+    * NUMBER
+    * VARCHAR2
+    * VARCHAR2(4001) conversion to CLOB
+    * DATE
+    * TIMESTAMP WITH TIME ZONE
+    * TIMESTAMP WITH LOCAL TIME ZONE
+  * Tablespace Storage
+    * Application Default Tablespace for ACTIVE tables
+    * Application Default Tablespace for History/Audit tables
+    * Application Default Tablespace for ACTIVE indexes
+    * Application Default Tablespace for History/Audit indexes
+    * Entity Specific Tablespace for ACTIVE tables
+    * Entity Specific Tablespace for History/Audit tables
+    * Entity Specific Tablespace for ACTIVE indexes
+    * Entity Specific Tablespace for History/Audit indexes
+
 
  = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* ||
