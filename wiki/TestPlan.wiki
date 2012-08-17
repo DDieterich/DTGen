@@ -1,11 +1,6 @@
 #summary Test Plan
 
  = Feature Set Testing =
-  * Enforced Discrete Domains (no FK)
-  * Enforced Case Folding
-  * Full Procedural APIs for each Entity
-  * Full Path Hierarchical Data (PK and NK)
-  * Entity Based History and Audit
   * Point-in-Time ASOF Views
   * Audited POP Functions
   * Comprehensive OMNI View Forms
@@ -16,10 +11,13 @@
   * Includes Generated PL/SQL for CLOB DML (APEX)
   * Query-able ASOF and OMNI Reporting (APEX)
 
+
  == Augmented Schema Functionality ==
   * Sequences and Surrogate Primary Keys (PK)
   * Natural Key Update-able Views
-  * Indexed Foreign Keys (FK) and Natural Keys (NK)
+  * Automatic Indexes
+    * Foreign Keys
+    * Natural Keys
   * Custom Check Constraints
     * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
     * ANY, SOME, ANY (List Comparisons)
@@ -31,7 +29,12 @@
   * Enforced Discrete Domains (no FK)
   * Enforced Case Folding
   * Full Procedural APIs for each Entity
-  * Full Path Hierarchical Data (PK and NK)
+    * INSERT
+    * UPDATE
+    * DELETE
+  * Full Path Hierarchical Data
+    * Primary Key Full Path
+    * Natural Key Full Path
  == Cross-Cutting Concerns ==
   * Global Lock Helper Function for Single Threaded Logic
   * Global Logging Function using Autonomous Transaction
