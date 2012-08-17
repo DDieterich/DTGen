@@ -1,15 +1,7 @@
 #summary Test Plan
 
  = Feature Set Testing =
-  * Point-in-Time ASOF Views
-  * Audited POP Functions
-  * Comprehensive OMNI View Forms
-  * Global Locks for Single Threaded Logic
 
-  * Default Maintenance User Interface (APEX)
-  * Includes Data Domain Filterable Grid Edit (APEX)
-  * Includes Generated PL/SQL for CLOB DML (APEX)
-  * Query-able ASOF and OMNI Reporting (APEX)
 
 
  == Augmented Schema Functionality ==
@@ -46,7 +38,9 @@
   * Data Domain Filterable Grid Edit (APEX)
   * Generated PL/SQL for CLOB DML (APEX)
   * Comprehensive *_OMNI_* View Forms _(Note 1)_
-  * GUI Query-able *_ASOF_* and *_OMNI_* Reporting _(Note 1)_
+  * GUI Query-able Reporting _(Note 1)_
+    * *_ASOF_*
+    * *_OMNI_*
  == Configurable Multi-Tier Deployments ==
   * Optional Deployment to Multiple Mid-Tier (MT) Servers
   * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
