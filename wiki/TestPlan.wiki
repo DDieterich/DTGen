@@ -37,6 +37,10 @@
     * DATE
     * TIMESTAMP WITH TIME ZONE
     * TIMESTAMP WITH LOCAL TIME ZONE
+  * Calculated PCTFREE
+    * Datatype storage size
+    * Default PCTFREE for required columns
+    * Default PCTFREE for non-required columns
 
  == Cross-Cutting Concerns ==
   * Global Lock Helper Function for Single Threaded Logic
