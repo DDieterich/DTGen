@@ -20,6 +20,9 @@
     * BETWEEN, EXISTS, IN (Misc. Conditions)
   * Enforced Discrete Domains (no FK)
   * Enforced Case Folding
+    * UPPER
+    * LOWER
+    * INITCAP
   * Full Procedural APIs for each Entity
     * INSERT
     * UPDATE
