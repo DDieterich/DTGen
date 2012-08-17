@@ -44,6 +44,9 @@
   * Separate security files
   * Database object compilation results reporting
   * Automatic Comment Generation
+    * Column Comments
+    * Table Comments
+    * View Comments
 
  == Default Maintenance User Interface ==
   * Data Domain Filterable Grid Edit (APEX)
@@ -60,7 +63,7 @@
   * Simultaneous Data Access from DB and MT Servers
   * Generated Materialized Views for MT Deployment of Selected Entities
 
- = Fundamental Database Features =
+ == Fundamental Database Features ==
   * Custom Check Constraints
     * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
     * ANY, SOME, ANY (List Comparisons)
