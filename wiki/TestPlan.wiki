@@ -1,6 +1,6 @@
 #summary Test Plan
 
-= Feature Set Testing =
+ = Feature Set Testing =
   * Natural Key Update-able Views
   * Sequences and Surrogate Primary Keys (PK)
   * Indexed Foreign Keys (FK) and Natural Keys (NK)
@@ -20,7 +20,35 @@
   * Includes Generated PL/SQL for CLOB DML (APEX)
   * Query-able ASOF and OMNI Reporting (APEX)
 
-= Boundary Condition Testing =
+ == Augmented Schema Functionality ==
+  * Sequences and Surrogate Primary Keys (PK)
+  * Natural Key Update-able Views
+  * Indexed Foreign Keys (FK) and Natural Keys (NK)
+  * Custom Check Constraints
+  * Enforced Discrete Domains (no FK)
+  * Enforced Case Folding
+  * Full Procedural APIs for each Entity
+  * Full Path Hierarchical Data (PK and NK)
+ == Cross-Cutting Concerns ==
+  * Global Lock Helper Function for Single Threaded Logic
+  * Global Logging Function using Autonomous Transaction
+  * Entity Based History and Audit _(Note 1)_
+  * Point-in-Time *_ASOF_* Views _(Note 1)_
+  * Transportable *_ASOF_* Data _(Note 1)_
+  * Audited *_POP_* Functions _(Note 1)_
+ == Default Maintenance User Interface ==
+  * Data Domain Filterable Grid Edit (APEX)
+  * Generated PL/SQL for CLOB DML (APEX)
+  * Comprehensive *_OMNI_* View Forms _(Note 1)_
+  * GUI Query-able *_ASOF_* and *_OMNI_* Reporting _(Note 1)_
+ == Configurable Multi-Tier Deployments ==
+  * Optional Deployment to Multiple Mid-Tier (MT) Servers
+  * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
+  * Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement)
+  * Simultaneous Data Access from DB and MT Servers
+  * Generated Materialized Views for MT Deployment of Selected Entities
+
+ = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* ||
 || Number of Columns in a Table || 0 || 1 || 99 || 100 ||
 || Number of Natural Key Columns || 0 || 1 || 99 || 100 ||
