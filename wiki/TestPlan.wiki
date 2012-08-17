@@ -41,6 +41,15 @@
     * Datatype storage size
     * Default PCTFREE for required columns
     * Default PCTFREE for non-required columns
+  * Tablespace Storage
+    * Application Default Tablespace for ACTIVE tables
+    * Application Default Tablespace for History/Audit tables
+    * Application Default Tablespace for ACTIVE indexes
+    * Application Default Tablespace for History/Audit indexes
+    * Entity Specific Tablespace for ACTIVE tables
+    * Entity Specific Tablespace for History/Audit tables
+    * Entity Specific Tablespace for ACTIVE indexes
+    * Entity Specific Tablespace for History/Audit indexes
 
  == Cross-Cutting Concerns ==
   * Global Lock Helper Function for Single Threaded Logic
