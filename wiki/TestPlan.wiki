@@ -16,6 +16,7 @@
       # INSERT
       # UPDATE
       # DELETE
+    # Optional Self-Correcting Data Entry
     # Full Path Hierarchical Data
       # Primary Key Full Path
       # Natural Key Full Path
