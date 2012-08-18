@@ -23,27 +23,25 @@
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
-
- == Cross-Cutting Concerns ==
-  * Global Lock Helper Function for Single Threaded Logic
-  * Global Logging Function using Autonomous Transaction
-  * Entity Based History and Audit _(Note 1)_
-  * Point-in-Time *_ASOF_* Views _(Note 1)_
-  * Transportable *_ASOF_* Data _(Note 1)_
-  * Audited *_POP_* Functions _(Note 1)_
-
- == Source code Generation Specifics ==
-  * Stored in database tables
-  * Line oriented with Linefeed
-  * Line oriented without Linefeed
-  * Always over-writes file
-  * Copyright in File Header
-  * Separate security files
-  * Database object compilation results reporting
-  * Automatic Comment Generation
-    * Column Comments
-    * Table Comments
-    * View Comments
+  # == Cross-Cutting Concerns ==
+    # Global Lock Helper Function for Single Threaded Logic
+    # Global Logging Function using Autonomous Transaction
+    # Entity Based History and Audit _(Note 1)_
+    # Point-in-Time *_ASOF_* Views _(Note 1)_
+    # Transportable *_ASOF_* Data _(Note 1)_
+    # Audited *_POP_* Functions _(Note 1)_
+  # == Source code Generation Specifics ==
+    # Stored in database tables
+    # Line oriented with Linefeed
+    # Line oriented without Linefeed
+    # Always over-writes file
+    # Copyright in File Header
+    # Separate security files
+    # Database object compilation results reporting
+    # Automatic Comment Generation
+      # Column Comments
+      # Table Comments
+      # View Comments
 
  == Default Maintenance User Interface ==
   * Data Domain Filterable Grid Edit (APEX)
