@@ -1,7 +1,7 @@
 #summary Test Plan
 
  = Functional Testing =
-  # Augmented Schema Functionality ==
+  # == Augmented Schema Functionality ==
     # Sequences and Surrogate Primary Keys (PK)
     # Natural Key Update-able Views
     # Automatic Indexes
