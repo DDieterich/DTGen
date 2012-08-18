@@ -42,40 +42,38 @@
       # Column Comments
       # Table Comments
       # View Comments
-
- == Default Maintenance User Interface ==
-  * Data Domain Filterable Grid Edit (APEX)
-  * Generated PL/SQL for CLOB DML (APEX)
-  * Comprehensive *_OMNI_* View Forms _(Note 1)_
-  * GUI Query-able Reporting _(Note 1)_
-    * *_ASOF_*
-    * *_OMNI_*
-
- == Fundamental Database Features ==
-  * Custom Check Constraints
-    * =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-    * ANY, SOME, ANY (List Comparisons)
-    * NOT, AND, OR (Logical Conditions)
-    * LIKE, REGEXP_LIKE (Pattern Matching)
-    * IS NULL, IS NOT NULL (NULL Conditions)
-    * (, ) (Compound Conditions)
-    * BETWEEN, EXISTS, IN (Misc. Conditions)
-  * Datatype Support
-    * NUMBER
-    * VARCHAR2
-    * VARCHAR2(4001) conversion to CLOB
-    * DATE
-    * TIMESTAMP WITH TIME ZONE
-    * TIMESTAMP WITH LOCAL TIME ZONE
-  * Tablespace Storage
-    * Application Default Tablespace for ACTIVE tables
-    * Application Default Tablespace for History/Audit tables
-    * Application Default Tablespace for ACTIVE indexes
-    * Application Default Tablespace for History/Audit indexes
-    * Entity Specific Tablespace for ACTIVE tables
-    * Entity Specific Tablespace for History/Audit tables
-    * Entity Specific Tablespace for ACTIVE indexes
-    * Entity Specific Tablespace for History/Audit indexes
+  # == Default Maintenance User Interface ==
+    # Data Domain Filterable Grid Edit (APEX)
+    # Generated PL/SQL for CLOB DML (APEX)
+    # Comprehensive *_OMNI_* View Forms _(Note 1)_
+    # GUI Query-able Reporting _(Note 1)_
+      # *_ASOF_*
+      # *_OMNI_*
+  # == Fundamental Database Features ==
+    # Custom Check Constraints
+      # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
+      # ANY, SOME, ANY (List Comparisons)
+      # NOT, AND, OR (Logical Conditions)
+      # LIKE, REGEXP_LIKE (Pattern Matching)
+      # IS NULL, IS NOT NULL (NULL Conditions)
+      # (, ) (Compound Conditions)
+      # BETWEEN, EXISTS, IN (Misc. Conditions)
+    # Datatype Support
+      # NUMBER
+      # VARCHAR2
+      # VARCHAR2(4001) conversion to CLOB
+      # DATE
+      # TIMESTAMP WITH TIME ZONE
+      # TIMESTAMP WITH LOCAL TIME ZONE
+    # Tablespace Storage
+      # Application Default Tablespace for ACTIVE tables
+      # Application Default Tablespace for History/Audit tables
+      # Application Default Tablespace for ACTIVE indexes
+      # Application Default Tablespace for History/Audit indexes
+      # Entity Specific Tablespace for ACTIVE tables
+      # Entity Specific Tablespace for History/Audit tables
+      # Entity Specific Tablespace for ACTIVE indexes
+      # Entity Specific Tablespace for History/Audit indexes
 
  = Deployment Option Testing =
   * Optional Deployment to Multiple Mid-Tier (MT) Servers
