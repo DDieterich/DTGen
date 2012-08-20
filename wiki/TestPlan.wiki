@@ -12,7 +12,6 @@
       # UPPER
       # LOWER
       # INITCAP
-    # Optional Case Folding Correction
     # Full Procedural APIs for each Entity
       # INSERT
       # UPDATE
