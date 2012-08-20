@@ -2,12 +2,10 @@
 
  = Functional Testing =
   # == Augmented Schema Functionality ==
-    # Sequences and Surrogate Primary Keys (PK)
     # Natural Key Update-able Views
     # Automatic Indexes
       # Foreign Keys
       # Natural Keys
-    # Enforced Discrete Domains (no FK)
     # Enforced Case Folding
       # UPPER
       # LOWER
@@ -42,7 +40,9 @@
       # *_ASOF_*
       # *_OMNI_*
   # == Fundamental Database Features ==
+    # Sequences and Surrogate Primary Keys (PK)
     # Custom Check Constraints
+      # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
       # ANY, SOME, ANY (List Comparisons)
       # NOT, AND, OR (Logical Conditions)
