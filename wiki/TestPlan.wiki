@@ -80,11 +80,15 @@
       # View Comments
 
  = Global Deployment Options =
-|| || *DB Integrity* || *Case Correction* ||
-|| A || No || No ||
-|| B || Yes || No ||
-|| C || No || Yes ||
-|| D || Yes || Yes ||
+|| || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
+|| A || No || No || No ||
+|| B || Yes || No || No ||
+|| C || No || Yes || No ||
+|| D || Yes || Yes || No ||
+|| E || No || No || Yes ||
+|| F || Yes || No || Yes ||
+|| G || No || Yes || Yes ||
+|| H || Yes || Yes || Yes ||
 
 Note: All testing will occur with both Database server and Mid-Tier server configured and running allowing for all testing to occur on both Database server and Mid-Tier server.
 
