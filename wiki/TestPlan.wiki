@@ -24,7 +24,10 @@
     # Entity Based History and Audit
       # Optional Effectivity
       # Point-in-Time *_ASOF_* View
-      # Audited *_POP_* Function
+    # Audited *_POP_* Function
+      # Pop Deleted Record
+      # Replace an Active Record
+      # Pop Active Record
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
