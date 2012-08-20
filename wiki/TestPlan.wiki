@@ -46,6 +46,8 @@
       # *_OMNI_*
   # == Fundamental Database Features ==
     # Sequences and Surrogate Primary Keys (PK)
+      # Primay Key Provided
+      # Primary Key NOT Provided
     # Custom Check Constraints
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
