@@ -29,6 +29,7 @@
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
     # Error Logging using Autonomous Transaction
+    # Self-Reporting Version Number
   # == Source code Generation Specifics ==
     # Copyright in File Header
     # Always over-writes previous file
