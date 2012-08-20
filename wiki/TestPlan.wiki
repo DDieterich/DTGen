@@ -100,7 +100,7 @@
       # Entity Specific Tablespace for History/Audit indexes
 
  = Global Deployment Options =
-|| || Table Trig/Cons || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
+|| || *Table Trig/Cons* || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
 || A || No || No || No || No ||
 || B || Yes || No || No || No ||
 || C || No || Yes || No || No ||
