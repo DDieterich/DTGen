@@ -100,15 +100,23 @@
       # Entity Specific Tablespace for History/Audit indexes
 
  = Global Deployment Options =
-|| || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
-|| A || No || No || No ||
-|| B || Yes || No || No ||
-|| C || No || Yes || No ||
-|| D || Yes || Yes || No ||
-|| E || No || No || Yes ||
-|| F || Yes || No || Yes ||
-|| G || No || Yes || Yes ||
-|| H || Yes || Yes || Yes ||
+|| Table Trig/Cons || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
+|| A || No || No || No || No ||
+|| B || Yes || No || No || No ||
+|| C || No || Yes || No || No ||
+|| D || Yes || Yes || No || No ||
+|| E || No || No || Yes || No ||
+|| F || Yes || No || Yes || No ||
+|| G || No || Yes || Yes || No ||
+|| H || Yes || Yes || Yes || No ||
+|| I || No || No || No || Yes ||
+|| J || Yes || No || No || Yes ||
+|| K || No || Yes || No || Yes ||
+|| L || Yes || Yes || No || Yes ||
+|| M || No || No || Yes || Yes ||
+|| N || Yes || No || Yes || Yes ||
+|| O || No || Yes || Yes || Yes ||
+|| P || Yes || Yes || Yes || Yes ||
 
 Note: All testing will occur with both Database server and Mid-Tier server configured and running allowing for all testing to occur on both Database server and Mid-Tier server.
 
