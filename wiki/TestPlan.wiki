@@ -12,7 +12,8 @@
       # INITCAP
     # Full Procedural APIs for each Entity
       # INSERT
-      # UPDATE
+      # UPDATE nkdata_provided_in TRUE
+      # UPDATE nkdata_provided_in FALSE
       # DELETE
     # Full Path Hierarchical Data
       # Primary Key Full Path
