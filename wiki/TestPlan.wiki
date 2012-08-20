@@ -23,13 +23,13 @@
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
+    # Entity Based History and Audit
+      # Optional Effectivity
+      # Point-in-Time *_ASOF_* View
+      # Audited *_POP_* Function
   # == Cross-Cutting Concerns ==
     # Global Lock Helper Function for Single Threaded Logic
     # Global Logging Function using Autonomous Transaction
-    # Entity Based History and Audit
-    # Entity Based Effectivity
-    # Point-in-Time *_ASOF_* Views
-    # Audited *_POP_* Functions
   # == Source code Generation Specifics ==
     # Copyright in File Header
     # Separate security files
