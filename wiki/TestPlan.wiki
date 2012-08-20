@@ -81,7 +81,7 @@
   * Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement)
   * Simultaneous Data Access from DB and MT Servers
   * Generated Materialized Views for MT Deployment of Selected Entities
-  * Separate user from schema using grants and aliases
+  * Separate user from schema using grants and synonyms
   * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
 
  = Boundary Condition Testing =
