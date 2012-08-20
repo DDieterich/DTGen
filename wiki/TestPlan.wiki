@@ -12,11 +12,11 @@
       # UPPER
       # LOWER
       # INITCAP
+    # Optional Case Folding Correction
     # Full Procedural APIs for each Entity
       # INSERT
       # UPDATE
       # DELETE
-    # Optional Self-Correcting Data Entry
     # Full Path Hierarchical Data
       # Primary Key Full Path
       # Natural Key Full Path
@@ -78,10 +78,11 @@
 
  = Deployment Option Testing =
   * Optional Deployment to Multiple Mid-Tier (MT) Servers
-  * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
   * Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement)
   * Simultaneous Data Access from DB and MT Servers
   * Generated Materialized Views for MT Deployment of Selected Entities
+  * Separate user from schema using grants and aliases
+  * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
 
  = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* ||
