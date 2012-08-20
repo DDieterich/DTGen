@@ -26,8 +26,9 @@
       # Point-in-Time *_ASOF_* View
       # Audited *_POP_* Function
   # == Cross-Cutting Concerns ==
-    # Global Lock Helper Function for Single Threaded Logic
-    # Global Logging Function using Autonomous Transaction
+    # Lock Helper for Global Single Threaded Logic
+    # Debug Logging using Autonomous Transaction
+    # Error Logging using Autonomous Transaction
   # == Source code Generation Specifics ==
     # Copyright in File Header
     # Always over-writes previous file
