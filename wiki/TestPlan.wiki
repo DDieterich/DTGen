@@ -26,10 +26,10 @@
   # == Cross-Cutting Concerns ==
     # Global Lock Helper Function for Single Threaded Logic
     # Global Logging Function using Autonomous Transaction
-    # Entity Based History and Audit _(Note 1)_
-    # Point-in-Time *_ASOF_* Views _(Note 1)_
-    # Transportable *_ASOF_* Data _(Note 1)_
-    # Audited *_POP_* Functions _(Note 1)_
+    # Entity Based History and Audit
+    # Point-in-Time *_ASOF_* Views
+    # *_POP_* Functions
+    # Audited *_POP_* Functions
   # == Source code Generation Specifics ==
     # Copyright in File Header
     # Separate security files
