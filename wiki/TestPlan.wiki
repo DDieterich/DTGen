@@ -72,6 +72,7 @@
       # DATE
       # TIMESTAMP WITH TIME ZONE
       # TIMESTAMP WITH LOCAL TIME ZONE
+    # Not NULL Constraints
     # Custom Check Constraints
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
