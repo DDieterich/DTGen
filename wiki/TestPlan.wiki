@@ -32,14 +32,13 @@
     # Global Logging Function using Autonomous Transaction
   # == Source code Generation Specifics ==
     # Copyright in File Header
-    # Separate security files
     # Always over-writes previous file
     # Database object compilation results reporting
   # == Default Maintenance User Interface ==
-    # Data Domain Filterable Grid Edit (APEX)
-    # Generated PL/SQL for CLOB DML (APEX)
-    # Comprehensive *_OMNI_* View Forms _(Note 1)_
-    # GUI Query-able Reporting _(Note 1)_
+    # Data Domain Filterable Grid Edit
+    # Generated PL/SQL for CLOB DML
+    # Comprehensive *_OMNI_* View Forms
+    # GUI Query-able Reporting
       # *_ASOF_*
       # *_OMNI_*
   # == Fundamental Database Features ==
