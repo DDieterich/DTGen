@@ -70,6 +70,7 @@
       # Column Comments
       # Table Comments
       # View Comments
+    $ Long Operations Tracking
 
  = Global Deployment Options =
 || || *DB Integrity* || *Case Correction* ||
