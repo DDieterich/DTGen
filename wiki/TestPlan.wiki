@@ -65,6 +65,13 @@
         # Insert into Active Table
         # Insert into Active View
         # Insert using Procedural API
+    # Datatype Support
+      # NUMBER
+      # VARCHAR2
+      # VARCHAR2(4001) conversion to CLOB
+      # DATE
+      # TIMESTAMP WITH TIME ZONE
+      # TIMESTAMP WITH LOCAL TIME ZONE
     # Custom Check Constraints
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
@@ -74,13 +81,13 @@
       # IS NULL, IS NOT NULL (NULL Conditions)
       # (, ) (Compound Conditions)
       # BETWEEN, EXISTS, IN (Misc. Conditions)
-    # Datatype Support
-      # NUMBER
-      # VARCHAR2
-      # VARCHAR2(4001) conversion to CLOB
-      # DATE
-      # TIMESTAMP WITH TIME ZONE
-      # TIMESTAMP WITH LOCAL TIME ZONE
+    # Custom Indexes
+      # UNIQUE
+      # Non-UNIQUE
+    # Comment Generation
+      # Column Comments
+      # Table Comments
+      # View Comments
     # Tablespace Storage
       # Application Default Tablespace for ACTIVE tables
       # Application Default Tablespace for History/Audit tables
@@ -90,10 +97,6 @@
       # Entity Specific Tablespace for History/Audit tables
       # Entity Specific Tablespace for ACTIVE indexes
       # Entity Specific Tablespace for History/Audit indexes
-    # Comment Generation
-      # Column Comments
-      # Table Comments
-      # View Comments
 
  = Global Deployment Options =
 || || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
