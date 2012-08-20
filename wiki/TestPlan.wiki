@@ -3,6 +3,15 @@
  = Functional Testing =
   # == Augmented Schema Functionality ==
     # Natural Key Update-able Views
+      # INSERT with Foreign Key Primary Key
+      # INSERT with Foreign Key Natural Key(s)
+      # INSERT with Foreign Key Primary Key Full Path
+      # INSERT with Foreign Key Natural Key Full Path
+      # UPDATE of Foreign Key Primary Key
+      # UPDATE of Foreign Key Natural Key(s)
+      # UPDATE of Foreign Key Primary Key Full Path
+      # UPDATE of Foreign Key Natural Key Full Path
+      # DELETE
     # Automatic Indexes
       # Foreign Keys
       # Natural Keys
