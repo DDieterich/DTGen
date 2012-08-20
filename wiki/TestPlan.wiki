@@ -72,7 +72,7 @@
       # Table Comments
       # View Comments
 
- = Deployment Option Testing =
+ = Global Deployment Options =
 || || *DB Integrity* || *Case Correction* ||
 || A || No || No ||
 || B || Yes || No ||
