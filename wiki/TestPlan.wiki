@@ -127,4 +127,3 @@ Note: All testing will occur with a non-schema user loaded and running allowing 
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* ||
 || Number of Columns in a Table || 0 || 1 || 99 || 100 ||
 || Number of Natural Key Columns || 0 || 1 || 99 || 100 ||
-|| Domain Value Lengths || 0 || 1 || Length || Len + 1 ||
