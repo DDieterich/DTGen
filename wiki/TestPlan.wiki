@@ -22,7 +22,6 @@
       # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key (Primary Key -OR- Natural Key(s) -OR- PK Full Path -OR- NK Full Path)
       # UPDATE using (column list -OR- table record -OR- view record)
-      # UPDATE with Primary Key
       # UPDATE with/without EFF_START_DTM
       # UPDATE nkdata_provided_in TRUE
       # UPDATE nkdata_provided_in FALSE
