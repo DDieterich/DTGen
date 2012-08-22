@@ -5,7 +5,7 @@
     # Natural Key Update-able Views
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
-      # INSERT with Foreign Key (Primary Key _OR_ Natural Key(s) _OR_ PK Full Path _OR_ NK Full Path)
+      # INSERT with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
       # UPDATE with/without EFF_START_DTM
       # UPDATE with Foreign Key (Primary Key _OR_ Natural Key(s) _OR_ PK Full Path _OR_ NK Full Path)
       # DELETE
