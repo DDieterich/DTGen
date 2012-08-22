@@ -3,16 +3,13 @@
  = Functional Testing =
   # == Augmented Schema Functionality ==
     # Natural Key Update-able Views
-      # INSERT with Primary Key
-      # INSERT without Primary Key
-      # INSERT with EFF_START_DTM
-      # INSERT without EFF_START_DTM
+      # INSERT with/without Primary Key
+      # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key Primary Key
       # INSERT with Foreign Key Natural Key(s)
       # INSERT with Foreign Key Primary Key Full Path
       # INSERT with Foreign Key Natural Key Full Path
-      # UPDATE with EFF_START_DTM
-      # UPDATE without EFF_START_DTM
+      # UPDATE with/without EFF_START_DTM
       # UPDATE of Foreign Key Primary Key
       # UPDATE of Foreign Key Natural Key(s)
       # UPDATE of Foreign Key Primary Key Full Path
@@ -26,27 +23,27 @@
       # LOWER
       # INITCAP
     # Full Procedural APIs for each Entity
-      # INSERT with Primary Key
-      # INSERT without Primary Key
+      # INSERT using column list, table record, or view record
+      # INSERT with/without Primary Key
       # INSERT with EFF_START_DTM
-      # INSERT without EFF_START_DTM
+      # INSERT without/without EFF_START_DTM
       # INSERT with Foreign Key Primary Key
       # INSERT with Foreign Key Natural Key(s)
       # INSERT with Foreign Key Primary Key Full Path
       # INSERT with Foreign Key Natural Key Full Path
+      # UPDATE using column list, table record, or view record
       # UPDATE with Primary Key
-      # UPDATE without Primary Key
-      # UPDATE with EFF_START_DTM
-      # UPDATE without EFF_START_DTM
+      # UPDATE with/without Primary Key
+      # UPDATE with/without EFF_START_DTM
       # UPDATE nkdata_provided_in TRUE
       # UPDATE nkdata_provided_in FALSE
       # UPDATE of Foreign Key Primary Key
       # UPDATE of Foreign Key Natural Key(s)
       # UPDATE of Foreign Key Primary Key Full Path
       # UPDATE of Foreign Key Natural Key Full Path
-      # DELETE with Primary Key
-      # DELETE without Primary Key
-      # DELETE with EFF_END_DTM
+      # DELETE using column list, table record, or view record
+      # DELETE with/without Primary Key
+      # DELETE with/without EFF_END_DTM
       # DELETE without EFF_END_DTM
     # Full Path Hierarchical Data
       # Primary Key Full Path
