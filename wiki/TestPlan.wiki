@@ -7,7 +7,7 @@
       # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
       # UPDATE with/without EFF_START_DTM
-      # UPDATE with Foreign Key (Primary Key _OR_ Natural Key(s) _OR_ PK Full Path _OR_ NK Full Path)
+      # UPDATE with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
       # DELETE
     # Automatic Indexes
       # Foreign Keys
@@ -17,15 +17,15 @@
       # LOWER
       # INITCAP
     # Full Procedural APIs for each Entity
-      # INSERT using (column list _OR_ table record _OR_ view record)
+      # INSERT using *(*Column List *OR* Table Record *OR* View Record*)*
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
-      # INSERT with Foreign Key (Primary Key _OR_ Natural Key(s) _OR_ PK Full Path -OR- NK Full Path)
-      # UPDATE using (column list _OR_ table record _OR_ view record)
+      # INSERT with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
+      # UPDATE using *(*Column List *OR* Table Record *OR* View Record*)*
       # UPDATE with/without EFF_START_DTM
       # UPDATE nkdata_provided_in TRUE
       # UPDATE nkdata_provided_in FALSE
-      # UPDATE with Foreign Key (Primary Key _OR_ Natural Key(s) _OR_ PK Full Path _OR_ NK Full Path)
+      # UPDATE with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
       # DELETE with/without EFF_END_DTM
     # Full Path Hierarchical Data
       # Primary Key Full Path
