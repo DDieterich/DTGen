@@ -41,6 +41,11 @@
       # Pop Deleted Record
       # Replace an Active Record
       # Pop Active Record
+    # Integrity Enforcement on Direct Table DML (Must Occur on Database Server. Must have UTIL.DB_CONSTAINTS set to TRUE)
+      # INSERT with/without Primary Key
+      # INSERT with/without EFF_START_DTM
+      # UPDATE with/without EFF_START_DTM
+      # DELETE
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
