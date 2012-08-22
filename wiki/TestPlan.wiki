@@ -19,20 +19,16 @@
     # Full Procedural APIs for each Entity
       # INSERT using (column list -OR- table record -OR- view record)
       # INSERT with/without Primary Key
-      # INSERT with EFF_START_DTM
-      # INSERT without/without EFF_START_DTM
+      # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key (Primary Key -OR- Key Natural Key(s) -OR- Primary Key Full Path -OR- Natural Key Full Path)
       # UPDATE using (column list -OR- table record -OR- view record)
       # UPDATE with Primary Key
-      # UPDATE with/without Primary Key
       # UPDATE with/without EFF_START_DTM
       # UPDATE nkdata_provided_in TRUE
       # UPDATE nkdata_provided_in FALSE
       # UPDATE with Foreign Key (Primary Key -OR- Key Natural Key(s) -OR- Primary Key Full Path -OR- Natural Key Full Path)
       # DELETE using (column list -OR- table record -OR- view record)
-      # DELETE with/without Primary Key
       # DELETE with/without EFF_END_DTM
-      # DELETE without EFF_END_DTM
     # Full Path Hierarchical Data
       # Primary Key Full Path
       # Natural Key Full Path
