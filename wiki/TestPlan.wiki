@@ -63,15 +63,6 @@
       # *_ASOF_*
       # *_OMNI_*
   # == Fundamental Database Features ==
-    # Sequences and Surrogate Primary Keys (PK)
-      # Primay Key Provided
-        # Insert into Active Table
-        # Insert into Active View
-        # Insert using Procedural API
-      # Primary Key NOT Provided
-        # Insert into Active Table
-        # Insert into Active View
-        # Insert using Procedural API
     # Datatype Support
       # NUMBER
       # VARCHAR2
@@ -79,8 +70,8 @@
       # DATE
       # TIMESTAMP WITH TIME ZONE
       # TIMESTAMP WITH LOCAL TIME ZONE
-    # Not NULL Constraints
-    # Custom Check Constraints
+    # Not NULL Column Constraints
+    # Custom Table Check Constraints
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
       # ANY, SOME, ANY (List Comparisons)
