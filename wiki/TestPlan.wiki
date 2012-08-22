@@ -47,6 +47,7 @@
       # DELETE with Primary Key
       # DELETE without Primary Key
       # DELETE with EFF_END_DTM
+      # DELETE without EFF_END_DTM
     # Full Path Hierarchical Data
       # Primary Key Full Path
       # Natural Key Full Path
