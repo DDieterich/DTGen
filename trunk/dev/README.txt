@@ -7,6 +7,13 @@ Because DTGen is used to create DTGen, development is a little tricky.  Somehow,
 Files and Directories:
 ----------------------
 cleanup.sh  - Linux Script to remove new DTGen objects from database
-load.sh     - Main script that loads new DTGen environment.
-remove.sh   - Removes all new DTGen logins from the TNS_ALIAS database
-setup.sh    - Creates all new DTGen logins in the TNS_ALIAS database
+d.env       - Defines environment variables
+d.sh        - Main script that runs other scripts
+              Usage: d.sh (setup|test|cleanup|remove)
+load.sh     - Loads the new DTGen environment.
+remove.sh   - Removes new DTGen logins
+setup.sh    - Creates new DTGen logins
+
+F900 Update
+-----------
+To update the F900 APEX GUI Application, see "How to create an application in APEX that uses the generated GUI" in the top-level README.TXT document.

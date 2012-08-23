@@ -5,11 +5,20 @@
 #     DTGen application after testing
 #
 
-echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
+if [ ${TESTNAME-NULL} = "NULL" -o \
+     ${TESTPASS-NULL} = "NULL" -o \
+     ${logfile-NULL}  = "NULL" ]
+then
+  echo "This script should not be run stand-alone.  Run d.sh instead."
+fi
 
-. ./t.env
+TEST_CONNECT_STRING=${TESTNAME}/${TESTPASS}
+if [ ${TNS_ALIAS-NULL} != "NULL" ]
+then
+   TEST_CONNECT_STRING=${TEST_CONNECT_STRING}@${TNS_ALIAS}
+fi
 
-sqlplus ${TESTNAME}/${TESTPASS}@${TNS_ALIAS} > ${logfile} 2>&1 <<EOF
+sqlplus ${TEST_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
    @uninstall_db
 EOF
 

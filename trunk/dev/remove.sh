@@ -5,12 +5,23 @@
 #     DTGen application testing logins
 #
 
-echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
+if [ ${SYSNAME-NULL}  = "NULL" -o \
+     ${SYSPASS-NULL}  = "NULL" -o \
+     ${TESTNAME-NULL} = "NULL" -o \
+     ${TESTPASS-NULL} = "NULL" -o \
+     ${logfile-NULL}  = "NULL" ]
+then
+  echo "This script should not be run stand-alone.  Run d.sh instead."
+fi
 
-. ./t.env
+SYS_CONNECT_STRING=${SYSNAME}/${SYSPASS}
+if [ ${TNS_ALIAS-NULL} != "NULL" ]
+then
+   SYS_CONNECT_STRING=${SYS_CONNECT_STRING}@${TNS_ALIAS}
+fi
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
-   connect ${SYSNAME}/${SYSPASS}@${TNS_ALIAS} as sysdba
+   connect ${SYS_CONNECT_STRING} as sysdba
    drop role ${TESTNAME}_app;
    drop role ${TESTNAME}_dml;
    drop user ${TESTNAME} cascade;

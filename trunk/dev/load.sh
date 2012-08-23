@@ -1,26 +1,39 @@
 #!/bin/bash
 
 #
-#  test.sh - Linux (or Cygwin for Windows) script to test the DTGen application
+#  test.sh - Linux (or Cygwin for Windows) script to load the DTGen application for development
 #
 
-echo "$0: TNS_ALIAS = ${TNS_ALIAS}"
+if [ ${OLDNAME-NULL}  = "NULL" -o \
+     ${OLDPASS-NULL}  = "NULL" -o \
+     ${TESTNAME-NULL} = "NULL" -o \
+     ${TESTPASS-NULL} = "NULL" -o \
+     ${logfile-NULL}  = "NULL" ]
+then
+  echo "This script should not be run stand-alone.  Run d.sh instead."
+fi
 
-. ./t.env
+OLD_CONNECT_STRING=${OLDNAME}/${OLDPASS}
+TEST_CONNECT_STRING=${TESTNAME}/${TESTPASS}
+if [ ${TNS_ALIAS-NULL} != "NULL" ]
+then
+   OLD_CONNECT_STRING=${OLD_CONNECT_STRING}@${TNS_ALIAS}
+   TEST_CONNECT_STRING=${TEST_CONNECT_STRING}@${TNS_ALIAS}
+fi
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set define '&'
    set trimspool on
    set verify off
-   connect ${OLDNAME}/${OLDPASS}@${TNS_ALIAS}
+   connect ${OLD_CONNECT_STRING}
    WHENEVER SQLERROR EXIT SQL.SQLCODE
    WHENEVER OSERROR EXIT -1
    set serveroutput on format wrapped
    prompt
    prompt Generating DTGEN ...
-   @../../supp/fullgen DTGEN
-   @../../supp/fullasm DTGEN
-   connect ${TESTNAME}/${TESTPASS}@${TNS_ALIAS}
+   @../supp/fullgen DTGEN
+   @../supp/fullasm DTGEN
+   connect ${TEST_CONNECT_STRING}
    WHENEVER SQLERROR EXIT SQL.SQLCODE
    WHENEVER OSERROR EXIT -1
    set serveroutput on format wrapped
@@ -49,7 +62,8 @@ then
 else
    LDRCTLNAME="dtgen_dataload"
 fi
-sqlldr ${TESTNAME}/${TESTPASS}@${TNS_ALIAS} CONTROL=${LDRCTLNAME}.ctl >> ${logfile} 2>&1
+echo "LDRCTLNAME = ${LDRCTLNAME}"
+sqlldr ${TEST_CONNECT_STRING} CONTROL=${LDRCTLNAME}.ctl >> ${logfile} 2>&1
 if [ ${?} != 0 ]
 then
    tail -20 ${LDRCTLNAME}.log
