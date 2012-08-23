@@ -7106,7 +7106,7 @@ BEGIN
    end loop;
    if nkfnd
    then
-      p('      ,nkdata_provided_in  in   VARCHAR2  default null');
+      p('      ,nkdata_provided_in  in   VARCHAR2  default ''Y''');
    end if;
    p('      );');
    p('   procedure upd');
@@ -7667,7 +7667,7 @@ BEGIN
    end loop;
    if nkfnd
    then
-      p('      ,nkdata_provided_in  in   VARCHAR2  default null');
+      p('      ,nkdata_provided_in  in   VARCHAR2  default ''Y''');
    end if;
    p('      )');
    p('   -- Application Update procedure');
@@ -7801,7 +7801,7 @@ BEGIN
    if nkfnd
    then
       p('   -- Set the Natural Key data as indicated by NKDATA_PROVIDED');
-      p('   if upper(substr(nkdata_provided_in,1,1)) in (''Y'',''T'')');
+      p('   if upper(substr(nvl(nkdata_provided_in,''Y''),1,1)) in (''Y'',''T'')');
       p('   then');
       p('      -- Use the Natural Key Data that was provided');
       for buff in (
@@ -7955,6 +7955,7 @@ BEGIN
    loop
       p('      ,n_'||buff.name||' => n_buff.'||buff.name);
    end loop;
+   p('      ,nkdata_provided_in => ''N''');
    p('      );') ;
    p('end upd;') ;
    p('----------------------------------------');
@@ -13805,9 +13806,10 @@ BEGIN
          fkfnd := 1;
       end if;
    end loop;
-   if fkfnd = 1 then
-      pr('        ''      ,nkdata_provided_in => ''''Y'''''' ');
-   end if;
+-- nkdata_provided_in is now defaulted to 'Y'
+--   if fkfnd = 1 then
+--      pr('        ''      ,nkdata_provided_in => ''''Y'''''' ');
+--   end if;
    pr('        ''      );'' ');
    p('        ''END;'';');
    p('');
