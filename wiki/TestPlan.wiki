@@ -137,7 +137,7 @@
 *Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
 
  = Deployment Options =
-|| *Table Trig/Cons* || *DB Schema* || *DB User* || *MT Schema* || *MT User* || DOD MT Schema || DOD MT User ||
+|| *Table Trig/Cons* || *DB Schema* || *DB User* || *MT Schema* || *MT User* || *DOD MT Schema* || *DOD MT User* ||
 || Installed || Yes || Yes || Yes || Yes || Yes || Yes ||
 || Not Installed || Yes || Yes || Yes || Yes || Yes || Yes ||
 
