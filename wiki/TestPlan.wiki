@@ -131,3 +131,4 @@ Note: All testing will occur with a non-schema user loaded and running to allow 
 || VARCHAR2 Datatype Length || 0 || 1 || 32767 || 32768 || No ||
 || TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
 || TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
+|| Exception Code || -21000 || -20999 || -20000 || -19999 || No ||
