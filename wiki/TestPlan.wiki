@@ -138,8 +138,8 @@
 
  = Deployment Options =
 || *Table Trig/Cons* || *DB Schema* || *DB User* || *MT Schema* || *MT User* || *DOD MT Schema* || *DOD MT User* ||
-|| Installed || Yes || Yes || Yes || Yes || Yes || Yes ||
-|| Not Installed || Yes || Yes || Yes || Yes || Yes || Yes ||
+|| Installed         || TDBST       || TDBUT     || TMTST       || TMTUT     || TMTSTDOD        || TMTUTDOD      ||
+|| Not Installed     || TDBSN       || TDBUN     || TMTSN       || TMTUN     || TMTSNDOD        || TMTUNDOD      ||
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
