@@ -126,8 +126,8 @@ Note: All testing will occur with a non-schema user loaded and running to allow 
 || Number of Tables || 0 || 1 || 200 || 201 ||
 || Number of Columns in a Table || 0 || 1 || 99 || 100 ||
 || Number of Natural Key Columns || 0 || 1 || 99 || 100 ||
-|| NUMBER Datatype Length || -1 || 0 || 38 || 39 ||
-|| NUMBER Datatype Scale || 0 || 1 || 38 || 39 ||
+|| NUMBER Datatype Length || 0 || 1 || 39 || 40 ||
+|| NUMBER Datatype Scale || -85 || -84 || 127 || 128 ||
 || VARCHAR2 Datatype Length || 0 || 1 || 32768 || 32769 ||
-|| TIMESTAMP WITH TIME ZONE Datatype Length || 0 || 1 || 10 || 10 ||
-|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0 || 1 || 10 || 10 ||
+|| TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 ||
+|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || -1 || 0 || 9 || 10 ||
