@@ -1,6 +1,40 @@
 #summary Test Plan
 
  = Functional Testing =
+  # == Fundamental Database Features ==
+    # Datatype Support
+      # NUMBER
+      # VARCHAR2
+      # VARCHAR2(4001) conversion to CLOB
+      # DATE
+      # TIMESTAMP WITH TIME ZONE
+      # TIMESTAMP WITH LOCAL TIME ZONE
+    # Not NULL Column Constraints
+    # Custom Table Check Constraints
+      # Enforced Discrete Domains (no FK)
+      # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
+      # ANY, SOME, ANY (List Comparisons)
+      # NOT, AND, OR (Logical Conditions)
+      # LIKE, REGEXP_LIKE (Pattern Matching)
+      # IS NULL, IS NOT NULL (NULL Conditions)
+      # (, ) (Compound Conditions)
+      # BETWEEN, EXISTS, IN (Misc. Conditions)
+    # Custom Indexes
+      # UNIQUE
+      # Non-UNIQUE
+    # Comment Generation
+      # Column Comments
+      # Table Comments
+      # View Comments
+    # Tablespace Storage
+      # Application Default Tablespace for ACTIVE tables
+      # Application Default Tablespace for History/Audit tables
+      # Application Default Tablespace for ACTIVE indexes
+      # Application Default Tablespace for History/Audit indexes
+      # Entity Specific Tablespace for ACTIVE tables
+      # Entity Specific Tablespace for History/Audit tables
+      # Entity Specific Tablespace for ACTIVE indexes
+      # Entity Specific Tablespace for History/Audit indexes
   # == Augmented Application Functionality ==
     # Natural Key Update-able Views
       # INSERT with/without Primary Key
@@ -63,40 +97,6 @@
     # GUI Query-able Reporting
       # *_ASOF_*
       # *_OMNI_*
-  # == Fundamental Database Features ==
-    # Datatype Support
-      # NUMBER
-      # VARCHAR2
-      # VARCHAR2(4001) conversion to CLOB
-      # DATE
-      # TIMESTAMP WITH TIME ZONE
-      # TIMESTAMP WITH LOCAL TIME ZONE
-    # Not NULL Column Constraints
-    # Custom Table Check Constraints
-      # Enforced Discrete Domains (no FK)
-      # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-      # ANY, SOME, ANY (List Comparisons)
-      # NOT, AND, OR (Logical Conditions)
-      # LIKE, REGEXP_LIKE (Pattern Matching)
-      # IS NULL, IS NOT NULL (NULL Conditions)
-      # (, ) (Compound Conditions)
-      # BETWEEN, EXISTS, IN (Misc. Conditions)
-    # Custom Indexes
-      # UNIQUE
-      # Non-UNIQUE
-    # Comment Generation
-      # Column Comments
-      # Table Comments
-      # View Comments
-    # Tablespace Storage
-      # Application Default Tablespace for ACTIVE tables
-      # Application Default Tablespace for History/Audit tables
-      # Application Default Tablespace for ACTIVE indexes
-      # Application Default Tablespace for History/Audit indexes
-      # Entity Specific Tablespace for ACTIVE tables
-      # Entity Specific Tablespace for History/Audit tables
-      # Entity Specific Tablespace for ACTIVE indexes
-      # Entity Specific Tablespace for History/Audit indexes
 
  = Global Parameter Options =
 || *Test Set* || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
