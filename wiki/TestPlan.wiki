@@ -108,6 +108,8 @@
 || G || No || Yes || Yes ||
 || H || Yes || Yes || Yes ||
 
+*Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
+
  = Deployment Options =
 || *Table Trig/Cons* || *DB Schema* || *DB User* || *MT Schema* || *MT User* ||
 || Installed || Yes || Yes || Yes || Yes ||
