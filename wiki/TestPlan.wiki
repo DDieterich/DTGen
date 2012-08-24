@@ -53,7 +53,7 @@
       # UPDATE with nkdata_provided_in *(*TRUE *OR* FALSE*)*
       # UPDATE with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
       # DELETE with/without EFF_END_DTM
-    # Integrity Enforcement on Direct Table DML (Must occur on Database Server)
+    # Integrity Enforcement on Direct Table DML
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # UPDATE with/without EFF_START_DTM
