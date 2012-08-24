@@ -98,7 +98,7 @@
       # Entity Specific Tablespace for History/Audit indexes
 
  = Global Parameter Options =
-|| || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
+|| *Test Set* || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
 || A || No || No || No ||
 || B || Yes || No || No ||
 || C || No || Yes || No ||
