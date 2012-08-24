@@ -39,19 +39,44 @@
     # Natural Key Update-able Views
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
-      # INSERT with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
+      # INSERT with Foreign Key
+        # Primary Key
+        # Natural Key(s)
+        # PK Full Path
+        # NK Full Path
       # UPDATE with/without EFF_START_DTM
-      # UPDATE with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
+      # UPDATE with Foreign Key
+        # Primary Key
+        # Natural Key(s)
+        # PK Full Path
+        # NK Full Path
       # DELETE
     # Full Procedural APIs for each Entity
-      # INSERT using *(*Column List *OR* Table Record *OR* View Record*)*
+      # INSERT
+        # Column List
+        # Table Record
+        # View Record
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
-      # INSERT with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
-      # UPDATE using *(*Column List *OR* Table Record *OR* View Record*)*
+      # INSERT with Foreign Key
+        # Primary Key
+        # Natural Key(s)
+        # PK Full Path
+        # NK Full Path
+      # UPDATE
+        # Column List
+        # Table Record
+        # View Record
       # UPDATE with/without EFF_START_DTM
-      # UPDATE with nkdata_provided_in *(*TRUE *OR* FALSE*)*
-      # UPDATE with Foreign Key *(*Primary Key *OR* Natural Key(s) *OR* PK Full Path *OR* NK Full Path*)*
+      # UPDATE with nkdata_provided_in
+        # TRUE
+        # FALSE
+        # NULL
+      # UPDATE with Foreign Key
+        # Primary Key
+        # Natural Key(s)
+        # PK Full Path
+        # NK Full Path
       # DELETE with/without EFF_END_DTM
     # Integrity Enforcement on Direct Table DML
       # INSERT with/without Primary Key
