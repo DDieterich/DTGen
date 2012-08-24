@@ -115,6 +115,8 @@
 || Installed || Yes || Yes || Yes || Yes ||
 || Not Installed || Yes || Yes || Yes || Yes ||
 
+*Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
+
  = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* || *Nullable* ||
 || Number of Tables || 0 || 1 || 200 || 201 || No ||
