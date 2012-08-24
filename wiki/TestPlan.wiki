@@ -116,9 +116,9 @@
 || O || No || Yes || Yes || Yes ||
 || P || Yes || Yes || Yes || Yes ||
 
-Note: All testing will occur with both Database server and Mid-Tier server configured and running allowing for all testing to occur on both Database server and Mid-Tier server.
+Note: All testing will occur with both Database server and Mid-Tier server configured and running to allow for all testing to occur on both Database server and Mid-Tier server.
 
-Note: All testing will occur with a non-schema user loaded and running allowing for all testing to occur on both schema access and non-schema user access
+Note: All testing will occur with a non-schema user loaded and running to allow for all testing to occur on both schema access and non-schema user access
 
 
  = Boundary Condition Testing =
