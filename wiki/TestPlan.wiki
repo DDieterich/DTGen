@@ -128,6 +128,6 @@ Note: All testing will occur with a non-schema user loaded and running to allow 
 || Number of Natural Key Columns || 0 || 1 || 99 || 100 || No ||
 || NUMBER Datatype Length || 0 || 1 || 39 || 40 || Yes ||
 || NUMBER Datatype Scale || -85 || -84 || 127 || 128 || Yes ||
-|| VARCHAR2 Datatype Length || 0 || 1 || 32768 || 32769 || No ||
+|| VARCHAR2 Datatype Length || 0 || 1 || 32767 || 32768 || No ||
 || TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
 || TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
