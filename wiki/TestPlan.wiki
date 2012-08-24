@@ -143,6 +143,8 @@
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
+*Note:* DOD MT Schema accesses the DB Schema through the DB User.  MT Schema accesses the DB Schema directly
+
  = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* || *Nullable* ||
 || Number of Tables || 0 || 1 || 200 || 201 || No ||
