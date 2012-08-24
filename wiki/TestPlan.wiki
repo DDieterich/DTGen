@@ -144,10 +144,10 @@
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
 || Accessed Via    || *DB User* || *MT Schema* || *MT User* || *DOD MT Schema* || *DOD MT User* ||
-|| *DB Schema*     || Synonyms  || DB Link     ||           ||                 ||               ||
-|| *MT Schema*     ||           ||             || Synonyms  ||                 ||               ||
+|| *DB Schema*     || Synonym   || DB Link     ||           ||                 ||               ||
+|| *MT Schema*     ||           ||             || Synonym   ||                 ||               ||
 || *DB User*       ||           ||             ||           || DB Link         ||               ||
-|| *DOD MT Schema* ||           ||             ||           ||                 || Synonyms      ||
+|| *DOD MT Schema* ||           ||             ||           ||                 || Synonym       ||
 
 *Note:* DB User accesses DB Schema though database synonyms. MT Schema accesses DB Schema.  MT User accesses MT Schema. DOD MT Schema accesses DB User. DOD MT User accesses DOD MT Schema.
 
