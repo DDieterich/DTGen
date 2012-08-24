@@ -137,9 +137,9 @@
 *Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
 
  = Deployment Configurations =
-|| DB Account Names         || *DB Schema* || *DB User* || *MT Schema* || *MT User* || *DOD MT Schema* || *DOD MT User* ||
-|| *Trig/Cons Installed*    || TDBST       || TDBUT     || TMTST       || TMTUT     || TMTSTDOD        || TMTUTDOD      ||
-|| *No Trig/Cons Installed* || TDBSN       || TDBUN     || TMTSN       || TMTUN     || TMTSNDOD        || TMTUNDOD      ||
+|| DB Account Names          || *DB Schema* || *DB User* || *MT Schema* || *MT User* || *DOD MT Schema* || *DOD MT User* ||
+|| *Triggers/Constraints*    || TDBST       || TDBUT     || TMTST       || TMTUT     || TMTSTDOD        || TMTUTDOD      ||
+|| *No Triggers/Constraints* || TDBSN       || TDBUN     || TMTSN       || TMTUN     || TMTSNDOD        || TMTUNDOD      ||
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
