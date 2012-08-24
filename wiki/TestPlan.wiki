@@ -149,8 +149,6 @@
 || *DB User*       ||           ||             ||           || DB Link         ||               ||
 || *DOD MT Schema* ||           ||             ||           ||                 || Synonym       ||
 
-*Note:* DB User accesses DB Schema though database synonyms. MT Schema accesses DB Schema.  MT User accesses MT Schema. DOD MT Schema accesses DB User. DOD MT User accesses DOD MT Schema.
-
  = Boundary Condition Testing =
 || *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* || *Nullable* ||
 || Number of Tables || 0 || 1 || 200 || 201 || No ||
