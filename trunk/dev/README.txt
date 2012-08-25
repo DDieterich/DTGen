@@ -20,7 +20,7 @@ generate.pks        - Updated DTGen Package
 gui_app_tree_vw.sql - Updated DTGen View
 gui_util.pkb        - Updated DTGen Package
 gui_util.pks        - Updated DTGen Package
-load.sh             - Loads the new DTGen environment.
+load.sh             - Loads the new DTGen environment
 remove.sh           - Removes new DTGen logins
 setup.sh            - Creates new DTGen logins
 
