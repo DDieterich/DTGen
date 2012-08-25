@@ -42,16 +42,39 @@ SQ6    CONSTANT varchar2(6) := SQ4||SQ2;
 usrfdt varchar2(40);    -- HIst/Aud User Full Datatype
 usrdt  varchar2(40);    -- Hist/Aud User Short Datatype
 usrcl  number;          -- Hist/Aud User Column Length
+END_OF_FILE  boolean;
 
 PROCEDURE p
       (text_in IN VARCHAR2)
    -- Put a newline into a file
    --   Requires the line of text
 IS
+   val_buff  file_lines_act.value%TYPE;
 BEGIN
    lbuff.seq := lbuff.seq + 1;
-   insert into file_lines_act (file_id, seq, value)
-      values (lbuff.file_id, lbuff.seq, text_in);
+   if END_OF_FILE then
+      insert into file_lines_act (file_id, seq, value)
+         values (lbuff.file_id, lbuff.seq, text_in);
+      return;
+   end if;
+   BEGIN
+      select value into val_buff
+       from  file_lines_act
+       where file_id = lbuff.file_id
+        and  seq     = lbuff.seq;
+   EXCEPTION
+      when NO_DATA_FOUND then
+         END_OF_FILE := true;
+         p(text_in);  -- Recursive call to do the insert
+      when OTHERS then
+         raise;
+   END;
+   if buf_val != text_in then
+      update file_lines_act
+        set  value   = text_in
+       where file_id = lbuff.file_id
+        and  seq     = lbuff.seq;
+   end if;
 END p;
 ----------------------------------------
 PROCEDURE pr
@@ -100,6 +123,7 @@ BEGIN
    fbuff.created_dt := sysdate;
    if fbuff.id is null
    then
+      END_OF_FILE := TRUE;
       files_dml.ins
             (n_id                  => fbuff.id
             ,n_application_id      => fbuff.application_id
@@ -109,11 +133,10 @@ BEGIN
             ,n_created_dt          => fbuff.created_dt
             ,n_description         => fbuff.description);
    else
+      END_OF_FILE := FALSE;
       update files_act
         set  created_dt = fbuff.created_dt
        where id = fbuff.id;
-      delete from file_lines_act
-       where file_id = fbuff.id;
    end if;
    lbuff.file_id := fbuff.id;
    lbuff.seq     := 0;
@@ -124,6 +147,15 @@ BEGIN
    header_comments;
    p('');
 END open_file;
+----------------------------------------
+PROCEDURE close_file
+   -- Delete the remaining part of an existing file
+IS
+BEGIN
+   delete from file_lines_act
+    where file_id = fbuff.id
+     and  seq    >= lbuff.seq;
+END close_file;
 ----------------------------------------
 PROCEDURE ps
       (text_in IN VARCHAR2)
@@ -151,6 +183,7 @@ BEGIN
       end loop;
    end if;
    p('');
+   close_file;
    sec_lines := sec_line0;
    sec_line  := 0;
 END dump_sec_lines;
@@ -15537,6 +15570,7 @@ BEGIN
    p('');
    p('select substr(object_name,1,30), object_type, status');
    p(' from  user_objects;');
+   close_file;
 END drop_glob;
 ----------------------------------------
 PROCEDURE create_glob
@@ -15548,7 +15582,8 @@ BEGIN
    p('');
    create_globals;
    create_util;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 END create_glob;
 ----------------------------------------
 PROCEDURE drop_gdst
@@ -15563,6 +15598,7 @@ BEGIN
    p('');
    p('select substr(object_name,1,30), object_type, status');
    p(' from  user_objects;');
+   close_file;
 END drop_gdst;
 ----------------------------------------
 PROCEDURE create_gdst
@@ -15574,7 +15610,8 @@ BEGIN
    p('');
    create_gd;
    create_util;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 END create_gdst;
 ----------------------------------------
 PROCEDURE delete_ods
@@ -15594,6 +15631,7 @@ BEGIN
       delete_tab;
       p('');
    END LOOP;
+   close_file;
 END delete_ods;
 ----------------------------------------
 PROCEDURE drop_ods
@@ -15623,6 +15661,7 @@ BEGIN
    p('select sequence_name, min_value, max_value, last_number');
    p(' from  user_sequences;');
    p('');
+   close_file;
 END drop_ods;
 ----------------------------------------
 PROCEDURE create_ods
@@ -15653,7 +15692,8 @@ BEGIN
       create_tp_body;
       util.add_longops (1);
    END LOOP;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
    util.end_longops;
 END create_ods;
 ----------------------------------------
@@ -15681,6 +15721,7 @@ BEGIN
    p('      ,constraint_type, table_name');
    p(' from  user_constraints');
    p(' where constraint_type not in (''P'',''U'',''R'');');
+   close_file;
 END drop_integ;
 ----------------------------------------
 PROCEDURE create_integ
@@ -15703,7 +15744,8 @@ BEGIN
       create_ttrig;
       util.add_longops (1);
    END LOOP;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
    util.end_longops;
 END create_integ;
 ----------------------------------------
@@ -15746,6 +15788,7 @@ BEGIN
       p(' from  user_constraints');
       p(' where constraint_type not in (''P'',''U'',''R'');');
    end if;
+   close_file;
 END drop_dist;
 ----------------------------------------
 PROCEDURE create_dist
@@ -15787,9 +15830,10 @@ BEGIN
          create_tp_body;
          util.add_longops (1);
       END LOOP;
-      dump_sec_lines;
       util.end_longops;
    end if;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 END create_dist;
 ----------------------------------------
 PROCEDURE drop_oltp
@@ -15817,6 +15861,7 @@ BEGIN
    p(' from  user_objects');
    p(' where object_type = ''PACKAGE BODY''');
    p('  and  object_name not like ''%_POP'';');
+   close_file;
 END drop_oltp;
 ----------------------------------------
 PROCEDURE create_oltp
@@ -15843,7 +15888,8 @@ BEGIN
       create_dp_body;
       util.add_longops (1);
    END LOOP;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
    util.end_longops;
 END create_oltp;
 ----------------------------------------
@@ -15866,6 +15912,7 @@ BEGIN
       drop_all;
       p('');
    END LOOP;
+   close_file;
 END drop_aa;
 ----------------------------------------
 PROCEDURE create_aa
@@ -15873,9 +15920,9 @@ IS
 BEGIN
    fbuff.name           := 'create_aa';
    fbuff.description    := 'Create _ALL and _ASOF Views and Package';
+--   util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    open_file;
    p('');
---   util.init_longops(lo_opname, lo_num_tables, fbuff.name, 'tables');
    for buff in (
       select * FROM tables TAB
        where TAB.application_id = abuff.id
@@ -15890,7 +15937,8 @@ BEGIN
       create_sh_body;
 --      util.add_longops (1);
    END LOOP;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 --   util.end_longops;
 END create_aa;
 ----------------------------------------
@@ -15902,6 +15950,7 @@ BEGIN
    open_file;
    p('');
    drop_prg;
+   close_file;
 END drop_mods;
 ----------------------------------------
 PROCEDURE create_mods
@@ -15912,7 +15961,8 @@ BEGIN
    open_file;
    p('');
    create_prg;
-   dump_sec_lines;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 END create_mods;
 ----------------------------------------
 PROCEDURE drop_usyn
@@ -15942,6 +15992,7 @@ BEGIN
       p('select substr(object_name,1,30), object_type, status');
       p(' from  user_objects;');
    END IF;
+   close_file;
 END drop_usyn;
 ----------------------------------------
 PROCEDURE create_usyn
@@ -15969,6 +16020,7 @@ BEGIN
          create_tsyn;
       END LOOP;
    END IF;
+   close_file;
 END create_usyn;
 ----------------------------------------
 PROCEDURE create_flow
@@ -16019,6 +16071,7 @@ BEGIN
       fin_flow;
       util.end_longops;
    END IF;
+   close_file;
 END create_flow;
 ----------------------------------------
 begin
