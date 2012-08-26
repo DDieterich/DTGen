@@ -4825,11 +4825,11 @@ begin
       end if;
       p('alter table ' || sown||tname || ' modify aud_beg_usr');
       p('   constraint ' || tname || '_nnh3 not null;');
-      p('alter table ' || sown||tname || ' modify aud_end_usr');
+      p('alter table ' || sown||tname || ' modify aud_prev_beg_usr');
       p('   constraint ' || tname || '_nnh4 not null;');
       p('alter table ' || sown||tname || ' modify aud_beg_dtm');
       p('   constraint ' || tname || '_nnh5 not null;');
-      p('alter table ' || sown||tname || ' modify aud_end_dtm');
+      p('alter table ' || sown||tname || ' modify aud_prev_beg_dtm');
       p('   constraint ' || tname || '_nnh6 not null;');
       p('alter table ' || sown||tname || ' modify pop_dml');
       p('   constraint ' || tname || '_nnp1 not null;');
@@ -15531,7 +15531,7 @@ BEGIN
       sown := '';
    end if;
    usrfdt := lower(nvl(abuff.usr_datatype,'VARCHAR2(30)'));
-   usrdt  := lower(get_usr_dtype);
+   usrdt  := upper(get_usr_dtype);
    usrcl  := get_usr_collen;
    load_nk_aa;
    lo_opname := 'DTGen ' || abuff.abbr || ' File Generation';

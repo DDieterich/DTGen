@@ -69,7 +69,7 @@ BEGIN
       when OTHERS then
          raise;
    END;
-   if buf_val != text_in then
+   if val_buff != text_in then
       update file_lines_act
         set  value   = text_in
        where file_id = lbuff.file_id
@@ -152,9 +152,12 @@ PROCEDURE close_file
    -- Delete the remaining part of an existing file
 IS
 BEGIN
-   delete from file_lines_act
-    where file_id = fbuff.id
-     and  seq    >= lbuff.seq;
+   if NOT END_OF_FILE then
+      delete from file_lines_act
+       where file_id = fbuff.id
+        and  seq    >= lbuff.seq;
+   end if;
+   END_OF_FILE := TRUE;
 END close_file;
 ----------------------------------------
 PROCEDURE ps
@@ -4842,11 +4845,11 @@ begin
       end if;
       p('alter table ' || sown||tname || ' modify aud_beg_usr');
       p('   constraint ' || tname || '_nnh3 not null;');
-      p('alter table ' || sown||tname || ' modify aud_end_usr');
+      p('alter table ' || sown||tname || ' modify aud_prev_beg_usr');
       p('   constraint ' || tname || '_nnh4 not null;');
       p('alter table ' || sown||tname || ' modify aud_beg_dtm');
       p('   constraint ' || tname || '_nnh5 not null;');
-      p('alter table ' || sown||tname || ' modify aud_end_dtm');
+      p('alter table ' || sown||tname || ' modify aud_prev_beg_dtm');
       p('   constraint ' || tname || '_nnh6 not null;');
       p('alter table ' || sown||tname || ' modify pop_dml');
       p('   constraint ' || tname || '_nnp1 not null;');
@@ -15532,7 +15535,7 @@ BEGIN
       sown := '';
    end if;
    usrfdt := lower(nvl(abuff.usr_datatype,'VARCHAR2(30)'));
-   usrdt  := lower(get_usr_dtype);
+   usrdt  := upper(get_usr_dtype);
    usrcl  := get_usr_collen;
    load_nk_aa;
    lo_opname := 'DTGen ' || abuff.abbr || ' File Generation';
