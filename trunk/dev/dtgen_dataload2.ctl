@@ -54,7 +54,7 @@ PROGRAMS                      DTGENgeneratePACKAGEMain Generation Program Un
 PROGRAMS                      DTGENgui_utilPACKAGEProvides Utility functions and procedures for APEX GUI
 TABLES                        DTGENAPPapplications1NONEXTRAApplications to be generated
 TABLES                        DTGENFfiles2NONEXTRAFiles for capturing scripts and logs
-TABLES                        DTGENFLfile_lines3NONEXTRALines for files
+TABLES                        DTGENFLfile_lines3LOGEXTRALines for files
 TABLES                        DTGENDOMdomains4NONMAINData domains to be generated as check constraints and/or lists of values for selected columns
 TABLES                        DTGENDVdomain_values5NONMAINData domains values for the data domains
 TABLES                        DTGENTABtables6NONMAINTables to be generated for each application
@@ -177,7 +177,7 @@ TAB_COLS                      DTGENEXCaction6VARCHAR2204840Pos
 TAB_COLS                      DTGENFapplication_id11XDTGENAPP1Surrogate Key for the application of this file
 TAB_COLS                      DTGENFname22XVARCHAR2301Name of this file
 TAB_COLS                      DTGENFtype3XDTGENFTYPE1Type for this file
-TAB_COLS                      DTGENFcreated_dt4XDATE1Time/Date this file was created
+TAB_COLS                      DTGENFcreated_dt4XDATE1Time/Date this file was created/updated
 TAB_COLS                      DTGENFdescription5VARCHAR210001Description for this file
 TAB_COLS                      DTGENFLfile_id11XDTGENF1Surrogate Key for the file of this line
 TAB_COLS                      DTGENFLseq22XNUMBER91Sequence number for this line in the file

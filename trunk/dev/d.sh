@@ -1,32 +1,41 @@
 #!/bin/bash
 
 #
-#  d.sh - Linux (or Cygwin for Windows) script to test generate the DTGen application
+#  d.sh - Linux (or Cygwin for Windows) script to generate and load a new DTGen application
 #
 
 # Check Parameters
 #
 function show_usage () {
-   echo "Use the form: d.sh (setup|test|cleanup|remove) {test directory}"
+   echo "Use the form: d.sh (setup|load|cleanup|remove|-p)"
    }
+
+if [ ! -r "./d.env" ]
+then
+   echo "Script is not readable: ./d.env"
+   show_usage;
+   exit -1
+fi
 if [ ${#} -ne 1 ]
 then
    echo "Incorrect number of parameters: ${#}"
    show_usage;
-   exit -1
+   exit -2
 fi
+if [ ${1} = "-p" ]
+then
+   . ./d.env -p
+   exit 0
+fi
+# Set the environment for the database connection
+. ./d.env
+
 if [ "${1}" != "setup"   -a \
-     "${1}" != "test"    -a \
+     "${1}" != "load"    -a \
      "${1}" != "cleanup" -a \
      "${1}" != "remove"  ]
 then
    echo "Incorrect first parameter: ${1}"
-   show_usage;
-   exit -2
-fi
-if [ ! -r "./d.env" ]
-then
-   echo "Script is not readable: ./d.env"
    show_usage;
    exit -3
 fi
@@ -36,9 +45,6 @@ then
    show_usage;
    exit -4
 fi
-
-# Set the environment for the database connection
-. ./d.env
 
 # Get SYS Password, if needed
 if [ ${1} = "setup"  -o \
