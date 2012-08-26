@@ -21,8 +21,10 @@ gui_app_tree_vw.sql - Updated DTGen View
 gui_util.pkb        - Updated DTGen Package
 gui_util.pks        - Updated DTGen Package
 load.sh             - Loads the new DTGen environment
+                      Runs Supplemental Scripts "fullgen" and "fullasm"
 remove.sh           - Removes new DTGen logins
 setup.sh            - Creates new DTGen logins
+                      Runs Supplemental Scripts "create_owner"
 
 
 F900 Update
