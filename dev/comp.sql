@@ -19,12 +19,6 @@ prompt generate.pks
 /
 show errors PACKAGE generate
 
-prompt
-prompt gui_util.pks
-@gui_util.pks
-/
-show errors PACKAGE gui_util
-
 
 -- Functions
 
@@ -34,11 +28,6 @@ show errors PACKAGE gui_util
 
 -- Views
 
-prompt
-prompt gui_app_tree_vw.sql
-@gui_app_tree_vw.sql
-/
-show errors VIEW gui_app_tree_vw
 
 -- Package Bodies
 
@@ -53,12 +42,6 @@ prompt generate.pkb
 @generate.pkb
 /
 show errors PACKAGE BODY generate
-
-prompt
-prompt gui_util.pkb
-@gui_util.pkb
-/
-show errors PACKAGE BODY gui_util
 
 
 prompt

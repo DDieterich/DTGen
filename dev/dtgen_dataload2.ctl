@@ -52,7 +52,7 @@ EXCEPTIONS                    DTGEN-20001gen_pop_updatepop_audit_bu(): Updat
 PROGRAMS                      DTGENdtgen_utilPACKAGEProvides Utility functions and procedures for DTGEN
 PROGRAMS                      DTGENgeneratePACKAGEMain Generation Program Unit
 PROGRAMS                      DTGENgui_utilPACKAGEProvides Utility functions and procedures for APEX GUI
-TABLES                        DTGENAPPapplications1LOGEXTRAApplications to be generated
+TABLES                        DTGENAPPapplications1NONEXTRAApplications to be generated
 TABLES                        DTGENFfiles2LOGEXTRAFiles for capturing scripts and logs
 TABLES                        DTGENFLfile_lines3LOGEXTRALines for files
 TABLES                        DTGENDOMdomains4NONMAINData domains to be generated as check constraints and/or lists of values for selected columns
@@ -181,7 +181,7 @@ TAB_COLS                      DTGENFcreated_dt4XDATE1Time/Date
 TAB_COLS                      DTGENFdescription5VARCHAR210001Description for this file
 TAB_COLS                      DTGENFLfile_id11XDTGENF1Surrogate Key for the file of this line
 TAB_COLS                      DTGENFLseq22XNUMBER91Sequence number for this line in the file
-TAB_COLS                      DTGENFLvalue3VARCHAR210001Value or contents of this line in the file
+TAB_COLS                      DTGENFLvalue3VARCHAR240001Value or contents of this line in the file
 TAB_COLS                      DTGENINDtab_col_id11XDTGENCOLSurrogate Key for the column for this index
 TAB_COLS                      DTGENINDtag22XVARCHAR24LTag attached to the table name for this column that uniquely identifies this index
 TAB_COLS                      DTGENINDseq33XNUMBER1Sequence number for this column for this index

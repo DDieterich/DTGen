@@ -351,60 +351,66 @@ begin
    end if;
    generate.init(app_abbr_in);
    -- Create Scripts
-   job_status := js_prefix || ' create_glob (1 of 18)';
+   job_status := js_prefix || ' create_glob (1 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_glob;
-   job_status := js_prefix || ' create_gdst (2 of 18)';
+   job_status := js_prefix || ' create_gdst (2 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_gdst;
-   job_status := js_prefix || ' create_ods (3 of 18)';
+   job_status := js_prefix || ' create_ods (3 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_ods;
-   job_status := js_prefix || ' create_integ (4 of 18)';
+   job_status := js_prefix || ' create_integ (4 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_integ;
-   job_status := js_prefix || ' create_dist (5 of 18)';
+   job_status := js_prefix || ' create_aa (5 of 20)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.create_integ;
+   job_status := js_prefix || ' create_dist (6 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_dist;
-   job_status := js_prefix || ' create_oltp (6 of 18)';
+   job_status := js_prefix || ' create_oltp (7 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_oltp;
-   job_status := js_prefix || ' create_mods (7 of 18)';
+   job_status := js_prefix || ' create_mods (8 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_mods;
-   job_status := js_prefix || ' create_usyn (8 of 18)';
+   job_status := js_prefix || ' create_usyn (9 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_usyn;
    -- Drop/Delete Scripts
-   job_status := js_prefix || ' drop_usyn (9 of 18)';
+   job_status := js_prefix || ' drop_usyn (10 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_usyn;
-   job_status := js_prefix || ' drop_mods (10 of 18)';
+   job_status := js_prefix || ' drop_mods (11 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_mods;
-   job_status := js_prefix || ' drop_oltp (11 of 18)';
+   job_status := js_prefix || ' drop_oltp (12 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_oltp;
-   job_status := js_prefix || ' drop_dist (12 of 18)';
+   job_status := js_prefix || ' drop_dist (13 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_dist;
-   job_status := js_prefix || ' drop_integ (13 of 18)';
+   job_status := js_prefix || ' drop_aa (14 of 20)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_dist;
+   job_status := js_prefix || ' drop_integ (15 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_integ;
-   job_status := js_prefix || ' delete_ods (14 of 18)';
+   job_status := js_prefix || ' delete_ods (16 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.delete_ods;
-   job_status := lockname || ' Generate drop_ods (15 of 18)';
+   job_status := lockname || ' Generate drop_ods (17 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_ods;
-   job_status := lockname || ' Generate drop_gdst (16 of 18)';
+   job_status := lockname || ' Generate drop_gdst (18 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_gdst;
-   job_status := lockname || ' Generate drop_glob (17 of 18)';
+   job_status := lockname || ' Generate drop_glob (19 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_glob;
    -- Create GUI Script
-   job_status := lockname || ' Generate create_flow (18 of 18)';
+   job_status := lockname || ' Generate create_flow (20 of 20)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_flow;
    
@@ -510,6 +516,24 @@ begin
    job_status := js_prefix || ' All COMPLETE';
    apex_plsql_job.update_job_status(job_num_in, job_status);
 end asm_all;
+----------------------------------------
+procedure del_all
+      (app_abbr_in  in  varchar2
+      ,flow_id_in   in  number)
+is
+begin
+   delete from file_lines_act
+    where files_nk1 = app_abbr_in;
+   delete from files_act
+    where applications_nk1 = app_abbr_in;
+   delete from apex_application_files
+    where flow_id = flow_id_in
+     and  title   in (
+          select title
+           from apex_application_files
+           where flow_id     = flow_id_in
+            and  description like app_abbr_in || ' %');
+end del_all;
 ----------------------------------------
 begin
    dbms_lob.createtemporary(af_blob_content, true, dbms_lob.session);
