@@ -22,6 +22,7 @@ BEGIN
    generate.drop_mods;
    generate.drop_oltp;
    generate.drop_dist;
+   generate.drop_aa;
    generate.drop_integ;
    generate.delete_ods;
    generate.drop_ods;
@@ -33,6 +34,7 @@ BEGIN
    generate.create_gdst;
    generate.create_ods;
    generate.create_integ;
+   generate.create_aa;
    generate.create_dist;
    generate.create_oltp;
    generate.create_mods;

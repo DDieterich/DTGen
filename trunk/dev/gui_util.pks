@@ -45,4 +45,7 @@ procedure asm_all
       (app_abbr_in  in  varchar2
       ,job_num_in   in  number default null
       ,flow_id_in   in  number default null);
+procedure del_all
+      (app_abbr_in  in  varchar2
+      ,flow_id_in   in  number);
 end gui_util;

@@ -14,6 +14,17 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
+type lbuff_rec_type is record
+   (seq    file_lines.seq%TYPE
+   ,value  file_lines.value%TYPE);
+type lbuff_aa_type is table
+  of lbuff_rec_type
+  index by PLS_INTEGER;
+lbuff_orig_aa   lbuff_aa_type;
+lbuff_apnd_aa   lbuff_aa_type;
+lbuff_updt_aa   lbuff_aa_type;
+lbuff_seq       file_lines.seq%TYPE;
+
 lo_opname      varchar2(64);  -- Operation Name for LongOps
 lo_num_tables  number;        -- Number of Tables for LongOps
 
@@ -23,7 +34,6 @@ sec_line0  sec_lines_type;  -- Used to reset the sec_lines array
 sec_line   number;
 abuff  applications%rowtype;
 fbuff  files%rowtype;
-lbuff  file_lines%rowtype;
 tbuff  tables%rowtype;
 cbuff  tab_cols%rowtype;
 cbuf0  tab_cols%rowtype;  -- Used to Initialize cbuff
@@ -42,7 +52,6 @@ SQ6    CONSTANT varchar2(6) := SQ4||SQ2;
 usrfdt varchar2(40);    -- HIst/Aud User Full Datatype
 usrdt  varchar2(40);    -- Hist/Aud User Short Datatype
 usrcl  number;          -- Hist/Aud User Column Length
-END_OF_FILE  boolean;
 
 PROCEDURE p
       (text_in IN VARCHAR2)
@@ -51,29 +60,15 @@ PROCEDURE p
 IS
    val_buff  file_lines_act.value%TYPE;
 BEGIN
-   lbuff.seq := lbuff.seq + 1;
-   if END_OF_FILE then
-      insert into file_lines_act (file_id, seq, value)
-         values (lbuff.file_id, lbuff.seq, text_in);
-      return;
-   end if;
-   BEGIN
-      select value into val_buff
-       from  file_lines_act
-       where file_id = lbuff.file_id
-        and  seq     = lbuff.seq;
-   EXCEPTION
-      when NO_DATA_FOUND then
-         END_OF_FILE := true;
-         p(text_in);  -- Recursive call to do the insert
-      when OTHERS then
-         raise;
-   END;
-   if val_buff != text_in then
-      update file_lines_act
-        set  value   = text_in
-       where file_id = lbuff.file_id
-        and  seq     = lbuff.seq;
+   lbuff_seq := lbuff_seq + 1;
+   if lbuff_seq > lbuff_orig_aa.COUNT then
+      lbuff_apnd_aa(lbuff_seq).seq   := lbuff_seq;
+      lbuff_apnd_aa(lbuff_seq).value := text_in;
+   else
+      if lbuff_orig_aa(lbuff_seq).value != text_in then
+         lbuff_updt_aa(lbuff_seq).seq   := lbuff_seq;
+         lbuff_updt_aa(lbuff_seq).value := text_in;
+      end if;
    end if;
 END p;
 ----------------------------------------
@@ -123,7 +118,6 @@ BEGIN
    fbuff.created_dt := sysdate;
    if fbuff.id is null
    then
-      END_OF_FILE := TRUE;
       files_dml.ins
             (n_id                  => fbuff.id
             ,n_application_id      => fbuff.application_id
@@ -132,15 +126,21 @@ BEGIN
             ,n_type                => fbuff.type
             ,n_created_dt          => fbuff.created_dt
             ,n_description         => fbuff.description);
+      lbuff_orig_aa.DELETE;   -- Just in Case
    else
-      END_OF_FILE := FALSE;
       update files_act
         set  created_dt = fbuff.created_dt
        where id = fbuff.id;
+      select seq, value bulk collect into lbuff_orig_aa
+       from  file_lines
+       where file_id = fbuff.id
+       order by seq;
+      -- The BULK COLLECT changes the size of the "lbuff_aa" as needed.
+      -- Not Needed: lbuff_aa.trim(lbuff_aa.COUNT-SQL%ROWCOUNT);
    end if;
-   lbuff.file_id := fbuff.id;
-   lbuff.seq     := 0;
-   lbuff.value   := '';
+   lbuff_seq := 0;
+   lbuff_updt_aa.DELETE;   -- Just in Case
+   lbuff_apnd_aa.DELETE;   -- Just in Case
    p('');
    p('-- Script File "' || fbuff.name || '"');
    p('--    ' || fbuff.description);
@@ -149,15 +149,29 @@ BEGIN
 END open_file;
 ----------------------------------------
 PROCEDURE close_file
+   -- Post Updates and Appended Lines
    -- Delete the remaining part of an existing file
 IS
 BEGIN
-   if NOT END_OF_FILE then
-      delete from file_lines_act
+   -- Send the Updates
+   FORALL i in INDICES of lbuff_updt_aa
+      update file_lines_act
+        set  value = lbuff_updt_aa(i).value
        where file_id = fbuff.id
-        and  seq    >= lbuff.seq;
-   end if;
-   END_OF_FILE := TRUE;
+        and  seq = lbuff_updt_aa(i).seq;
+   -- Append lines
+   FORALL i in INDICES of lbuff_apnd_aa
+      insert into file_lines_act (file_id, seq, value)
+         values (fbuff.id, lbuff_apnd_aa(i).seq, lbuff_apnd_aa(i).value);
+   -- Delete any remaining lines
+   delete from file_lines_act
+    where file_id = fbuff.id
+     and  seq     > lbuff_seq;
+   -- Free the memory
+   lbuff_apnd_aa.DELETE;
+   lbuff_updt_aa.DELETE;
+   lbuff_orig_aa.DELETE;
+   lbuff_seq := 0;
 END close_file;
 ----------------------------------------
 PROCEDURE ps
@@ -5949,7 +5963,7 @@ BEGIN
                p('      ,' || buff.fk_prefix ||
                               get_tababbr(buff.fk_table_id) ||
                        '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
-               fk_tid := -1;  -- The same Foriegn Key Table may be referenced
+               fk_tid := -1;  -- The same Foreign Key Table may be referenced
                               --   twice, back-to-back, in column order
             else
                if fk_tid != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
