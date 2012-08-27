@@ -52,8 +52,8 @@ EXCEPTIONS                    DTGEN-20001gen_pop_updatepop_audit_bu(): Updat
 PROGRAMS                      DTGENdtgen_utilPACKAGEProvides Utility functions and procedures for DTGEN
 PROGRAMS                      DTGENgeneratePACKAGEMain Generation Program Unit
 PROGRAMS                      DTGENgui_utilPACKAGEProvides Utility functions and procedures for APEX GUI
-TABLES                        DTGENAPPapplications1NONEXTRAApplications to be generated
-TABLES                        DTGENFfiles2NONEXTRAFiles for capturing scripts and logs
+TABLES                        DTGENAPPapplications1LOGEXTRAApplications to be generated
+TABLES                        DTGENFfiles2LOGEXTRAFiles for capturing scripts and logs
 TABLES                        DTGENFLfile_lines3LOGEXTRALines for files
 TABLES                        DTGENDOMdomains4NONMAINData domains to be generated as check constraints and/or lists of values for selected columns
 TABLES                        DTGENDVdomain_values5NONMAINData domains values for the data domains
