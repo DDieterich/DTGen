@@ -53,6 +53,7 @@ then
    if [ "${SYSPASS:-"NULL"}" = "NULL" ]
    then
       read -sp "Enter the '${SYSNAME}' password:" SYSPASS
+      export SYSPASS
       echo
    fi
    if [ `echo "exit" | sqlplus ${SYSNAME}/${SYSPASS}@${TNS_ALIAS} as sysdba |

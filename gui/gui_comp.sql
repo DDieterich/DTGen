@@ -9,7 +9,7 @@ set define off
 
 prompt
 prompt gui_util.pks
-@src/gui_util.pks
+@gui_util.pks
 /
 show errors PACKAGE gui_util
 
@@ -24,7 +24,7 @@ show errors PACKAGE gui_util
 
 prompt
 prompt gui_app_tree_vw.sql
-@src/gui_app_tree_vw.sql
+@gui_app_tree_vw.sql
 /
 show errors VIEW gui_app_tree_vw
 
@@ -33,7 +33,7 @@ show errors VIEW gui_app_tree_vw
 
 prompt
 prompt gui_util.pkb
-@src/gui_util.pkb
+@gui_util.pkb
 /
 show errors PACKAGE BODY gui_util
 

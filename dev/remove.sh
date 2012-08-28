@@ -12,6 +12,7 @@ if [ ${SYSNAME-NULL}  = "NULL" -o \
      ${logfile-NULL}  = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run d.sh instead."
+  exit -1
 fi
 
 SYS_CONNECT_STRING=${SYSNAME}/${SYSPASS}
