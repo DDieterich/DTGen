@@ -1,6 +1,6 @@
 
 prompt
-prompt === Compile Stored Program Units ===
+prompt === Compile GUI Helper Units ===
 
 set define off
 

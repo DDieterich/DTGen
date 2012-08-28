@@ -11,6 +11,8 @@ Files and Directories:
 demo           - Directory of demonstration files and scripts directory
 docs           - Directory of DTGen documentation directory
 f900.sql       - APEX export of the GUI source for DTGen
+gui_comp.sql   - Compile (Install) APEX GUI Helper Objects
+gui_uncomp.sql - Un-Compile (Un-Install) APEX GUI Helper Objects
 install.sql    - Installs DTGen Schema. Run as sys or system.
 src            - Direcotry of source code for DTGen
 supp           - Directory of supplemental installation and sample scripts

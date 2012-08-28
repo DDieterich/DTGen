@@ -128,9 +128,6 @@ BEGIN
             ,n_description         => fbuff.description);
       lbuff_orig_aa.DELETE;   -- Just in Case
    else
-      update files_act
-        set  created_dt = fbuff.created_dt
-       where id = fbuff.id;
       select seq, value bulk collect into lbuff_orig_aa
        from  file_lines
        where file_id = fbuff.id
@@ -153,23 +150,32 @@ PROCEDURE close_file
    -- Delete the remaining part of an existing file
 IS
 BEGIN
-   -- Send the Updates
-   FORALL i in INDICES of lbuff_updt_aa
-      update file_lines_act
-        set  value = lbuff_updt_aa(i).value
+   if lbuff_updt_aa.COUNT > 0 OR
+      lbuff_apnd_aa.COUNT > 0 OR
+      lbuff_orig_aa.COUNT > lbuff_seq;
+   then
+      -- Send the Updates
+      FORALL i in INDICES of lbuff_updt_aa
+         update file_lines_act
+           set  value = lbuff_updt_aa(i).value
+          where file_id = fbuff.id
+           and  seq = lbuff_updt_aa(i).seq;
+      -- Append lines
+      FORALL i in INDICES of lbuff_apnd_aa
+         insert into file_lines_act (file_id, seq, value)
+            values (fbuff.id, lbuff_apnd_aa(i).seq, lbuff_apnd_aa(i).value);
+      -- Delete any remaining lines
+      delete from file_lines_act
        where file_id = fbuff.id
-        and  seq = lbuff_updt_aa(i).seq;
-   -- Append lines
-   FORALL i in INDICES of lbuff_apnd_aa
-      insert into file_lines_act (file_id, seq, value)
-         values (fbuff.id, lbuff_apnd_aa(i).seq, lbuff_apnd_aa(i).value);
-   -- Delete any remaining lines
-   delete from file_lines_act
-    where file_id = fbuff.id
-     and  seq     > lbuff_seq;
-   -- Free the memory
-   lbuff_apnd_aa.DELETE;
-   lbuff_updt_aa.DELETE;
+        and  seq     > lbuff_seq;
+      -- Update create/update date/time
+      update files_act
+        set  created_dt = sysdate
+       where id = fbuff.id;
+      -- Free the memory
+      lbuff_apnd_aa.DELETE;
+      lbuff_updt_aa.DELETE;
+   end if;
    lbuff_orig_aa.DELETE;
    lbuff_seq := 0;
 END close_file;

@@ -51,7 +51,6 @@ EXCEPTIONS                    DTGEN-20002gen_no_userCurrent user has not bee
 EXCEPTIONS                    DTGEN-20001gen_pop_updatepop_audit_bu(): Updates are not allowed.An attempt was made to update data in the POP_AUDIT table.Updates to POP_AUDIT data are not allowed.
 PROGRAMS                      DTGENdtgen_utilPACKAGEProvides Utility functions and procedures for DTGEN
 PROGRAMS                      DTGENgeneratePACKAGEMain Generation Program Unit
-PROGRAMS                      DTGENgui_utilPACKAGEProvides Utility functions and procedures for APEX GUI
 TABLES                        DTGENAPPapplications1NONEXTRAApplications to be generated
 TABLES                        DTGENFfiles2LOGEXTRAFiles for capturing scripts and logs
 TABLES                        DTGENFLfile_lines3LOGEXTRALines for files
