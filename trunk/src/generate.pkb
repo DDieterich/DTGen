@@ -534,6 +534,15 @@ begin
    return nk_aa(tabid_in).tbuff.abbr;
 end get_tababbr;
 ----------------------------------------
+function get_tabtype
+      (tabid_in  in  tables.id%type)
+   return varchar2
+   --  For a table ID, return the table type
+is
+begin
+   return nk_aa(tabid_in).tbuff.type;
+end get_tabtype;
+----------------------------------------
 function table_self_ref
       (tabid_in  in  tables.id%type)
    return boolean
@@ -5798,6 +5807,7 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
    fkseq    number(2);
+   view_suffix  varchar2(10);
 BEGIN
    if tbuff.type not in ('EFF', 'LOG')
    then
@@ -5921,8 +5931,13 @@ BEGIN
            and  COL.table_id     = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ALL ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ALL ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);
@@ -5971,8 +5986,13 @@ BEGIN
            and  COL.table_id     = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ALL ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ALL ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);
@@ -6120,8 +6140,13 @@ BEGIN
            and  COL.table_id    = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_L ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_L ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.' ||
                    tbuff.name || '_id = ' || tbuff.abbr || '.' || buff.name);
@@ -6239,8 +6264,13 @@ BEGIN
            and  COL.table_id    = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ALL ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ALL ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);
@@ -6318,8 +6348,13 @@ BEGIN
            and  COL.table_id    = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ALL ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ALL ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);
@@ -6381,6 +6416,7 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
    fkseq    number(2);
+   view_suffix  varchar2(10);
 BEGIN
    if tbuff.type not in ('EFF', 'LOG')
    then
@@ -6510,8 +6546,13 @@ BEGIN
            and  COL.table_id     = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ALL ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ALL ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);
@@ -6725,8 +6766,13 @@ BEGIN
            and  COL.table_id    = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_F ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_F ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.' ||
                    tbuff.name || '_id = ' || tbuff.abbr || '.' || buff.name);
@@ -6740,8 +6786,13 @@ BEGIN
            and  COL.table_id    = tbuff.id
           order by COL.seq )
       loop
+         if get_tabtype(buff.fk_table_id) = 'NON' then
+            view_suffix := '_ACT ';
+         else
+            view_suffix := '_ASOF ';
+         end if;
          p('  left outer join ' || 
-                   get_tabname(buff.fk_table_id) || '_ASOF ' ||
+                   get_tabname(buff.fk_table_id) || view_suffix ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || ' on ' ||
                    buff.fk_prefix || get_tababbr(buff.fk_table_id) || '.id = ' ||
                    tbuff.abbr || '.' || buff.name);

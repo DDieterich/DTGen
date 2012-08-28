@@ -11,6 +11,7 @@ if [ ${OLDNAME-NULL}  = "NULL" -o \
      ${logfile-NULL}  = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run d.sh instead."
+  exit -1
 fi
 
 OLD_CONNECT_STRING=${OLDNAME}/${OLDPASS}
@@ -90,6 +91,24 @@ if [ `grep -e "^Total logical records skipped:" \
          grep -v '        0$' 2>&1 | tee /dev/tty | wc -l` != 0 ]
 then
    tail -20 ${LDRCTLNAME}.log
+   exit -1
+fi
+
+cd gui
+sqlplus /nolog >> ${logfile} 2>&1 <<EOF
+   connect ${TEST_CONNECT_STRING}
+   @gui_comp
+EOF
+if [ ${?} != 0 ]
+then
+   echo "SQL*Plus in GUI did not return a 0: ${?}"
+   tail -20 ${logfile}
+   exit ${?}
+fi
+if [ `fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} |
+         tee /dev/tty | wc -l` != 0 ]
+then
+   tail -20 ${logfile}
    exit -1
 fi
 
