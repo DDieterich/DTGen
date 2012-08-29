@@ -19,14 +19,14 @@
       # IS NULL, IS NOT NULL (NULL Conditions)
       # (, ) (Compound Conditions)
       # BETWEEN, EXISTS, IN (Misc. Conditions)
-    # *CIT*: Custom Indexes for Tables
+    # _*CIT*_: Custom Indexes for Tables
       # UNIQUE
       # Non-UNIQUE
     # Comment Generation
-      # *CGC*: Column Comments
-      # *CGT*: Table Comments
-      # *CGV*: View Comments
-    # *TST*: Tablespace Storage for Tables
+      # _*CGC*_: Column Comments
+      # _*CGT*_: Table Comments
+      # _*CGV*_: View Comments
+    # _*TST*_: Tablespace Storage for Tables
       # Application Default Tablespace for ACTIVE tables
       # Application Default Tablespace for History/Audit tables
       # Application Default Tablespace for ACTIVE indexes
@@ -36,7 +36,7 @@
       # Entity Specific Tablespace for ACTIVE indexes
       # Entity Specific Tablespace for History/Audit indexes
   # == Augmented Application Functionality ==
-    # *NKUV*: Natural Key Update-able Views
+    # _*NKUV*_: Natural Key Update-able Views
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key
@@ -51,7 +51,7 @@
         # PK Full Path
         # NK Full Path
       # DELETE
-    # *APIT*: Full Procedural APIs for each Table
+    # _*APIT*_: Full Procedural APIs for each Table
       # INSERT
         # Column List
         # Table Record
@@ -78,30 +78,30 @@
         # PK Full Path
         # NK Full Path
       # DELETE with/without EFF_END_DTM
-    # *DMLIT*: DML Integrity Enforcement for Tables
+    # _*DMLIT*_: DML Integrity Enforcement for Tables
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # UPDATE with/without EFF_START_DTM
       # DELETE
-    # *FPHC*: Full Path Hierarchical Data for Columns
+    # _*FPHC*_: Full Path Hierarchical Data for Columns
       # Primary Key Full Path
       # Natural Key Full Path
-    # *CFC*: Enforced Case Folding for Columns
+    # _*CFC*_: Enforced Case Folding for Columns
       # UPPER
       # LOWER
       # INITCAP
-    # *HAT*: Entity Based History and Audit for Tables
+    # _*HAT*_: Entity Based History and Audit for Tables
       # Optional Effectivity
       # Point-in-Time *_ASOF_* View
-    # *POPT*: Audited *_POP_* Function for Tables
+    # _*POPT*_: Audited *_POP_* Function for Tables
       # Pop Deleted Record
       # Replace an Active Record
       # Pop Active Record
   # == Augmented Schema Functionality ==
-    # *AIT*: Automatic Indexes for Tables
+    # _*AIT*_: Automatic Indexes for Tables
       # Foreign Keys
       # Natural Keys
-    # *PFT*: Calculated PCTFREE for Tables
+    # _*PFT*_: Calculated PCTFREE for Tables
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
