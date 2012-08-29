@@ -2,15 +2,15 @@
 
  = Functional Testing =
   # == Fundamental Database Features ==
-    # ===DTC===: Datatype Support for Columns
+    # === DTC ===: Datatype Support for Columns
       # NUMBER
       # VARCHAR2
       # VARCHAR2(4001) conversion to CLOB
       # DATE
       # TIMESTAMP WITH TIME ZONE
       # TIMESTAMP WITH LOCAL TIME ZONE
-    # ===NNCC===: Not NULL Constraints for Columns
-    # ===CCCT===: Custom Check Constraints for Tables
+    # === NNCC ===: Not NULL Constraints for Columns
+    # === CCCT ===: Custom Check Constraints for Tables
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
       # ANY, SOME, ANY (List Comparisons)
