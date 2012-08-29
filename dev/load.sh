@@ -95,7 +95,7 @@ then
 fi
 
 cd gui
-sqlplus /nolog >> ${logfile} 2>&1 <<EOF
+sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${TEST_CONNECT_STRING}
    @gui_comp
 EOF
