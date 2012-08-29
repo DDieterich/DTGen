@@ -2,15 +2,15 @@
 
  = Functional Testing =
   # == Fundamental Database Features ==
-    # Datatype Support for Columns - DTC
+    # *DTC*: Datatype Support for Columns
       # NUMBER
       # VARCHAR2
       # VARCHAR2(4001) conversion to CLOB
       # DATE
       # TIMESTAMP WITH TIME ZONE
       # TIMESTAMP WITH LOCAL TIME ZONE
-    # Not NULL Constraints for Columns - NNCC
-    # Custom Check Constraints for Tables - CCCT
+    # *NNCC*: Not NULL Constraints for Columns
+    # *CCCT*: Custom Check Constraints for Tables
       # Enforced Discrete Domains (no FK)
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
       # ANY, SOME, ANY (List Comparisons)
@@ -19,14 +19,14 @@
       # IS NULL, IS NOT NULL (NULL Conditions)
       # (, ) (Compound Conditions)
       # BETWEEN, EXISTS, IN (Misc. Conditions)
-    # Custom Indexes for Tables - CIT
+    # *CIT*: Custom Indexes for Tables
       # UNIQUE
       # Non-UNIQUE
     # Comment Generation
-      # Column Comments - CGC
-      # Table Comments - CGT
-      # View Comments - CGV
-    # Tablespace Storage for Tables - TST
+      # *CGC*: Column Comments
+      # *CGT*: Table Comments
+      # *CGV*: View Comments
+    # *TST*: Tablespace Storage for Tables
       # Application Default Tablespace for ACTIVE tables
       # Application Default Tablespace for History/Audit tables
       # Application Default Tablespace for ACTIVE indexes
@@ -36,7 +36,7 @@
       # Entity Specific Tablespace for ACTIVE indexes
       # Entity Specific Tablespace for History/Audit indexes
   # == Augmented Application Functionality ==
-    # Natural Key Update-able Views - NKUV
+    # *NKUV*: Natural Key Update-able Views
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # INSERT with Foreign Key
@@ -51,7 +51,7 @@
         # PK Full Path
         # NK Full Path
       # DELETE
-    # Full Procedural APIs for each Table - APIT
+    # *APIT*: Full Procedural APIs for each Table
       # INSERT
         # Column List
         # Table Record
@@ -78,30 +78,30 @@
         # PK Full Path
         # NK Full Path
       # DELETE with/without EFF_END_DTM
-    # DML Integrity Enforcement for Tables - DMLIT
+    # *DMLIT*: DML Integrity Enforcement for Tables
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # UPDATE with/without EFF_START_DTM
       # DELETE
-    # Full Path Hierarchical Data for Columns - FPHC
+    # *FPHC*: Full Path Hierarchical Data for Columns
       # Primary Key Full Path
       # Natural Key Full Path
-    # Enforced Case Folding for Columns - CFC
+    # *CFC*: Enforced Case Folding for Columns
       # UPPER
       # LOWER
       # INITCAP
-    # Entity Based History and Audit for Tables - HAT
+    # *HAT*: Entity Based History and Audit for Tables
       # Optional Effectivity
       # Point-in-Time *_ASOF_* View
-    # Audited *_POP_* Function for Tables - POPT
+    # *POPT*: Audited *_POP_* Function for Tables
       # Pop Deleted Record
       # Replace an Active Record
       # Pop Active Record
   # == Augmented Schema Functionality ==
-    # Automatic Indexes for Tables - AIT
+    # *AIT*: Automatic Indexes for Tables
       # Foreign Keys
       # Natural Keys
-    # Calculated PCTFREE for Tables - PFT
+    # *PFT*: Calculated PCTFREE for Tables
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
