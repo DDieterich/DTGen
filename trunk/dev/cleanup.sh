@@ -23,8 +23,10 @@ sqlplus ${TEST_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
    @uninstall_db
 EOF
 
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
+
 cd gui
-sqlplus ${TEST_CONNECT_STRING} >> ${logfile} 2>&1 <<EOF
+sqlplus ${TEST_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
    @gui_uncomp
 EOF
 

@@ -14,11 +14,8 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
-type lbuff_rec_type is record
-   (seq    file_lines.seq%TYPE
-   ,value  file_lines.value%TYPE);
 type lbuff_aa_type is table
-  of lbuff_rec_type
+  of file_lines%ROWTYPE
   index by PLS_INTEGER;
 lbuff_orig_aa   lbuff_aa_type;
 lbuff_apnd_aa   lbuff_aa_type;
@@ -59,15 +56,19 @@ PROCEDURE p
    --   Requires the line of text
 IS
    val_buff  file_lines_act.value%TYPE;
+   i  number;
 BEGIN
    lbuff_seq := lbuff_seq + 1;
    if lbuff_seq > lbuff_orig_aa.COUNT then
-      lbuff_apnd_aa(lbuff_seq).seq   := lbuff_seq;
-      lbuff_apnd_aa(lbuff_seq).value := text_in;
+      i := lbuff_apnd_aa.COUNT + 1;
+      lbuff_apnd_aa(i).file_id := fbuff.id;
+      lbuff_apnd_aa(i).seq     := lbuff_seq;
+      lbuff_apnd_aa(i).value   := text_in;
    else
       if lbuff_orig_aa(lbuff_seq).value != text_in then
-         lbuff_updt_aa(lbuff_seq).seq   := lbuff_seq;
-         lbuff_updt_aa(lbuff_seq).value := text_in;
+         i := lbuff_updt_aa.COUNT + 1;
+         lbuff_updt_aa(i)       := lbuff_orig_aa(lbuff_seq);
+         lbuff_updt_aa(i).value := text_in;
       end if;
    end if;
 END p;
@@ -103,9 +104,17 @@ PROCEDURE open_file
    --    Requires fbuff.name and application_id
 IS
 BEGIN
+   if lbuff_orig_aa.COUNT != 0 OR
+      lbuff_updt_aa.COUNT != 0 OR
+      lbuff_apnd_aa.COUNT != 0 OR
+      lbuff_seq != 0
+   then
+      raise_application_error (-20000, 'File ' || fbuff.name ||
+                              ' may have been left "open"');
+   end if;
    begin
-      select F.id
-       into  fbuff.id
+      select F.id,     F.aud_beg_usr,     F.aud_beg_dtm
+       into  fbuff.id, fbuff.aud_beg_usr, fbuff.aud_beg_dtm
        from  files  F
        where F.application_id = fbuff.application_id
         and  F.name           = fbuff.name;
@@ -118,26 +127,24 @@ BEGIN
    fbuff.created_dt := sysdate;
    if fbuff.id is null
    then
-      files_dml.ins
-            (n_id                  => fbuff.id
-            ,n_application_id      => fbuff.application_id
-            ,n_applications_nk1_in => null
-            ,n_name                => fbuff.name
-            ,n_type                => fbuff.type
-            ,n_created_dt          => fbuff.created_dt
-            ,n_description         => fbuff.description);
-      lbuff_orig_aa.DELETE;   -- Just in Case
+      files_dml.ins(fbuff);
    else
-      select seq, value bulk collect into lbuff_orig_aa
+      -- The BULK COLLECT changes the size of the "lbuff_aa" as needed.
+      -- Not Needed: lbuff_aa.trim(lbuff_aa.COUNT-SQL%ROWCOUNT);
+      select * bulk collect into lbuff_orig_aa
        from  file_lines
        where file_id = fbuff.id
        order by seq;
-      -- The BULK COLLECT changes the size of the "lbuff_aa" as needed.
-      -- Not Needed: lbuff_aa.trim(lbuff_aa.COUNT-SQL%ROWCOUNT);
+      lbuff_seq := SQL%ROWCOUNT;
+      FOR i IN 1 .. lbuff_seq
+      LOOP
+         if lbuff_orig_aa(i).seq != i then
+            raise_application_error (-20000, 'File Lines in "' ||fbuff.name ||
+                                     '" are out of sequence at SEQ ' || i );
+         end if;
+      END LOOP;
+      lbuff_seq := 0;
    end if;
-   lbuff_seq := 0;
-   lbuff_updt_aa.DELETE;   -- Just in Case
-   lbuff_apnd_aa.DELETE;   -- Just in Case
    p('');
    p('-- Script File "' || fbuff.name || '"');
    p('--    ' || fbuff.description);
@@ -150,32 +157,27 @@ PROCEDURE close_file
    -- Delete the remaining part of an existing file
 IS
 BEGIN
-   if lbuff_updt_aa.COUNT > 0 OR
-      lbuff_apnd_aa.COUNT > 0 OR
-      lbuff_orig_aa.COUNT > lbuff_seq
-   then
-      -- Send the Updates
-      FORALL i in INDICES of lbuff_updt_aa
-         update file_lines_act
-           set  value = lbuff_updt_aa(i).value
-          where file_id = fbuff.id
-           and  seq = lbuff_updt_aa(i).seq;
-      -- Append lines
-      FORALL i in INDICES of lbuff_apnd_aa
-         insert into file_lines_act (file_id, seq, value)
-            values (fbuff.id, lbuff_apnd_aa(i).seq, lbuff_apnd_aa(i).value);
-      -- Delete any remaining lines
-      delete from file_lines_act
-       where file_id = fbuff.id
-        and  seq     > lbuff_seq;
-      -- Update create/update date/time
-      update files_act
-        set  created_dt = sysdate
-       where id = fbuff.id;
-      -- Free the memory
-      lbuff_apnd_aa.DELETE;
-      lbuff_updt_aa.DELETE;
-   end if;
+   -- Send the Updates
+   FOR i IN 1 .. lbuff_updt_aa.COUNT
+   LOOP
+      file_lines_dml.upd(lbuff_updt_aa(i));
+   END LOOP;
+   -- Append lines
+   FOR i IN 1 .. lbuff_apnd_aa.COUNT
+   LOOP
+      file_lines_dml.ins(lbuff_apnd_aa(i));
+   END LOOP;
+   -- Delete any remaining lines
+   FOR i IN lbuff_seq+1 .. lbuff_orig_aa.COUNT
+   LOOP
+      file_lines_dml.del(lbuff_orig_aa(i).id);
+   END LOOP;
+   -- Update create/update date/time
+   fbuff.created_dt := sysdate;
+   files_dml.upd(fbuff);
+   -- Free the memory
+   lbuff_apnd_aa.DELETE;
+   lbuff_updt_aa.DELETE;
    lbuff_orig_aa.DELETE;
    lbuff_seq := 0;
 END close_file;
@@ -3263,6 +3265,15 @@ BEGIN
    p('   then');
    p('      if util.ignore_no_change');
    p('      then');
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      if tbuff.type = 'EFF'
+      then
+         p('         -- If no beg_dtm was set, :new.beg_dtm will be the same as :old.beg_dtm');
+      end if;
+      p('         n_aud_beg_usr := o_aud_beg_usr;');
+      p('         n_aud_beg_dtm := o_aud_beg_dtm;');
+   end if;
    p('         return;');
    p('      end if;');
    p('      raise_application_error(-20008, ''' || sp_name || '.upd' ||
@@ -15930,6 +15941,10 @@ BEGIN
     where application_id = abuff.id;
    sec_lines := sec_line0;
    sec_line  := 0;
+   lbuff_apnd_aa.DELETE;
+   lbuff_updt_aa.DELETE;
+   lbuff_orig_aa.DELETE;
+   lbuff_seq := 0;
 END init;
 ----------------------------------------
 PROCEDURE next_table
