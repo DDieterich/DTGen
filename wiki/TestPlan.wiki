@@ -165,8 +165,9 @@
 
  * TST: Override Default Tablespace and Table Defined Tablespaces
 
- === Tables: TAB1_NON, TAB1_LOG, and TAB1_EFF (HAT: Entity Based History and Audit for Tables) ===
+ === Tables: T1A_NON, T1A_LOG, and T1A_EFF ===
 
+ * HAT: Entity Based History and Audit for Tables
  * DTC: Datatype Support for Columns
  * Boundary Test:
    * NUMBER Datatype Length,
@@ -181,8 +182,9 @@
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
 
- === Tables: TAB2_NON, TAB2_LOG, and TAB2_EFF (HAT: Entity Based History and Audit for Tables) ===
+ === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
+ * HAT: Entity Based History and Audit for Tables
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
  * APIT: Full Procedural APIs for each Table
@@ -193,8 +195,9 @@
 
  * TST: Default Tablespaces, Table Defined Tablespaces
 
- === Tables: NON, LOG, and EFF (HAT: Entity Based History and Audit for Tables) ===
+ === Tables: T2A_NON, T2A_LOG, and T2A_EFF ===
 
+ * HAT: Entity Based History and Audit for Tables
  * NNCC: Not NULL Constraints for Columns
  * CIT: Custom Indexes for Tables
  * AIT: Automatic Indexes for Tables
