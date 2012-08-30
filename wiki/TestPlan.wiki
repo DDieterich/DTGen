@@ -12,11 +12,11 @@
     # _*EDDC*_: Enforced Discrete Domains (no FK) for Columns
     # _*NNCC*_: Not NULL Constraints for Columns
     # _*CCCT*_: Custom Check Constraints for Tables
-      # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-      # NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE (Logical Conditions)
-      # IS NULL, IS NOT NULL (NULL Conditions)
-      # (, ) (Compound Conditions)
-      # **, {{{*}}}, /, +, -, || (Operators)
+      # Equality/Inequality: =, !=, ^=, <>, >, <, >=, <=
+      # Logical Conditions: NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE
+      # NULL Conditions: IS NULL, IS NOT NULL
+      # Compound Conditions: (, )
+      # Operators: **, {{{*}}}, /, +, -, ||
     # _*CIT*_: Custom Indexes for Tables
       # UNIQUE
       # Non-UNIQUE
@@ -177,11 +177,6 @@
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
  * CCCT: Custom Check Constraints for Tables
-   * Equality/Inequality: =, !=, ^=, <>, >, <, >=, <=
-   * Logical Conditions: NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE
-   * NULL Conditions: IS NULL, IS NOT NULL
-   * Compound Conditions: (, )
-   * Operators: **, *, /, +, -, ||
  * APIT: Full Procedural APIs for each Table
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
