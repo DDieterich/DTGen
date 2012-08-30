@@ -12,11 +12,11 @@
     # _*EDDC*_: Enforced Discrete Domains (no FK) for Columns
     # _*NNCC*_: Not NULL Constraints for Columns
     # _*CCCT*_: Custom Check Constraints for Tables
-      # Equality/Inequality: =, !=, ^=, <>, >, <, >=, <=
-      # Logical Conditions: NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE
-      # NULL Conditions: IS NULL, IS NOT NULL
-      # Compound Conditions: (, )
-      # Operators: **, {{{*}}}, /, +, -, ||
+      # _Equality/Inequality:_ =, !=, ^=, <>, >, <, >=, <=
+      # _Logical Conditions:_ NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE
+      # _NULL Conditions:_ IS NULL, IS NOT NULL
+      # _Compound Conditions:_ (, )
+      # _Operators:_ **, {{{*}}}, /, +, -, ||
     # _*CIT*_: Custom Indexes for Tables
       # UNIQUE
       # Non-UNIQUE
