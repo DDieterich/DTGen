@@ -9,16 +9,14 @@
       # DATE
       # TIMESTAMP WITH TIME ZONE
       # TIMESTAMP WITH LOCAL TIME ZONE
-    # _*NNCC:*_ Not NULL Constraints for Columns
-    # _*CCCT:*_ Custom Check Constraints for Tables
-      # Enforced Discrete Domains (no FK)
+    # _*EDDC*_: Enforced Discrete Domains (no FK) for Columns
+    # _*NNCC*_: Not NULL Constraints for Columns
+    # _*CCCT*_: Custom Check Constraints for Tables
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-      # ANY, SOME, ANY (List Comparisons)
-      # NOT, AND, OR (Logical Conditions)
+      # NOT, AND, OR, BETWEEN, EXISTS, IN (Logical Conditions)
       # LIKE, REGEXP_LIKE (Pattern Matching)
       # IS NULL, IS NOT NULL (NULL Conditions)
       # (, ) (Compound Conditions)
-      # BETWEEN, EXISTS, IN (Misc. Conditions)
     # _*CIT*_: Custom Indexes for Tables
       # UNIQUE
       # Non-UNIQUE
