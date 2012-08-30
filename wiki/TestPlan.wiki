@@ -158,3 +158,52 @@
 || TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
 || TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
 || Exception Code || -21000 || -20999 || -20000 || -19999 || No ||
+
+ = Implementation =
+
+ == TST1: Application Test 1 ==
+
+ * TST: Override Default Tablespace and Table Defined Tablespaces
+
+ === Tables: NON, LOG, and EFF (HAT: Entity Based History and Audit for Tables) ===
+
+ * DTC: Datatype Support for Columns
+ * Boundary Test:
+   * NUMBER Datatype Length,
+   * NUMBER Datatype Scale,
+   * VARCHAR2 Datatype Length,
+   * TIMESTAMP WITH TIME ZONE Datatype Length
+   * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length
+ * CFC: Enforced Case Folding for Columns
+ * EDDC: Enforced Discrete Domains (no FK) for Columns
+ * CCCT: Custom Check Constraints for Tables
+   * Equality/Inequality: =, !=, ^=, <>, >, <, >=, <=
+   * Logical Conditions: NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE
+   * NULL Conditions: IS NULL, IS NOT NULL
+   * Compound Conditions: (, )
+   * Operators: **, *, /, +, -, ||
+ * APIT: Full Procedural APIs for each Table
+ * POPT: Audited POP Function for Tables
+ * DMLIT: DML Integrity Enforcement for Tables
+
+ === Tables: NON, LOG, and EFF (HAT: Entity Based History and Audit for Tables) ===
+
+ * FPHC: Full Path Hierarchical Data for Columns
+ * NKUV: Natural Key Update-able Views
+ * APIT: Full Procedural APIs for each Table
+ * POPT: Audited POP Function for Tables
+ * DMLIT: DML Integrity Enforcement for Tables
+
+ == TST2: Application Test 2 ==
+
+ * TST: Default Tablespaces, Table Defined Tablespaces
+
+ === Tables: NON, LOG, and EFF (HAT: Entity Based History and Audit for Tables) ===
+
+ * NNCC: Not NULL Constraints for Columns
+ * CIT: Custom Indexes for Tables
+ * AIT: Automatic Indexes for Tables
+ * PFT: Calculated PCTFREE for Tables
+ * CGC: Column Comments
+ * CGT: Table Comments
+ * CGV: View Comments
