@@ -174,9 +174,9 @@
    * VARCHAR2 Datatype Length,
    * TIMESTAMP WITH TIME ZONE Datatype Length
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length
+ * CCCT: Custom Check Constraints for Tables
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
- * CCCT: Custom Check Constraints for Tables
  * APIT: Full Procedural APIs for each Table
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
