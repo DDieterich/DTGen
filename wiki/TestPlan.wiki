@@ -13,8 +13,7 @@
     # _*NNCC*_: Not NULL Constraints for Columns
     # _*CCCT*_: Custom Check Constraints for Tables
       # =, !=, ^=, <>, >, <, >=, <= (Equality/Inequality test)
-      # NOT, AND, OR, BETWEEN, EXISTS, IN (Logical Conditions)
-      # LIKE, REGEXP_LIKE (Pattern Matching)
+      # NOT, AND, OR, BETWEEN, EXISTS, IN, LIKE (Logical Conditions)
       # IS NULL, IS NOT NULL (NULL Conditions)
       # (, ) (Compound Conditions)
       # **, {{{*}}}, /, +, -, || (Operators)
