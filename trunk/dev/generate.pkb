@@ -2043,7 +2043,7 @@ BEGIN
    p('         (systimestamp');
    p('         ,usr_buff');
    p('         ,substr(txt_in,1,4000)');
-   p('         ,fcs_txt');
+   p('         ,nvl(loc_in, fcs_txt)');
    p('         );');
    p('   dbms_output.put_line(txt_in || fcs_txt);');
    p('   commit;');

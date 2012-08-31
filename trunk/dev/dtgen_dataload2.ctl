@@ -27,7 +27,7 @@ into table TAB_COLS_ACT APPEND when key = 'TAB_COLS                      ' fiel
 into table TAB_INDS_ACT APPEND when key = 'INDEXES                       ' fields terminated by ''
    (key FILLER position(1:31), tab_cols_nk1 CHAR(5), tab_cols_nk2 CHAR(5), tab_cols_nk3 CHAR(25), tag CHAR(4), seq FLOAT EXTERNAL)
 BEGINDATA
-APPLICATIONS                  DTGENDtgen For OracleDTGENDTGEN_TESTDTGENDTGen&1.&2.Generates Oracle PL/SQL code and APEX User InterfacesTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+APPLICATIONS                  DTGENDtgen For OracleDTGENDTGENDTGENDTGen&1.&2.Generates Oracle PL/SQL code and APEX User InterfacesTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 DOMAINS                       DTGENCTYPEColumn TypeU30Column Data type (number, varchar2, etc...)
 DOMAINS                       DTGENFLAGFlagU1Flagged
 DOMAINS                       DTGENFOLDCase FoldU1Upper case character fold
@@ -122,22 +122,23 @@ DOMAIN_VALUES                 DTGENYNY1Yes, true, correct, or affirmative
 DOMAIN_VALUES                 DTGENYNN2No, false, incorrect, or negative
 TAB_COLS                      DTGENAPPabbr11XVARCHAR25UAbbreviation for this application
 TAB_COLS                      DTGENAPPname2XVARCHAR230IName of this application
-TAB_COLS                      DTGENAPPdb_schema3VARCHAR230U50Name of the database schema objects owner. Used for user synonym and DB Link creation. Also used for explicit owner of all database objects if db_schema_exp flag is set.
-TAB_COLS                      DTGENAPPdb_schema_exp4DTGENFLAG50Explicitly define the schema owner for all database object
-TAB_COLS                      DTGENAPPapex_schema5VARCHAR230U50Name of the APEX parsing schema owner for the generated APEX pages
-TAB_COLS                      DTGENAPPapex_ws_name6VARCHAR230U50Workspace name (Upper Case) for the generated APEX pages
-TAB_COLS                      DTGENAPPapex_app_name7VARCHAR23050Application name (Mixed Case) for the generated APEX pages
-TAB_COLS                      DTGENAPPdbid8VARCHAR2200050Database link connect string for mid-tier connections to the centralized database server.
-TAB_COLS                      DTGENAPPdb_auth9VARCHAR220050Database link authorization for mid-tier connections to the centralized database server
-TAB_COLS                      DTGENAPPdescription10VARCHAR2100040Description of this application
-TAB_COLS                      DTGENAPPts_null_override11DTGENFLAGFlag to override all tablespace names to null
-TAB_COLS                      DTGENAPPts_onln_data12VARCHAR230L70Default tableapace name for on-line data tables
-TAB_COLS                      DTGENAPPts_onln_indx13VARCHAR230L70Default tablespace name for on-line indexes
-TAB_COLS                      DTGENAPPts_hist_data14VARCHAR230L70Default tablespace name for history data tables
-TAB_COLS                      DTGENAPPts_hist_indx15VARCHAR230L70Default tablespace name for history indexes
-TAB_COLS                      DTGENAPPusr_datatype18VARCHAR220U50Datatype for the "_USR" data columns in history tables tables. The default value is VARCHAR2(30).
-TAB_COLS                      DTGENAPPusr_frgn_key19VARCHAR2100L50Foreign Key for the "_USR" data columns in history tables. Must be of the form "table", "schema.table", "table(column)",  or "schema.table(column)".
-TAB_COLS                      DTGENAPPcopyright20VARCHAR2400050Copyright notice that is placed in the comment header in all generated scripts
+TAB_COLS                      DTGENAPPversion3XVARCHAR210IVersion of this application
+TAB_COLS                      DTGENAPPdb_schema4VARCHAR230U50Name of the database schema objects owner. Used for user synonym and DB Link creation. Also used for explicit owner of all database objects if db_schema_exp flag is set.
+TAB_COLS                      DTGENAPPdb_schema_exp5DTGENFLAG50Explicitly define the schema owner for all database object
+TAB_COLS                      DTGENAPPapex_schema6VARCHAR230U50Name of the APEX parsing schema owner for the generated APEX pages
+TAB_COLS                      DTGENAPPapex_ws_name7VARCHAR230U50Workspace name (Upper Case) for the generated APEX pages
+TAB_COLS                      DTGENAPPapex_app_name8VARCHAR23050Application name (Mixed Case) for the generated APEX pages
+TAB_COLS                      DTGENAPPdbid9VARCHAR2200050Database link connect string for mid-tier connections to the centralized database server.
+TAB_COLS                      DTGENAPPdb_auth10VARCHAR220050Database link authorization for mid-tier connections to the centralized database server
+TAB_COLS                      DTGENAPPdescription11VARCHAR2100040Description of this application
+TAB_COLS                      DTGENAPPts_null_override12DTGENFLAGFlag to override all tablespace names to null
+TAB_COLS                      DTGENAPPts_onln_data13VARCHAR230L70Default tableapace name for on-line data tables
+TAB_COLS                      DTGENAPPts_onln_indx14VARCHAR230L70Default tablespace name for on-line indexes
+TAB_COLS                      DTGENAPPts_hist_data15VARCHAR230L70Default tablespace name for history data tables
+TAB_COLS                      DTGENAPPts_hist_indx16VARCHAR230L70Default tablespace name for history indexes
+TAB_COLS                      DTGENAPPusr_datatype17VARCHAR220U50Datatype for the "_USR" data columns in history tables tables. The default value is VARCHAR2(30).
+TAB_COLS                      DTGENAPPusr_frgn_key18VARCHAR2100L50Foreign Key for the "_USR" data columns in history tables. Must be of the form "table", "schema.table", "table(column)",  or "schema.table(column)".
+TAB_COLS                      DTGENAPPcopyright19VARCHAR2400050Copyright notice that is placed in the comment header in all generated scripts
 TAB_COLS                      DTGENCKtable_id11XDTGENTABSurrogate Key for the table of this check constraint
 TAB_COLS                      DTGENCKseq22XNUMBER2Sequence number of this check constraint
 TAB_COLS                      DTGENCKtext3XVARCHAR21000Execution (PL/SQL) text for this check constraint

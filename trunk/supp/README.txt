@@ -15,6 +15,8 @@ create_owner.sql   - Used by install.sql to create the DTGen owner and roles
 create_user.sql    - Sample script used to create an application user
                      -) Must be run by sys or system
                      -) Creates the user and synonyms and grants permissions
+drop_owner.sql     - Sample script used to drop a DTGen owner and roles
+drop_user.sql      - Sample script used to drop an application user
 dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 fullasm.sql        - SPOOL script used to assemble scripts for an application
                      -) The ABBR of the application is the first parameter
