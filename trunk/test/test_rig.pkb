@@ -90,5 +90,17 @@ begin
                    ' => ' || value_in || ')';
 end DTC_UPDATE_API2;
 
+function run_test
+      (app_abbr_in  in  varchar2
+      ,username_in  in  varchar2)
+      (
+is
+   sql_txt  varchar2(4000);
+begin
+   for buff in (
+      select * from test parms
+       where 
+end run_test;
+
 end test_rig;
 /

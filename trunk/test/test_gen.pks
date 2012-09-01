@@ -14,12 +14,12 @@ type user_parms_aa_type is table
 user_parms_aa  user_parms_aa_type;
 
 procedure gen_load
-      (app_abbr_in  in  varchar2
-      ,username_in  in  varchar2);
+      (app_abbr_in   in  varchar2
+      ,db_schema_in  in  varchar2);
 
 procedure cleanup
-      (app_abbr_in  in  varchar2
-      ,username_in  in  varchar2);
+      (app_abbr_in   in  varchar2
+      ,db_schema_in  in  varchar2);
 
 end test_gen;
 /

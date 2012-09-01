@@ -13,10 +13,15 @@ create_ut_owner.sql   - Run as sys to create Unit Test Repository Owner
                         &1. - Generator Schema Object Owner Name
 create_ut_syns.sql    - Called by create_ut_logins.sql
 drop_ut_logins.sql    - Run as sys to drop the Test Environments
+                        Calls supp/drop_owner and supp/drop_user
 drop_ut_owner.sql     - Run as sys to drop Unit Test Repository Owner
 g.sql                 - Creates some GUI stuff
 install_usyn.sql      - Dummy User Synonym Script for supp/create_user.sql
                         Note: The user synonyms are created by test_gen.gen_load
+test_gen.pkb          - Called by create_ut_objs to create TEST_GEN package
+test_gen.pks          - Called by create_ut_objs to create TEST_GEN package
+test_rig.pkb          - Called by create_ut_objs to create TEST_RIG package
+test_rig.pks          - Called by create_ut_objs to create TEST_RIG package
 
 
 Installation Instructions:
@@ -37,6 +42,10 @@ Installation Instructions:
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
      - OR -
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
+
+4) Run SQL*Developer and Load Unit Tests
+
+   -) Tools -> Import from File -> ???
 
 4) Install the Unit Test Environments
 
