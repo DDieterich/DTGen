@@ -32,6 +32,9 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set serveroutput on format wrapped
    prompt
    prompt Generating DTGEN ...
+   update applications_act
+     set  db_schema = '${TESTNAME}'
+    where abbr = 'DTGEN';
    @../supp/fullgen DTGEN
    @../supp/fullasm DTGEN
    connect ${TEST_CONNECT_STRING}
@@ -41,6 +44,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    prompt
    prompt Running installation ...
    @install_db
+   @install_db_sec
    @comp
 EOF
 if [ ${?} != 0 ]
