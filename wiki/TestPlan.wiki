@@ -152,7 +152,7 @@
 || Number of Tables || 0 || 1 || 200 || 201 || No ||
 || Number of Columns in a Table || 0 || 1 || 99 || 100 || No ||
 || Number of Natural Key Columns || 0 || 1 || 99 || 100 || No ||
-|| NUMBER Datatype Length || 0 || 1 || 39 || 40 || Yes ||
+|| NUMBER Datatype Length || 0 || 1 || 38 || 39 || Yes ||
 || NUMBER Datatype Scale || -85 || -84 || 127 || 128 || Yes ||
 || VARCHAR2 Datatype Length || 0 || 1 || 32767 || 32768 || No ||
 || TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
