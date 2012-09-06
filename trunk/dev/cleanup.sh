@@ -20,6 +20,7 @@ then
 fi
 
 sqlplus ${TEST_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
+   ALTER SESSION SET recyclebin = OFF;
    @uninstall_db
 EOF
 
@@ -27,6 +28,7 @@ fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
 cd gui
 sqlplus ${TEST_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
+   ALTER SESSION SET recyclebin = OFF;
    @gui_uncomp
 EOF
 

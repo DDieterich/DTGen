@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'Cp1252'?>
+<UT>
+   <object class="oracle.dbtools.unit_test.testObjects.UtLibraryItem">
+      <libitem id="87cf02e7-e9eb-4066-afea-77e170118b7a" name="Save Employees" class="oracle.dbtools.unit_test.startup.TableCopyStartup">
+         <startup>
+            <class>oracle.dbtools.unit_test.startup.TableCopyStartup</class>
+            <name>Table or Row Copy</name>
+            <description>"T$TEMP_EMPLOYEES" := SELECT ROWID AS SRC$ROWID, s.* FROM "EMPLOYEES" s </description>
+            <source>"EMPLOYEES"</source>
+            <predicate/>
+            <temp>"T$TEMP_EMPLOYEES"</temp>
+         </startup>
+      </libitem>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtLibraryItem">
+      <libitem id="add3a4fc-a29c-4e00-aab0-d1484f3b0365" name="Restore Employees" class="oracle.dbtools.unit_test.teardown.TableRestoreTeardown">
+         <teardown>
+            <class>oracle.dbtools.unit_test.teardown.TableRestoreTeardown</class>
+            <name>Table or Row Restore</name>
+            <description>"T$TEMP_EMPLOYEES" -> "EMPLOYEES"</description>
+            <source>"EMPLOYEES"</source>
+            <key>PRIMARY KEY</key>
+            <temp>"T$TEMP_EMPLOYEES"</temp>
+            <predicate/>
+            <dropTempTable>yes</dropTempTable>
+         </teardown>
+      </libitem>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtLibraryItem">
+      <libitem id="b668e02a-37cc-42bc-8476-da94880be4fa" name="AWARD_BONUS_DYN_QUERY" class="oracle.dbtools.unit_test.editor.DynamicValueQuery">
+         <dvq>
+            <class>oracle.dbtools.unit_test.editor.DynamicValueQuery</class>
+            <name>Dynamic Value Query</name>
+            <description>SELECT emp_id, sales_amt FROM award_bonus_dyn_query;</description>
+            <code>SELECT emp_id, sales_amt FROM award_bonus_dyn_query;</code>
+         </dvq>
+      </libitem>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtLibraryItem">
+      <libitem id="740a849b-7bbc-467c-ad88-106136f5730f" name="AWARD_BONUS_DYN_QUERY" class="oracle.dbtools.unit_test.process_validation.QueryReturningNoRows">
+         <validation>
+            <class>oracle.dbtools.unit_test.process_validation.QueryReturningNoRows</class>
+            <name>Query returning no row(s)</name>
+            <description>SELECT * FROM employees WHERE salary > 20000   
+  AND commission_pct IS NOT NULL   
+</description>
+            <code>SELECT * FROM employees WHERE salary > 20000   
+  AND commission_pct IS NOT NULL   
+</code>
+         </validation>
+      </libitem>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtTest">
+      <test id="9ba7ceb1-7995-42d6-91d6-b20fd4f4fc2d" name="AWARD_BONUS_DYN_QUERY" obj_name="AWARD_BONUS" obj_owner="DTGEN_TEST" obj_type="PROCEDURE" obj_call="" src_conn_name="IdeConnections%23XE2dtgen_test" coverage="false">
+         <arg id="9f4180a6-a020-456a-ac53-80953fd07e80" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54915" argument_name="EMP_ID" position="1" sequence="1" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <arg id="5928eb2d-6905-4b3a-9af2-69366f5f1852" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54915" argument_name="SALES_AMT" position="2" sequence="2" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <startup id="1ba07f54-c23b-4325-adc5-02e1b6f7673b" lib_id="87cf02e7-e9eb-4066-afea-77e170118b7a" lib_name="Save Employees"/>
+         <teardown id="e3423033-954f-4882-a83d-5bbf85f56602" lib_id="add3a4fc-a29c-4e00-aab0-d1484f3b0365" lib_name="Restore Employees"/>
+         <test_impl id="d03d421c-05fe-4f34-b4d1-cba9e1519967" test_id="9ba7ceb1-7995-42d6-91d6-b20fd4f4fc2d" name="Test Implementation 1" expected_ret="Success" expected_err="ANY" dq_lib_id="b668e02a-37cc-42bc-8476-da94880be4fa" dq_lib_name="AWARD_BONUS_DYN_QUERY">
+            <parm argId="9f4180a6-a020-456a-ac53-80953fd07e80" utiId="d03d421c-05fe-4f34-b4d1-cba9e1519967" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue is_null=&quot;true&quot; name=&quot;EMP_ID&quot;/>" test_out_val="true"/>
+            <parm argId="5928eb2d-6905-4b3a-9af2-69366f5f1852" utiId="d03d421c-05fe-4f34-b4d1-cba9e1519967" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue is_null=&quot;true&quot; name=&quot;SALES_AMT&quot;/>" test_out_val="true"/>
+            <validation id="a2ddece3-ee8f-4dc2-906a-fe4ac702748f" apply="true" lib_id="740a849b-7bbc-467c-ad88-106136f5730f" lib_name="AWARD_BONUS_DYN_QUERY"/>
+         </test_impl>
+      </test>
+   </object>
+</UT>

@@ -65,7 +65,7 @@ BEGIN
       lbuff_apnd_aa(i).seq     := lbuff_seq;
       lbuff_apnd_aa(i).value   := text_in;
    else
-      if lbuff_orig_aa(lbuff_seq).value != text_in then
+      if NOT util.is_equal(lbuff_orig_aa(lbuff_seq).value, text_in) then
          i := lbuff_updt_aa.COUNT + 1;
          lbuff_updt_aa(i)       := lbuff_orig_aa(lbuff_seq);
          lbuff_updt_aa(i).value := text_in;
@@ -157,24 +157,25 @@ PROCEDURE close_file
    -- Delete the remaining part of an existing file
 IS
 BEGIN
+   --dbms_output.put_line('Closing File ' || fbuff.name);
    -- Send the Updates
    FOR i IN 1 .. lbuff_updt_aa.COUNT
    LOOP
+      --dbms_output.put_line('Updating Seq ' || lbuff_updt_aa(i).seq);
       file_lines_dml.upd(lbuff_updt_aa(i));
    END LOOP;
    -- Append lines
    FOR i IN 1 .. lbuff_apnd_aa.COUNT
    LOOP
+      --dbms_output.put_line('Appending Seq ' || lbuff_apnd_aa(i).seq);
       file_lines_dml.ins(lbuff_apnd_aa(i));
    END LOOP;
    -- Delete any remaining lines
    FOR i IN lbuff_seq+1 .. lbuff_orig_aa.COUNT
    LOOP
+      --dbms_output.put_line('Deleting Seq ' || lbuff_orig_aa(i).seq);
       file_lines_dml.del(lbuff_orig_aa(i).id);
    END LOOP;
-   -- Update create/update date/time
-   fbuff.created_dt := sysdate;
-   files_dml.upd(fbuff);
    -- Free the memory
    lbuff_apnd_aa.DELETE;
    lbuff_updt_aa.DELETE;
@@ -221,6 +222,7 @@ procedure show_errors
    --  *** DOES NOT USE SQL*Plus commands, only SQL
 is
 begin
+   -- Queries must start with the word "select" and can only return 1 string
    p('select ''' || upper(name_in) || ''' as "' || initcap(type_in) || ':"');
    if sown is not null
    then
@@ -236,6 +238,7 @@ begin
    end if;
    p('  and  rownum = 1');
    p('/');
+   -- Queries must start with the word "select" and can only return 1 string
    p('select ''(''||line||''/''||position||'') ''||text as error');
    if sown is not null
    then
@@ -836,6 +839,7 @@ begin
          end if;
       end loop;
    end loop;
+   /*
    nknum := nk_aa.FIRST;
    loop
       for i in 1 .. nk_aa(nknum).cbuff_va.COUNT
@@ -850,6 +854,7 @@ begin
       dbms_output.put_line('-');
       nknum := nk_aa.NEXT(nknum);
    end loop;
+   */
 end load_nk_aa;
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -3476,8 +3481,11 @@ PROCEDURE drop_sh
    --  For a tbuff, drop the sh package
 IS
 BEGIN
-   p('drop package ' || sown||tbuff.name||'_sh');
-   p('/');
+   if table_self_ref(tbuff.id)
+   then
+      p('drop package ' || sown||tbuff.name||'_sh');
+      p('/');
+   end if;
 END drop_sh;
 ----------------------------------------
 PROCEDURE create_sh_spec
@@ -4081,12 +4089,10 @@ IS
    tname    varchar2(30);
    fkseq    number(2);
 BEGIN
-   p('/***  ACTIVE Foreign Keys  ***/');
    tname := tbuff.name;
    --  Foreign Keys
    if abuff.usr_frgn_key is not null
    then
-      p('/***  ACTIVE Audit Foreign Key ***/');
       p('alter table ' || sown||tname || ' drop constraint ' ||
                                 tname || '_fa1');
       p('/');
@@ -4800,6 +4806,7 @@ BEGIN
       p('/');
       p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
                                 tbuff.name || '_PDAT_nnh3');
+      p('/');
       if tbuff.type = 'EFF'
       then
          p('alter table ' || sown||tbuff.name || '_PDAT drop constraint ' ||
@@ -4814,7 +4821,8 @@ BEGIN
       end if;
       for buff in (
          select * from tab_cols COL
-          where COL.req     is not null
+          where (   COL.nk   is not null
+                 or COL.req  is not null )
            and  COL.table_id = tbuff.id
           order by COL.seq desc)
       loop
@@ -4854,7 +4862,8 @@ BEGIN
       end if;
       for buff in (
          select * from tab_cols COL
-          where COL.req     is not null
+          where (   COL.nk   is not null
+                 or COL.req  is not null )
            and  COL.table_id = tbuff.id
           order by COL.seq desc)
       loop
@@ -4939,7 +4948,8 @@ begin
    -- Not Null Check Constraints
    for buff in (
       select * from tab_cols COL
-       where COL.req     is not null
+       where (   COL.nk   is not null
+              or COL.req  is not null )
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
@@ -5023,7 +5033,8 @@ begin
       tname := tbuff.name || HOA;
       for buff in (
          select * from tab_cols COL
-          where COL.req     is not null
+          where (   COL.nk   is not null
+                 or COL.req  is not null )
            and  COL.table_id = tbuff.id
           order by COL.seq )
       loop
@@ -5065,7 +5076,8 @@ begin
       tname := tbuff.name || '_PDAT';
       for buff in (
          select * from tab_cols COL
-          where COL.req     is not null
+          where (   COL.nk   is not null
+                 or COL.req  is not null )
            and  COL.table_id = tbuff.id
           order by COL.seq )
       loop
@@ -5081,7 +5093,7 @@ begin
          p('alter table ' || sown||tname || ' modify eff_beg_dtm');
          p('   constraint ' || tname || '_nnh1 not null');
          p('/');
-         p('alter table ' || sown||tname || ' modify eff_end_dtm');
+         p('alter table ' || sown||tname || ' modify eff_prev_beg_dtm');
          p('   constraint ' || tname || '_nnh2 not null');
          p('/');
       end if;
@@ -7505,10 +7517,10 @@ BEGIN
          end loop;
       end if;
    end loop;
-   if nkfnd
-   then
+   --if nkfnd
+   --then
       p('      ,nkdata_provided_in  in   VARCHAR2  default ''Y''');
-   end if;
+   --end if;
    p('      );');
    p('   procedure upd');
    p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
@@ -8068,10 +8080,10 @@ BEGIN
          end loop;
       end if;
    end loop;
-   if nkfnd
-   then
+   --if nkfnd
+   --then
       p('      ,nkdata_provided_in  in   VARCHAR2  default ''Y''');
-   end if;
+   --end if;
    p('      )');
    p('   -- Application Update procedure');
    p('is');
@@ -8358,7 +8370,10 @@ BEGIN
    loop
       p('      ,n_'||buff.name||' => n_buff.'||buff.name);
    end loop;
-   p('      ,nkdata_provided_in => ''N''');
+   --if nkfnd
+   --then
+      p('      ,nkdata_provided_in => ''N''');
+   --end if;
    p('      );') ;
    p('end upd;') ;
    p('----------------------------------------');
@@ -15956,10 +15971,9 @@ BEGIN
          when 'LOG' then '_AUD'
          else '_BOGUS'
       end;
-   p('----------------------------------------');
+   -- Queries must start with the word "select" and can only return 1 string
    p('select ''***  '||tbuff.name||'  ***'' as TABLE_NAME from dual');
    p('/');
-   p('----------------------------------------');
 END next_table;
 ----------------------------------------
 PROCEDURE drop_glob
@@ -15972,8 +15986,12 @@ BEGIN
    drop_util;
    drop_globals;
    p('');
-   p('select substr(object_name,1,30), object_type, status');
+   p('select object_type              || '': '' ||');
+   p('       substr(object_name,1,30) || ''('' ||');
+   p('       status                   || '')''  as remaining_objects');
    p(' from  user_objects');
+   p(' order by object_type');
+   p('      ,object_name');
    p('/');
    close_file;
 END drop_glob;
@@ -16001,8 +16019,12 @@ BEGIN
    drop_util;
    drop_gd;
    p('');
-   p('select substr(object_name,1,30), object_type, status');
+   p('select object_type              || '': '' ||');
+   p('       substr(object_name,1,30) || ''('' ||');
+   p('       status                   || '')''  as remaining_objects');
    p(' from  user_objects');
+   p(' order by object_type');
+   p('      ,object_name');
    p('/');
    close_file;
 END drop_gdst;
@@ -16060,14 +16082,27 @@ BEGIN
       drop_tab;
       p('');
    END LOOP;
-   p('select substr(object_name,1,30), object_type, status');
-   p(' from  user_objects where object_type = ''PACKAGE BODY''');
+   p('select object_type              || '': '' ||');
+   p('       substr(object_name,1,30) || ''('' ||');
+   p('       status                   || '')''  as remaining_objects');
+   p(' from  user_objects');
+   p(' where object_type = ''PACKAGE BODY''');
+   p('  and  object_name not in (''GLOB'', ''UTIL'')');
+   p(' order by object_type');
+   p('      ,object_name');
    p('/');
-   p('select table_name, tablespace_name');
+   p('select table_name      || '' (tablespace '' ||');
+   p('       tablespace_name || '')''  as remaining_tables');
    p(' from  user_tables');
+   p(' where table_name != ''UTIL_LOG''');
+   p(' order by table_name');
    p('/');
-   p('select sequence_name, min_value, max_value, last_number');
+   p('select sequence_name || '' min:'' ||');
+   p('       min_value     || '' max:'' ||');
+   p('       max_value     || '' last:'' ||');
+   p('       last_number  as remaining_sequences');
    p(' from  user_sequences');
+   p(' order by sequence_name');
    p('/');
    p('');
    close_file;
@@ -16124,13 +16159,24 @@ BEGIN
       drop_cons;
       p('');
    END LOOP;
-   p('select trigger_name, trigger_type, table_name');
-   p(' from  user_triggers where base_object_type = ''TABLE''');
+   p('select table_name   || '': '' ||');
+   p('       trigger_type || '' - '' ||');
+   p('       trigger_name   as remaining_table_triggers');
+   p(' from  user_triggers');
+   p(' where base_object_type = ''TABLE''');
+   p(' order by table_name');
+   p('      ,trigger_type');
    p('/');
-   p('select substr(owner||''.''||constraint_name,1,40)');
-   p('      ,constraint_type, table_name');
+   p('select table_name      || '': '' ||');
+   p('       constraint_type || '' = '' ||');
+   p('       substr(owner    || ''.'' ||');
+   p('              constraint_name, 1, 40)  as remaining_constraints');
    p(' from  user_constraints');
    p(' where constraint_type not in (''P'',''U'',''R'')');
+   p(' order by table_name');
+   p('      ,constraint_type');
+   p('      ,owner');
+   p('      ,constraint_name');
    p('/');
    close_file;
 END drop_integ;
@@ -16192,13 +16238,24 @@ BEGIN
          drop_rem;
          p('');
       END LOOP;
-      p('select trigger_name, trigger_type, table_name');
-      p(' from  user_triggers where base_object_type = ''TABLE''');
+      p('select table_name   || '': '' ||');
+      p('       trigger_type || '' - '' ||');
+      p('       trigger_name   as remaining_table_triggers');
+      p(' from  user_triggers');
+      p(' where base_object_type = ''TABLE''');
+      p(' order by table_name');
+      p('      ,trigger_type');
       p('/');
-      p('select substr(owner||''.''||constraint_name,1,40)');
-      p('      ,constraint_type, table_name');
+      p('select table_name      || '': '' ||');
+      p('       constraint_type || '' = '' ||');
+      p('       substr(owner    || ''.'' ||');
+      p('              constraint_name, 1, 40)  as remaining_constraints');
       p(' from  user_constraints');
       p(' where constraint_type not in (''P'',''U'',''R'')');
+      p(' order by table_name');
+      p('      ,constraint_type');
+      p('      ,owner');
+      p('      ,constraint_name');
       p('/');
    end if;
    close_file;
@@ -16268,13 +16325,23 @@ BEGIN
       drop_dp;
       p('');
    END LOOP;
-   p('select view_name, text_length, view_type_owner');
+   p('select view_type_owner || '': '' ||');
+   p('       view_name       || ''(len '' ||');
+   p('       text_length     || '')''   as remaining_views');
    p(' from  user_views');
+   p(' order by view_type_owner');
+   p('      ,view_name');
    p('/');
-   p('select substr(object_name,1,30), object_type, status');
+   p('select object_type              || '': '' ||');
+   p('       substr(object_name,1,30) || ''('' ||');
+   p('       status                   || '')''   as remaining_objects');
    p(' from  user_objects');
    p(' where object_type = ''PACKAGE BODY''');
    p('  and  object_name not like ''%_POP''');
+   p('  and  object_name not like ''%_TAB''');
+   p('  and  object_name not in (''GLOB'', ''UTIL'')');
+   p(' order by object_type');
+   p('      ,object_name');
    p('/');
    close_file;
 END drop_oltp;
@@ -16404,8 +16471,12 @@ BEGIN
          drop_tsyn;
       END LOOP;
       drop_gsyn;
-      p('select substr(object_name,1,30), object_type, status');
+      p('select object_type              || '': '' ||');
+      p('       substr(object_name,1,30) || ''('' ||');
+      p('       status                   || '')''  as remaining_objects');
       p(' from  user_objects');
+      p(' order by object_type');
+      p('      ,object_name');
       p('/');
    END IF;
    close_file;

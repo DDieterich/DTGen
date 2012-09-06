@@ -1,0 +1,67 @@
+<?xml version = '1.0' encoding = 'Cp1252'?>
+<UT>
+   <object class="oracle.dbtools.unit_test.testObjects.UtTest">
+      <test id="b674b58c-e267-4f08-8120-8a96067042e4" name="AWARD_BONUS" obj_name="AWARD_BONUS" obj_owner="DTGEN_TEST" obj_type="PROCEDURE" obj_call="" src_conn_name="IdeConnections%23XE2dtgen_test" coverage="true">
+         <arg id="f78a05e2-6b5a-4814-a8e9-dc862524a77d" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54014" argument_name="EMP_ID" position="1" sequence="1" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <arg id="3acd5c4b-501c-4a72-94ee-da00bac13e15" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54014" argument_name="SALES_AMT" position="2" sequence="2" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <startup id="b969eda2-b228-4143-b355-5810d1904d0c">
+            <startup>
+               <class>oracle.dbtools.unit_test.startup.TableCopyStartup</class>
+               <name>Table or Row Copy</name>
+               <description>"TMP$AWARD_BONUS" := SELECT ROWID AS SRC$ROWID, s.* FROM "EMPLOYEES" s </description>
+               <source>"EMPLOYEES"</source>
+               <predicate/>
+               <temp>"TMP$AWARD_BONUS"</temp>
+            </startup>
+         </startup>
+         <teardown id="02257168-1a34-42ce-9515-98adfc2c6ae0">
+            <teardown>
+               <class>oracle.dbtools.unit_test.teardown.TableRestoreTeardown</class>
+               <name>Table or Row Restore</name>
+               <description>"TMP$AWARD_BONUS" -> "EMPLOYEES"</description>
+               <source>"EMPLOYEES"</source>
+               <key>PRIMARY KEY</key>
+               <temp>"TMP$AWARD_BONUS"</temp>
+               <predicate/>
+               <dropTempTable>yes</dropTempTable>
+            </teardown>
+         </teardown>
+         <test_impl id="58d2a902-f502-489e-aacb-b0809beac8ba" test_id="b674b58c-e267-4f08-8120-8a96067042e4" name="Test Implementation 1" expected_ret="Success" expected_err="ANY">
+            <parm argId="3acd5c4b-501c-4a72-94ee-da00bac13e15" utiId="58d2a902-f502-489e-aacb-b0809beac8ba" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;SALES_AMT&quot;>5000&lt;/DataValue>" test_out_val="true"/>
+            <parm argId="f78a05e2-6b5a-4814-a8e9-dc862524a77d" utiId="58d2a902-f502-489e-aacb-b0809beac8ba" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;EMP_ID&quot;>1001&lt;/DataValue>" test_out_val="true"/>
+            <validation id="818186d8-015f-4610-a730-024c6cd2d438" apply="true">
+               <validation>
+                  <class>oracle.dbtools.unit_test.process_validation.QueryReturningRows</class>
+                  <name>Query returning row(s)</name>
+                  <description>SELECT * FROM employees   
+  WHERE employee_id = 1001 AND salary = 9400   
+</description>
+                  <code>SELECT * FROM employees   
+  WHERE employee_id = 1001 AND salary = 9400   
+</code>
+               </validation>
+            </validation>
+         </test_impl>
+         <test_impl id="94c9f834-a1f9-4cdb-8b12-9f62195acf36" test_id="b674b58c-e267-4f08-8120-8a96067042e4" name="Test Implementation 2" expected_ret="Exception" expected_err="ANY">
+            <parm argId="3acd5c4b-501c-4a72-94ee-da00bac13e15" utiId="94c9f834-a1f9-4cdb-8b12-9f62195acf36" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;SALES_AMT&quot;>5000&lt;/DataValue>" test_out_val="true"/>
+            <parm argId="f78a05e2-6b5a-4814-a8e9-dc862524a77d" utiId="94c9f834-a1f9-4cdb-8b12-9f62195acf36" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;EMP_ID&quot;>1004&lt;/DataValue>" test_out_val="true"/>
+         </test_impl>
+      </test>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtTest">
+      <test id="fd9d5b6e-ea16-45a1-a872-5860c8f51d92" name="AWARD_BONUS_NO_COMM_EXC" obj_name="AWARD_BONUS" obj_owner="DTGEN_TEST" obj_type="PROCEDURE" obj_call="" src_conn_name="IdeConnections%23XE2dtgen_test" coverage="false">
+         <arg id="ddf91255-d850-4764-82d6-2ca38e95b5d6" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54014" argument_name="EMP_ID" position="1" sequence="1" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <arg id="7b4804f8-4862-406e-9260-0e241c1a7bb7" owner="DTGEN_TEST" object_name="AWARD_BONUS" object_id="54014" argument_name="SALES_AMT" position="2" sequence="2" data_level="0" data_type="NUMBER" in_out="IN" data_length="22" radix="10" pls_type="NUMBER" char_length="0" char_used="0"/>
+         <test_impl id="0e606d9e-18e6-4516-b170-327120289bf8" test_id="fd9d5b6e-ea16-45a1-a872-5860c8f51d92" name="Test Implementation 1" expected_ret="Exception" expected_err="ANY">
+            <parm argId="7b4804f8-4862-406e-9260-0e241c1a7bb7" utiId="0e606d9e-18e6-4516-b170-327120289bf8" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;SALES_AMT&quot;>5000&lt;/DataValue>" test_out_val="true"/>
+            <parm argId="ddf91255-d850-4764-82d6-2ca38e95b5d6" utiId="0e606d9e-18e6-4516-b170-327120289bf8" input_value="&lt;?xml version = '1.0' encoding = 'UTF-8'?>&#xD;&#xA;&lt;DataValue name=&quot;EMP_ID&quot;>1004&lt;/DataValue>" test_out_val="true"/>
+         </test_impl>
+      </test>
+   </object>
+   <object class="oracle.dbtools.unit_test.testObjects.UtSuite">
+      <suite id="0b9c7eb0-20f9-4b06-85de-016b95aed6fc" name="AWARD_BONUS_SUITE" coverage="false" source_conn_name="">
+         <suite_item test_id="b674b58c-e267-4f08-8120-8a96067042e4" run_start="true" run_teardown="true"/>
+         <suite_item test_id="fd9d5b6e-ea16-45a1-a872-5860c8f51d92" run_start="true" run_teardown="true"/>
+      </suite>
+   </object>
+</UT>
