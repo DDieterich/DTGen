@@ -231,7 +231,11 @@ is
                             ,table_name  tab
                        from  user_tables)
                connect by prior tab = partab )
-       where tab not in ('FILES','FILE_LINES','UTIL_LOG')
+       where tab not in ('FILES','FILES_PDAT',
+                         'FILES_AUD','FILES_HIST',
+                         'FILE_LINES','FILE_LINES_PDAT',
+                         'FILE_LINES_AUD','FILE_LINES_HIST',
+                         'UTIL_LOG')
        group by tab
        order by 1, 2;
    cursor column_cursor (tab_name varchar2) is

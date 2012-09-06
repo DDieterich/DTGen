@@ -1,0 +1,482 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Sep 6 14:32:19 2012
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> Connected.
+SQL> 
+Session altered.
+
+SQL> 
+***************************
+Running Script drop_usyn
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+REMAINING_OBJECTS
+--------------------------------------------------------------------------------
+SYNONYM: TEST_GEN(VALID)
+SYNONYM: TEST_PARMS(VALID)
+SYNONYM: TEST_RIG(VALID)
+SYNONYM: TEST_RUN(VALID)
+
+SQL> Connected.
+SQL> 
+Session altered.
+
+SQL> 
+***************************
+Running Script drop_mods
+***************************
+
+
+***************************
+Running Script drop_aa
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+***************************
+Running Script drop_oltp
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+no rows selected
+
+
+no rows selected
+
+
+***************************
+Running Script drop_integ
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+no rows selected
+
+
+no rows selected
+
+
+***************************
+Running Script drop_ods
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+***************************
+Running Script drop_glob
+***************************
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Type dropped.
+
+
+Type dropped.
+
+
+Package dropped.
+
+
+REMAINING_OBJECTS
+--------------------------------------------------------------------------------
+SYNONYM: TEST_GEN(VALID)
+SYNONYM: TEST_PARMS(VALID)
+SYNONYM: TEST_RIG(VALID)
+SYNONYM: TEST_RUN(VALID)
+
+SQL> Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - Production

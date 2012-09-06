@@ -7,10 +7,12 @@
 
 -- Create Synonyms back to the Generator Schema Object Owner
 create synonym applications_act for &1..applications_act;
+create synonym file_lines_act   for &1..file_lines_act;
 create synonym file_lines_asof  for &1..file_lines_asof;
 create synonym util             for &1..util;
 create synonym glob             for &1..glob;
 create synonym generate         for &1..generate;
+create synonym dtgen_util       for &1..dtgen_util;
 
 @test_gen.pks
 grant execute on test_gen to dtgen_ut_test;

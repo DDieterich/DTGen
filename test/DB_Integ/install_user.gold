@@ -1,0 +1,90 @@
+SQL>    connect TDBUT/TDBUT@XE2
+Connected.
+SQL>    @install_user
+
+***************************
+Running Script create_usyn
+***************************
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+SQL>    spool off
