@@ -10,25 +10,25 @@ set serveroutput on format wrapped
 set trimspool on
 set verify off
 
-execute assemble.install_script('&1.','DB');
+execute dtgen_util.install_script('&1.','DB');
 spool install_db_sec.sql
-execute assemble.install_script('&1.','DB','sec');
+execute dtgen_util.install_script('&1.','DB','sec');
 spool install_mt.sql
-execute assemble.install_script('&1.','MT');
+execute dtgen_util.install_script('&1.','MT');
 spool install_mt_sec.sql
-execute assemble.install_script('&1.','MT','sec');
+execute dtgen_util.install_script('&1.','MT','sec');
 spool install_usr.sql
-execute assemble.install_script('&1.','USR');
+execute dtgen_util.install_script('&1.','USR');
 spool install_gui.sql
-execute assemble.install_script('&1.','GUI');
+execute dtgen_util.install_script('&1.','GUI');
 spool uninstall_db.sql
-execute assemble.uninstall_script('&1.','DB');
+execute dtgen_util.uninstall_script('&1.','DB');
 spool uninstall_mt.sql
-execute assemble.uninstall_script('&1.','MT');
+execute dtgen_util.uninstall_script('&1.','MT');
 spool uninstall_usr.sql
-execute assemble.uninstall_script('&1.','USR');
+execute dtgen_util.uninstall_script('&1.','USR');
 spool dtgen_dataload.ctl
-execute assemble.data_script('&1.')
+execute dtgen_util.data_script('&1.')
 
 set verify on
 set pagesize 20
@@ -43,7 +43,7 @@ spool off
 --
 --  NOTE: This approach is an advanced option and requires
 --     proper assembly of the install and uninstall files
---     that are created.  Use of the ASSEMBLE package as 
+--     that are created.  Use of the dtgen_util package as 
 --     shown above is preferred.
 --
 -- @select_file &1. drop_usyn

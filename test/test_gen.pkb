@@ -148,6 +148,7 @@ begin
    sql_txt := '';
 end run_script;
 
+/*
 function gen_load
       (app_abbr_in   in  varchar2
       ,db_schema_in  in  varchar2)
@@ -230,27 +231,23 @@ begin
    commit;
    return log_txt;
 end cleanup;
+*/
 
 ------------------------------------------------------------
 
 procedure gen_all
-      (vector_in     in  varchar2
+      (action_in     in  varchar2
       ,db_schema_in  in  varchar2)
 is
    saved_db_schema  applications_act.db_schema%TYPE;
    saved_dbid       applications_act.dbid%TYPE;
    saved_db_auth    applications_act.db_auth%TYPE;
    app_abbr         applications_act.abbr%TYPE;
-   sql_prefix       varchar2(100);
 begin
-   if lower(vector_in) = 'i' then
-      sql_prefix := 'begin generate.create_';
-   else
-      sql_prefix := 'begin generate.drop_';
-   end if;
    util.set_usr(USER);
-   app_abbr := user_aa(db_schema_in).app_file_aa.FIRST;
+   for j in 1 .. user_aa(db_schema_in).actapp_aa(action_in).COUNT
    loop
+      app_abbr := user_aa(db_schema_in).actapp_aa(action_in)(j).app_abbr;
       select       db_schema,       dbid,       db_auth
        into  saved_db_schema, saved_dbid, saved_db_auth
        from  applications_act
@@ -261,10 +258,10 @@ begin
             ,db_auth   = user_aa(db_schema_in).db_auth
        where abbr = app_abbr;
       generate.init(app_abbr);
-      FOR i in 1 .. user_aa(db_schema_in).app_file_aa(app_abbr).COUNT
+      FOR i in 1 .. user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt.COUNT
       loop
-         sql_txt := sql_prefix ||
-                    user_aa(db_schema_in).app_file_aa(app_abbr)(i) ||
+         sql_txt := 'begin generate.' ||
+                    user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt(i) ||
                     '; end;';
          --dbms_output.put_line ('SQL> ' || sql_txt);
          execute immediate sql_txt;
@@ -275,8 +272,6 @@ begin
             ,db_auth   = saved_db_auth
        where abbr = app_abbr;
       commit;
-      exit when app_abbr = user_aa(db_schema_in).app_file_aa.LAST;
-      app_abbr := user_aa(db_schema_in).app_file_aa.NEXT(app_abbr);
    end loop;
    sql_txt := '';
 end gen_all;
@@ -303,61 +298,205 @@ begin
 end output_file;
 
 procedure output_all
-      (vector_in     in  varchar2
+      (action_in     in  varchar2
       ,db_schema_in  in  varchar2)
 is
-   app_abbr  applications_act.abbr%TYPE;
+   app_abbr   applications_act.abbr%TYPE;
+   file_name  file_lines_act.files_nk2%TYPE;
 begin
-   gen_all(vector_in, db_schema_in);
-   if lower(vector_in) = 'i' then
-      app_abbr := user_aa(db_schema_in).app_file_aa.FIRST;
+   gen_all(action_in, db_schema_in);
+   for j in 1 .. user_aa(db_schema_in).actapp_aa(action_in).COUNT
+   loop
+      app_abbr := user_aa(db_schema_in).actapp_aa(action_in)(j).app_abbr;
+      FOR i in 1 .. user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt.COUNT
       loop
-         FOR i in 1 .. user_aa(db_schema_in).app_file_aa(app_abbr).COUNT
-         loop
-            output_file(app_abbr, 'create_' ||
-                        user_aa(db_schema_in).app_file_aa(app_abbr)(i));
-         end loop;
-         exit when app_abbr = user_aa(db_schema_in).app_file_aa.LAST;
-         app_abbr := user_aa(db_schema_in).app_file_aa.NEXT(app_abbr);
+         file_name := user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt(i);
+         --dbms_output.put_line('*** INSERT ' || file_name || ' for ' ||
+         --                                      db_schema_in || ' ' ||
+         --                                      app_abbr || ' HERE ***');
+         output_file(app_abbr, file_name);
+         case file_name
+         when 'drop_gusr' then
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''  as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+         when 'drop_oltp' then
+   dbms_output.put_line('select view_type_owner || '': '' ||');
+   dbms_output.put_line('       view_name       || ''(len '' ||');
+   dbms_output.put_line('       text_length     || '')''   as remaining_views');
+   dbms_output.put_line(' from  user_views');
+   dbms_output.put_line(' order by view_type_owner');
+   dbms_output.put_line('      ,view_name');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''   as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' where object_type = ''PACKAGE BODY''');
+   dbms_output.put_line('  and  object_name not like ''%_POP''');
+   dbms_output.put_line('  and  object_name not like ''%_TAB''');
+   dbms_output.put_line('  and  object_name not in (''GLOB'', ''UTIL'')');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+         when 'drop_dist' then
+   dbms_output.put_line('select table_name   || '': '' ||');
+   dbms_output.put_line('       trigger_type || '' - '' ||');
+   dbms_output.put_line('       trigger_name   as remaining_table_triggers');
+   dbms_output.put_line(' from  user_triggers');
+   dbms_output.put_line(' where base_object_type = ''TABLE''');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,trigger_type');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select table_name      || '': '' ||');
+   dbms_output.put_line('       constraint_type || '' = '' ||');
+   dbms_output.put_line('       substr(owner    || ''.'' ||');
+   dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
+   dbms_output.put_line(' from  user_constraints');
+   dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,constraint_type');
+   dbms_output.put_line('      ,owner');
+   dbms_output.put_line('      ,constraint_name');
+   dbms_output.put_line('/');
+         when 'drop_integ' then
+   dbms_output.put_line('select table_name   || '': '' ||');
+   dbms_output.put_line('       trigger_type || '' - '' ||');
+   dbms_output.put_line('       trigger_name   as remaining_table_triggers');
+   dbms_output.put_line(' from  user_triggers');
+   dbms_output.put_line(' where base_object_type = ''TABLE''');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,trigger_type');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select table_name      || '': '' ||');
+   dbms_output.put_line('       constraint_type || '' = '' ||');
+   dbms_output.put_line('       substr(owner    || ''.'' ||');
+   dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
+   dbms_output.put_line(' from  user_constraints');
+   dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,constraint_type');
+   dbms_output.put_line('      ,owner');
+   dbms_output.put_line('      ,constraint_name');
+   dbms_output.put_line('/');
+         when 'drop_ods' then
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''  as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' where object_type = ''PACKAGE BODY''');
+   dbms_output.put_line('  and  object_name not in (''GLOB'', ''UTIL'')');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select table_name      || '' (tablespace '' ||');
+   dbms_output.put_line('       tablespace_name || '')''  as remaining_tables');
+   dbms_output.put_line(' from  user_tables');
+   dbms_output.put_line(' where table_name != ''UTIL_LOG''');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select sequence_name || '' min:'' ||');
+   dbms_output.put_line('       min_value     || '' max:'' ||');
+   dbms_output.put_line('       max_value     || '' last:'' ||');
+   dbms_output.put_line('       last_number  as remaining_sequences');
+   dbms_output.put_line(' from  user_sequences');
+   dbms_output.put_line(' order by sequence_name');
+   dbms_output.put_line('/');
+         when 'drop_gdst' then
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''  as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+         when 'drop_glob' then
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''  as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+         when 'drop_usyn' then
+            null;
+         when 'drop_aa' then
+            null;
+         when 'drop_mods' then
+            null;
+         when 'delete_ods' then
+            null;
+         else
+            if file_name like 'drop_%'  or
+               file_name like 'delete_%'
+            then
+               raise_application_error(-20000, 'Unknown GENERATE procedure ' ||
+                                                file_name);
+            end if;
+         end case;
       end loop;
-   else
-      app_abbr := user_aa(db_schema_in).app_file_aa.LAST;
-      loop
-         FOR i in REVERSE 1 .. user_aa(db_schema_in).app_file_aa(app_abbr).COUNT
-         loop
-            output_file(app_abbr, 'drop_' ||
-                        user_aa(db_schema_in).app_file_aa(app_abbr)(i));
-         end loop;
-         exit when app_abbr = user_aa(db_schema_in).app_file_aa.FIRST;
-         app_abbr := user_aa(db_schema_in).app_file_aa.PRIOR(app_abbr);
-      end loop;
-   end if;
+   end loop;
 end output_all;
 
 begin
    user_aa('TDBST').db_schema           := null;
    user_aa('TDBST').dbid                := null;
    user_aa('TDBST').db_auth             := null;
-   user_aa('TDBST').app_file_aa('TST1') := file_nt_type
-      ('glob'
-      ,'ods'
-      ,'integ'
-      ,'oltp'
-      ,'aa'
-      ,'mods');
-   --user_aa('TDBST').app_file_aa('TST2') := file_nt_type
-   --   ('ods'
-   --   ,'integ'
-   --   ,'oltp'
-   --   ,'aa'
-   --   ,'mods');
+   appfile_rec.file_nt  := file_nt_type('create_glob'
+                                       ,'create_ods'
+                                       ,'create_oltp'
+                                       ,'create_aa'
+                                       ,'create_mods'
+                                       ,'create_integ');
+   appfile_rec.app_abbr := 'TST1';
+   user_aa('TDBST').actapp_aa('install')(1) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('create_ods'
+                                       ,'create_oltp'
+                                       ,'create_aa'
+                                       ,'create_mods'
+                                       ,'create_integ');
+   appfile_rec.app_abbr := 'TST2';
+   user_aa('TDBST').actapp_aa('install')(2) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('drop_integ'
+                                       ,'delete_ods'
+                                       ,'drop_mods'
+                                       ,'drop_aa'
+                                       ,'drop_oltp'
+                                       ,'drop_ods');
+   appfile_rec.app_abbr := 'TST2';
+   user_aa('TDBST').actapp_aa('uninstall')(1) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('drop_integ'
+                                       ,'delete_ods'
+                                       ,'drop_mods'
+                                       ,'drop_aa'
+                                       ,'drop_oltp'
+                                       ,'drop_ods'
+                                       ,'drop_glob');
+   appfile_rec.app_abbr := 'TST1';
+   user_aa('TDBST').actapp_aa('uninstall')(1) := appfile_rec;
+   ----------------------------------------
    user_aa('TDBUT').db_schema           := 'TDBST';
    user_aa('TDBUT').dbid                := null;
    user_aa('TDBUT').db_auth             := null;
-   user_aa('TDBUT').app_file_aa('TST1') := file_nt_type
-      ('usyn');
-   --user_aa('TDBUT').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+   appfile_rec.file_nt  := file_nt_type('create_gusr'
+                                       ,'create_usyn');
+   appfile_rec.app_abbr := 'TST1';
+   user_aa('TDBUT').actapp_aa('install')(1) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('create_usyn');
+   appfile_rec.app_abbr := 'TST2';
+   user_aa('TDBUT').actapp_aa('install')(2) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('drop_usyn');
+   appfile_rec.app_abbr := 'TST2';
+   user_aa('TDBUT').actapp_aa('uninstall')(1) := appfile_rec;
+   appfile_rec.file_nt  := file_nt_type('drop_usyn'
+                                       ,'drop_gusr');
+   appfile_rec.app_abbr := 'TST1';
+   user_aa('TDBUT').actapp_aa('uninstall')(2) := appfile_rec;
+/*
    user_aa('TMTST').db_schema           := null;
    user_aa('TMTST').dbid                := 'loopback';
    user_aa('TMTST').db_auth             := 'TDBST/TDBST';
@@ -366,17 +505,20 @@ begin
       ,'dist'
       ,'oltp'
       ,'mods');
-   --user_aa('TMTST').app_file_aa('TST2') := file_nt_type
-   --   ('dist'
-   --   ,'oltp'
-   --   ,'mods');
+   user_aa('TMTST').app_file_aa('TST2') := file_nt_type
+      ('dist'
+      ,'oltp'
+      ,'mods');
+   ----------------------------------------
    user_aa('TMTUT').db_schema           := 'TMTST';
    user_aa('TMTUT').dbid                := null;
    user_aa('TMTUT').db_auth             := null;
    user_aa('TMTUT').app_file_aa('TST1') := file_nt_type
+      ('gusr'
+      ,'usyn');
+   user_aa('TMTUT').app_file_aa('TST2') := file_nt_type
       ('usyn');
-   --user_aa('TMTUT').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+   ----------------------------------------
    user_aa('TMTSTDOD').db_schema           := null;
    user_aa('TMTSTDOD').dbid                := 'loopback';
    user_aa('TMTSTDOD').db_auth             := 'TDBUT/TDBUT';
@@ -385,17 +527,20 @@ begin
       ,'dist'
       ,'oltp'
       ,'mods');
-   --user_aa('TMTSTDOD').app_file_aa('TST2') := file_nt_type
-   --   ('dist'
-   --   ,'oltp'
-   --   ,'mods');
+   user_aa('TMTSTDOD').app_file_aa('TST2') := file_nt_type
+      ('dist'
+      ,'oltp'
+      ,'mods');
+   ----------------------------------------
    user_aa('TMTUTDOD').db_schema           := 'TMTSTDOD';
    user_aa('TMTUTDOD').dbid                := null;
    user_aa('TMTUTDOD').db_auth             := null;
    user_aa('TMTUTDOD').app_file_aa('TST1') := file_nt_type
+      ('gusr'
+      ,'usyn');
+   user_aa('TMTUTDOD').app_file_aa('TST2') := file_nt_type
       ('usyn');
-   --user_aa('TMTUTDOD').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+   ----------------------------------------
    user_aa('TDBSN').db_schema           := null;
    user_aa('TDBSN').dbid                := null;
    user_aa('TDBSN').db_auth             := null;
@@ -405,18 +550,21 @@ begin
       ,'oltp'
       ,'aa'
       ,'mods');
-   --user_aa('TDBSN').app_file_aa('TST2') := file_nt_type
-   --   ('ods'
-   --   ,'oltp'
-   --   ,'aa'
-   --   ,'mods');
+   user_aa('TDBSN').app_file_aa('TST2') := file_nt_type
+      ('ods'
+      ,'oltp'
+      ,'aa'
+      ,'mods');
+   ----------------------------------------
    user_aa('TDBUN').db_schema           := 'TDBSN';
    user_aa('TDBUN').dbid                := null;
    user_aa('TDBUN').db_auth             := null;
    user_aa('TDBUN').app_file_aa('TST1') := file_nt_type
+      ('gusr'
+      ,'usyn');
+   user_aa('TDBUN').app_file_aa('TST2') := file_nt_type
       ('usyn');
-   --user_aa('TDBUN').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+   ----------------------------------------
    user_aa('TMTSN').db_schema           := null;
    user_aa('TMTSN').dbid                := 'loopback';
    user_aa('TMTSN').db_auth             := 'TDBSN/TDBSN';
@@ -425,17 +573,20 @@ begin
       ,'dist'
       ,'oltp'
       ,'mods');
-   --user_aa('TMTSN').app_file_aa('TST2') := file_nt_type
-   --   ('dist'
-   --   ,'oltp'
-   --   ,'mods');
+   user_aa('TMTSN').app_file_aa('TST2') := file_nt_type
+      ('dist'
+      ,'oltp'
+      ,'mods');
+   ----------------------------------------
    user_aa('TMTUN').db_schema           := 'TMTSN';
    user_aa('TMTUN').dbid                := null;
    user_aa('TMTUN').db_auth             := null;
    user_aa('TMTUN').app_file_aa('TST1') := file_nt_type
+      ('gusr'
+      ,'usyn');
+   user_aa('TMTUN').app_file_aa('TST2') := file_nt_type
       ('usyn');
-   --user_aa('TMTUN').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+   ----------------------------------------
    user_aa('TMTSNDOD').db_schema           := null;
    user_aa('TMTSNDOD').dbid                := 'loopback';
    user_aa('TMTSNDOD').db_auth             := 'TDBUN/TDBUN';
@@ -444,16 +595,19 @@ begin
       ,'dist'
       ,'oltp'
       ,'mods');
-   --user_aa('TMTSNDOD').app_file_aa('TST2') := file_nt_type
-   --   ('dist'
-   --   ,'oltp'
-   --   ,'mods');
+   user_aa('TMTSNDOD').app_file_aa('TST2') := file_nt_type
+      ('dist'
+      ,'oltp'
+      ,'mods');
+   ----------------------------------------
    user_aa('TMTUNDOD').db_schema           := 'TMTSNDOD';
    user_aa('TMTUNDOD').dbid                := null;
    user_aa('TMTUNDOD').db_auth             := null;
    user_aa('TMTUNDOD').app_file_aa('TST1') := file_nt_type
+      ('gusr'
+      ,'usyn');
+   user_aa('TMTUNDOD').app_file_aa('TST2') := file_nt_type
       ('usyn');
-   --user_aa('TMTUNDOD').app_file_aa('TST2') := file_nt_type
-   --   ('usyn');
+*/
 end test_gen;
 /

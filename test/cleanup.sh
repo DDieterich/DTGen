@@ -25,9 +25,10 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    @uninstall_owner
 EOF
 
-echo "cleanup.gold comparison ..."
+echo "*** cleanup.gold comparison ..."
 sdiff -s -w 80 cleanup.gold cleanup.log | fgrep -v 'SQL*Plus: Release '
 
+echo "*** Errors and Warnings ..."
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
 #cd ${GUI_DIR}

@@ -29,13 +29,13 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set sqlprompt "-- "
    set sqlcontinue "-- "
    spool install_owner.sql
-   execute test_gen.output_all('i', '${OWNERNAME}');
+   execute test_gen.output_all('install', '${OWNERNAME}');
    spool uninstall_owner.sql
-   execute test_gen.output_all('u', '${OWNERNAME}');
+   execute test_gen.output_all('uninstall', '${OWNERNAME}');
    spool install_user.sql
-   execute test_gen.output_all('i', '${USERNAME}');
+   execute test_gen.output_all('install', '${USERNAME}');
    spool uninstall_user.sql
-   execute test_gen.output_all('u', '${USERNAME}');
+   execute test_gen.output_all('uninstall', '${USERNAME}');
    spool off
    set sqlprompt "SQL> "
    set sqlcontinue "> "
@@ -54,12 +54,13 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    exit
 EOF
 
-echo "install_owner.gold comparison ..."
+echo "*** install_owner.gold comparison ..."
 sdiff -s -w 80 install_owner.gold install_owner.log
 
-echo "install_user.gold comparison ..."
+echo "*** install_user.gold comparison ..."
 sdiff -s -w 80 install_user.gold install_user.log
 
+echo "*** Errors and Warnings ..."
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
 #cd ${GUI_DIR}

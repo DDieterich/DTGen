@@ -26,12 +26,14 @@ BEGIN
    generate.drop_integ;
    generate.delete_ods;
    generate.drop_ods;
+   generate.drop_gusr;
    generate.drop_gdst;
    generate.drop_glob;
 
    /*  Create Scripts  */
    generate.create_glob;
    generate.create_gdst;
+   generate.create_gusr;
    generate.create_ods;
    generate.create_integ;
    generate.create_aa;

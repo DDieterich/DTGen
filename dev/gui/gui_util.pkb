@@ -56,9 +56,9 @@ end get_column_length;
 ----------------------------------------
 procedure update_apex_app_files
       (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
-      ,suffix_in    in  varchar2
-      ,un_in        in  varchar2)
+      ,action_in    in  varchar2
+      ,own_key_in   in  varchar2 default null
+      ,suffix_in    in  varchar2 default null)
 is
    dest_offset   number  := 1;
    src_offset    number  := 1;
@@ -68,31 +68,8 @@ is
    cnt   number;
 begin
    dbms_lob.trim(af_blob_content, 0);
-   if un_in is null
+   if lower(action_in) = 'data'
    then
-      dbms_lob.converttoblob
-         (af_blob_content
-         ,dtgen_util.install_script(app_abbr_in, aa_key_in, suffix_in)
-         ,dbms_lob.lobmaxsize
-         ,dest_offset
-         ,src_offset
-         ,dbms_lob.default_csid
-         ,lang_context
-         ,warning
-         );
-   elsif un_in = 'un'
-   then
-      dbms_lob.converttoblob
-         (af_blob_content
-         ,dtgen_util.uninstall_script(app_abbr_in, aa_key_in, suffix_in)
-         ,dbms_lob.lobmaxsize
-         ,dest_offset
-         ,src_offset
-         ,dbms_lob.default_csid
-         ,lang_context
-         ,warning
-         );
-   else
       dbms_lob.converttoblob
          (af_blob_content
          ,dtgen_util.data_script(app_abbr_in)
@@ -103,14 +80,25 @@ begin
          ,lang_context
          ,warning
          );
+   else
+      dbms_lob.converttoblob
+         (af_blob_content
+         ,dtgen_util.assemble_script(app_abbr_in, action_in, own_key_in, suffix_in)
+         ,dbms_lob.lobmaxsize
+         ,dest_offset
+         ,src_offset
+         ,dbms_lob.default_csid
+         ,lang_context
+         ,warning
+         );
    end if;
    if warning != DBMS_LOB.NO_WARNING
    then
-      DBMS_OUTPUT.PUT_LINE('gui_util.update_scripts() ' ||
+      DBMS_OUTPUT.PUT_LINE('gui_util.update_apex_app_files() ' ||
              'had problems with dbms_lob.converttoblob.');
    end if;
-   af_doc_size     := dbms_lob.getlength(af_blob_content);
-   af_id := wwv_flow_id.next_val;
+   af_doc_size := dbms_lob.getlength(af_blob_content);
+   af_id       := wwv_flow_id.next_val;
    delete from apex_application_files
     where flow_id = af_flow_id
      and  title   = af_title;
@@ -351,66 +339,70 @@ begin
    end if;
    generate.init(app_abbr_in);
    -- Create Scripts
-   job_status := js_prefix || ' create_glob (1 of 20)';
+   job_status := js_prefix || ' create_glob (1 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_glob;
-   job_status := js_prefix || ' create_gdst (2 of 20)';
+   job_status := js_prefix || ' create_gdst (2 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_gdst;
-   job_status := js_prefix || ' create_ods (3 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_ods;
-   job_status := js_prefix || ' create_integ (4 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_integ;
-   job_status := js_prefix || ' create_aa (5 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_integ;
-   job_status := js_prefix || ' create_dist (6 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_dist;
-   job_status := js_prefix || ' create_oltp (7 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_oltp;
-   job_status := js_prefix || ' create_mods (8 of 20)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.create_mods;
-   job_status := js_prefix || ' create_usyn (9 of 20)';
+   job_status := js_prefix || ' create_gusr (3 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_usyn;
-   -- Drop/Delete Scripts
-   job_status := js_prefix || ' drop_usyn (10 of 20)';
+   job_status := js_prefix || ' create_ods (4 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_usyn;
-   job_status := js_prefix || ' drop_mods (11 of 20)';
+   generate.create_ods;
+   job_status := js_prefix || ' create_integ (5 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_mods;
-   job_status := js_prefix || ' drop_oltp (12 of 20)';
+   generate.create_integ;
+   job_status := js_prefix || ' create_aa (6 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_oltp;
-   job_status := js_prefix || ' drop_dist (13 of 20)';
+   generate.create_integ;
+   job_status := js_prefix || ' create_dist (7 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_dist;
-   job_status := js_prefix || ' drop_aa (14 of 20)';
+   generate.create_dist;
+   job_status := js_prefix || ' create_oltp (8 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_dist;
-   job_status := js_prefix || ' drop_integ (15 of 20)';
+   generate.create_oltp;
+   job_status := js_prefix || ' create_mods (9 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   generate.drop_integ;
-   job_status := js_prefix || ' delete_ods (16 of 20)';
+   generate.create_mods;
+   job_status := js_prefix || ' create_usyn (10 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.create_usyn;
+   -- Delete Scripts
+   job_status := js_prefix || ' delete_ods (11 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.delete_ods;
-   job_status := lockname || ' Generate drop_ods (17 of 20)';
+   -- Drop Scripts
+   job_status := js_prefix || ' drop_usyn (12 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_usyn;
+   job_status := js_prefix || ' drop_mods (13 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_mods;
+   job_status := js_prefix || ' drop_oltp (14 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_oltp;
+   job_status := js_prefix || ' drop_dist (15 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_dist;
+   job_status := js_prefix || ' drop_aa (16 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_dist;
+   job_status := js_prefix || ' drop_integ (17 of 21)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   generate.drop_integ;
+   job_status := js_prefix || ' drop_ods (18 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_ods;
-   job_status := lockname || ' Generate drop_gdst (18 of 20)';
+   job_status := js_prefix || ' drop_gdst (19 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_gdst;
-   job_status := lockname || ' Generate drop_glob (19 of 20)';
+   job_status := js_prefix || ' drop_glob (20 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.drop_glob;
    -- Create GUI Script
-   job_status := lockname || ' Generate create_flow (20 of 20)';
+   job_status := js_prefix || ' create_flow (21 of 21)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    generate.create_flow;
    
@@ -451,61 +443,67 @@ begin
    af_description  := app_abbr_in || ' database installation script';
    job_status := js_prefix || ' ' || af_title || ' (1 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'DB', '', '');
+   update_apex_app_files(app_abbr_in, 'install', 'DB');
    -- install_db_sec
    af_title        := 'install_db_sec.sql';
    af_description  := app_abbr_in || ' database security installation script';
    job_status := js_prefix || ' ' || af_title || ' (2 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'DB', 'sec', '');
+   update_apex_app_files(app_abbr_in, 'install', 'DB', 'sec');
    -- install_mt
    af_title        := 'install_mt.sql';
    af_description  := app_abbr_in || ' mid-tier installation script';
    job_status := js_prefix || ' ' || af_title || ' (3 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'MT', '', '');
+   update_apex_app_files(app_abbr_in, 'install', 'MT');
    -- install_mt_sec
    af_title        := 'install_mt_sec.sql';
    af_description  := app_abbr_in || ' mid-tier security installation script';
    job_status := js_prefix || ' ' || af_title || ' (4 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'MT', 'sec', '');
+   update_apex_app_files(app_abbr_in, 'install', 'MT', 'sec');
    -- install_usr
    af_title        := 'install_usr.sql';
    af_description  := app_abbr_in || ' user synonym installation script';
    job_status := js_prefix || ' ' || af_title || ' (5 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'USR', '', '');
+   update_apex_app_files(app_abbr_in, 'install', 'USR');
+   -- delete_db
+   af_title        := 'delete_db.sql';
+   af_description  := app_abbr_in || ' data delete script';
+   job_status := js_prefix || ' ' || af_title || ' (6 of 11)';
+   apex_plsql_job.update_job_status(job_num_in, job_status);
+   update_apex_app_files(app_abbr_in, 'delete', 'DB');
    -- uninstall_usr
    af_title        := 'uninstall_usr.sql';
    af_description  := app_abbr_in || ' user synonym uninstallation script';
    job_status := js_prefix || ' ' || af_title || ' (7 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'USR', '', 'un');
+   update_apex_app_files(app_abbr_in, 'uninstall', 'USR');
    -- uninstall_mt
    af_title        := 'uninstall_mt.sql';
    af_description  := app_abbr_in || ' mid-tier uninstallation script';
    job_status := js_prefix || ' ' || af_title || ' (8 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'MT', '', 'un');
+   update_apex_app_files(app_abbr_in, 'uninstall', 'MT');
    -- uninstall_db
    af_title        := 'uninstall_db.sql';
    af_description  := app_abbr_in || ' database uninstallation script';
    job_status := js_prefix || ' ' || af_title || ' (9 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'DB', '', 'un');
+   update_apex_app_files(app_abbr_in, 'uninstall', 'DB');
    -- dtgen_dataload
    af_title        := 'dtgen_dataload.ctl';
    af_description  := app_abbr_in || ' DTGen dataload script';
    job_status := js_prefix || ' ' || af_title || ' (10 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, '', '', 'xx');
+   update_apex_app_files(app_abbr_in, 'data');
    -- install_gui
    af_title        := 'install_gui.sql';
    af_description  := app_abbr_in || ' APEX maintenance GUI installation script';
    job_status := js_prefix || ' ' || af_title || ' (11 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'GUI', '', '');
+   update_apex_app_files(app_abbr_in, 'install', 'GUI');
    --
    retstr := glob.release_lock;
    if retstr <> 'SUCCESS'
@@ -522,10 +520,7 @@ procedure del_all
       ,flow_id_in   in  number)
 is
 begin
-   delete from file_lines_act
-    where files_nk1 = app_abbr_in;
-   delete from files_act
-    where applications_nk1 = app_abbr_in;
+   dtgen_util.delete_files(app_abbr_in);
    delete from apex_application_files
     where flow_id = flow_id_in
      and  title   in (

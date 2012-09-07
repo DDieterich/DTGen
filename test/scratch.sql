@@ -19,8 +19,8 @@ insert into tab_cols_act (tables_nk1, tables_nk2, name, seq, nk, type, len, scal
    and  tables_nk2 = 'DTCN';
 
 ------------------------------------------------------------
-execute test_gen.output_all('i',USER);
-execute test_gen.output_all('u',USER);
+execute test_gen.output_all('install',USER);
+execute test_gen.output_all('uninstall',USER);
 execute dtgen_util.data_script('TST1');
 execute dtgen_util.data_script('TST2');
 purge recyclebin;
