@@ -84,55 +84,6 @@ In-Install Instructions:
 2) Remove the Unit Test Repository Owner
    sqlplus system/password@tns_alias @drop_ut_owner
 
-
-Testing Notes:
---------------
-After Dropping User Synonyms:
-      p('select substr(object_name,1,30), object_type, status');
-      p(' from  user_objects');
-      p('/');
-After Dropping OLTP:
-   p('select view_name, text_length, view_type_owner');
-   p(' from  user_views');
-   p('/');
-   p('select substr(object_name,1,30), object_type, status');
-   p(' from  user_objects');
-   p(' where object_type = ''PACKAGE BODY''');
-   p('  and  object_name not like ''%_POP''');
-   p('/');
-After Dropping DIST:
-      p('select trigger_name, trigger_type, table_name');
-      p(' from  user_triggers where base_object_type = ''TABLE''');
-      p('/');
-      p('select substr(owner||''.''||constraint_name,1,40)');
-      p('      ,constraint_type, table_name');
-      p(' from  user_constraints');
-      p(' where constraint_type not in (''P'',''U'',''R'')');
-      p('/');
-After Dropping INTEG:
-   p('select trigger_name, trigger_type, table_name');
-   p(' from  user_triggers where base_object_type = ''TABLE''');
-   p('/');
-   p('select substr(owner||''.''||constraint_name,1,40)');
-   p('      ,constraint_type, table_name');
-   p(' from  user_constraints');
-   p(' where constraint_type not in (''P'',''U'',''R'')');
-   p('/');
-After Dropping ODS:
-   p('select substr(object_name,1,30), object_type, status');
-   p(' from  user_objects where object_type = ''PACKAGE BODY''');
-   p('/');
-   p('select table_name, tablespace_name');
-   p(' from  user_tables');
-   p('/');
-   p('select sequence_name, min_value, max_value, last_number');
-   p(' from  user_sequences');
-   p('/');
-After Dropping GDST:
-   p('select substr(object_name,1,30), object_type, status');
-   p(' from  user_objects');
-   p('/');
-After Dropping GLOB:
-   p('select substr(object_name,1,30), object_type, status');
-   p(' from  user_objects');
-   p('/');
+Co-Locating DTGen Applications:
+-------------------------------
+This test setup co-locates 2 applications (TST1 and TST2) in the same owner/user environments.

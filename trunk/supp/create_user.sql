@@ -23,4 +23,5 @@ grant &3._app to &1.;
 
 --connect &1./&2.
 --set serveroutput on format wrapped
+--@install_gusr
 --@install_usyn

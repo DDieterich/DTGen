@@ -59,58 +59,62 @@ begin
    return rstr;
 end get_aa_key_name;
 ----------------------------------------
-procedure install_script
+procedure assemble_script
       (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
+      ,action_in    in  varchar2
+      ,own_key_in   in  varchar2
       ,suffix_in    in  varchar2 default '')
 is
-   nk2  varchar2(100);
+   aa_key     varchar2(100) := lower(action_in||'_'||own_key_in);
+   file_name  varchar2(100);
 begin
    rclob := '';
    begin
-      vc2_list := aa_vc2(upper(aa_key_in));
+      vc2_list := aa_vc2(aa_key);
    exception
       when no_data_found then
-         raise_application_error (-20000, 'aa_key_in "' || aa_key_in ||
-            '" is not recognized in generate.install_script()');
+         raise_application_error (-20000, '", aa_key "' || aa_key ||
+                                          '" is not recognized');
       when others then
          raise;
    end;
-   lo_opname := 'DTGen ' || app_abbr_in || ' Install Script Assembly';
+   lo_opname := 'DTGen ' || app_abbr_in || ' ' ||
+                initcap(action_in) || ' Script Assembly';
    lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
    util.init_longops(lo_opname, lo_num_units,
-      get_aa_key_name(aa_key_in, suffix_in), 'tables');
+      get_aa_key_name(aa_key, suffix_in), 'tables');
    p('');
    p('--');
-   p('--  Install ' || get_aa_key_name(aa_key_in, suffix_in) ||
-        ' Scripts for ' || app_abbr_in);
+   p('--  ' || initcap(action_in) || ' ' ||
+          get_aa_key_name(aa_key, suffix_in) ||
+          ' Scripts for ' || app_abbr_in);
    p('--');
    p('--  The ' || vc2_list.count || ' scripts included are:');
    for i in 1 .. vc2_list.count
    loop
       if suffix_in is not null
       then
-         p('--    -) create_' || vc2_list(i) || '_' || suffix_in);
+         p('--    -) ' || vc2_list(i) || '_' || suffix_in);
       else
-         p('--    -) create_' || vc2_list(i));
+         p('--    -) ' || vc2_list(i));
       end if;
    end loop;
    p('--');
    p('');
    for i in 1 .. vc2_list.count
    loop
-      nk2 := 'create_' || vc2_list(i);
+      file_name := vc2_list(i);
       if suffix_in is not null
       then
-         nk2 := nk2 || '_' || suffix_in;
+         file_name := file_name || '_' || suffix_in;
       end if;
       p('');
-      p('select '' -) '||nk2||'  '' as FILE_NAME from dual;');
+      p('select '' -) ' || file_name || '  '' as FILE_NAME from dual;');
       p('');
       for buff in (
          select value from file_lines_act
           where files_nk1 = upper(app_abbr_in)
-           and  files_nk2 = lower(nk2)
+           and  files_nk2 = lower(file_name)
           order by seq )
       loop
          p(buff.value);
@@ -119,95 +123,21 @@ begin
       util.add_longops (1);
    end loop;
    util.end_longops;
-end install_script;
+end assemble_script;
 ----------------------------------------
-function install_script
+function assemble_script
       (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
+      ,action_in    in  varchar2
+      ,own_key_in   in  varchar2
       ,suffix_in    in  varchar2 default '')
    return clob
 is
 begin
    USE_RCLOB := TRUE;
-   install_script(app_abbr_in, aa_key_in, suffix_in);
+   assemble_script(app_abbr_in, action_in, own_key_in, suffix_in);
    USE_RCLOB := FALSE;
    return rclob;
-end install_script;
-----------------------------------------
-procedure uninstall_script
-      (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
-      ,suffix_in    in  varchar2 default '')
-is
-   nk2  varchar2(100);
-begin
-   rclob := '';
-   begin
-      vc2_list := aa_vc2(upper(aa_key_in));
-   exception
-      when no_data_found then
-         raise_application_error (-20000, 'aa_key_in "' || aa_key_in ||
-            '" is not recognized in generate.uninstall_script()');
-      when others then
-         raise;
-   end;
-   lo_opname := 'DTGen ' || app_abbr_in || ' Uninstall Script Assembly';
-   lo_num_units := vc2_list.count + 1;  -- Add one for util.end_longops
-   util.init_longops(lo_opname, lo_num_units,
-      get_aa_key_name(aa_key_in, suffix_in), 'tables');
-   p('');
-   p('--');
-   p('--  Uninstall ' || get_aa_key_name(aa_key_in, suffix_in) ||
-        ' Scripts for ' || app_abbr_in);
-   p('--');
-   p('--  The ' || vc2_list.count || ' scripts included are:');
-   for i in REVERSE 1 .. vc2_list.count
-   loop
-      if suffix_in is not null
-      then
-         p('--    -) drop_' || vc2_list(i) || '_' || suffix_in);
-      else
-         p('--    -) drop_' || vc2_list(i));
-      end if;
-   end loop;
-   p('--');
-   p('');
-   for i in REVERSE 1 .. vc2_list.count
-   loop
-      nk2 := 'drop_' || vc2_list(i);
-      if suffix_in is not null
-      then
-         nk2 := nk2 || '_' || suffix_in;
-      end if;
-      p('');
-      p('select '' -) '||nk2||'  '' as FILE_NAME from dual;');
-      p('');
-      for buff in (
-         select value from file_lines_act
-          where files_nk1 = upper(app_abbr_in)
-           and  files_nk2 = lower(nk2)
-          order by seq )
-      loop
-         p(buff.value);
-      end loop;
-      p('');
-      util.add_longops (1);
-   end loop;
-   util.end_longops;
-end uninstall_script;
-----------------------------------------
-function uninstall_script
-      (app_abbr_in  in  varchar2
-      ,aa_key_in    in  varchar2
-      ,suffix_in    in  varchar2 default '')
-   return clob
-is
-begin
-   USE_RCLOB := TRUE;
-   uninstall_script(app_abbr_in, aa_key_in, suffix_in);
-   USE_RCLOB := FALSE;
-   return rclob;
-end uninstall_script;
+end assemble_script;
 ----------------------------------------
 procedure data_script
       (app_abbr_in  in  varchar2)
@@ -427,21 +357,49 @@ begin
    return retnum;
 end delete_app;
 ----------------------------------------
+procedure delete_files
+      (app_abbr_in  in  varchar2)
+is
 begin
-   aa_vc2('DB') := vc2_list_type
-      ('glob'
-      ,'ods'
-      ,'integ'
-      ,'oltp'
-      ,'aa'
-      ,'mods');
-   aa_vc2('MT') := vc2_list_type
-      ('gdst'
-      ,'dist'
-      ,'oltp'
-      ,'mods');
-   aa_vc2('GUI') := vc2_list_type
-      ('flow');
-   aa_vc2('USR') := vc2_list_type
-      ('usyn');
+   delete from file_lines_act
+    where files_nk1 = app_abbr_in;
+   delete from files_act
+    where applications_nk1 = app_abbr_in;
+end delete_files;
+----------------------------------------
+begin
+   aa_vc2('install_db') := vc2_list_type
+      ('create_glob'
+      ,'create_ods'
+      ,'create_integ'
+      ,'create_oltp'
+      ,'create_aa'
+      ,'create_mods');
+   aa_vc2('delete_db') := vc2_list_type
+      ('delete_ods');
+   aa_vc2('uninstall_db') := vc2_list_type
+      ('drop_mods'
+      ,'drop_aa'
+      ,'drop_oltp'
+      ,'drop_integ'
+      ,'drop_ods'
+      ,'drop_glob');
+   aa_vc2('install_mt') := vc2_list_type
+      ('create_gdst'
+      ,'create_dist'
+      ,'create_oltp'
+      ,'create_mods');
+   aa_vc2('uninstall_mt') := vc2_list_type
+      ('drop_mods'
+      ,'drop_oltp'
+      ,'drop_dist'
+      ,'drop_gdst');
+   aa_vc2('install_gui') := vc2_list_type
+      ('create_flow');
+   aa_vc2('install_usr') := vc2_list_type
+      ('gusr'
+      ,'usyn');
+   aa_vc2('uninstall_usr') := vc2_list_type
+      ('usyn'
+      ,'gusr');
 END dtgen_util;

@@ -87,4 +87,89 @@ Synonym created.
 
 Synonym created.
 
+
+***************************
+Running Script create_usyn
+***************************
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t2a_non  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t2a_log  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t2a_eff  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
 SQL>    spool off
