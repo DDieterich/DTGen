@@ -1,9 +1,25 @@
-SQL>    connect TDBST/TDBST@XE2
+SQL>    connect TMTST/TMTST@XE2
 Connected.
 SQL>    @install_owner
 
 ***************************
-Running Script create_glob
+Running Script create_dblink
+***************************
+
+
+Database link created.
+
+
+***************************
+Running Script create_dblink
+***************************
+
+
+Database link created.
+
+
+***************************
+Running Script create_gdst
 ***************************
 
 
@@ -104,7 +120,7 @@ Grant succeeded.
 
 
 ***************************
-Running Script create_ods
+Running Script create_dist
 ***************************
 
 
@@ -122,13 +138,10 @@ no rows selected
 no rows selected
 
 
-Sequence created.
+Synonym created.
 
 
-Table created.
-
-
-Comment created.
+View created.
 
 
 Comment created.
@@ -158,10 +171,7 @@ Comment created.
 Comment created.
 
 
-Table altered.
-
-
-Table altered.
+Comment created.
 
 
 Package body created.
@@ -187,6 +197,144 @@ no rows selected
 no rows selected
 
 
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package created.
 
 
@@ -196,168 +344,6 @@ no rows selected
 no rows selected
 
 
-Sequence created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
 Package body created.
 
 
@@ -365,6 +351,93 @@ no rows selected
 
 
 no rows selected
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Package body created.
@@ -390,6 +463,159 @@ no rows selected
 no rows selected
 
 
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package created.
 
 
@@ -399,186 +625,6 @@ no rows selected
 no rows selected
 
 
-Sequence created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
 Package body created.
 
 
@@ -588,6 +634,105 @@ no rows selected
 no rows selected
 
 
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package body created.
 
 
@@ -595,54 +740,6 @@ no rows selected
 
 
 no rows selected
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
 
 
 Grant succeeded.
@@ -694,7 +791,7 @@ Grant succeeded.
 
 
 ***************************
-Running Script create_ods
+Running Script create_dist
 ***************************
 
 
@@ -712,13 +809,10 @@ no rows selected
 no rows selected
 
 
-Sequence created.
+Synonym created.
 
 
-Table created.
-
-
-Comment created.
+View created.
 
 
 Comment created.
@@ -730,10 +824,7 @@ Comment created.
 Comment created.
 
 
-Table altered.
-
-
-Table altered.
+Comment created.
 
 
 Package body created.
@@ -759,6 +850,90 @@ no rows selected
 no rows selected
 
 
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package created.
 
 
@@ -768,114 +943,6 @@ no rows selected
 no rows selected
 
 
-Sequence created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
 Package body created.
 
 
@@ -883,6 +950,57 @@ no rows selected
 
 
 no rows selected
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Package body created.
@@ -908,6 +1026,105 @@ no rows selected
 no rows selected
 
 
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package created.
 
 
@@ -917,132 +1134,6 @@ no rows selected
 no rows selected
 
 
-Sequence created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
-Table altered.
-
-
-Index created.
-
-
 Package body created.
 
 
@@ -1052,6 +1143,69 @@ no rows selected
 no rows selected
 
 
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Package body created.
 
 
@@ -1059,54 +1213,6 @@ no rows selected
 
 
 no rows selected
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
 
 
 Grant succeeded.
@@ -1912,466 +2018,6 @@ Grant succeeded.
 
 
 ***************************
-Running Script create_aa
-***************************
-
-
-TABLE_NAME
------------------
-***  t1a_non  ***
-
-
-TABLE_NAME
------------------
-***  t1a_log  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-TABLE_NAME
------------------
-***  t1a_eff  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-***************************
-Running Script create_aa
-***************************
-
-
-TABLE_NAME
------------------
-***  t2a_non  ***
-
-
-TABLE_NAME
------------------
-***  t2a_log  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-TABLE_NAME
------------------
-***  t2a_eff  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-Grant succeeded.
-
-
-***************************
 Running Script create_mods
 ***************************
 
@@ -2379,465 +2025,5 @@ Running Script create_mods
 ***************************
 Running Script create_mods
 ***************************
-
-
-***************************
-Running Script create_integ
-***************************
-
-
-TABLE_NAME
------------------
-***  t1a_non  ***
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_log  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_eff  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-***************************
-Running Script create_integ
-***************************
-
-
-TABLE_NAME
------------------
-***  t2a_non  ***
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t2a_log  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t2a_eff  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
 
 SQL>    spool install_user.log

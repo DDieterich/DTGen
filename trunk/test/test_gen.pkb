@@ -250,19 +250,6 @@ procedure gen_all
       ,db_schema_in  in  varchar2)
 is
    app_abbr  file_lines_act.files_nk1%TYPE;
-   procedure reset_app_parms is begin
-      for i in 1 .. applist_nt.COUNT
-      loop
-         app_abbr := applist_nt(i);
-         update applications_act
-           set  db_schema = sap_aa(app_abbr).db_schema
-               ,dbid      = sap_aa(app_abbr).dbid
-               ,db_auth   = sap_aa(app_abbr).db_auth
-          where abbr = app_abbr;
-      end loop;
-      commit;
-      sql_txt := '';
-   end reset_app_parms;
 begin
    util.set_usr(USER);
    for i in 1 .. applist_nt.COUNT
@@ -282,46 +269,50 @@ begin
             ,db_auth   = user_aa(db_schema_in).db_auth
        where abbr = app_abbr;
    end loop;
-   begin
-      FOR j in 1 .. user_aa(db_schema_in).action_aa(action_in).COUNT
-      loop
-         sql_txt := 'begin generate.' ||
-                     user_aa(db_schema_in).action_aa(action_in)(j).file_name ||
-                    '; end;';
-         --dbms_output.put_line ('SQL> ' || sql_txt);
-         case user_aa(db_schema_in).action_aa(action_in)(j).applist_key
-         when 'FO' then
-            app_abbr := applist_nt(1);
+   FOR j in 1 .. user_aa(db_schema_in).action_aa(action_in).COUNT
+   loop
+      sql_txt := 'begin generate.' ||
+                  user_aa(db_schema_in).action_aa(action_in)(j).file_name ||
+                 '; end;';
+      --dbms_output.put_line ('SQL> ' || sql_txt);
+      case user_aa(db_schema_in).action_aa(action_in)(j).applist_key
+      when 'FO' then
+         app_abbr := applist_nt(1);
+         generate.init(app_abbr);
+         --dbms_output.put_line('APP_ABBR: ' || app_abbr);
+         execute immediate sql_txt;
+      when 'FA' then
+         FOR i in 1 .. applist_nt.COUNT
+         loop
+            app_abbr := applist_nt(i);
             generate.init(app_abbr);
             --dbms_output.put_line('APP_ABBR: ' || app_abbr);
             execute immediate sql_txt;
-         when 'FA' then
-            FOR i in 1 .. applist_nt.COUNT
-            loop
-               app_abbr := applist_nt(i);
-               generate.init(app_abbr);
-               --dbms_output.put_line('APP_ABBR: ' || app_abbr);
-               execute immediate sql_txt;
-            end loop;
-         when 'RA' then
-            FOR i in REVERSE 1 .. applist_nt.COUNT
-            loop
-               app_abbr := applist_nt(i);
-               generate.init(app_abbr);
-               --dbms_output.put_line('APP_ABBR: ' || app_abbr);
-               execute immediate sql_txt;
-            end loop;
-         else
-            raise_application_error (-20000, 'Invalid applist_key: ' ||
-               user_aa(db_schema_in).action_aa(action_in)(j).applist_key);
-         end case;
-      end loop;
-   exception
-      when others then
-         reset_app_parms;
-         raise;
-   end;
-   reset_app_parms;
+         end loop;
+      when 'RA' then
+         FOR i in REVERSE 1 .. applist_nt.COUNT
+         loop
+            app_abbr := applist_nt(i);
+            generate.init(app_abbr);
+            --dbms_output.put_line('APP_ABBR: ' || app_abbr);
+            execute immediate sql_txt;
+         end loop;
+      else
+         raise_application_error (-20000, 'Invalid applist_key: ' ||
+            user_aa(db_schema_in).action_aa(action_in)(j).applist_key);
+      end case;
+   end loop;
+   for i in 1 .. applist_nt.COUNT
+   loop
+      app_abbr := applist_nt(i);
+      update applications_act
+        set  db_schema = sap_aa(app_abbr).db_schema
+            ,dbid      = sap_aa(app_abbr).dbid
+            ,db_auth   = sap_aa(app_abbr).db_auth
+       where abbr = app_abbr;
+   end loop;
+   commit;
+   sql_txt := '';
 exception
    when others then
       rollback;
@@ -343,6 +334,14 @@ begin
       select value from file_lines_act
        where files_nk1 = app_abbr_in
         and  files_nk2 = file_name_in
+       order by seq )
+   loop
+      dbms_output.put_line(buff.value);
+   end loop;
+   for buff in (
+      select value from file_lines_act
+       where files_nk1 = app_abbr_in
+        and  files_nk2 = file_name_in || '_sec'
        order by seq )
    loop
       dbms_output.put_line(buff.value);
@@ -442,6 +441,8 @@ begin
       when 'drop_aa' then
          null;
       when 'drop_oltp' then
+         null;
+      when 'drop_dist' then
    dbms_output.put_line('select view_type_owner || '': '' ||');
    dbms_output.put_line('       view_name       || ''(len '' ||');
    dbms_output.put_line('       text_length     || '')''   as remaining_views');
@@ -460,7 +461,6 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-      when 'drop_dist' then
    dbms_output.put_line('select table_name   || '': '' ||');
    dbms_output.put_line('       trigger_type || '' - '' ||');
    dbms_output.put_line('       trigger_name   as remaining_table_triggers');
@@ -481,6 +481,24 @@ begin
    dbms_output.put_line('      ,constraint_name');
    dbms_output.put_line('/');
       when 'drop_ods' then
+   dbms_output.put_line('select view_type_owner || '': '' ||');
+   dbms_output.put_line('       view_name       || ''(len '' ||');
+   dbms_output.put_line('       text_length     || '')''   as remaining_views');
+   dbms_output.put_line(' from  user_views');
+   dbms_output.put_line(' order by view_type_owner');
+   dbms_output.put_line('      ,view_name');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select object_type              || '': '' ||');
+   dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
+   dbms_output.put_line('       status                   || '')''   as remaining_objects');
+   dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' where object_type = ''PACKAGE BODY''');
+   dbms_output.put_line('  and  object_name not like ''%_POP''');
+   dbms_output.put_line('  and  object_name not like ''%_TAB''');
+   dbms_output.put_line('  and  object_name not in (''GLOB'', ''UTIL'')');
+   dbms_output.put_line(' order by object_type');
+   dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
@@ -508,8 +526,16 @@ begin
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
    dbms_output.put_line(' from  user_objects');
+   dbms_output.put_line(' where object_type != ''DATABASE LINK''');
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
+   dbms_output.put_line('/');
+      when 'drop_dblink' then
+   dbms_output.put_line('select db_link  || '': '' ||');
+   dbms_output.put_line('       username || ''@''  ||');
+   dbms_output.put_line('       host              remainin_database_links');
+   dbms_output.put_line(' from user_db_links');
+   dbms_output.put_line(' order by db_link');
    dbms_output.put_line('/');
       when 'drop_glob' then
    dbms_output.put_line('select object_type              || '': '' ||');
@@ -533,9 +559,10 @@ end output_all;
 begin
    -- Application List
    applist_nt := applist_nt_type('TST1', 'TST2');
-   -- FO - First Only
    -- FA - Forward All
+   -- FO - Forard first Only
    -- RA - Reverse All
+   -- NOTE: RO (Reverse last Only) would be the same as FO
    ----------------------------------------
    user_aa('TDBST').db_schema       := null;
    user_aa('TDBST').dbid            := null;
@@ -586,33 +613,57 @@ begin
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'drop_gusr';
    user_aa('TDBUT').action_aa('uninstall')(2) := fileapp_rec;
-/*
    ----------------------------------------
    user_aa('TMTST').db_schema           := null;
    user_aa('TMTST').dbid                := 'loopback';
-   user_aa('TMTST').db_auth             := 'TDBST/TDBST';
-   user_aa('TMTST').app_file_aa('TST1') := file_nt_type
-      ('gdst'
-      ,'dist'
-      ,'oltp'
-      ,'mods');
-   user_aa('TMTST').app_file_aa('TST2') := file_nt_type
-      ('dist'
-      ,'oltp'
-      ,'mods');
+   user_aa('TMTST').db_auth             := 'connect to TDBST identified by TDBST';
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_dblink';
+   user_aa('TMTST').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_gdst';
+   user_aa('TMTST').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_dist';
+   user_aa('TMTST').action_aa  ('install')(3) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_oltp';
+   user_aa('TMTST').action_aa  ('install')(4) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_mods';
+   user_aa('TMTST').action_aa  ('install')(5) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_mods';
+   user_aa('TMTST').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_oltp';
+   user_aa('TMTST').action_aa('uninstall')(2) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_dist';
+   user_aa('TMTST').action_aa('uninstall')(3) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gdst';
+   user_aa('TMTST').action_aa('uninstall')(4) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_dblink';
+   user_aa('TMTST').action_aa('uninstall')(5) := fileapp_rec;
    ----------------------------------------
    user_aa('TMTUT').db_schema           := 'TMTST';
    user_aa('TMTUT').dbid                := null;
    user_aa('TMTUT').db_auth             := null;
-   user_aa('TMTUT').app_file_aa('TST1') := file_nt_type
-      ('gusr'
-      ,'usyn');
-   user_aa('TMTUT').app_file_aa('TST2') := file_nt_type
-      ('usyn');
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_gusr';
+   user_aa('TMTUT').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_usyn';
+   user_aa('TMTUT').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_usyn';
+   user_aa('TMTUT').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gusr';
+   user_aa('TMTUT').action_aa('uninstall')(2) := fileapp_rec;
    ----------------------------------------
+/*
    user_aa('TMTSTDOD').db_schema           := null;
    user_aa('TMTSTDOD').dbid                := 'loopback';
-   user_aa('TMTSTDOD').db_auth             := 'TDBUT/TDBUT';
+   user_aa('TMTSTDOD').db_auth             := 'connect to TDBUT identified by TDBUT';
    user_aa('TMTSTDOD').app_file_aa('TST1') := file_nt_type
       ('gdst'
       ,'dist'
@@ -658,7 +709,7 @@ begin
    ----------------------------------------
    user_aa('TMTSN').db_schema           := null;
    user_aa('TMTSN').dbid                := 'loopback';
-   user_aa('TMTSN').db_auth             := 'TDBSN/TDBSN';
+   user_aa('TMTSN').db_auth             := 'connect to TDBSN identified by TDBSN';
    user_aa('TMTSN').app_file_aa('TST1') := file_nt_type
       ('gdst'
       ,'dist'
@@ -680,7 +731,7 @@ begin
    ----------------------------------------
    user_aa('TMTSNDOD').db_schema           := null;
    user_aa('TMTSNDOD').dbid                := 'loopback';
-   user_aa('TMTSNDOD').db_auth             := 'TDBUN/TDBUN';
+   user_aa('TMTSNDOD').db_auth             := 'connect to TDBUN identified by TDBUN';
    user_aa('TMTSNDOD').app_file_aa('TST1') := file_nt_type
       ('gdst'
       ,'dist'

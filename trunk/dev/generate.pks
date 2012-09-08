@@ -53,6 +53,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure drop_integ;
    procedure delete_ods;
    procedure drop_ods;
+   procedure drop_dblink;
    -- Global Drop/Delete Scripts
    procedure drop_gusr;
    procedure drop_gdst;
@@ -63,6 +64,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure create_gdst;
    procedure create_gusr;
    -- Create Scripts
+   procedure create_dblink;
    procedure create_ods;
    procedure create_integ;
    procedure create_dist;
