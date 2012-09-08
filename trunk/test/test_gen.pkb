@@ -1,6 +1,16 @@
 create or replace package body test_gen
 is
 
+-- SAP; Saved Application Parameters
+type sap_rec_type is record
+   (db_schema  applications_act.db_schema%TYPE
+   ,dbid       applications_act.dbid%TYPE
+   ,db_auth    applications_act.db_auth%TYPE);
+type sap_aa_type is table
+   of sap_rec_type
+   index by applications_act.abbr%TYPE;
+sap_aa  sap_aa_type;
+
 sql_txt   clob;
 log_txt   clob;
 gen_tst   timestamp with time zone;
@@ -239,17 +249,31 @@ procedure gen_all
       (action_in     in  varchar2
       ,db_schema_in  in  varchar2)
 is
-   saved_db_schema  applications_act.db_schema%TYPE;
-   saved_dbid       applications_act.dbid%TYPE;
-   saved_db_auth    applications_act.db_auth%TYPE;
-   app_abbr         applications_act.abbr%TYPE;
+   app_abbr  file_lines_act.files_nk1%TYPE;
+   procedure reset_app_parms is begin
+      for i in 1 .. applist_nt.COUNT
+      loop
+         app_abbr := applist_nt(i);
+         update applications_act
+           set  db_schema = sap_aa(app_abbr).db_schema
+               ,dbid      = sap_aa(app_abbr).dbid
+               ,db_auth   = sap_aa(app_abbr).db_auth
+          where abbr = app_abbr;
+      end loop;
+      commit;
+      sql_txt := '';
+   end reset_app_parms;
 begin
    util.set_usr(USER);
-   for j in 1 .. user_aa(db_schema_in).actapp_aa(action_in).COUNT
+   for i in 1 .. applist_nt.COUNT
    loop
-      app_abbr := user_aa(db_schema_in).actapp_aa(action_in)(j).app_abbr;
-      select       db_schema,       dbid,       db_auth
-       into  saved_db_schema, saved_dbid, saved_db_auth
+      app_abbr := applist_nt(i);
+      select db_schema
+            ,dbid
+            ,db_auth
+       into  sap_aa(app_abbr).db_schema
+            ,sap_aa(app_abbr).dbid
+            ,sap_aa(app_abbr).db_auth
        from  applications_act
        where abbr = app_abbr;
       update applications_act
@@ -257,23 +281,51 @@ begin
             ,dbid      = user_aa(db_schema_in).dbid
             ,db_auth   = user_aa(db_schema_in).db_auth
        where abbr = app_abbr;
-      generate.init(app_abbr);
-      FOR i in 1 .. user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt.COUNT
+   end loop;
+   begin
+      FOR j in 1 .. user_aa(db_schema_in).action_aa(action_in).COUNT
       loop
          sql_txt := 'begin generate.' ||
-                    user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt(i) ||
+                     user_aa(db_schema_in).action_aa(action_in)(j).file_name ||
                     '; end;';
-         --dbms_output.put_line ('SQL> ' || sql_txt);
-         execute immediate sql_txt;
+         dbms_output.put_line ('SQL> ' || sql_txt);
+         case user_aa(db_schema_in).action_aa(action_in)(j).applist_key
+         when 'FO' then
+            app_abbr := applist_nt(1);
+            generate.init(app_abbr);
+            --dbms_output.put_line('APP_ABBR: ' || app_abbr);
+            execute immediate sql_txt;
+         when 'FA' then
+            FOR i in 1 .. applist_nt.COUNT
+            loop
+               app_abbr := applist_nt(i);
+               generate.init(app_abbr);
+               --dbms_output.put_line('APP_ABBR: ' || app_abbr);
+               execute immediate sql_txt;
+            end loop;
+         when 'RA' then
+            FOR i in REVERSE 1 .. applist_nt.COUNT
+            loop
+               app_abbr := applist_nt(i);
+               generate.init(app_abbr);
+               --dbms_output.put_line('APP_ABBR: ' || app_abbr);
+               execute immediate sql_txt;
+            end loop;
+         else
+            raise_application_error (-20000, 'Invalid applist_key: ' ||
+               user_aa(db_schema_in).action_aa(action_in)(j).applist_key);
+         end case;
       end loop;
-      update applications_act
-        set  db_schema = saved_db_schema
-            ,dbid      = saved_dbid
-            ,db_auth   = saved_db_auth
-       where abbr = app_abbr;
-      commit;
-   end loop;
-   sql_txt := '';
+   exception
+      when others then
+         reset_app_parms;
+         raise;
+   end;
+   reset_app_parms;
+exception
+   when others then
+      rollback;
+      raise;
 end gen_all;
 
 procedure output_file
@@ -305,18 +357,40 @@ is
    file_name  file_lines_act.files_nk2%TYPE;
 begin
    gen_all(action_in, db_schema_in);
-   for j in 1 .. user_aa(db_schema_in).actapp_aa(action_in).COUNT
+   for j in 1 .. user_aa(db_schema_in).action_aa(action_in).COUNT
    loop
-      app_abbr := user_aa(db_schema_in).actapp_aa(action_in)(j).app_abbr;
-      FOR i in 1 .. user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt.COUNT
-      loop
-         file_name := user_aa(db_schema_in).actapp_aa(action_in)(j).file_nt(i);
+      file_name := user_aa(db_schema_in).action_aa(action_in)(j).file_name;
+      case user_aa(db_schema_in).action_aa(action_in)(j).applist_key
+      when 'FO' then
+         app_abbr := applist_nt(1);
          --dbms_output.put_line('*** INSERT ' || file_name || ' for ' ||
          --                                      db_schema_in || ' ' ||
          --                                      app_abbr || ' HERE ***');
          output_file(app_abbr, file_name);
-         case file_name
-         when 'drop_gusr' then
+      when 'FA' then
+         FOR i in 1 .. applist_nt.COUNT
+         loop
+            app_abbr := applist_nt(i);
+            --dbms_output.put_line('*** INSERT ' || file_name || ' for ' ||
+            --                                      db_schema_in || ' ' ||
+            --                                      app_abbr || ' HERE ***');
+            output_file(app_abbr, file_name);
+         end loop;
+      when 'RA' then
+         FOR i in REVERSE 1 .. applist_nt.COUNT
+         loop
+            app_abbr := applist_nt(i);
+            --dbms_output.put_line('*** INSERT ' || file_name || ' for ' ||
+            --                                      db_schema_in || ' ' ||
+            --                                      app_abbr || ' HERE ***');
+            output_file(app_abbr, file_name);
+         end loop;
+      else
+         raise_application_error (-20000, 'Invalid applist_key: ' ||
+            user_aa(db_schema_in).action_aa(action_in)(j).applist_key);
+      end case;
+      case file_name
+      when 'drop_gusr' then
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
@@ -324,7 +398,7 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-         when 'drop_oltp' then
+      when 'drop_oltp' then
    dbms_output.put_line('select view_type_owner || '': '' ||');
    dbms_output.put_line('       view_name       || ''(len '' ||');
    dbms_output.put_line('       text_length     || '')''   as remaining_views');
@@ -343,7 +417,7 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-         when 'drop_dist' then
+      when 'drop_dist' then
    dbms_output.put_line('select table_name   || '': '' ||');
    dbms_output.put_line('       trigger_type || '' - '' ||');
    dbms_output.put_line('       trigger_name   as remaining_table_triggers');
@@ -363,7 +437,7 @@ begin
    dbms_output.put_line('      ,owner');
    dbms_output.put_line('      ,constraint_name');
    dbms_output.put_line('/');
-         when 'drop_integ' then
+      when 'drop_integ' then
    dbms_output.put_line('select table_name   || '': '' ||');
    dbms_output.put_line('       trigger_type || '' - '' ||');
    dbms_output.put_line('       trigger_name   as remaining_table_triggers');
@@ -383,7 +457,7 @@ begin
    dbms_output.put_line('      ,owner');
    dbms_output.put_line('      ,constraint_name');
    dbms_output.put_line('/');
-         when 'drop_ods' then
+      when 'drop_ods' then
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
@@ -406,7 +480,7 @@ begin
    dbms_output.put_line(' from  user_sequences');
    dbms_output.put_line(' order by sequence_name');
    dbms_output.put_line('/');
-         when 'drop_gdst' then
+      when 'drop_gdst' then
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
@@ -414,7 +488,7 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-         when 'drop_glob' then
+      when 'drop_glob' then
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
    dbms_output.put_line('       status                   || '')''  as remaining_objects');
@@ -422,81 +496,83 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-         when 'drop_usyn' then
-            null;
-         when 'drop_aa' then
-            null;
-         when 'drop_mods' then
-            null;
-         when 'delete_ods' then
-            null;
-         else
-            if file_name like 'drop_%'  or
-               file_name like 'delete_%'
-            then
-               raise_application_error(-20000, 'Unknown GENERATE procedure ' ||
-                                                file_name);
-            end if;
-         end case;
-      end loop;
+      when 'drop_usyn' then
+         null;
+      when 'drop_aa' then
+         null;
+      when 'drop_mods' then
+         null;
+      when 'delete_ods' then
+         null;
+      else
+         if file_name like 'drop_%'  or
+            file_name like 'delete_%'
+         then
+            raise_application_error(-20000, 'Unknown GENERATE procedure ' ||
+                                             file_name);
+         end if;
+      end case;
    end loop;
 end output_all;
 
 begin
-   user_aa('TDBST').db_schema           := null;
-   user_aa('TDBST').dbid                := null;
-   user_aa('TDBST').db_auth             := null;
-   appfile_rec.file_nt  := file_nt_type('create_glob'
-                                       ,'create_ods'
-                                       ,'create_oltp'
-                                       ,'create_aa'
-                                       ,'create_mods'
-                                       ,'create_integ');
-   appfile_rec.app_abbr := 'TST1';
-   user_aa('TDBST').actapp_aa('install')(1) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('create_ods'
-                                       ,'create_oltp'
-                                       ,'create_aa'
-                                       ,'create_mods'
-                                       ,'create_integ');
-   appfile_rec.app_abbr := 'TST2';
-   user_aa('TDBST').actapp_aa('install')(2) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('drop_integ'
-                                       ,'delete_ods'
-                                       ,'drop_mods'
-                                       ,'drop_aa'
-                                       ,'drop_oltp'
-                                       ,'drop_ods');
-   appfile_rec.app_abbr := 'TST2';
-   user_aa('TDBST').actapp_aa('uninstall')(1) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('drop_integ'
-                                       ,'delete_ods'
-                                       ,'drop_mods'
-                                       ,'drop_aa'
-                                       ,'drop_oltp'
-                                       ,'drop_ods'
-                                       ,'drop_glob');
-   appfile_rec.app_abbr := 'TST1';
-   user_aa('TDBST').actapp_aa('uninstall')(1) := appfile_rec;
+   -- Application List
+   applist_nt := applist_nt_type('TST1', 'TST2');
+   -- FO - First Only
+   -- FA - Forward All
+   -- RA - Reverse All
    ----------------------------------------
-   user_aa('TDBUT').db_schema           := 'TDBST';
-   user_aa('TDBUT').dbid                := null;
-   user_aa('TDBUT').db_auth             := null;
-   appfile_rec.file_nt  := file_nt_type('create_gusr'
-                                       ,'create_usyn');
-   appfile_rec.app_abbr := 'TST1';
-   user_aa('TDBUT').actapp_aa('install')(1) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('create_usyn');
-   appfile_rec.app_abbr := 'TST2';
-   user_aa('TDBUT').actapp_aa('install')(2) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('drop_usyn');
-   appfile_rec.app_abbr := 'TST2';
-   user_aa('TDBUT').actapp_aa('uninstall')(1) := appfile_rec;
-   appfile_rec.file_nt  := file_nt_type('drop_usyn'
-                                       ,'drop_gusr');
-   appfile_rec.app_abbr := 'TST1';
-   user_aa('TDBUT').actapp_aa('uninstall')(2) := appfile_rec;
+   user_aa('TDBST').db_schema       := null;
+   user_aa('TDBST').dbid            := null;
+   user_aa('TDBST').db_auth         := null;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_glob';
+   user_aa('TDBST').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_ods';
+   user_aa('TDBST').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_oltp';
+   user_aa('TDBST').action_aa  ('install')(3) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_aa';
+   user_aa('TDBST').action_aa  ('install')(4) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_mods';
+   user_aa('TDBST').action_aa  ('install')(5) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_integ';
+   user_aa('TDBST').action_aa  ('install')(6) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_integ';
+   user_aa('TDBST').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.file_name :=       'delete_ods';
+   user_aa('TDBST').action_aa('uninstall')(2) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_mods';
+   user_aa('TDBST').action_aa('uninstall')(3) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_aa';
+   user_aa('TDBST').action_aa('uninstall')(4) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_oltp';
+   user_aa('TDBST').action_aa('uninstall')(5) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_ods';
+   user_aa('TDBST').action_aa('uninstall')(6) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_glob';
+   user_aa('TDBST').action_aa('uninstall')(7) := fileapp_rec;
+   ----------------------------------------
+   user_aa('TDBUT').db_schema       := 'TDBST';
+   user_aa('TDBUT').dbid            := null;
+   user_aa('TDBUT').db_auth         := null;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_gusr';
+   user_aa('TDBUT').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_usyn';
+   user_aa('TDBUT').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_usyn';
+   user_aa('TDBUT').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gusr';
+   user_aa('TDBUT').action_aa('uninstall')(2) := fileapp_rec;
 /*
+   ----------------------------------------
    user_aa('TMTST').db_schema           := null;
    user_aa('TMTST').dbid                := 'loopback';
    user_aa('TMTST').db_auth             := 'TDBST/TDBST';
