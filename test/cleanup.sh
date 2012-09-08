@@ -28,19 +28,19 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
 EOF
 
 echo "*** uninstall_user.gold comparison ..."
-sdiff -s -w 80 uninstall_user.gold uninstall_user.log
+sdiff -s -w 80 uninstall_user.gold uninstall_user.log | ${SORT} -u | head
 
 echo "*** uninstall_owner.gold comparison ..."
-sdiff -s -w 80 uninstall_owner.gold uninstall_owner.log
+sdiff -s -w 80 uninstall_owner.gold uninstall_owner.log | ${SORT} -u | head
 
 echo "*** Errors and Warnings ..."
-fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
 
 #cd ${GUI_DIR}
 #sqlplus ${OWNER_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
 #   @gui_uncomp
 #EOF
 #
-#fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
+#fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
 
 echo "$0 Complete"

@@ -1481,6 +1481,12 @@ BEGIN
    p('   --    (Centrally located, but globally visible)');
    header_comments;
    p('');
+   p('   -- Current User for Audit');
+   p('   procedure set_usr');
+   p('         (usr_in  in  ' || usrdt || ');');
+   p('   function get_usr');
+   p('      return ' || usrdt || ';');
+   p('');
    p('   -- TRUE - Table Triggers run TABLE_TAB calls');
    p('   -- FALSE - View_TABs run TABLE_TAB calls');
    p('   procedure set_db_constraints');
@@ -1495,15 +1501,17 @@ BEGIN
    p('   function get_fold_strings');
    p('      return boolean;');
    p('');
-   p('   -- Current User is set and read by the UTIL package');
-   p('   -- Current User is also "cached" in the UTIL package');
-   p('   -- NEVER modify glob.current_usr, use the UTIL package instead');
-   p('   current_usr ' || usrfdt || ';');
-   p('');
    p('   procedure set_asof_dtm');
    p('         (asof_dtm_in  in  timestamp with time zone);');
    p('   function get_asof_dtm');
    p('      return timestamp with time zone;');
+   p('');
+   p('   -- TRUE - gen_no_change error is ignored during UPDATE');
+   p('   -- FALSE - gen_no_change error is enforced during UPDATE');
+   p('   procedure set_ignore_no_change');
+   p('      (bool_in  in  boolean);');
+   p('   function get_ignore_no_change');
+   p('      return boolean;');
    p('');
    p('   function get_dtm');
    p('      return timestamp with local time zone;');
@@ -1538,13 +1546,40 @@ BEGIN
    p('--    (Centrally located, but globally visible)');
    header_comments;
    p('');
+   p('current_usr           ' || usrfdt || ';');
    p('db_constraints        boolean := false;');
    p('fold_strings          boolean := true;');
    p('asof_dtm              timestamp with time zone := ');
    p('   to_timestamp_tz(''2010-01-01 00:00:00 UTC'',''YYYY-MM-DD HH24:MI:SS TZR'');');
+   p('ignore_no_change      boolean := true;');
+   p('');
    p('st_lockhandle         varchar2(128);  -- Single Threaded DBMS_LOCK');
    p('st_lockname           varchar2(128);  -- Single Threaded DBMS_LOCK');
    p('');
+   p('----------------------------------------');
+   p('procedure set_usr');
+   p('      (usr_in  in  ' || usrdt || ')');
+   p('is');
+   p('begin');
+   if abuff.usr_datatype is not null
+   then
+      p('   current_usr := usr_in;');
+   else
+      p('   current_usr := substr(usr_in,1,30);');
+   end if;
+   p('end set_usr;');
+   p('----------------------------------------');
+   p('function get_usr');
+   p('   return ' || usrdt);
+   p('is');
+   p('begin');
+   p('   if current_usr is null');
+   p('   then');
+   p('      raise_application_error(-20002, ''Current User has not been set in the ' ||
+                                            initcap(sp_name) || ' Package.'');');
+   p('   end if;');
+   p('   return current_usr;');
+   p('end get_usr;');
    p('----------------------------------------');
    p('procedure set_db_constraints');
    p('      (bool_in  in  boolean)');
@@ -1587,6 +1622,20 @@ BEGIN
    p('begin');
    p('   return asof_dtm;');
    p('end get_asof_dtm;');
+   p('----------------------------------------');
+   p('procedure set_ignore_no_change');
+   p('      (bool_in  in  boolean)');
+   p('is');
+   p('begin');
+   p('   ignore_no_change := bool_in;');
+   p('end set_ignore_no_change;');
+   p('----------------------------------------');
+   p('function get_ignore_no_change');
+   p('      return boolean');
+   p('is');
+   p('begin');
+   p('   return ignore_no_change;');
+   p('end get_ignore_no_change;');
    p('----------------------------------------');
    p('function get_dtm');
    p('      return timestamp with local time zone');
@@ -1752,7 +1801,7 @@ BEGIN
    p('');
    p('comment on column ' || sown||sp_name || '_log.dtm is ''System time when message was logged''');
    p('/');
-   p('comment on column ' || sown||sp_name || '_log.usr is ''Username from ' || sp_name || '.get_usr function''');
+   p('comment on column ' || sown||sp_name || '_log.usr is ''Username from glob.get_usr function''');
    p('/');
    p('comment on column ' || sown||sp_name || '_log.txt is ''Error or Debug message text''');
    p('/');
@@ -1783,16 +1832,10 @@ BEGIN
    p('   -- Separates values in a path hierarchy');
    p('   path_sep  constant varchar2(1) := '':'';');
    p('');
-   p('   -- TRUE - gen_no_change error is ignored during UPDATE');
-   p('   -- FALSE - gen_no_change error is enforced during UPDATE');
-   p('   ignore_no_change  boolean := true;');
-   p('');
    p('   first_dtm  constant timestamp with time zone :=');
    p('        to_timestamp_tz(''1970-01-01 00:00:00 UTC'',''YYYY-MM-DD HH24:MI:SS TZR'');');
    p('   last_dtm   constant timestamp with time zone :=');
    p('        to_timestamp_tz(''4713-12-31 23:59:59 UTC'',''YYYY-MM-DD HH24:MI:SS TZR'');');
-   p('');
-   p('   current_usr ' || usrfdt || ';');
    p('');
    p('   function get_version');
    p('      return varchar2;');
@@ -1812,12 +1855,6 @@ BEGIN
    p('         ,n2_in  in  number');
    p('         )');
    p('      return boolean;');
-   p('');
-   p('   procedure set_usr');
-   p('         (usr_in  in  ' || usrdt);
-   p('         );');
-   p('   function get_usr');
-   p('      return ' || usrdt || ';');
    p('');
    p('   procedure init_longops');
    p('         (opname_in       in  varchar2');
@@ -1933,36 +1970,6 @@ BEGIN
    p('   end if;');
    p('end is_equal;');
    p('----------------------------------------');
-   p('procedure set_usr');
-   p('      (usr_in  in  ' || usrdt || ')');
-   p('is');
-   p('begin');
-   if abuff.usr_datatype is not null
-   then
-      p('   current_usr := usr_in;');
-   else
-      p('   current_usr := substr(usr_in,1,30);');
-   end if;
-   p('   glob.current_usr := current_usr;');
-   p('end set_usr;');
-   p('----------------------------------------');
-   p('function get_usr');
-   p('   return ' || usrdt);
-   p('is');
-   p('begin');
-   p('   if current_usr is null');
-   p('   then');
-   p('      if glob.current_usr is null');
-   p('      then');
-   p('         raise_application_error(-20002, ''Current User has not been set in the ' ||
-                                               initcap(sp_name) || ' Package.'');');
-   p('      else');
-   p('         current_usr := glob.current_usr;');
-   p('      end if;');
-   p('   end if;');
-   p('   return current_usr;');
-   p('end get_usr;');
-   p('----------------------------------------');
    p('procedure init_longops');
    p('      (opname_in       in  varchar2');
    p('      ,totalwork_in    in  number');
@@ -2035,7 +2042,7 @@ BEGIN
    p('   -- DBMS_UTILITY.FORMAT_CALL_STACK returns up to 2000 characters');
    p('   fcs_txt := DBMS_UTILITY.FORMAT_CALL_STACK;');
    p('   begin');
-   p('      usr_buff := nvl(current_usr,glob.current_usr);');
+   p('      usr_buff := glob.get_usr;');
    p('   exception when others then');
    p('      usr_buff := null;');
    p('   end;');
@@ -2164,8 +2171,6 @@ IS
 BEGIN
    p('drop package ' || sown||'glob');
    p('/');
-   p('drop database link '|| sown||abuff.abbr||'_db');
-   p('/');
 END drop_gd;
 ----------------------------------------
 PROCEDURE create_gd
@@ -2174,12 +2179,6 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
 BEGIN
-   p('-- Database Link to Centralized Database Server.');
-   p('create database link '|| sown||abuff.abbr||'_db');
-   p('   ' || abuff.db_auth);
-   p('   using ''' || abuff.dbid || '''');
-   p('/');
-   p('');
    sp_type := 'package';
    sp_name := 'glob';
    p('CREATE ' || sp_type || ' ' || sown||sp_name);
@@ -2189,6 +2188,11 @@ BEGIN
    p('   --    Globally available settings and functions');
    p('   --    (All procedures and functions point to link '||abuff.abbr||'_db)');
    header_comments;
+   p('');
+   p('   procedure set_usr');
+   p('         (usr_in  in  ' || usrdt || ');');
+   p('   function get_usr');
+   p('      return ' || usrdt || ';');
    p('');
    p('   procedure set_db_constraints');
    p('      (bool_in  in  boolean);');
@@ -2204,6 +2208,11 @@ BEGIN
    p('         (asof_dtm_in  in  timestamp with time zone);');
    p('   function get_asof_dtm');
    p('      return timestamp with time zone;');
+   p('');
+   p('   procedure set_ignore_no_change');
+   p('      (bool_in  in  boolean);');
+   p('   function get_ignore_no_change');
+   p('      return boolean;');
    p('');
    p('   function get_dtm');
    p('      return timestamp with local time zone;');
@@ -2238,6 +2247,20 @@ BEGIN
    p('--    (All procedures and functions point to link '||abuff.abbr||'_db)');
    header_comments;
    p('');
+   p('----------------------------------------');
+   p('procedure set_usr');
+   p('      (usr_in  in  ' || usrdt || ')');
+   p('is');
+   p('begin');
+   p('   glob.set_usr@'||abuff.abbr||'_db(usr_in);');
+   p('end set_usr;');
+   p('----------------------------------------');
+   p('function get_usr');
+   p('   return ' || usrdt);
+   p('is');
+   p('begin');
+   p('   return glob.get_usr@'||abuff.abbr||'_db;');
+   p('end get_usr;');
    p('----------------------------------------');
    p('procedure set_db_constraints');
    p('      (bool_in  in  boolean)');
@@ -2280,6 +2303,20 @@ BEGIN
    p('begin');
    p('   return glob.get_asof_dtm@'||abuff.abbr||'_db;');
    p('end get_asof_dtm;');
+   p('----------------------------------------');
+   p('procedure set_ignore_no_change');
+   p('      (bool_in  in  boolean)');
+   p('is');
+   p('begin');
+   p('   glob.set_ignore_no_change@'||abuff.abbr||'_db(bool_in);');
+   p('end set_ignore_no_change;');
+   p('----------------------------------------');
+   p('function get_ignore_no_change');
+   p('      return boolean');
+   p('is');
+   p('begin');
+   p('   return glob.get_ignore_no_change@'||abuff.abbr||'_db;');
+   p('end get_ignore_no_change;');
    p('----------------------------------------');
    p('function get_dtm');
    p('      return timestamp with local time zone');
@@ -2710,7 +2747,7 @@ BEGIN
    p('               (hbuf.' || tbuff.name || '_id');
    p('               ,''DELETE''');
    p('               ,systimestamp');
-   p('               ,util.get_usr');
+   p('               ,glob.get_usr');
    if tbuff.type = 'EFF'
    then
       p('               ,hbuf.eff_end_dtm');
@@ -2798,7 +2835,7 @@ BEGIN
    p('               (abuf.id');
    p('               ,''INSERT''');
    p('               ,systimestamp');
-   p('               ,util.get_usr');
+   p('               ,glob.get_usr');
    p('               ,abuf.aud_beg_dtm');
    p('               ,abuf.aud_beg_usr');
    if tbuff.type = 'EFF'
@@ -2846,7 +2883,7 @@ BEGIN
    p('               (abuf.id');
    p('               ,''UPDATE''');
    p('               ,systimestamp');
-   p('               ,util.get_usr');
+   p('               ,glob.get_usr');
    p('               ,hbuf.aud_end_dtm');
    p('               ,hbuf.aud_beg_dtm');
    p('               ,hbuf.aud_end_usr');
@@ -3211,7 +3248,7 @@ BEGIN
    p('             );');
    if tbuff.type in ('EFF', 'LOG')
    then
-      p('   n_aud_beg_usr := util.get_usr;');
+      p('   n_aud_beg_usr := glob.get_usr;');
       p('   n_aud_beg_dtm := glob.get_dtm;');
    end if;
    p('end ins;') ;
@@ -3269,7 +3306,7 @@ BEGIN
       end if;
    end loop;
    p('   then');
-   p('      if util.ignore_no_change');
+   p('      if glob.get_ignore_no_change');
    p('      then');
    if tbuff.type in ('EFF', 'LOG')
    then
@@ -3327,7 +3364,7 @@ BEGIN
                   '(): The new Effectivity Date must be greater than '' || o_eff_beg_dtm);');
          p('   end if;');
       end if;
-      p('   n_aud_beg_usr := util.get_usr;');
+      p('   n_aud_beg_usr := glob.get_usr;');
       p('   n_aud_beg_dtm := glob.get_dtm;');
       p('   if n_aud_beg_dtm <= o_aud_beg_dtm');
       p('   then');
@@ -3421,7 +3458,7 @@ BEGIN
          p('      glob.upd_early_eff(''' || tbuff.name || ''', x_eff_end_dtm);');
          p('   end if;');
       end if;
-      p('   n_aud_beg_usr := util.get_usr;');
+      p('   n_aud_beg_usr := glob.get_usr;');
       p('   n_aud_beg_dtm := glob.get_dtm;');
       p('   if n_aud_beg_dtm <= o_aud_beg_dtm');
       p('   then');
@@ -9764,7 +9801,7 @@ BEGIN
       p('         p_process_point=> ''AFTER_SUBMIT'',');
       p('         p_process_type=> ''PLSQL'',');
       p('         p_process_name=> ''SET_USR'',');
-      p('         p_process_sql_clob => ''"#OWNER#".util.set_usr(:APP_USER);'',');
+      p('         p_process_sql_clob => ''"#OWNER#".glob.set_usr(:APP_USER);'',');
       p('         p_process_error_message=> ''SET_USR: Unable to set user in UTIL package.'',');
       p('         p_process_when=> '''',');
       p('         p_process_when_type=> '''',');
@@ -12524,7 +12561,7 @@ BEGIN
    pr('       ''   MRU_COUNT  number := 0;'' ');
    pr('       ''   rows       number;'' ');
    pr('       ''begin'' ');
-   pr('       ''   util.ignore_no_change := FALSE;'' ');
+   pr('       ''   glob.get_ignore_no_change := FALSE;'' ');
    pr('       ''   for i in 1 .. apex_application.g_f02.count'' ');
    pr('       ''   loop'' ');
    --  Create the update statement
@@ -16003,6 +16040,64 @@ BEGIN
    dump_sec_lines;  -- Performs an "open_file"
 END create_glob;
 ----------------------------------------
+PROCEDURE drop_dblink
+IS
+BEGIN
+   fbuff.name           := 'drop_dblink';
+   fbuff.description    := 'Drop Mid-Tier Database Link using generated code';
+   open_file;
+   p('');
+   if abuff.dbid IS NULL
+   then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DBA_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
+      p('drop database link '|| sown||abuff.abbr||'_db');
+      p('/');
+   end if;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
+END drop_dblink;
+----------------------------------------
+PROCEDURE create_dblink
+IS
+BEGIN
+   fbuff.name           := 'create_dblink';
+   fbuff.description    := 'Create Mid-Tier Database Link using generated code';
+   open_file;
+   p('');
+   if abuff.dbid IS NULL
+   then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DBA_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
+      p('-- Database Link to Centralized Database Server.');
+      p('create database link '|| sown||abuff.abbr||'_db');
+      p('   ' || abuff.db_auth);
+      p('   using ''' || abuff.dbid || '''');
+      p('/');
+      p('');
+   end if;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
+END create_dblink;
+----------------------------------------
 PROCEDURE drop_gdst
 IS
 BEGIN
@@ -16010,10 +16105,24 @@ BEGIN
    fbuff.description    := 'Drop Distributed Globals using generated code';
    open_file;
    p('');
-   drop_util;
-   drop_gd;
-   p('');
-   close_file;
+   if abuff.dbid IS NULL
+   then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DBA_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
+      drop_util;
+      drop_gd;
+      p('');
+      close_file;
+   end if;
 END drop_gdst;
 ----------------------------------------
 PROCEDURE create_gdst
@@ -16023,10 +16132,24 @@ BEGIN
    fbuff.description    := 'Create Distributed Globals using generated code';
    open_file;
    p('');
-   create_gd;
-   create_util;
-   close_file;
-   dump_sec_lines;  -- Performs an "open_file"
+   if abuff.dbid IS NULL
+   then
+      p('   --');
+      p('   -- DBID is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   elsif abuff.db_auth IS NULL
+   then
+      p('   --');
+      p('   -- DBA_AUTH is not defined in APPLICATIONS');
+      p('   --');
+      p('');
+   else
+      create_gd;
+      create_util;
+      close_file;
+      dump_sec_lines;  -- Performs an "open_file"
+   end if;
 END create_gdst;
 ----------------------------------------
 PROCEDURE delete_ods

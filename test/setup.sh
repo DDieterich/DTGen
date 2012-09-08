@@ -27,6 +27,6 @@ sqlplus ${SYS_CONNECT_STRING-NULL} as sysdba > ${logfile} 2>&1 <<EOF
    @../create_ut_syns ${USERNAME} ${TESTNAME}
 EOF
 
-fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
 
 echo "$0 Complete"

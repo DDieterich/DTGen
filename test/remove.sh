@@ -21,6 +21,6 @@ sqlplus ${SYS_CONNECT_STRING} as sysdba > ${logfile} 2>&1 <<EOF
    @../../supp/drop_owner ${OWNERNAME}
 EOF
 
-fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
 
 echo "$0 Complete"

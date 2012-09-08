@@ -25,15 +25,6 @@ execute dtgen_util.data_script('TST1');
 execute dtgen_util.data_script('TST2');
 purge recyclebin;
 
-declare num_rows number; begin
-for buff in (select table_name from user_tables) loop
-   execute immediate 'select count(*) into :a from ' || buff.table_name into num_rows;
-   if nvl(num_rows,0) > 0 then
-      dbms_output.put_line('Table ' || buff.table_name || ' has ' || num_rows || ' rows.');
-   end if;
-end loop; end;
-/
-
 ------------------------------------------------------------
 execute dbms_output.put_line(test_gen.gen_load('TST1',USER));
 
