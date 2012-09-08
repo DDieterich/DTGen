@@ -17,16 +17,21 @@ then
 fi
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
+   spool uninstall_user.log
    connect ${USER_CONNECT_STRING}
    ALTER SESSION SET recyclebin = OFF;
    @uninstall_user
+   spool uninstall_owner.log
    connect ${OWNER_CONNECT_STRING}
    ALTER SESSION SET recyclebin = OFF;
    @uninstall_owner
 EOF
 
-echo "*** cleanup.gold comparison ..."
-sdiff -s -w 80 cleanup.gold cleanup.log | fgrep -v 'SQL*Plus: Release '
+echo "*** uninstall_user.gold comparison ..."
+sdiff -s -w 80 uninstall_user.gold uninstall_user.log
+
+echo "*** uninstall_owner.gold comparison ..."
+sdiff -s -w 80 uninstall_owner.gold uninstall_owner.log
 
 echo "*** Errors and Warnings ..."
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}

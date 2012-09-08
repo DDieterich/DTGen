@@ -577,845 +577,6 @@ no rows selected
 
 
 ***************************
-Running Script create_integ
-***************************
-
-
-TABLE_NAME
------------------
-***  t1a_non  ***
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_log  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_eff  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-***************************
-Running Script create_oltp
-***************************
-
-
-TABLE_NAME
------------------
-***  t1a_non  ***
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_log  ***
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-TABLE_NAME
------------------
-***  t1a_eff  ***
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Trigger created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Package body created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-***************************
-Running Script create_aa
-***************************
-
-
-TABLE_NAME
------------------
-***  t1a_non  ***
-
-
-TABLE_NAME
------------------
-***  t1a_log  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-TABLE_NAME
------------------
-***  t1a_eff  ***
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-View created.
-
-
-no rows selected
-
-
-no rows selected
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-View altered.
-
-
-***************************
-Running Script create_mods
-***************************
-
-
-***************************
 Running Script create_ods
 ***************************
 
@@ -1784,16 +945,64 @@ no rows selected
 
 
 ***************************
-Running Script create_integ
+Running Script create_oltp
 ***************************
 
 
 TABLE_NAME
 -----------------
-***  t2a_non  ***
+***  t1a_non  ***
 
 
-Table altered.
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
 
 
 Trigger created.
@@ -1815,6 +1024,33 @@ no rows selected
 
 
 Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
 
 
 no rows selected
@@ -1825,61 +1061,64 @@ no rows selected
 
 TABLE_NAME
 -----------------
-***  t2a_log  ***
+***  t1a_log  ***
 
 
-Table altered.
+Package created.
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+View created.
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
+
+
+View altered.
 
 
 Trigger created.
@@ -1901,6 +1140,33 @@ no rows selected
 
 
 Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
 
 
 no rows selected
@@ -1911,79 +1177,67 @@ no rows selected
 
 TABLE_NAME
 -----------------
-***  t2a_eff  ***
+***  t1a_eff  ***
 
 
-Table altered.
+Package created.
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+View created.
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+no rows selected
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
+Comment created.
 
 
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
+View altered.
 
 
 Trigger created.
@@ -2005,6 +1259,33 @@ no rows selected
 
 
 Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
 
 
 no rows selected
@@ -2316,6 +1597,260 @@ Running Script create_aa
 
 TABLE_NAME
 -----------------
+***  t1a_non  ***
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+***************************
+Running Script create_aa
+***************************
+
+
+TABLE_NAME
+-----------------
 ***  t2a_non  ***
 
 
@@ -2494,5 +2029,470 @@ View altered.
 ***************************
 Running Script create_mods
 ***************************
+
+
+***************************
+Running Script create_mods
+***************************
+
+
+***************************
+Running Script create_integ
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+***************************
+Running Script create_integ
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t2a_non  ***
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t2a_log  ***
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t2a_eff  ***
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 SQL>    spool install_user.log

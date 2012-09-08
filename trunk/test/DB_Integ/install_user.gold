@@ -3,7 +3,7 @@ Connected.
 SQL>    @install_user
 
 ***************************
-Running Script create_usyn
+Running Script create_gusr
 ***************************
 
 
@@ -14,6 +14,11 @@ Synonym created.
 
 
 Synonym created.
+
+
+***************************
+Running Script create_usyn
+***************************
 
 
 TABLE_NAME
@@ -91,14 +96,6 @@ Synonym created.
 ***************************
 Running Script create_usyn
 ***************************
-
-Synonym created.
-
-
-Synonym created.
-
-
-Synonym created.
 
 
 TABLE_NAME
