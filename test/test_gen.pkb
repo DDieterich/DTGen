@@ -288,7 +288,7 @@ begin
          sql_txt := 'begin generate.' ||
                      user_aa(db_schema_in).action_aa(action_in)(j).file_name ||
                     '; end;';
-         dbms_output.put_line ('SQL> ' || sql_txt);
+         --dbms_output.put_line ('SQL> ' || sql_txt);
          case user_aa(db_schema_in).action_aa(action_in)(j).applist_key
          when 'FO' then
             app_abbr := applist_nt(1);
@@ -390,6 +390,8 @@ begin
             user_aa(db_schema_in).action_aa(action_in)(j).applist_key);
       end case;
       case file_name
+      when 'drop_usyn' then
+         null;
       when 'drop_gusr' then
    dbms_output.put_line('select object_type              || '': '' ||');
    dbms_output.put_line('       substr(object_name,1,30) || ''('' ||');
@@ -398,6 +400,47 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
+      when 'drop_integ' then
+   dbms_output.put_line('select table_name   || '': '' ||');
+   dbms_output.put_line('       trigger_type || '' - '' ||');
+   dbms_output.put_line('       trigger_name   as remaining_table_triggers');
+   dbms_output.put_line(' from  user_triggers');
+   dbms_output.put_line(' where base_object_type = ''TABLE''');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,trigger_type');
+   dbms_output.put_line('/');
+   dbms_output.put_line('select table_name      || '': '' ||');
+   dbms_output.put_line('       constraint_type || '' = '' ||');
+   dbms_output.put_line('       substr(owner    || ''.'' ||');
+   dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
+   dbms_output.put_line(' from  user_constraints');
+   dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
+   dbms_output.put_line(' order by table_name');
+   dbms_output.put_line('      ,constraint_type');
+   dbms_output.put_line('      ,owner');
+   dbms_output.put_line('      ,constraint_name');
+   dbms_output.put_line('/');
+      when 'delete_ods' then
+   dbms_output.put_line('set serveroutput on format wrapped');
+   dbms_output.put_line('declare');
+   dbms_output.put_line('   num_rows number;');
+   dbms_output.put_line('begin');
+   dbms_output.put_line('   for buff in');
+   dbms_output.put_line('      (select table_name from user_tables)');
+   dbms_output.put_line('   loop');
+   dbms_output.put_line('      execute immediate ''select count(*) into :a from '' ||');
+   dbms_output.put_line('                          buff.table_name into num_rows;');
+   dbms_output.put_line('      if nvl(num_rows,0) > 0 then');
+   dbms_output.put_line('         dbms_output.put_line(''Table '' || buff.table_name ||');
+   dbms_output.put_line('                              '' has '' || num_rows || '' rows.'');');
+   dbms_output.put_line('      end if;');
+   dbms_output.put_line('   end loop;');
+   dbms_output.put_line('end;');
+   dbms_output.put_line('/');
+      when 'drop_mods' then
+         null;
+      when 'drop_aa' then
+         null;
       when 'drop_oltp' then
    dbms_output.put_line('select view_type_owner || '': '' ||');
    dbms_output.put_line('       view_name       || ''(len '' ||');
@@ -418,26 +461,6 @@ begin
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
       when 'drop_dist' then
-   dbms_output.put_line('select table_name   || '': '' ||');
-   dbms_output.put_line('       trigger_type || '' - '' ||');
-   dbms_output.put_line('       trigger_name   as remaining_table_triggers');
-   dbms_output.put_line(' from  user_triggers');
-   dbms_output.put_line(' where base_object_type = ''TABLE''');
-   dbms_output.put_line(' order by table_name');
-   dbms_output.put_line('      ,trigger_type');
-   dbms_output.put_line('/');
-   dbms_output.put_line('select table_name      || '': '' ||');
-   dbms_output.put_line('       constraint_type || '' = '' ||');
-   dbms_output.put_line('       substr(owner    || ''.'' ||');
-   dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
-   dbms_output.put_line(' from  user_constraints');
-   dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
-   dbms_output.put_line(' order by table_name');
-   dbms_output.put_line('      ,constraint_type');
-   dbms_output.put_line('      ,owner');
-   dbms_output.put_line('      ,constraint_name');
-   dbms_output.put_line('/');
-      when 'drop_integ' then
    dbms_output.put_line('select table_name   || '': '' ||');
    dbms_output.put_line('       trigger_type || '' - '' ||');
    dbms_output.put_line('       trigger_name   as remaining_table_triggers');
@@ -496,14 +519,6 @@ begin
    dbms_output.put_line(' order by object_type');
    dbms_output.put_line('      ,object_name');
    dbms_output.put_line('/');
-      when 'drop_usyn' then
-         null;
-      when 'drop_aa' then
-         null;
-      when 'drop_mods' then
-         null;
-      when 'delete_ods' then
-         null;
       else
          if file_name like 'drop_%'  or
             file_name like 'delete_%'

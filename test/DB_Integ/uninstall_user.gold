@@ -1,0 +1,184 @@
+SQL>    connect TDBUT/TDBUT@XE2
+Connected.
+SQL>    ALTER SESSION SET recyclebin = OFF;
+
+Session altered.
+
+SQL>    @uninstall_user
+
+***************************
+Running Script drop_usyn
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_eff  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_log  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_non  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+***************************
+Running Script drop_usyn
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+***************************
+Running Script drop_gusr
+***************************
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+REMAINING_OBJECTS                                                               
+--------------------------------------------------------------------------------
+SYNONYM: TEST_GEN(INVALID)                                                      
+SYNONYM: TEST_PARMS(VALID)                                                      
+SYNONYM: TEST_RIG(VALID)                                                        
+SYNONYM: TEST_RUN(VALID)                                                        
+
+SQL>    spool uninstall_owner.log
