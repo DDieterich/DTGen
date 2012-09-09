@@ -17,18 +17,6 @@ create synonym &1..test_parms for &2..test_parms;
 create synonym &1..test_gen   for &2..test_gen;
 create synonym &1..test_rig   for &2..test_rig;
 
--- Create New Application Roles
---
-define app_abbr=TST1
-create role &app_abbr._dml;
-create role &app_abbr._app;
-grant &app_abbr._app to &app_abbr._dml;
---
-define app_abbr=TST2
-create role &app_abbr._dml;
-create role &app_abbr._app;
-grant &app_abbr._app to &app_abbr._dml;
-
 alter user &1.
    quota unlimited on test_onln_data_default
    quota unlimited on test_onln_indx_default

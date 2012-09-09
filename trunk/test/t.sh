@@ -24,7 +24,7 @@ export SORT="/usr/bin/sort"
 
 # Set directory list
 DIR_LIST="DB_Integ MT_Integ DODMT_Integ DB_NoInteg MT_NoInteg DODMT_NoInteg"
-DIR_LIST="DB_Integ MT_Integ"
+DIR_LIST="DB_Integ MT_Integ DODMT_Integ"
 
 # Set Connect Strings
 export DEV_CONNECT_STRING=${DEVNAME}/${DEVPASS}

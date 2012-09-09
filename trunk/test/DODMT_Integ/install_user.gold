@@ -1,4 +1,4 @@
-SQL>    connect TDBUT/TDBUT@XE2
+SQL>    connect TMTUTDOD/TMTUTDOD@XE2
 Connected.
 SQL>    @install_user
 

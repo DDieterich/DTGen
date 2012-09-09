@@ -12,6 +12,11 @@ define UTO_PASS=dtgen_test
 set define '&'
 set serveroutput on format wrapped
 
+-- Create New Application Roles
+--
+@create_app_roles TST1
+@create_app_roles TST2
+
 -- Create New Schema Owner
 --
 create user &UTO_NAME. identified by &UTO_PASS.
