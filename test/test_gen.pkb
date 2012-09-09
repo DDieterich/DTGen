@@ -564,9 +564,9 @@ begin
    -- RA - Reverse All
    -- NOTE: RO (Reverse last Only) would be the same as FO
    ----------------------------------------
-   user_aa('TDBST').db_schema       := null;
-   user_aa('TDBST').dbid            := null;
-   user_aa('TDBST').db_auth         := null;
+   user_aa('TDBST').db_schema    := null;
+   user_aa('TDBST').dbid         := null;
+   user_aa('TDBST').db_auth      := null;
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_glob';
    user_aa('TDBST').action_aa  ('install')(1) := fileapp_rec;
@@ -598,9 +598,9 @@ begin
    fileapp_rec.file_name :=       'drop_glob';
    user_aa('TDBST').action_aa('uninstall')(7) := fileapp_rec;
    ----------------------------------------
-   user_aa('TDBUT').db_schema       := 'TDBST';
-   user_aa('TDBUT').dbid            := null;
-   user_aa('TDBUT').db_auth         := null;
+   user_aa('TDBUT').db_schema    := 'TDBST';
+   user_aa('TDBUT').dbid         := null;
+   user_aa('TDBUT').db_auth      := null;
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gusr';
    user_aa('TDBUT').action_aa  ('install')(1) := fileapp_rec;
@@ -614,9 +614,9 @@ begin
    fileapp_rec.file_name :=       'drop_gusr';
    user_aa('TDBUT').action_aa('uninstall')(2) := fileapp_rec;
    ----------------------------------------
-   user_aa('TMTST').db_schema           := null;
-   user_aa('TMTST').dbid                := 'loopback';
-   user_aa('TMTST').db_auth             := 'connect to TDBST identified by TDBST';
+   user_aa('TMTST').db_schema    := null;
+   user_aa('TMTST').dbid         := 'loopback';
+   user_aa('TMTST').db_auth      := 'connect to TDBST identified by TDBST';
    fileapp_rec.applist_key := 'FA';
    fileapp_rec.file_name :=       'create_dblink';
    user_aa('TMTST').action_aa  ('install')(1) := fileapp_rec;
@@ -644,9 +644,9 @@ begin
    fileapp_rec.file_name :=       'drop_dblink';
    user_aa('TMTST').action_aa('uninstall')(5) := fileapp_rec;
    ----------------------------------------
-   user_aa('TMTUT').db_schema           := 'TMTST';
-   user_aa('TMTUT').dbid                := null;
-   user_aa('TMTUT').db_auth             := null;
+   user_aa('TMTUT').db_schema    := 'TMTST';
+   user_aa('TMTUT').dbid         := null;
+   user_aa('TMTUT').db_auth      := null;
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gusr';
    user_aa('TMTUT').action_aa  ('install')(1) := fileapp_rec;
@@ -660,29 +660,53 @@ begin
    fileapp_rec.file_name :=       'drop_gusr';
    user_aa('TMTUT').action_aa('uninstall')(2) := fileapp_rec;
    ----------------------------------------
+   user_aa('TMTSTDOD').db_schema := null;
+   user_aa('TMTSTDOD').dbid      := 'loopback';
+   user_aa('TMTSTDOD').db_auth   := 'connect to TDBUT identified by TDBUT';
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_dblink';
+   user_aa('TMTSTDOD').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_gdst';
+   user_aa('TMTSTDOD').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_dist';
+   user_aa('TMTSTDOD').action_aa  ('install')(3) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_oltp';
+   user_aa('TMTSTDOD').action_aa  ('install')(4) := fileapp_rec;
+   fileapp_rec.file_name :=       'create_mods';
+   user_aa('TMTSTDOD').action_aa  ('install')(5) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_mods';
+   user_aa('TMTSTDOD').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_oltp';
+   user_aa('TMTSTDOD').action_aa('uninstall')(2) := fileapp_rec;
+   fileapp_rec.file_name :=       'drop_dist';
+   user_aa('TMTSTDOD').action_aa('uninstall')(3) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gdst';
+   user_aa('TMTSTDOD').action_aa('uninstall')(4) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_dblink';
+   user_aa('TMTSTDOD').action_aa('uninstall')(5) := fileapp_rec;
+   ----------------------------------------
+   user_aa('TMTUTDOD').db_schema := 'TMTSTDOD';
+   user_aa('TMTUTDOD').dbid      := null;
+   user_aa('TMTUTDOD').db_auth   := null;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'create_gusr';
+   user_aa('TMTUTDOD').action_aa  ('install')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FA';
+   fileapp_rec.file_name :=       'create_usyn';
+   user_aa('TMTUTDOD').action_aa  ('install')(2) := fileapp_rec;
+   fileapp_rec.applist_key := 'RA';
+   fileapp_rec.file_name :=       'drop_usyn';
+   user_aa('TMTUTDOD').action_aa('uninstall')(1) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gusr';
+   user_aa('TMTUTDOD').action_aa('uninstall')(2) := fileapp_rec;
+   ----------------------------------------
 /*
-   user_aa('TMTSTDOD').db_schema           := null;
-   user_aa('TMTSTDOD').dbid                := 'loopback';
-   user_aa('TMTSTDOD').db_auth             := 'connect to TDBUT identified by TDBUT';
-   user_aa('TMTSTDOD').app_file_aa('TST1') := file_nt_type
-      ('gdst'
-      ,'dist'
-      ,'oltp'
-      ,'mods');
-   user_aa('TMTSTDOD').app_file_aa('TST2') := file_nt_type
-      ('dist'
-      ,'oltp'
-      ,'mods');
-   ----------------------------------------
-   user_aa('TMTUTDOD').db_schema           := 'TMTSTDOD';
-   user_aa('TMTUTDOD').dbid                := null;
-   user_aa('TMTUTDOD').db_auth             := null;
-   user_aa('TMTUTDOD').app_file_aa('TST1') := file_nt_type
-      ('gusr'
-      ,'usyn');
-   user_aa('TMTUTDOD').app_file_aa('TST2') := file_nt_type
-      ('usyn');
-   ----------------------------------------
    user_aa('TDBSN').db_schema           := null;
    user_aa('TDBSN').dbid                := null;
    user_aa('TDBSN').db_auth             := null;

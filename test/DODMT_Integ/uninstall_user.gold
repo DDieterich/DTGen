@@ -1,4 +1,4 @@
-SQL>    connect TMTUT/TMTUT@XE2
+SQL>    connect TMTUTDOD/TMTUTDOD@XE2
 Connected.
 SQL>    ALTER SESSION SET recyclebin = OFF;
 

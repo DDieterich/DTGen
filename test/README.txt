@@ -6,6 +6,7 @@ DTGen "test" README File
 Files and Directories:
 ----------------------
 cleanup.sh            - Called by "t.sh cleanup"
+create_app_roles.sql  - Called by "t.sh setup"
 create_ut_objs.sql    - Run as "dtgen_test" to create Unit Test Objects
                         &1. - Generator Schema Object Owner Name
 create_ut_owner.sql   - Run as sys to create Unit Test Repository Owner
@@ -15,10 +16,12 @@ DB_Integ              - Directory for TDBST and TDBUT Test Scripts
 DB_NoInteg            - Directory for TDBSN and TDBUN Test Scripts
 DODMT_Integ           - Directory for TMTSTDOD and TMTUTDOD Test Scripts
 DODMT_NoInteg         - Directory for TMTSNDOD and TMTUNDOD Test Scripts
+drop_app_roles.sql    - Called by "t.sh remove"
 drop_ut_owner.sql     - Run as sys to drop Unit Test Repository Owner
 dtgen_tst1_dataload.ctl - SQL*Loader control file to load the TST1 application
 dtgen_tst2_dataload.ctl - SQL*Loader control file to load the TST2 application
 g.sql                 - Creates some GUI stuff
+grant_app_roles.sql   - Called by "t.sh setup"
 load.sh               - Called by "t.sh load"
 MT_Integ              - Directory for TMTST and TMTUT Test Scripts
 MT_NoInteg            - Directory for TMTSN and TMTUN Test Scripts

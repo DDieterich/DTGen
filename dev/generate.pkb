@@ -2397,6 +2397,8 @@ BEGIN
    p('create sequence '|| sown||tbuff.name||'_seq');
    p('/');
    ps('');
+   ps('grant alter on '|| sown||tbuff.name||'_seq to '||abuff.abbr||'_dml');
+   ps('/');
    ps('grant select on '|| sown||tbuff.name||'_seq to '||abuff.abbr||'_app');
    ps('/');
    ps('-- audit rename on '|| sown||tbuff.name||'_seq by access');
@@ -5341,6 +5343,7 @@ IS
    sp_name  user_errors.name%type;
 BEGIN
    p('');
+   p('--  Should use "'||sown||tbuff.name||'_dml.get_next_id" instead of sequence');
    p('create synonym '||sown||tbuff.name||'_seq');
    p('   for '||tbuff.name||'_seq@'||abuff.abbr||'_db');
    p('/');
@@ -8652,8 +8655,8 @@ BEGIN
    end if;
    p('drop synonym '||sown||tbuff.name);
    p('/');
-   p('--drop synonym '||sown||tbuff.name||'_seq');
-   p('--/');
+   p('drop synonym '||sown||tbuff.name||'_seq');
+   p('/');
    p('');
 END drop_tsyn;
 ----------------------------------------
@@ -8662,10 +8665,10 @@ PROCEDURE create_tsyn
 IS
 BEGIN
    p('');
-   p('--  Must use "'||sown||tbuff.name||'_dml.get_next_id" instead of sequence');
-   p('--create synonym '||sown||tbuff.name||'_seq');
-   p('--   for '||abuff.db_schema||'.'||tbuff.name||'_seq');
-   p('--/');
+   p('--  Should use "'||sown||tbuff.name||'_dml.get_next_id" instead of sequence');
+   p('create synonym '||sown||tbuff.name||'_seq');
+   p('   for '||abuff.db_schema||'.'||tbuff.name||'_seq');
+   p('/');
    p('create synonym '||sown||tbuff.name);
    p('   for '||abuff.db_schema||'.'||tbuff.name);
    p('/');
