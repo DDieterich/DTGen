@@ -148,16 +148,16 @@
 || *DOD MT Schema* ||           ||             ||           ||                 || Synonym       ||
 
  = Boundary Condition Testing =
-|| *Condition Name* || *Below* || *Lowest* || *Highest* || *Above* || *Nullable* ||
-|| Number of Tables || 0 || 1 || 200 || 201 || No ||
-|| Number of Columns in a Table || 0 || 1 || 99 || 100 || No ||
-|| Number of Natural Key Columns || 0 || 1 || 99 || 100 || No ||
-|| NUMBER Datatype Length || 0 || 1 || 38 || 39 || Yes ||
-|| NUMBER Datatype Scale || -85 || -84 || 127 || 128 || Yes ||
-|| VARCHAR2 Datatype Length || 0 || 1 || 32767 || 32768 || No ||
-|| TIMESTAMP WITH TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
-|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || -1 || 0 || 9 || 10 || Yes ||
-|| Exception Code || -21000 || -20999 || -20000 || -19999 || No ||
+|| *Condition Name* || *Lowest* || *Highest* || *Nullable* ||
+|| Number of Tables || 1 || 200 || No ||
+|| Number of Columns in a Table || 1 || 99 || No ||
+|| Number of Natural Key Columns || 1 || 99 || No ||
+|| NUMBER Datatype Length || 1 || 38 || Yes ||
+|| NUMBER Datatype Scale || -84 || 127 || Yes ||
+|| VARCHAR2 Datatype Length || 1 || 32767 || No ||
+|| TIMESTAMP WITH TIME ZONE Datatype Length || 0 || 9 || Yes ||
+|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0 || 9 || Yes ||
+|| Exception Code || -20999 || -20000 || No ||
 
  = Implementation =
 
