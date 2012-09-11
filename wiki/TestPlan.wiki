@@ -169,12 +169,11 @@
 
  * HAT: Entity Based History and Audit for Tables
  * DTC: Datatype Support for Columns
- * Boundary Test:
-   * NUMBER Datatype Length,
-   * NUMBER Datatype Scale,
-   * VARCHAR2 Datatype Length,
-   * TIMESTAMP WITH TIME ZONE Datatype Length
-   * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length
+   * NUMBER Datatype Length Boundary Test
+   * NUMBER Datatype Scale Boundary Test
+   * VARCHAR2 Datatype Length Boundary Test
+   * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
+   * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
  * CCCT: Custom Check Constraints for Tables
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
