@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-#  test.sh - Linux (or Cygwin for Windows) script to test the DTGen application
+#  load.sh - Linux (or Cygwin for Windows) script to load the DTGen test
 #
 
 . ./t.env

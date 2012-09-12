@@ -1,4 +1,4 @@
-SQL>    connect TMTST/TMTST@XE2
+SQL>    connect TDBSN/TDBSN@XE2
 Connected.
 SQL>    ALTER SESSION SET recyclebin = OFF;
 
@@ -7,6 +7,91 @@ Session altered.
 SQL>    @uninstall_owner
 
 ***************************
+Running Script delete_ods
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_eff  ***                                                               
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_log  ***                                                               
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_non  ***                                                               
+
+
+0 rows deleted.
+
+
+***************************
+Running Script delete_ods
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+0 rows deleted.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+0 rows deleted.
+
+
+PL/SQL procedure successfully completed.
+
+
+***************************
 Running Script drop_mods
 ***************************
 
@@ -17,6 +102,70 @@ Running Script drop_mods
 
 
 Package dropped.
+
+
+***************************
+Running Script drop_aa
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_eff  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_log  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t2a_non  ***                                                               
+
+
+***************************
+Running Script drop_aa
+***************************
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
 
 
 ***************************
@@ -114,7 +263,7 @@ Package dropped.
 
 
 ***************************
-Running Script drop_dist
+Running Script drop_ods
 ***************************
 
 
@@ -126,25 +275,19 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
-
-
-View dropped.
-
-
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
 
 
 TABLE_NAME                                                                      
@@ -155,25 +298,19 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
-
-
-View dropped.
-
-
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
 
 
 TABLE_NAME                                                                      
@@ -184,14 +321,14 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
 
 
 ***************************
-Running Script drop_dist
+Running Script drop_ods
 ***************************
 
 
@@ -203,25 +340,19 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
-
-
-View dropped.
-
-
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
 
 
 TABLE_NAME                                                                      
@@ -232,25 +363,19 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
-
-
-View dropped.
-
-
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
 
 
 TABLE_NAME                                                                      
@@ -261,10 +386,13 @@ TABLE_NAME
 Package dropped.
 
 
-View dropped.
+Table dropped.
 
 
-Synonym dropped.
+Sequence dropped.
+
+
+no rows selected
 
 
 no rows selected
@@ -280,7 +408,7 @@ no rows selected
 
 
 ***************************
-Running Script drop_gdst
+Running Script drop_glob
 ***************************
 
 
@@ -310,24 +438,5 @@ SYNONYM: TEST_PARMS(VALID)
 SYNONYM: TEST_SETS(VALID)                                                       
 
 7 rows selected.
-
-
-***************************
-Running Script drop_dblink
-***************************
-
-
-Database link dropped.
-
-
-***************************
-Running Script drop_dblink
-***************************
-
-
-Database link dropped.
-
-
-no rows selected
 
 SQL> 
