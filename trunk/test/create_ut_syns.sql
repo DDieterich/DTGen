@@ -12,10 +12,13 @@ set serveroutput on format wrapped
 
 grant dtgen_ut_test to &1.;
 
-create synonym &1..test_run     for &2..test_run;
+--create synonym &1..test_run     for &2..test_run;
 create synonym &1..global_parms for &2..global_parms;
+create synonym &1..table_types  for &2..table_types;
+create synonym &1..parm_types   for &2..parm_types;
 create synonym &1..test_parms   for &2..test_parms;
-create synonym &1..test_schemas for &2..test_schemas;
+create synonym &1..test_sets    for &2..test_sets;
+create synonym &1..all_tests    for &2..all_tests;
 create synonym &1..test_gen     for &2..test_gen;
 
 alter user &1.

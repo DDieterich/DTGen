@@ -1,19 +1,33 @@
 create or replace package body test_rig
 is
 
-current_test_set  global_parms.test_set%TYPE := null;
-sql_txt           varchar2(1993);
+current_global_set  global_parms.global_set%TYPE := null;
+tparms              test_parms%ROWTYPE;
+sql_txt             varchar2(1993);
 
 function run_sql
    return varchar2
 is
 begin
+   --dbms_output.put_line(sql_txt);
    execute immediate sql_txt;
    return 'SUCCESS';
 exception
    when others then
       return sqlerrm || ', SQL> ' || sql_txt;
 end run_sql;
+
+procedure get_tparms
+      (parm_set_in  in  number)
+is
+   cursor curs is
+      select * from test_parms
+       where parm_set = parm_set_in;
+begin
+   open curs;
+   fetch curs into tparms;
+   close curs;
+end get_tparms;
 
 procedure basic_test
 is
@@ -22,40 +36,99 @@ begin
    select dummy into junk from dual;
 end basic_test;
 
-procedure DTC_INSERT
-      (version_in      in  varchar2
-      ,table_name_in   in  varchar2
-      ,tab_seq_in      in  varchar2
-      ,column_name_in  in  varchar2
-      ,value_in        in  varchar2)
+procedure DTC_SQLTAB
+      (table_name_in  in  varchar2)
 is
+   action_in      test_parms.val0%TYPE := tparms.val0;
+   tab_seq_in     test_parms.val1%TYPE := tparms.val1;
+   column_name_in test_parms.val2%TYPE := tparms.val2;
+   value_in       test_parms.val3%TYPE := tparms.val3;
+   is_eff         boolean := FALSE;
+   is_log         boolean := FALSE;
 begin
-   case version_in
-   when 'SQLTAB' then sql_txt :=
+   if upper(substr(table_name_in,length(table_name_in)-2)) = 'EFF' then
+      is_eff := TRUE;
+      is_log := TRUE;
+   elsif upper(substr(table_name_in,length(table_name_in)-2)) = 'LOG' then
+      is_log := TRUE;
+   end if;
+   case action_in
+   when 'INSERT' then sql_txt :=
       'insert into ' || table_name_in ||
            ' (id' ||
-           ', seq' ||
+           ', seq';
+      if is_eff then sql_txt := sql_txt ||
+           ', eff_beg_dtm';
+      end if;
+      if is_log then sql_txt := sql_txt ||
+           ', aud_beg_usr' ||
+           ', aud_beg_dtm';
+      end if;
+      sql_txt := sql_txt ||
            ', ' || column_name_in || ') ' ||
          'values ' ||
             '(' || table_name_in || '_dml.get_next_id' ||
-           ', ' || tab_seq_in ||
+           ', ' || tab_seq_in;
+      if is_eff then sql_txt := sql_txt ||
+           ', glob.get_dtm';
+      end if;
+      if is_log then sql_txt := sql_txt ||
+           ', glob.get_usr' ||
+           ', glob.get_dtm';
+      end if;
+      sql_txt := sql_txt ||
            ', ' || value_in || ')';
-   when 'SQLACT' then sql_txt :=
+   when 'UPDATE' then sql_txt :=
+      'update ' || table_name_in ||
+       ' set ' || column_name_in || ' = ' || value_in ||
+      ' where seq = ' || tab_seq_in;
+   when 'DELETE' then sql_txt :=
+      'delete from ' || table_name_in ||
+      ' where seq = ' || tab_seq_in;
+   else
+      raise_application_error (-20000, 'Unkown action_in: ' || action_in);
+   end case;
+end DTC_SQLTAB;
+
+procedure DTC_SQLACT
+      (table_name_in  in  varchar2)
+is
+   action_in      test_parms.val0%TYPE := tparms.val0;
+   tab_seq_in     test_parms.val1%TYPE := tparms.val1;
+   column_name_in test_parms.val2%TYPE := tparms.val2;
+   value_in       test_parms.val3%TYPE := tparms.val3;
+begin
+   case action_in
+   when 'INSERT' then sql_txt :=
       'insert into ' || table_name_in || '_act' ||
            ' (seq' ||
            ', ' || column_name_in || ') ' ||
          'values' ||
            ' (' || tab_seq_in ||
            ' ,' || value_in || ')';
-   when 'DMLTAB' then sql_txt :=
-      'declare ' ||
-         'buff ' || table_name_in || '%ROWTYPE; ' ||
-      'begin ' ||
-         'buff.seq := ' ||tab_seq_in || '; ' ||
-         'buff.' || column_name_in || ' := ' || value_in || '; ' ||
-          table_name_in  || '_dml.ins(buff); ' ||
-      'end;';
-   when 'DMLACT' then sql_txt :=
+   when 'UPDATE' then sql_txt :=
+      'update ' || table_name_in || '_ACT' ||
+       ' set ' || column_name_in || ' = ' || value_in ||
+      ' where seq = ' || tab_seq_in;
+   when 'DELETE' then sql_txt :=
+      'delete from ' || table_name_in || '_ACT' ||
+      ' where seq = ' || tab_seq_in;
+   else
+      raise_application_error (-20000, 'Unkown action_in: ' || action_in);
+   end case;
+end DTC_SQLACT;
+
+procedure DTC_DMLACT
+      (table_name_in  in  varchar2)
+is
+   action_in      test_parms.val0%TYPE := tparms.val0;
+   tab_seq_in     test_parms.val1%TYPE := tparms.val1;
+   column_name_in test_parms.val2%TYPE := tparms.val2;
+   value_in       test_parms.val3%TYPE := tparms.val3;
+   is_eff         boolean := FALSE;
+begin
+   case action_in
+   when 'INSERT' then sql_txt :=
       'declare ' ||
          'buff ' || table_name_in  || '_ACT%ROWTYPE; ' ||
       'begin ' || 
@@ -63,38 +136,7 @@ begin
          'buff.' || column_name_in || ' := ' || value_in || '; ' ||
           table_name_in  || '_dml.ins(buff); ' ||
       'end;';
-   else
-      raise_application_error (-20000, 'Unkown version_in: ' || version_in);
-   end case;
-end DTC_INSERT;
-
-procedure DTC_UPDATE
-      (version_in      in  varchar2
-      ,table_name_in   in  varchar2
-      ,tab_seq_in      in  varchar2
-      ,column_name_in  in  varchar2
-      ,value_in        in  varchar2)
-is
-begin
-   case version_in
-   when 'SQLTAB' then sql_txt :=
-      'update ' || table_name_in ||
-       ' set ' || column_name_in || ' = ' || value_in ||
-      ' where seq = ' || tab_seq_in;
-   when 'SQLACT' then sql_txt :=
-      'update ' || table_name_in || '_ACT' ||
-       ' set ' || column_name_in || ' = ' || value_in ||
-      ' where seq = ' || tab_seq_in;
-   when 'DMLTAB' then sql_txt :=
-      'declare ' ||
-         'buff ' || table_name_in  || '%ROWTYPE; ' ||
-      'begin ' ||
-         'buff.seq := ' ||tab_seq_in || '; ' ||
-         'buff.id := ' || table_name_in || '_dml.get_id(buff.seq);' ||
-         'buff.' || column_name_in || ' := ' || value_in || '; ' ||
-          table_name_in  || '_dml.upd(buff); ' ||
-      'end;';
-   when 'DMLACT' then sql_txt :=
+   when 'UPDATE' then sql_txt :=
       'declare ' ||
          'buff ' || table_name_in || '_ACT%ROWTYPE; ' ||
       'begin ' || 
@@ -103,47 +145,48 @@ begin
          'buff.' || column_name_in || ' := ' || value_in || '; ' ||
           table_name_in  || '_dml.upd(buff); ' ||
       'end;';
+   when 'DELETE' then
+      if upper(substr(table_name_in,length(table_name_in)-2)) = 'EFF' then
+         is_eff := TRUE;
+      end if;
+      if is_eff then
+         sql_txt := 'declare ' ||
+                       'x_eff_tstmp timestamp with local time zone; ';
+      else
+         sql_txt := '';
+      end if;
+      sql_txt := sql_txt ||
+      'begin ' || table_name_in || '_dml.del(' ||
+                  table_name_in || '_dml.get_id(' || tab_seq_in || ')';
+      if is_eff then
+         sql_txt := sql_txt || ', x_eff_tstmp';
+      end if;
+      sql_txt := sql_txt || '); end;';
    else
-      raise_application_error (-20000, 'Unkown version_in: ' || version_in);
+      raise_application_error (-20000, 'Unkown action_in: ' || action_in);
    end case;
-end DTC_UPDATE;
+end DTC_DMLACT;
 
-procedure DTC_DELETE
-      (version_in      in  varchar2
-      ,table_name_in   in  varchar2
-      ,tab_seq_in      in  varchar2)
+procedure DTC_DMLTAB
+      (table_name_in  in  varchar2)
 is
 begin
-   case version_in
-   when 'SQLTAB' then sql_txt :=
-      'delete from ' || table_name_in ||
-      ' where seq = ' || tab_seq_in;
-   when 'SQLACT' then sql_txt :=
-      'delete from ' || table_name_in || '_ACT' ||
-      ' where seq = ' || tab_seq_in;
-   when 'DML' then sql_txt :=
-      'declare ' ||
-         'did  number; ' ||
-      'begin ' ||
-          table_name_in || '_dml.del(' ||
-             table_name_in || '_dml.get_id(' ||
-             tab_seq_in || ')); ' ||
-      'end;';
-   else
-      raise_application_error (-20000, 'Unkown version_in: ' || version_in);
-   end case;
-end DTC_DELETE;
+   dtc_dmlact(table_name_in);
+   sql_txt := replace(sql_txt
+                     ,'buff ' || table_name_in || '_ACT%ROWTYPE; '
+                     ,'buff ' || table_name_in || '%ROWTYPE; ');
+end DTC_DMLTAB;
 
-procedure set_test_set
-      (test_set_in  in  varchar2)
+procedure set_global_parms
+      (global_set_in  in  varchar2)
 is
 begin
-   if test_set_in = current_test_set then
+   if global_set_in = current_global_set then
       return;
    end if;
    for buff in (
       select * from global_parms
-       where test_set = test_set_in)
+       where global_set = global_set_in)
    loop
       case upper(buff.db_constraints)
       when 'T' then
@@ -164,45 +207,71 @@ begin
          glob.set_ignore_no_change(FALSE);
       end case;
    end loop;
-   current_test_set := test_set_in;
-end set_test_set;
+   current_global_set := global_set_in;
+end set_global_parms;
 
-function run
-      (test_set_in  in  varchar2
-      ,test_seq_in  in  number)
+function run_test_instance
+      (test_name_in   in  varchar2
+      ,table_type_in  in  varchar2
+      ,parm_set_in    in  number)
    return varchar2
 is
-   cursor curs is
-      select * from test_parms
-       where test_seq  = test_seq_in;
-   buff  test_parms%ROWTYPE;
 begin
-   --set_test_set(test_set_in);
-   open curs;
-   fetch curs into buff;
-   close curs;
-   case buff.test_name
-   when 'DTC_INSERT' then
-      dtc_insert(version_in      => buff.val0
-                ,table_name_in   => buff.val1
-                ,tab_seq_in      => buff.val2
-                ,column_name_in  => buff.val3
-                ,value_in        => buff.val4);
-   when 'DTC_UPDATE' then
-      dtc_update(version_in      => buff.val0
-                ,table_name_in   => buff.val1
-                ,tab_seq_in      => buff.val2
-                ,column_name_in  => buff.val3
-                ,value_in        => buff.val4);
-   when 'DTC_DELETE' then
-      dtc_delete(version_in     => buff.val0
-                ,table_name_in  => buff.val1
-                ,tab_seq_in     => buff.val2);
+   get_tparms(parm_set_in);
+   case test_name_in
+   when 'DTC_SQLTAB' then
+      dtc_sqltab('T1A_' || table_type_in);
+   when 'DTC_SQLACT' then
+      dtc_sqlact('T1A_' || table_type_in);
+   when 'DTC_DMLTAB' then
+      dtc_dmltab('T1A_' || table_type_in);
+   when 'DTC_DMLACT' then
+      dtc_dmlact('T1A_' || table_type_in);
    else
-      raise_application_error (-20000, 'Unkown buff.test_name: ' || buff.test_name);
+      raise_application_error (-20000, 'Unkown test_name_in: ' || test_name_in);
    end case;
    return run_sql;
-end run;
+end run_test_instance;
+
+procedure run_test
+      (test_name_in   in  varchar2
+      ,table_type_in  in  varchar2)
+is
+begin
+   glob.set_usr(USER);
+   for buff in (
+      select parm_set from test_parms
+       where parm_type = (select parm_type from test_sets
+                           where test_name = test_name_in)
+       order by parm_set )
+   loop
+      dbms_output.put_line('');
+      dbms_output.put_line('Running Test ' || test_name_in ||
+                                       ' ' || table_type_in ||
+                        ' Using Parm_Set ' || buff.parm_set);
+      dbms_output.put_line(run_test_instance(test_name_in
+                                            ,table_type_in
+                                            ,buff.parm_set));
+   end loop;
+end run_test;
+
+procedure run_all
+is
+begin
+   for tbuff in (
+      select table_type from table_types
+       order by table_type desc)
+   loop
+      for sbuff in (
+         select test_name from test_sets
+          group by test_name
+          order by test_name desc)
+      loop
+         run_test(test_name_in  => sbuff.test_name
+                 ,table_type_in => tbuff.table_type);
+      end loop;
+   end loop;
+end run_all;
 
 
 end test_rig;

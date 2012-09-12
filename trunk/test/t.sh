@@ -24,7 +24,7 @@ export SORT="/usr/bin/sort"
 
 # Set directory list
 DIR_LIST="DB_Integ MT_Integ DODMT_Integ DB_NoInteg MT_NoInteg DODMT_NoInteg"
-DIR_LIST="DB_Integ MT_Integ DODMT_Integ"
+DIR_LIST="DB_Integ MT_Integ DB_NoInteg MT_NoInteg"
 
 # Set Connect Strings
 export DEV_CONNECT_STRING=${DEVNAME}/${DEVPASS}
@@ -39,7 +39,7 @@ then
 fi
 
 function show_usage () {
-   echo "Use the form: t.sh (setup|load|cleanup|remove|-p) {test directory}"
+   echo "Use the form: t.sh (setup|load|test|cleanup|remove|-p) {test directory}"
    }
 
 # Check Number of Parameters
@@ -51,7 +51,7 @@ then
 fi
 
 # Check First Parameter
-if [ "${1}" != "setup" -a "${1}" != "load" -a "${1}" != "cleanup" -a "${1}" != "remove" -a "${1}" != "-p" ]
+if [ "${1}" != "setup" -a "${1}" != "load" -a "${1}" != "test" -a "${1}" != "cleanup" -a "${1}" != "remove" -a "${1}" != "-p" ]
 then
    echo "Incorrect first parameter: ${1}"
    show_usage;

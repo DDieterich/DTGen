@@ -1,0 +1,193 @@
+SQL>    connect TDBUN/TDBUN@XE2
+Connected.
+SQL>    @install_user
+
+***************************
+Running Script create_gusr
+***************************
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+***************************
+Running Script create_usyn
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+***************************
+Running Script create_usyn
+***************************
+
+
+TABLE_NAME
+-----------------
+***  t2a_non  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t2a_log  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t2a_eff  ***
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+
+Synonym created.
+
+SQL>    spool off
