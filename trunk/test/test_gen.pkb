@@ -17,7 +17,7 @@ gen_tst   timestamp with time zone;
 LF        constant varchar2(1) := chr(10);
 
 ------------------------------------------------------------
-
+/*
 procedure get_gen_tst
 is
 begin
@@ -75,11 +75,10 @@ end run_sql;
 procedure collect_sql
       (next_line_in  in  varchar2)
 is
-   /* This section is used by the DBMS_SQL section below
    c        integer;
    col_cnt  integer;
    descr_t  dbms_sql.desc_tab;
-   buff     varchar2(4000);            */
+   buff     varchar2(4000);
    num_rows integer;
 begin
    if next_line_in is null then
@@ -97,9 +96,6 @@ begin
    end if;
    -- dbms_output.put_line('SQL> ' || sql_txt);
    -- Execute and Clear the SQL Buffer
-   /* This section is an alternative to the execute immediate.
-         This will use DBMS_SQL to check for a query and return
-         a single string from the query.
    c := dbms_sql.open_cursor;
    --dbms_output.put_line('cursor is ' || c);
    dbms_sql.parse(c, 'delete from test_run', DBMS_SQL.NATIVE);
@@ -119,12 +115,9 @@ begin
       --dbms_output.put_line('col_type is ' || descr_t(1).col_type);
       dbms_sql.define_column(c, 1, buff, 4000);
    end if;
-   num_rows := run_sql(col_cnt, c);                 */
+   num_rows := run_sql(col_cnt, c);
    num_rows := run_sql(-1);
    --dbms_output.put_line('num_rows is ' || num_rows);
-   /* This section is an alternative to the execute immediate.
-         This will use DBMS_SQL to check for a query and return
-         a single string from the query.
    for i in 1 .. num_rows
    loop
       dbms_sql.column_value(c, 1, buff);
@@ -136,7 +129,7 @@ exception
       if dbms_sql.is_open(c) then
          dbms_sql.close_cursor(c);
       end if;
-      raise;                            */
+      raise;
 end collect_sql;
 
 procedure run_script
@@ -158,7 +151,6 @@ begin
    sql_txt := '';
 end run_script;
 
-/*
 function gen_load
       (app_abbr_in   in  varchar2
       ,db_schema_in  in  varchar2)
@@ -216,6 +208,16 @@ begin
    return log_txt;
 end gen_load;
 
+-- This needs to be in a validation that follows test_gen.gen_load
+select attribute || ' on ' ||
+       type      || ' '    ||
+       name      || ' at ' ||
+       line      || ','    ||
+       position  || ' is ' ||
+       text      error_text
+ from  user_errors
+ order by type, name, sequence, line, position;
+
 function cleanup
       (app_abbr_in     in  varchar2
       ,db_schema_in    in  varchar2
@@ -242,7 +244,6 @@ begin
    return log_txt;
 end cleanup;
 */
-
 ------------------------------------------------------------
 
 procedure gen_all

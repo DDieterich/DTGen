@@ -28,6 +28,7 @@ into table TAB_INDS_ACT APPEND when key = 'TAB_INDS                      ' fiel
    (key FILLER position(1:31), tab_cols_nk1 CHAR(5), tab_cols_nk2 CHAR(5), tab_cols_nk3 CHAR(25), tag CHAR(4), seq FLOAT EXTERNAL)
 BEGINDATA
 APPLICATIONS                  TST1Test Application 1Test Application 1Xtest_onln_data_defaulttest_onln_indx_defaulttest_hist_data_defaulttest_hist_indx_default*** This is only a test ***
+PROGRAMS                      TST1test_rigPACKAGEProvides Unit Testing functions and procedures
 TABLES                        TST1T1ANt1a_non10NONDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, NON Table Type
 TABLES                        TST1T1ALt1a_log11LOGDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, LOG Table Type
 TABLES                        TST1T1AEt1a_eff12EFFDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, EFF Table Type

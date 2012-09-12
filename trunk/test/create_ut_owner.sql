@@ -14,8 +14,8 @@ set serveroutput on format wrapped
 
 -- Create New Application Roles
 --
-@create_app_roles TST1
-@create_app_roles TST2
+@create_app_roles TST1 &UTO_NAME.
+@create_app_roles TST2 &UTO_NAME.
 
 -- Create New Schema Owner
 --

@@ -16,9 +16,8 @@ create synonym dtgen_util       for &1..dtgen_util;
 
 @test_gen.pks
 grant execute on test_gen to dtgen_ut_test;
-@test_rig.pks
-grant execute on test_rig to dtgen_ut_test;
 
+/*
 create table test_run as
    select abbr          app_abbr
          ,db_schema     db_schema
@@ -29,15 +28,20 @@ alter table test_run
    primary key (app_abbr, db_schema));
 grant select, insert, update, delete
    on test_run to dtgen_ut_test;
+*/
 
-drop table test_parms;
-create table test_parms as
-   select db_schema from applications_act
-    where 0 = 1;
-alter table test_parms
-  add (seq          number
+create table global_parms
+      (test_set          varchar2(1)
+      ,db_constraints    varchar2(1) not null
+      ,fold_strings      varchar2(1) not null
+      ,ignore_no_change  varchar2(1) not null
+      ,constraint global_parms_pk primary key (test_set));
+grant select
+   on global_parms to dtgen_ut_test;
+
+create table test_parms
+      (test_seq     number
       ,test_name    varchar2(30)   not null
-      ,success      varchar2(4000) not null
       ,val0         varchar2(4000)
       ,val1         varchar2(4000)
       ,val2         varchar2(4000)
@@ -48,15 +52,23 @@ alter table test_parms
       ,val7         varchar2(4000)
       ,val8         varchar2(4000)
       ,val9         varchar2(4000)
-      ,constraint test_parms_pk primary key (db_schema, seq));
+      ,constraint test_parms_pk primary key (test_seq));
 grant select
    on test_parms to dtgen_ut_test;
-/
+
+create table test_schemas as
+   select db_schema from applications_act
+    where 0 = 1;
+alter table test_schemas
+  add (test_set   varchar2(1)
+      ,test_seq   number
+      ,success    varchar2(4000) not null
+      ,constraint test_schemas_pk primary key (db_schema, test_set, test_seq)
+      ,constraint test_schemas_fk1 foreign key (test_set)
+                         references global_parms (test_set));
+      ,constraint test_schemas_fk2 foreign key (test_seq)
+                         references test_parms (test_seq));
+grant select
+   on test_schemas to dtgen_ut_test;
 
 @test_gen.pkb
-@test_rig.pkb
-
-insert into test_parms (db_schema, seq, test_name, success, val0, val1, val2) values ('TDBST', 1, 'DTC_INSERT', 'SUCCESS', 'NUM_PLAIN', 1, null);
-insert into test_parms (db_schema, seq, test_name, success, val0, val1, val2) values ('TDBST', 2, 'DTC_INSERT', 'SUCCESS', 'NUM_PLAIN', 2, '123.89');
-insert into test_parms (db_schema, seq, test_name, success, val0, val1, val2) values ('TDBST', 3, 'DTC_INSERT', 'SUCCESS', 'NUM_PLAIN', 3, '-1.2e-4');
-insert into test_parms (db_schema, seq, test_name, success, val0, val1, val2) values ('TDBST', 4, 'DTC_INSERT', 'SUCCESS', 'NUM_PLAIN', 4, '1.2e5');

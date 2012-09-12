@@ -12,10 +12,11 @@ set serveroutput on format wrapped
 
 grant dtgen_ut_test to &1.;
 
-create synonym &1..test_run   for &2..test_run;
-create synonym &1..test_parms for &2..test_parms;
-create synonym &1..test_gen   for &2..test_gen;
-create synonym &1..test_rig   for &2..test_rig;
+create synonym &1..test_run     for &2..test_run;
+create synonym &1..global_parms for &2..global_parms;
+create synonym &1..test_parms   for &2..test_parms;
+create synonym &1..test_schemas for &2..test_schemas;
+create synonym &1..test_gen     for &2..test_gen;
 
 alter user &1.
    quota unlimited on test_onln_data_default

@@ -2394,6 +2394,12 @@ Running Script create_mods
 ***************************
 
 
+Package created.
+
+
+Grant succeeded.
+
+
 ***************************
 Running Script create_mods
 ***************************
@@ -2857,5 +2863,27 @@ no rows selected
 
 
 no rows selected
+
+SQL>    @../comp
+
+=== Compile Stored Program Units ===
+
+../test_rig.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+../test_rig.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
 
 SQL>    spool install_user.log
