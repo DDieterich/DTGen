@@ -385,7 +385,8 @@ begin
       ,'drop_ods'
       ,'drop_glob');
    aa_vc2('install_mt') := vc2_list_type
-      ('create_gdst'
+      ('create_dblink'
+      ,'create_gdst'
       ,'create_dist'
       ,'create_oltp'
       ,'create_mods');
@@ -393,7 +394,8 @@ begin
       ('drop_mods'
       ,'drop_oltp'
       ,'drop_dist'
-      ,'drop_gdst');
+      ,'drop_gdst'
+      ,'drop_dblink');
    aa_vc2('install_gui') := vc2_list_type
       ('create_flow');
    aa_vc2('install_usr') := vc2_list_type

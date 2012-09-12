@@ -105,13 +105,21 @@ PROCEDURE open_file
    --    Requires fbuff.name and application_id
 IS
 BEGIN
-   if lbuff_orig_aa.COUNT != 0 OR
-      lbuff_updt_aa.COUNT != 0 OR
-      lbuff_apnd_aa.COUNT != 0 OR
-      lbuff_seq != 0
-   then
+   if lbuff_orig_aa.COUNT != 0 then
       raise_application_error (-20000, 'File ' || fbuff.name ||
-                              ' may have been left "open"');
+                              ' lbuff_orig_aa.COUNT != 0: ' || lbuff_orig_aa.COUNT);
+   end if;
+   if lbuff_updt_aa.COUNT != 0 then
+      raise_application_error (-20000, 'File ' || fbuff.name ||
+                              ' lbuff_updt_aa.COUNT != 0: ' || lbuff_updt_aa.COUNT);
+   end if;
+   if lbuff_apnd_aa.COUNT != 0 then
+      raise_application_error (-20000, 'File ' || fbuff.name ||
+                              ' lbuff_apnd_aa.COUNT != 0: ' || lbuff_apnd_aa.COUNT);
+   end if;
+   if lbuff_seq != 0 then
+      raise_application_error (-20000, 'File ' || fbuff.name ||
+                              ' lbuff_seq != 0: ' || lbuff_seq);
    end if;
    begin
       select F.id,     F.aud_beg_usr,     F.aud_beg_dtm
@@ -198,17 +206,17 @@ PROCEDURE dump_sec_lines
    -- Print the security array
 IS
 BEGIN
+   if sec_lines.COUNT = 0 and sec_line = 0 then
+      return;
+   end if;
    fbuff.name        := fbuff.name || '_sec';
    fbuff.description := 'Security script to ' || fbuff.description;
    open_file;
    p('');
-   if sec_lines.COUNT > 0
-   then
-      for i in sec_lines.FIRST .. sec_lines.LAST
-      loop
-         p(sec_lines(i));
-      end loop;
-   end if;
+   for i in sec_lines.FIRST .. sec_lines.LAST
+   loop
+      p(sec_lines(i));
+   end loop;
    p('');
    close_file;
    sec_lines := sec_line0;
@@ -7487,8 +7495,11 @@ BEGIN
    p('');
    p('   procedure clear');
    p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
-   p('   procedure clear');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('   procedure clear');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   end if;
    p('');
    p('   procedure ins');
    p('      (n_id  in out  NUMBER');
@@ -7523,8 +7534,11 @@ BEGIN
    p('      );');
    p('   procedure ins');
    p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
-   p('   procedure ins');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('   procedure ins');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   end if;
    p('');
    p('   procedure upd');
    p('      (o_id_in  in  NUMBER');
@@ -7565,8 +7579,11 @@ BEGIN
    p('      );');
    p('   procedure upd');
    p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
-   p('   procedure upd');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('   procedure upd');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
+   end if;
    p('');
    p('   procedure del');
    p('      (o_id_in  in  NUMBER');
@@ -7947,26 +7964,29 @@ BEGIN
       end if;
    end loop;
    p('end clear;');
-   p('----------------------------------------');
-   p('procedure clear');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
-   p('   -- Clear a %ROWTYPE buffer');
-   p('is');
-   p('begin');
-   p('   n_buff.id := null;');
-   if tbuff.type = 'EFF'
+   if tbuff.type in ('EFF', 'LOG')
    then
-      p('   n_buff.eff_beg_dtm := null;');
+      p('----------------------------------------');
+      p('procedure clear');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+      p('   -- Clear a %ROWTYPE buffer');
+      p('is');
+      p('begin');
+      p('   n_buff.id := null;');
+      if tbuff.type = 'EFF'
+      then
+         p('   n_buff.eff_beg_dtm := null;');
+      end if;
+      -- Setup DML package insert columns
+      for buff in (
+         select * from tab_cols COL
+          where COL.table_id = tbuff.id
+          order by COL.seq )
+      loop
+         p('   n_buff.'||buff.name||' := null;');
+      end loop;
+      p('end clear;');
    end if;
-   -- Setup DML package insert columns
-   for buff in (
-      select * from tab_cols COL
-       where COL.table_id = tbuff.id
-       order by COL.seq )
-   loop
-      p('   n_buff.'||buff.name||' := null;');
-   end loop;
-   p('end clear;');
    p('----------------------------------------');
    p('procedure ins');
    p('      (n_id  in out  NUMBER');
@@ -8067,28 +8087,31 @@ BEGIN
    end loop;
    p('      );');
    p('end ins;') ;
-   p('----------------------------------------');
-   p('procedure ins');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
-   p('   -- Application Insert procedure with %ROWTYPE');
-   p('is');
-   p('begin');
-   p('   ' || tbuff.name || '_dml.ins');
-   p('      (n_id => n_buff.id');
-   if tbuff.type = 'EFF'
+   if tbuff.type in ('EFF', 'LOG')
    then
-      p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+      p('----------------------------------------');
+      p('procedure ins');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+      p('   -- Application Insert procedure with %ROWTYPE');
+      p('is');
+      p('begin');
+      p('   ' || tbuff.name || '_dml.ins');
+      p('      (n_id => n_buff.id');
+      if tbuff.type = 'EFF'
+      then
+         p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+      end if;
+      -- Setup DML package insert columns
+      for buff in (
+         select * from tab_cols COL
+          where COL.table_id = tbuff.id
+          order by COL.seq )
+      loop
+         p('      ,n_'||buff.name||' => n_buff.'||buff.name);
+      end loop;
+        p('      );');
+      p('end ins;') ;
    end if;
-   -- Setup DML package insert columns
-   for buff in (
-      select * from tab_cols COL
-       where COL.table_id = tbuff.id
-       order by COL.seq )
-   loop
-      p('      ,n_'||buff.name||' => n_buff.'||buff.name);
-   end loop;
-   p('      );');
-   p('end ins;') ;
    p('----------------------------------------');
    p('procedure upd');
    p('      (o_id_in  in  NUMBER');
@@ -8392,31 +8415,34 @@ BEGIN
    end if;
    p('      );') ;
    p('end upd;') ;
-   p('----------------------------------------');
-   p('procedure upd');
-   p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
-   p('is');
-   p('begin');
-   p('   ' || tbuff.name || '_dml.upd');
-   p('      (o_id_in => n_buff.id');
-   if tbuff.type = 'EFF'
+   if tbuff.type in ('EFF', 'LOG')
    then
-      p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+      p('----------------------------------------');
+      p('procedure upd');
+      p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE)');
+      p('is');
+      p('begin');
+      p('   ' || tbuff.name || '_dml.upd');
+      p('      (o_id_in => n_buff.id');
+      if tbuff.type = 'EFF'
+      then
+         p('      ,n_eff_beg_dtm => n_buff.eff_beg_dtm');
+      end if;
+      nkfnd := FALSE;
+      for buff in (
+         select * from tab_cols COL
+          where COL.table_id = tbuff.id
+          order by COL.seq )
+      loop
+         p('      ,n_'||buff.name||' => n_buff.'||buff.name);
+      end loop;
+      --if nkfnd
+      --then
+         p('      ,nkdata_provided_in => ''N''');
+      --end if;
+      p('      );') ;
+      p('end upd;') ;
    end if;
-   nkfnd := FALSE;
-   for buff in (
-      select * from tab_cols COL
-       where COL.table_id = tbuff.id
-       order by COL.seq )
-   loop
-      p('      ,n_'||buff.name||' => n_buff.'||buff.name);
-   end loop;
-   --if nkfnd
-   --then
-      p('      ,nkdata_provided_in => ''N''');
-   --end if;
-   p('      );') ;
-   p('end upd;') ;
    p('----------------------------------------');
    p('procedure del');
    p('      (o_id_in  in  NUMBER');
@@ -8585,15 +8611,6 @@ PROCEDURE drop_gsyn
    --  Drop the user's global and program synonyms
 IS
 BEGIN
-   for buff in (
-      select * FROM programs PRG
-       where PRG.application_id = abuff.id
-       order by PRG.name desc)
-   LOOP
-      p('drop synonym '||sown||buff.name);
-      p('/');
-   END LOOP;
-   p('');
    p('drop synonym ' || sown||'glob');
    p('/');
    p('drop synonym ' || sown||'util_log');
@@ -8616,16 +8633,6 @@ BEGIN
    p('create synonym ' || sown||'glob');
    p('   for '||abuff.db_schema||'.glob');
    p('/');
-   p('');
-   for buff in (
-      select * FROM programs PRG
-       where PRG.application_id = abuff.id
-       order by PRG.name)
-   LOOP
-      p('create synonym '||sown||buff.name);
-      p('   for '||abuff.db_schema||'.'||buff.name);
-      p('/');
-   END LOOP;
    p('');
 END create_gsyn;
 ----------------------------------------
@@ -8701,6 +8708,37 @@ BEGIN
    end if;
    p('');
 END create_tsyn;
+----------------------------------------
+PROCEDURE drop_msyn
+   --  Drop the user's global and program synonyms
+IS
+BEGIN
+   for buff in (
+      select * FROM programs PRG
+       where PRG.application_id = abuff.id
+       order by PRG.name desc)
+   LOOP
+      p('drop synonym '||sown||buff.name);
+      p('/');
+   END LOOP;
+   p('');
+END drop_msyn;
+----------------------------------------
+PROCEDURE create_msyn
+   --  Create the user's package synonyms
+IS
+BEGIN
+   for buff in (
+      select * FROM programs PRG
+       where PRG.application_id = abuff.id
+       order by PRG.name)
+   LOOP
+      p('create synonym '||sown||buff.name);
+      p('   for '||abuff.db_schema||'.'||buff.name);
+      p('/');
+   END LOOP;
+   p('');
+END create_msyn;
 ----------------------------------------
 PROCEDURE create_search_where
 IS
@@ -16124,8 +16162,8 @@ BEGIN
       drop_util;
       drop_gd;
       p('');
-      close_file;
    end if;
+   close_file;
 END drop_gdst;
 ----------------------------------------
 PROCEDURE create_gdst
@@ -16150,9 +16188,9 @@ BEGIN
    else
       create_gd;
       create_util;
-      close_file;
-      dump_sec_lines;  -- Performs an "open_file"
    end if;
+   close_file;
+   dump_sec_lines;  -- Performs an "open_file"
 END create_gdst;
 ----------------------------------------
 PROCEDURE delete_ods
@@ -16534,6 +16572,7 @@ BEGIN
       p('   --');
       p('');
    ELSE
+      drop_msyn;
       for buff in (
          select * FROM tables TAB
           where TAB.application_id = abuff.id
@@ -16570,6 +16609,7 @@ BEGIN
          next_table;
          create_tsyn;
       END LOOP;
+      create_msyn;
    END IF;
    close_file;
 END create_usyn;

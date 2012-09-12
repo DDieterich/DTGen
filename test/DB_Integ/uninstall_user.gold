@@ -97,6 +97,9 @@ Running Script drop_usyn
 ***************************
 
 
+Synonym dropped.
+
+
 TABLE_NAME                                                                      
 -----------------                                                               
 ***  t1a_eff  ***                                                               
@@ -196,7 +199,6 @@ REMAINING_OBJECTS
 --------------------------------------------------------------------------------
 SYNONYM: TEST_GEN(VALID)                                                        
 SYNONYM: TEST_PARMS(VALID)                                                      
-SYNONYM: TEST_RIG(VALID)                                                        
 SYNONYM: TEST_RUN(VALID)                                                        
 
 SQL>    spool uninstall_owner.log

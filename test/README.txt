@@ -6,7 +6,8 @@ DTGen "test" README File
 Files and Directories:
 ----------------------
 cleanup.sh            - Called by "t.sh cleanup"
-create_app_roles.sql  - Called by "t.sh setup"
+comp.sql              - Called by "t.sh load"
+create_app_roles.sql  - Called by "create_ut_owner.sql"
 create_ut_objs.sql    - Run as "dtgen_test" to create Unit Test Objects
                         &1. - Generator Schema Object Owner Name
 create_ut_owner.sql   - Run as sys to create Unit Test Repository Owner
@@ -35,6 +36,8 @@ test_gen.pkb          - Called by create_ut_objs to create TEST_GEN package
 test_gen.pks          - Called by create_ut_objs to create TEST_GEN package
 test_rig.pkb          - Called by create_ut_objs to create TEST_RIG package
 test_rig.pks          - Called by create_ut_objs to create TEST_RIG package
+ut_dataload.ctl       - SQL*Loader control file to load unit test data
+XE2_All.xml           - SQL*Developer Unit Test Export
 
 
 Files in Sub-Directories
@@ -64,10 +67,17 @@ Installation Instructions:
    -) Tools -> Unit Test -> Select Current Repository: dtgen_test
    -) Tools -> Unit Test -> Create/Update Repository: (answer questions as needed)
 
+   Share the Unit Test Repository?
+
 3) Install Unit Test Repository Owner Objects
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
      - OR -
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
+
+4) Load Test Parameters
+   sqlldr dtgen/dtgen control=test_parms_dataload.ctl
+     - OR -
+   sqlldr dtgen_dev/dtgen_dev control=test_parms_dataload.ctl
 
 4) Run SQL*Developer and Load Unit Tests
    -) Tools -> Import from File -> ???

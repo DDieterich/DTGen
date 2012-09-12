@@ -459,6 +459,9 @@ Running Script drop_mods
 ***************************
 
 
+Package dropped.
+
+
 ***************************
 Running Script drop_aa
 ***************************
@@ -786,7 +789,6 @@ REMAINING_OBJECTS
 --------------------------------------------------------------------------------
 SYNONYM: TEST_GEN(VALID)                                                        
 SYNONYM: TEST_PARMS(VALID)                                                      
-SYNONYM: TEST_RIG(VALID)                                                        
 SYNONYM: TEST_RUN(VALID)                                                        
 
 SQL> 

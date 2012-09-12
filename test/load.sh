@@ -47,6 +47,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    spool install_owner.log
    connect ${OWNER_CONNECT_STRING}
    @install_owner
+   @../comp
    spool install_user.log
    connect ${USER_CONNECT_STRING}
    @install_user
