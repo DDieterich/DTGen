@@ -5,25 +5,30 @@
 #
 
 # Set the Oracle environment for the database connection
-#export ORACLE_HOME=
-#export ORACLE_SID=
+export TNS_ALIAS=DEMO1
 export TNS_ALIAS=XE2
+DEV_PROD="DEV"
+if [ ${DEV_PROD} = "PROD" ]
+then
+   export GUI_DIR=../../gui
+   export DEVNAME=dtgen
+   export DEVPASS=dtgen
+else
+   export GUI_DIR=../../dev/gui
+   export DEVNAME=dtgen_dev
+   export DEVPASS=dtgen_dev
+fi
 export TESTNAME=dtgen_test
 export TESTPASS=dtgen_test
+export DB_LINK_NAME="XE@loopback"
+export DB_USING_STR="'loopback'"
 export logfile="${1}.log"
-#########################
-#export GUI_DIR=../../gui
-#export DEVNAME=dtgen
-#export DEVPASS=dtgen
-export GUI_DIR=../../dev/gui
-export DEVNAME=dtgen_dev
-export DEVPASS=dtgen_dev
 
 # Pickup the CygWin sort instead of the Windows sort
 export SORT="/usr/bin/sort"
 
 # Set directory list
-DIR_LIST="DB_Integ MT_Integ DODMT_Integ DB_NoInteg MT_NoInteg DODMT_NoInteg"
+#DIR_LIST="DB_Integ MT_Integ DODMT_Integ DB_NoInteg MT_NoInteg DODMT_NoInteg"
 DIR_LIST="DB_Integ MT_Integ DB_NoInteg MT_NoInteg"
 
 # Set Connect Strings
@@ -35,7 +40,7 @@ fi
 export TEST_CONNECT_STRING=${TESTNAME}/${TESTPASS}
 if [ ${TNS_ALIAS-NULL} != "NULL" ]
 then
-   TEST_CONNECT_STRING=${TEST_CONNECT_STRING}@${TNS_ALIAS}
+   TEST_CONNECT_STRING=${CONNECT_STRING}@${TNS_ALIAS}
 fi
 
 function show_usage () {
@@ -84,17 +89,16 @@ if [ ${1} = "-p" ]
 then
    echo ""
    echo "Common Environment for ${0}:"
-   echo "ORACLE_HOME = ${ORACLE_HOME}"
-   echo "ORACLE_SID  = ${ORACLE_SID}"
-   echo "TNS_ALIAS   = ${TNS_ALIAS}"
-   echo "SYSNAME  = ${SYSNAME}"
-   echo "SYSPASS  = ${SYSPASS}"
-   echo "GUI_DIR  = ${GUI_DIR}"
-   echo "DEVNAME  = ${DEVNAME}"
-   echo "DEVPASS  = ${DEVPASS}"
-   echo "TESTNAME = ${TESTNAME}"
-   echo "TESTPASS = ${TESTPASS}"
-   echo "logfile  = ${logfile}"
+   echo "TNS_ALIAS = ${TNS_ALIAS}"
+   echo "TNS_ALIAS = ${TNS_ALIAS}"
+   echo "SYSNAME   = ${SYSNAME}"
+   echo "SYSPASS   = ${SYSPASS}"
+   echo "GUI_DIR   = ${GUI_DIR}"
+   echo "DEVNAME   = ${DEVNAME}"
+   echo "DEVPASS   = ${DEVPASS}"
+   echo "TESTNAME  = ${TESTNAME}"
+   echo "TESTPASS  = ${TESTPASS}"
+   echo "logfile   = ${logfile}"
    echo "SYS_CONNECT_STRING  = ${SYS_CONNECT_STRING}"
    echo "DEV_CONNECT_STRING  = ${DEV_CONNECT_STRING}"
    echo "TEST_CONNECT_STRING = ${TEST_CONNECT_STRING}"

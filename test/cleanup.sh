@@ -10,10 +10,30 @@
 if [ ${USER_CONNECT_STRING-NULL}  = "NULL" -o \
      ${OWNER_CONNECT_STRING-NULL} = "NULL" -o \
      ${GUI_DIR-NULL}              = "NULL" -o \
+     ${DB_LINK_NAME-NULL}         = "NULL" -o \
      ${logfile-NULL}              = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run t.sh instead."
   exit -1
+fi
+
+# NOTE: There is a CREATE_DBLINK in load.sh
+DROP_DBLINK=""
+if [ ${OWNERNAME} = 'TMTST' ]
+then
+   DROP_DBLINK="drop database link ${DB_LINK_NAME};"
+fi
+if [ ${OWNERNAME} = 'TMTSTDOD' ]
+then
+   DROP_DBLINK="drop database link ${DB_LINK_NAME};"
+fi
+if [ ${OWNERNAME} = 'TMTSN' ]
+then
+   DROP_DBLINK="drop database link ${DB_LINK_NAME};"
+fi
+if [ ${OWNERNAME} = 'TMTSNDOD' ]
+then
+   DROP_DBLINK="drop database link ${DB_LINK_NAME};"
 fi
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
@@ -25,6 +45,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${OWNER_CONNECT_STRING}
    ALTER SESSION SET recyclebin = OFF;
    @uninstall_owner
+   ${DROP_DBLINK}
 EOF
 
 echo "*** uninstall_user.gold comparison ..."

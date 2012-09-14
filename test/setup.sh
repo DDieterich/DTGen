@@ -21,6 +21,7 @@ fi
 
 # Must be run as the "sys as sysdba" user
 sqlplus ${SYS_CONNECT_STRING-NULL} as sysdba > ${logfile} 2>&1 <<EOF
+   alter system set global_names=TRUE comment='Required for DTGen Mutli-Tier Testing' scope=BOTH;
    @../../supp/create_owner ${OWNERNAME} ${OWNERPASS} users
    @../create_ut_syns ${OWNERNAME} ${TESTNAME}
    grant select on ${TESTNAME}.global_parms to ${OWNERNAME} with grant option;

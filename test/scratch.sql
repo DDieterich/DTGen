@@ -1,7 +1,40 @@
 ------------------------------------------------------------
 REM Test User
 
+execute dbms_output.put_line(glob.get_dtm);
+
+select global_name from global_name;
+
+drop database link XE@LOOPBACK;
+create database link XE@LOOPBACK
+  connect to TDBST identified by "TDBST"
+  using 'loopback';
+grant execute on glob to TMTST;
+revoke execute on glob from TMTST;
+
+select table_name from user_tab_privs
+ where grantor    = USER
+  and  privilege  = 'EXECUTE'
+  and  table_name like '%_POP';
+
+select * from dual@XE@LOOPBACK;
+select * from t1a_non@XE@LOOPBACK;
+
+select object_name, status from user_objects@XE@LOOPBACK where object_type = 'PACKAGE BODY';
+select object_name, status from user_objects@XE where object_type = 'PACKAGE BODY';
+
+grant execute on glob to tdbst with grant option;
+grant execute on glob to public;
+revoke execute on glob from public;
+execute dbms_output.put_line(TDBST.glob.get_dtm@XE@LOOPBACK);
+execute dbms_output.put_line(glob.get_dtm@XE@LOOPBACK);
+
 execute test_rig.run_all;
+execute test_rig.run_test('DTC_SQLTAB',111);
+execute test_rig.run_test('DTC_SQLTAB',121);
+execute test_rig.run_test('DTC_SQLTAB',131);
+
+select t1a_non_seq.nextval from dual;
 
 select T1A_EFF_dml.get_id(11) from dual;
 
@@ -61,3 +94,11 @@ insert into tab_cols_act (tables_nk1, tables_nk2, name, seq, nk, type, len, scal
 
 execute glob.set_usr('Test');
 execute gui_util.gen_all('TST1');
+
+------------------------------------------------------------
+REM System Admin
+
+grant tst1_dml to tdbst;
+grant tst2_dml to tdbst;
+grant tst1_dml to tmtst;
+grant tst2_dml to tmtst;

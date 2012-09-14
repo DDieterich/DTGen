@@ -1,4 +1,10 @@
 
+-) Check testing results
+-) Remove db_auth data from test_gen?
+-) Need to change the dbid and db_auth fields in DTGEN
+-) Need to fix the problem with db_links in TAB procedure, only on Mid-Tier
+   Check the link name against the GLOBAL_NAME in the the TAB Procedure?
+
 DTGen "test" README File
    Developed by DMSTEX (http://dmstex.com)
 
@@ -58,31 +64,41 @@ uninstall_user.gold     - Gold file for "t.sh cleanup" logging
 
 Installation Instructions:
 --------------------------
+NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
+      privileges with private fixed user database links, extra grants
+      have been added to the load.sh script to allow successful testing
+      of the multi-tier architecture
+
 1) Create the Unit Test Repository Owner
    sqlplus system/password@tns_alias @create_ut_owner dtgen
      - OR -
    sqlplus system/password@tns_alias @create_ut_owner dtgen_dev
 
-2) Run SQL*Developer and Create a Unit Test Repository
+2) Create the Unit Test Tablespaces
+   sqlplus system/password@tns_alias @create_tspaces_windows
+     - OR -
+   sqlplus system/password@tns_alias @create_tspaces_linux
+
+3) Run SQL*Developer and Create a Unit Test Repository
    -) Tools -> Unit Test -> Select Current Repository: dtgen_test
    -) Tools -> Unit Test -> Create/Update Repository: (answer questions as needed)
 
    Share the Unit Test Repository?
 
-3) Install Unit Test Repository Owner Objects
+4) Install Unit Test Repository Owner Objects
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
      - OR -
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
 
-4) Load Test Parameters
+5) Load Test Parameters
    sqlldr dtgen/dtgen control=test_parms_dataload.ctl
      - OR -
    sqlldr dtgen_dev/dtgen_dev control=test_parms_dataload.ctl
 
-4) Run SQL*Developer and Load Unit Tests
+6) Run SQL*Developer and Load Unit Tests
    -) Tools -> Import from File -> ???
 
-5) Set the names as needed in t.sh
+7) Set the names as needed in t.sh
    export GUI_DIR=../../gui
    export DEVNAME=dtgen
    export DEVPASS=dtgen
@@ -91,10 +107,10 @@ Installation Instructions:
    export DEVNAME=dtgen_dev
    export DEVPASS=dtgen_dev
 
-6) Confirm Test Settings
+8) Confirm Test Settings
    ./t.sh -p
 
-7) Setup the Unit Test Environments
+9) Setup the Unit Test Environments
    ./t.sh setup
 
 

@@ -365,91 +365,6 @@ no rows selected
 
 
 ***************************
-Running Script delete_ods
-***************************
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t2a_eff  ***                                                               
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t2a_log  ***                                                               
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t2a_non  ***                                                               
-
-
-0 rows deleted.
-
-
-***************************
-Running Script delete_ods
-***************************
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t1a_eff  ***                                                               
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t1a_log  ***                                                               
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-0 rows deleted.
-
-
-TABLE_NAME                                                                      
------------------                                                               
-***  t1a_non  ***                                                               
-
-
-0 rows deleted.
-
-
-PL/SQL procedure successfully completed.
-
-
-***************************
 Running Script drop_mods
 ***************************
 
@@ -797,4 +712,5 @@ SYNONYM: TEST_SETS(VALID)
 
 7 rows selected.
 
+SQL> 
 SQL> 

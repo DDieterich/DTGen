@@ -1897,6 +1897,8 @@ BEGIN
    p('         )');
    p('     return varchar2;');
    p('');
+   p('   procedure delete_all_data;');
+   p('');
    p('end ' || sp_name || ';');
    p('/');
    show_errors(sp_type, sp_name);
@@ -2165,6 +2167,27 @@ BEGIN
    p('     raise;');
    p('end col_data;');
    p('----------------------------------------');
+   p('procedure delete_all_data');
+   p('   --  delete all rows in all tables');
+   p('   --  EXECUTE IMMEDIATE is used because these tables');
+   p('   --      don''t exist at UTIL PACKAGE compile time');
+   p('is');
+   p('begin');
+   for buff in (
+      select * FROM tables TAB
+       where TAB.application_id = abuff.id
+       order by TAB.seq desc)
+   LOOP
+      if buff.type in ('EFF', 'LOG')
+      then
+         p('   EXECUTE IMMEDIATE ''delete from '|| sown||buff.name||'_PDAT'';');
+         p('   EXECUTE IMMEDIATE ''delete from '|| sown||buff.name||HOA||''';');
+      end if;
+      p('   EXECUTE IMMEDIATE ''delete from '|| sown||buff.name||''';');
+   end loop;
+   p('   EXECUTE IMMEDIATE ''delete from util_log'';');
+   p('end delete_all_data;');
+   p('----------------------------------------');
    p('begin');
    p('   lo_rindex := dbms_application_info.set_session_longops_nohint;');
    p('end ' || sp_name || ';');
@@ -2194,7 +2217,7 @@ BEGIN
    p('');
    p('   -- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
    p('   --    Globally available settings and functions');
-   p('   --    (All procedures and functions point to link '||abuff.abbr||'_db)');
+   p('   --    (All procedures and functions point to link '||abuff.dbid||')');
    header_comments;
    p('');
    p('   procedure set_usr');
@@ -2252,7 +2275,7 @@ BEGIN
    p('');
    p('-- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
    p('--    Globally available settings and functions');
-   p('--    (All procedures and functions point to link '||abuff.abbr||'_db)');
+   p('--    (All procedures and functions point to link '||abuff.dbid||')');
    header_comments;
    p('');
    p('----------------------------------------');
@@ -2260,77 +2283,77 @@ BEGIN
    p('      (usr_in  in  ' || usrdt || ')');
    p('is');
    p('begin');
-   p('   glob.set_usr@'||abuff.abbr||'_db(usr_in);');
+   p('   '||abuff.db_auth||'glob.set_usr@'||abuff.dbid||'(usr_in);');
    p('end set_usr;');
    p('----------------------------------------');
    p('function get_usr');
    p('   return ' || usrdt);
    p('is');
    p('begin');
-   p('   return glob.get_usr@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_usr@'||abuff.dbid||';');
    p('end get_usr;');
    p('----------------------------------------');
    p('procedure set_db_constraints');
    p('      (bool_in  in  boolean)');
    p('is');
    p('begin');
-   p('   glob.set_db_constraints@'||abuff.abbr||'_db(bool_in);');
+   p('   '||abuff.db_auth||'glob.set_db_constraints@'||abuff.dbid||'(bool_in);');
    p('end set_db_constraints;');
    p('----------------------------------------');
    p('function get_db_constraints');
    p('      return boolean');
    p('is');
    p('begin');
-   p('   return glob.get_db_constraints@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_db_constraints@'||abuff.dbid||';');
    p('end get_db_constraints;');
    p('----------------------------------------');
    p('procedure set_fold_strings');
    p('      (bool_in  in  boolean)');
    p('is');
    p('begin');
-   p('   glob.set_fold_strings@'||abuff.abbr||'_db(bool_in);');
+   p('   '||abuff.db_auth||'glob.set_fold_strings@'||abuff.dbid||'(bool_in);');
    p('end set_fold_strings;');
    p('----------------------------------------');
    p('function get_fold_strings');
    p('      return boolean');
    p('is');
    p('begin');
-   p('   return glob.get_fold_strings@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_fold_strings@'||abuff.dbid||';');
    p('end get_fold_strings;');
    p('----------------------------------------');
    p('procedure set_asof_dtm');
    p('      (asof_dtm_in  in  timestamp with time zone)');
    p('is');
    p('begin');
-   p('   glob.set_asof_dtm@'||abuff.abbr||'_db(asof_dtm_in);');
+   p('   '||abuff.db_auth||'glob.set_asof_dtm@'||abuff.dbid||'(asof_dtm_in);');
    p('end set_asof_dtm;');
    p('----------------------------------------');
    p('function get_asof_dtm');
    p('   return timestamp with time zone');
    p('is');
    p('begin');
-   p('   return glob.get_asof_dtm@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_asof_dtm@'||abuff.dbid||';');
    p('end get_asof_dtm;');
    p('----------------------------------------');
    p('procedure set_ignore_no_change');
    p('      (bool_in  in  boolean)');
    p('is');
    p('begin');
-   p('   glob.set_ignore_no_change@'||abuff.abbr||'_db(bool_in);');
+   p('   '||abuff.db_auth||'glob.set_ignore_no_change@'||abuff.dbid||'(bool_in);');
    p('end set_ignore_no_change;');
    p('----------------------------------------');
    p('function get_ignore_no_change');
    p('      return boolean');
    p('is');
    p('begin');
-   p('   return glob.get_ignore_no_change@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_ignore_no_change@'||abuff.dbid||';');
    p('end get_ignore_no_change;');
    p('----------------------------------------');
    p('function get_dtm');
    p('      return timestamp with local time zone');
    p('is');
    p('begin');
-   p('   return glob.get_dtm@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.get_dtm@'||abuff.dbid||';');
    p('end get_dtm;');
    p('----------------------------------------');
    p('procedure upd_early_eff');
@@ -2339,7 +2362,7 @@ BEGIN
    p('   -- Centralized procedure to set next ETL start date/time');
    p('is');
    p('begin');
-   p('   glob.upd_early_eff@'||abuff.abbr||'_db(table_name, eff_dtm_in);');
+   p('   '||abuff.db_auth||'glob.upd_early_eff@'||abuff.dbid||'(table_name, eff_dtm_in);');
    p('end upd_early_eff;');
    p('----------------------------------------');
    p('function request_lock');
@@ -2348,14 +2371,14 @@ BEGIN
    p('   return varchar2');
    p('is');
    p('begin');
-   p('   return glob.request_lock@'||abuff.abbr||'_db(lockname_in, timeout_in);');
+   p('   return '||abuff.db_auth||'glob.request_lock@'||abuff.dbid||'(lockname_in, timeout_in);');
    p('end request_lock;');
    p('----------------------------------------');
    p('function release_lock');
    p('   return varchar2');
    p('is');
    p('begin');
-   p('   return glob.release_lock@'||abuff.abbr||'_db;');
+   p('   return '||abuff.db_auth||'glob.release_lock@'||abuff.dbid||';');
    p('end release_lock;');
    p('----------------------------------------');
    p('end ' || sp_name || ';');
@@ -2380,21 +2403,6 @@ BEGIN
    p('drop sequence '|| sown||tbuff.name||'_seq');
    p('/');
 END drop_tab;
-----------------------------------------
-PROCEDURE delete_tab
-   --  For a tbuff, delete the rows in the tables
-IS
-BEGIN
-   p('delete from '|| sown||tbuff.name);
-   p('/');
-   if tbuff.type in ('EFF', 'LOG')
-   then
-      p('delete from '|| sown||tbuff.name||HOA);
-      p('/');
-      p('delete from '|| sown||tbuff.name||'_PDAT');
-      p('/');
-   end if;
-END delete_tab;
 ----------------------------------------
 PROCEDURE create_tab_act
    --  For a tbuff, create the tables
@@ -2756,7 +2764,7 @@ BEGIN
    p('            values');
    p('               (hbuf.' || tbuff.name || '_id');
    p('               ,''DELETE''');
-   p('               ,systimestamp');
+   p('               ,glob.get_dtm');
    p('               ,glob.get_usr');
    if tbuff.type = 'EFF'
    then
@@ -2844,7 +2852,7 @@ BEGIN
    p('            values');
    p('               (abuf.id');
    p('               ,''INSERT''');
-   p('               ,systimestamp');
+   p('               ,glob.get_dtm');
    p('               ,glob.get_usr');
    p('               ,abuf.aud_beg_dtm');
    p('               ,abuf.aud_beg_usr');
@@ -2892,7 +2900,7 @@ BEGIN
    p('            values');
    p('               (abuf.id');
    p('               ,''UPDATE''');
-   p('               ,systimestamp');
+   p('               ,glob.get_dtm');
    p('               ,glob.get_usr');
    p('               ,hbuf.aud_end_dtm');
    p('               ,hbuf.aud_beg_dtm');
@@ -3239,7 +3247,11 @@ BEGIN
    p('   -- Set n_id, if needed');
    p('   if n_id is null');
    p('   then');
-   p('      select '|| tbuff.name || '_seq.nextval');
+   if abuff.dbid is not null then
+      p('      select '||abuff.db_auth||tbuff.name||'_seq.nextval@'||abuff.dbid||'');
+   else
+      p('      select '||tbuff.name||'_seq.nextval');
+   end if;
    p('       into  n_id');
    p('       from  dual;');
    p('   end if;');
@@ -5353,7 +5365,7 @@ BEGIN
    p('');
    p('--  Should use "'||sown||tbuff.name||'_dml.get_next_id" instead of sequence');
    p('create synonym '||sown||tbuff.name||'_seq');
-   p('   for '||tbuff.name||'_seq@'||abuff.abbr||'_db');
+   p('   for '||abuff.db_auth||tbuff.name||'_seq@'||abuff.dbid);
    p('/');
    ps('');
    ps('-- audit rename on '||sown||tbuff.name||'_seq by access');
@@ -5363,7 +5375,7 @@ BEGIN
       p('');
       p('create materialized view '||sown||tbuff.name);
       p('   refresh next sysdate + '||tbuff.mv_refresh_hr||'/24');
-      p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db');
+      p('   as select * from '||abuff.db_auth||tbuff.name||'@'||abuff.dbid);
       p('/');
       p('comment on materialized view ' ||sown||tbuff.name|| ' is ''' ||
          replace(tbuff.description,SQ1,SQ2) || '''');
@@ -5371,7 +5383,7 @@ BEGIN
    else
       p('');
       p('create view '||sown||tbuff.name);
-      p('   as select * from '||tbuff.name||'@'||abuff.abbr||'_db');
+      p('   as select * from '||abuff.db_auth||tbuff.name||'@'||abuff.dbid);
       p('/');
       p('comment on table ' ||sown||tbuff.name|| ' is ''' ||
          replace(tbuff.description,SQ1,SQ2) || '''');
@@ -5391,7 +5403,7 @@ BEGIN
 	  return;
    end if;
    p('create view '||sown||tbuff.name||HOA);
-   p('   as select * from '||tbuff.name||HOA||'@'||abuff.abbr||'_db');
+   p('   as select * from '||abuff.db_auth||tbuff.name||HOA||'@'||abuff.dbid);
    p('/');
    ps('');
    ps('grant select on ' ||sown||tbuff.name||HOA|| ' to ' || abuff.abbr || '_app');
@@ -5402,7 +5414,7 @@ BEGIN
    hoa_col_comments(tbuff.name||HOA);
    p('');
    p('create view '||sown||tbuff.name||'_PDAT');
-   p('   as select * from '||tbuff.name||'_PDAT@'||abuff.abbr||'_db');
+   p('   as select * from '||abuff.db_auth||tbuff.name||'_PDAT@'||abuff.dbid);
    p('/');
    ps('');
    ps('grant select on ' ||sown||tbuff.name|| '_PDAT to ' || abuff.abbr || '_app');
@@ -5419,7 +5431,7 @@ BEGIN
    p('');
    p('   -- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
    p('   --    Pop (UNDO) functions');
-   p('   --    (All procedures and functions point to link '||abuff.abbr||'_db)');
+   p('   --    (All procedures and functions point to link '||abuff.dbid||')');
    header_comments;
    p('');
    p('   procedure at_server');
@@ -5440,14 +5452,14 @@ BEGIN
    p('');
    p('-- MT FACADE ' || initcap(sp_type) || ' ' || initcap(sp_name));
    p('--    Pop (UNDO) functions');
-   p('--    (All procedures and functions point to link '||abuff.abbr||'_db)');
+   p('--    (All procedures and functions point to link '||abuff.dbid||')');
    header_comments;
    p('');
    p('procedure at_server');
    p('      (id_in  in  number)');
    p('is');
    p('begin');
-   p('   '||sp_name||'.at_server@'||abuff.abbr||'_db(id_in);');
+   p('   '||abuff.db_auth||sp_name||'.at_server@'||abuff.dbid||'(id_in);');
    p('end at_server;');
    p('');
    p('end '||sp_name||';');
@@ -5494,7 +5506,7 @@ BEGIN
    end if;
    p('');
    p('create view '||sown||tbuff.name||'_ALL');
-   p('   as select * from '||tbuff.name||'_all@'||abuff.abbr||'_db');
+   p('   as select * from '||abuff.db_auth||tbuff.name||'_all@'||abuff.dbid);
    p('/');
    p('');
    all_col_comments(tbuff.name||'_all');
@@ -5504,7 +5516,7 @@ BEGIN
    ps('-- audit rename on ' ||sown||tbuff.name || '_ALL by access');
    ps('-- /');
    p('create view '||sown||tbuff.name||'_ASOF');
-   p('   as select * from '||tbuff.name||'_asof@'||abuff.abbr||'_db');
+   p('   as select * from '||abuff.db_auth||tbuff.name||'_asof@'||abuff.dbid);
    p('/');
    p('');
    asof_col_comments(tbuff.name||'_asof');
@@ -7633,7 +7645,12 @@ BEGIN
    p('is');
    p('   retid  number;');
    p('begin');
-   p('   select '||tbuff.name||'_seq.nextval into retid from dual;');
+   if abuff.dbid is not null then
+      p('   select '||abuff.db_auth||tbuff.name||'_seq.nextval@'||abuff.dbid);
+   else
+      p('   select '||tbuff.name||'_seq.nextval');
+   end if;
+   p('    into  retid from dual;');
    p('   return retid;');
    p('end get_next_id;');
    p('----------------------------------------');
@@ -7642,7 +7659,12 @@ BEGIN
    p('is');
    p('   retid  number;');
    p('begin');
-   p('   select '||tbuff.name||'_seq.currval into retid from dual;');
+   if abuff.dbid is not null then
+      p('   select '||abuff.db_auth||tbuff.name||'_seq.currval@'||abuff.dbid);
+   else
+      p('   select '||tbuff.name||'_seq.currval');
+   end if;
+   p('    into  retid from dual;');
    p('   return retid;');
    p('end get_curr_id;');
    p('----------------------------------------');
@@ -16081,64 +16103,6 @@ BEGIN
    dump_sec_lines;  -- Performs an "open_file"
 END create_glob;
 ----------------------------------------
-PROCEDURE drop_dblink
-IS
-BEGIN
-   fbuff.name           := 'drop_dblink';
-   fbuff.description    := 'Drop Mid-Tier Database Link using generated code';
-   open_file;
-   p('');
-   if abuff.dbid IS NULL
-   then
-      p('   --');
-      p('   -- DBID is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DBA_AUTH is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   else
-      p('drop database link '|| sown||abuff.abbr||'_db');
-      p('/');
-   end if;
-   close_file;
-   dump_sec_lines;  -- Performs an "open_file"
-END drop_dblink;
-----------------------------------------
-PROCEDURE create_dblink
-IS
-BEGIN
-   fbuff.name           := 'create_dblink';
-   fbuff.description    := 'Create Mid-Tier Database Link using generated code';
-   open_file;
-   p('');
-   if abuff.dbid IS NULL
-   then
-      p('   --');
-      p('   -- DBID is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DBA_AUTH is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   else
-      p('-- Database Link to Centralized Database Server.');
-      p('create database link '|| sown||abuff.abbr||'_db');
-      p('   ' || abuff.db_auth);
-      p('   using ''' || abuff.dbid || '''');
-      p('/');
-      p('');
-   end if;
-   close_file;
-   dump_sec_lines;  -- Performs an "open_file"
-END create_dblink;
-----------------------------------------
 PROCEDURE drop_gdst
 IS
 BEGIN
@@ -16150,12 +16114,6 @@ BEGIN
    then
       p('   --');
       p('   -- DBID is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DBA_AUTH is not defined in APPLICATIONS');
       p('   --');
       p('');
    else
@@ -16179,12 +16137,6 @@ BEGIN
       p('   -- DBID is not defined in APPLICATIONS');
       p('   --');
       p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DBA_AUTH is not defined in APPLICATIONS');
-      p('   --');
-      p('');
    else
       create_gd;
       create_util;
@@ -16192,26 +16144,6 @@ BEGIN
    close_file;
    dump_sec_lines;  -- Performs an "open_file"
 END create_gdst;
-----------------------------------------
-PROCEDURE delete_ods
-IS
-BEGIN
-   fbuff.name           := 'delete_ods';
-   fbuff.description    := 'Delete data from Online Data Store';
-   open_file;
-   p('');
-   for buff in (
-      select * FROM tables TAB
-       where TAB.application_id = abuff.id
-       order by TAB.seq desc)
-   LOOP
-      tbuff := buff;
-      next_table;
-      delete_tab;
-      p('');
-   END LOOP;
-   close_file;
-END delete_ods;
 ----------------------------------------
 PROCEDURE drop_ods
 IS
@@ -16329,12 +16261,6 @@ BEGIN
       p('   -- DBID is not defined in APPLICATIONS');
       p('   --');
       p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DB_AUTH is not defined in APPLICATIONS');
-      p('   --');
-      p('');
    else
       for buff in (
          select * FROM tables TAB
@@ -16363,12 +16289,6 @@ BEGIN
    then
       p('   --');
       p('   -- DBID is not defined in APPLICATIONS');
-      p('   --');
-      p('');
-   elsif abuff.db_auth IS NULL
-   then
-      p('   --');
-      p('   -- DBA_AUTH is not defined in APPLICATIONS');
       p('   --');
       p('');
    else

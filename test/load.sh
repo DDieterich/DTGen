@@ -11,11 +11,98 @@ if [ ${OWNER_CONNECT_STRING-NULL} = "NULL" -o \
      ${USER_CONNECT_STRING-NULL}  = "NULL" -o \
      ${USERNAME-NULL}             = "NULL" -o \
      ${GUI_DIR-NULL}              = "NULL" -o \
+     ${DB_LINK_NAME-NULL}         = "NULL" -o \
+     ${DB_USING_STR-NULL}         = "NULL" -o \
      ${logfile-NULL}              = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run t.sh instead."
   exit -1
 fi
+
+# NOTE: There is a DROP_DBLINK in cleanup.sh
+CREATE_DBLINK=""
+if [ ${OWNERNAME} = 'TMTST' ]
+then
+   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBST identified by \"TDBST\" using ${DB_USING_STR};"
+fi
+if [ ${OWNERNAME} = 'TMTSTDOD' ]
+then
+   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBUT identified by \"TDBUT\" using ${DB_USING_STR};"
+fi
+if [ ${OWNERNAME} = 'TMTSN' ]
+then
+   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBSN identified by \"TDBSN\" using ${DB_USING_STR};"
+fi
+if [ ${OWNERNAME} = 'TMTSNDOD' ]
+then
+   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBUN identified by \"TDBUN\" using ${DB_USING_STR};"
+fi
+
+# As best I can tell, this is a bug in Oracle11g Express Edition.
+#   These grants should not be necessary when using private fixed
+#   user database links.
+GRANT_EXECUTE=""
+if [ ${OWNERNAME} = 'TDBST' ]
+then
+   GRANT_EXECUTE="grant execute on glob to TMTST;
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'EXECUTE'
+        and  table_name like '%_POP' )
+   loop
+      execute immediate 'grant execute on ' || buff.table_name || ' to TMTST';
+   end loop;
+end;
+/"
+fi
+if [ ${OWNERNAME} = 'TDBUT' ]
+then
+   GRANT_EXECUTE="grant execute on glob to TMTSTDOD;
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'EXECUTE'
+        and  table_name like '%_POP' )
+   loop
+      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSTDOD';
+   end loop;
+end;
+/"
+fi
+if [ ${OWNERNAME} = 'TDBSN' ]
+then
+   GRANT_EXECUTE="grant execute on glob to TMTSN;
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'EXECUTE'
+        and  table_name like '%_POP' )
+   loop
+      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSN';
+   end loop;
+end;
+/"
+fi
+if [ ${OWNERNAME} = 'TDBUN' ]
+then
+   GRANT_EXECUTE="grant execute on glob to TMTSNDOD;
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'EXECUTE'
+        and  table_name like '%_POP' )
+   loop
+      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSNDOD';
+   end loop;
+end;
+/"
+fi
+
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${OWNER_CONNECT_STRING}
@@ -46,8 +133,10 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set feedback 6
    spool install_owner.log
    connect ${OWNER_CONNECT_STRING}
+   ${CREATE_DBLINK}
    @install_owner
    @../comp
+   ${GRANT_EXECUTE}
    spool install_user.log
    connect ${USER_CONNECT_STRING}
    @install_user
