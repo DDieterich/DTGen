@@ -8,4 +8,4 @@
 --
 create role &1._dml;
 create role &1._app;
-grant &1._app to &1_dml.;
+grant &1._app to &1._dml;

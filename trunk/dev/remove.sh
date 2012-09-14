@@ -30,6 +30,9 @@ EOF
 
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile}
 
+echo "$0 Complete"
+exit
+
 for FILE in setup.log \
             test.log \
             install_db_sec.sql \
@@ -46,10 +49,8 @@ for FILE in setup.log \
             dtgen_dataload2.log \
             dtgen_dataload2.bad \
             install_gui.LST \
-            cleanup.log \
+            cleanup.log
 do
    echo "Removing ${FILE} ..."
    rm ${FILE}
 done >> ${logfile} 2>&1
-
-echo "$0 Complete"

@@ -10,7 +10,7 @@ Files and Directories:
 cleanup.sh          - Linux Script to remove new DTGen objects from database
 d.env               - Defines environment variables
 d.sh                - Main script that runs other scripts
-                      Usage: d.sh (setup|test|cleanup|remove)
+                      Usage: d.sh (setup|load|cleanup|remove)
 load.sh             - Loads the new DTGen environment
                       Runs Supplemental Scripts "fullgen" and "fullasm"
 remove.sh           - Removes new DTGen logins

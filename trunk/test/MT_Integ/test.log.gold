@@ -1,0 +1,934 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Wed Sep 12 11:34:12 2012
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> Connected.
+SQL> SQL> SQL> 
+Running Test DTC_DMLACT EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 11, glob.get_dtm, glob.get_usr, glob.get_dtm, NU
+LL)
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 12, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
+23.89')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 13, glob.get_dtm, glob.get_usr, glob.get_dtm, '-
+1.2e-4')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 14, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
+.2e5')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 11, glob.get_usr, glob.get_dtm, NULL)
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 12, glob.get_usr, glob.get_dtm, '123.89')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 13, glob.get_usr, glob.get_dtm, '-1.2e-4')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 14, glob.get_usr, glob.get_dtm, '1.2e5')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 11, NUL
+L)
+
+Running Test DTC_SQLTAB NON Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 12, '12
+3.89')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 13, '-1
+.2e-4')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 14, '1.
+2e5')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 134
+SUCCESS
+
+PL/SQL procedure successfully completed.
+
+SQL> Connected.
+SQL> SQL> SQL> 
+Running Test DTC_DMLACT EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 11, glob.get_dtm, glob.get_usr, glob.get_dtm, NU
+LL)
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 12, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
+23.89')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 13, glob.get_dtm, glob.get_usr, glob.get_dtm, '-
+1.2e-4')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
+alues (T1A_EFF_dml.get_next_id, 14, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
+.2e5')
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB EFF Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 11, glob.get_usr, glob.get_dtm, NULL)
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 12, glob.get_usr, glob.get_dtm, '123.89')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 13, glob.get_usr, glob.get_dtm, '-1.2e-4')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
+G_dml.get_next_id, 14, glob.get_usr, glob.get_dtm, '1.2e5')
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB LOG Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLACT NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_DMLTAB NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 111
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 112
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 113
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 114
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLACT NON Using Parm_Set 134
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 111
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 11, NUL
+L)
+
+Running Test DTC_SQLTAB NON Using Parm_Set 112
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 12, '12
+3.89')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 113
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 13, '-1
+.2e-4')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 114
+ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
+nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 14, '1.
+2e5')
+
+Running Test DTC_SQLTAB NON Using Parm_Set 121
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 122
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 123
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 124
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 131
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 132
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 133
+SUCCESS
+
+Running Test DTC_SQLTAB NON Using Parm_Set 134
+SUCCESS
+
+PL/SQL procedure successfully completed.
+
+SQL> Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - Production

@@ -3,7 +3,7 @@ is
 
 current_global_set  global_parms.global_set%TYPE := null;
 tparms              test_parms%ROWTYPE;
-sql_txt             varchar2(1993);
+sql_txt             varchar2(1994);
 
 function run_sql
    return varchar2
@@ -14,7 +14,7 @@ begin
    return 'SUCCESS';
 exception
    when others then
-      return sqlerrm || ', SQL> ' || sql_txt;
+      return sqlerrm || CHR(10) || 'SQL: ' || sql_txt;
 end run_sql;
 
 procedure get_tparms
@@ -258,6 +258,7 @@ end run_test;
 procedure run_all
 is
 begin
+   util.delete_all_data;
    for tbuff in (
       select table_type from table_types
        order by table_type desc)
@@ -271,6 +272,7 @@ begin
                  ,table_type_in => tbuff.table_type);
       end loop;
    end loop;
+   commit;
 end run_all;
 
 
