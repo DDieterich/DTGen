@@ -41,68 +41,48 @@ fi
 # As best I can tell, this is a bug in Oracle11g Express Edition.
 #   These grants should not be necessary when using private fixed
 #   user database links.
+function setup_grant_execute () {
+   GRANT_EXECUTE="grant execute on glob to ${1};
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'EXECUTE'
+        and  table_name like '%_POP' )
+   loop
+      execute immediate 'grant execute on ' || buff.table_name || ' to ${1}';
+   end loop;
+end;
+/
+begin
+   FOR buff in (
+      select table_name from user_tab_privs
+       where grantor    = USER
+        and  privilege  = 'UPDATE'
+        and  table_name not like '%~_ACT' escape '~' )
+   loop
+      execute immediate 'grant all on ' || buff.table_name || ' to ${1}';
+   end loop;
+end;
+/"
+   }
 GRANT_EXECUTE=""
 if [ ${OWNERNAME} = 'TDBST' ]
 then
-   GRANT_EXECUTE="grant execute on glob to TMTST;
-begin
-   FOR buff in (
-      select table_name from user_tab_privs
-       where grantor    = USER
-        and  privilege  = 'EXECUTE'
-        and  table_name like '%_POP' )
-   loop
-      execute immediate 'grant execute on ' || buff.table_name || ' to TMTST';
-   end loop;
-end;
-/"
+   setup_grant_execute 'TMTST'
 fi
 if [ ${OWNERNAME} = 'TDBUT' ]
 then
-   GRANT_EXECUTE="grant execute on glob to TMTSTDOD;
-begin
-   FOR buff in (
-      select table_name from user_tab_privs
-       where grantor    = USER
-        and  privilege  = 'EXECUTE'
-        and  table_name like '%_POP' )
-   loop
-      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSTDOD';
-   end loop;
-end;
-/"
+   setup_grant_execute 'TMTSTDOD' 
 fi
 if [ ${OWNERNAME} = 'TDBSN' ]
 then
-   GRANT_EXECUTE="grant execute on glob to TMTSN;
-begin
-   FOR buff in (
-      select table_name from user_tab_privs
-       where grantor    = USER
-        and  privilege  = 'EXECUTE'
-        and  table_name like '%_POP' )
-   loop
-      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSN';
-   end loop;
-end;
-/"
+   setup_grant_execute 'TMTSN'
 fi
 if [ ${OWNERNAME} = 'TDBUN' ]
 then
-   GRANT_EXECUTE="grant execute on glob to TMTSNDOD;
-begin
-   FOR buff in (
-      select table_name from user_tab_privs
-       where grantor    = USER
-        and  privilege  = 'EXECUTE'
-        and  table_name like '%_POP' )
-   loop
-      execute immediate 'grant execute on ' || buff.table_name || ' to TMTSNDOD';
-   end loop;
-end;
-/"
+   setup_grant_execute 'TMTSNDOD'
 fi
-
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${OWNER_CONNECT_STRING}

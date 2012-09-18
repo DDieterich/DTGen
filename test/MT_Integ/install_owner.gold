@@ -1,22 +1,10 @@
 SQL>    connect TMTST/TMTST@XE2
 Connected.
+SQL>    create database link XE@loopback connect to TDBST identified by "TDBST" using 'loopback';
+
+Database link created.
+
 SQL>    @install_owner
-
-***************************
-Running Script create_dblink
-***************************
-
-
-Database link created.
-
-
-***************************
-Running Script create_dblink
-***************************
-
-
-Database link created.
-
 
 ***************************
 Running Script create_gdst
@@ -174,6 +162,33 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Package body created.
 
 
@@ -239,49 +254,31 @@ Comment created.
 Comment created.
 
 
-View created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
+no rows selected
 
 
 View created.
@@ -329,10 +326,109 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
 Comment created.
 
 
 Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -508,55 +604,31 @@ Comment created.
 Comment created.
 
 
-View created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
+no rows selected
 
 
 View created.
@@ -610,10 +682,115 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
 Comment created.
 
 
 Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -827,6 +1004,33 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Package body created.
 
 
@@ -874,6 +1078,33 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -901,6 +1132,33 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -932,6 +1190,33 @@ Comment created.
 
 
 Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -1053,37 +1338,31 @@ Comment created.
 Comment created.
 
 
-View created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
+Trigger created.
 
 
-Comment created.
+no rows selected
 
 
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
+no rows selected
 
 
 View created.
@@ -1119,10 +1398,97 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
 Comment created.
 
 
 Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -2054,4 +2420,5 @@ Package body created.
 
 No errors.
 
+SQL> 
 SQL>    spool install_user.log

@@ -1,0 +1,255 @@
+SQL> drop user TEST_MTS cascade;
+
+User dropped.
+
+SQL> drop user TEST_DBS cascade;
+
+User dropped.
+
+SQL> 
+SQL> alter system set global_names=TRUE
+  2  	comment='Required for Mutli-Tier Distributed Testing'
+  3  	scope=MEMORY;
+
+System altered.
+
+SQL> 
+SQL> -- Simulated Database Server User
+SQL> create user TEST_DBS identified by TEST_DBS
+  2  	default tablespace users;
+
+User created.
+
+SQL> grant connect, resource to TEST_DBS;
+
+Grant succeeded.
+
+SQL> -- Simulated Mid-Tier Server User
+SQL> create user TEST_MTS identified by TEST_MTS
+  2  	default tablespace users;
+
+User created.
+
+SQL> grant connect, resource to TEST_MTS;
+
+Grant succeeded.
+
+SQL> grant create database link to TEST_MTS;
+
+Grant succeeded.
+
+SQL> grant create synonym to TEST_MTS;
+
+Grant succeeded.
+
+SQL> 
+SQL> -- Simulated Database Server User
+SQL> connect TEST_DBS@XE2/TEST_DBS
+Connected.
+SQL> create table test_globals
+  2  	(seq  number
+  3  	,gval varchar2(30));
+
+Table created.
+
+SQL> create package test_global_pkg
+  2  is
+  3  	procedure set_gval(gval_in in varchar2);
+  4  	function get_gval return varchar2;
+  5  end test_global_pkg;
+  6  /
+
+Package created.
+
+SQL> show errors
+No errors.
+SQL> create package body test_global_pkg
+  2  is
+  3  	gval varchar2(30) := 'DBS_DEFAULT';
+  4  procedure set_gval(gval_in in varchar2)
+  5  is
+  6  begin
+  7  	gval := gval_in;
+  8  end set_gval;
+  9  function get_gval return varchar2
+ 10  is
+ 11  begin
+ 12  	return gval;
+ 13  end get_gval;
+ 14  begin
+ 15  	gval := 'DBS_INIT';
+ 16  end test_global_pkg;
+ 17  /
+
+Package body created.
+
+SQL> show errors
+No errors.
+SQL> insert into test_globals (seq, gval)
+  2    values (0, test_global_pkg.get_gval);
+
+1 row created.
+
+SQL> execute test_global_pkg.set_gval('DBS_Val1');
+
+PL/SQL procedure successfully completed.
+
+SQL> insert into test_globals (seq, gval)
+  2    values (1, test_global_pkg.get_gval);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> -- This should not be necessary
+SQL> grant execute on test_global_pkg to TEST_MTS;
+
+Grant succeeded.
+
+SQL> 
+SQL> -- Simulated Mid-Tier Server User
+SQL> connect TEST_MTS@XE2/TEST_MTS
+Connected.
+SQL> create database link XE@loopback
+  2  	connect to TEST_DBS identified by TEST_DBS
+  3  	using 'loopback';
+
+Database link created.
+
+SQL> create synonym test_globals for test_globals@XE@loopback;
+
+Synonym created.
+
+SQL> create package test_global_pkg
+  2  is
+  3  	procedure set_gval(gval_in in varchar2);
+  4  	function get_gval return varchar2;
+  5  end test_global_pkg;
+  6  /
+
+Package created.
+
+SQL> show errors
+No errors.
+SQL> create package body test_global_pkg
+  2  is
+  3  procedure set_gval(gval_in in varchar2)
+  4  is
+  5  begin
+  6  	test_global_pkg.set_gval@XE@loopback(gval_in);
+  7  end set_gval;
+  8  function get_gval return varchar2
+  9  is
+ 10  begin
+ 11  	return test_global_pkg.get_gval@XE@loopback;
+ 12  end get_gval;
+ 13  end test_global_pkg;
+ 14  /
+
+Package body created.
+
+SQL> show errors
+No errors.
+SQL> insert into test_globals (seq, gval)
+  2    values (2, TEST_DBS.test_global_pkg.get_gval);
+
+1 row created.
+
+SQL> execute test_global_pkg.set_gval('MTS_Val1');
+
+PL/SQL procedure successfully completed.
+
+SQL> insert into test_globals (seq, gval)
+  2    values (3, TEST_DBS.test_global_pkg.get_gval);
+
+1 row created.
+
+SQL> execute execute immediate 'insert into test_globals (seq, gval) values (4, TEST_DBS.test_global_pkg.get_gval)';
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  	insert into test_globals@XE@loopback (seq, gval)
+  3  	  values (5, TEST_DBS.test_global_pkg.get_gval);
+  4  end;
+  5  /
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2  	execute immediate 'insert into test_globals@XE@loopback (seq, gval) values (6, TEST_DBS.test_global_pkg.get_gval)';
+  3  end;
+  4  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select test_global_pkg.get_gval from dual;
+
+GET_GVAL                                                                        
+--------------------------------------------------------------------------------
+MTS_Val1                                                                        
+
+SQL> select test_global_pkg.get_gval from dual@XE@loopback;
+
+GET_GVAL                                                                        
+--------------------------------------------------------------------------------
+MTS_Val1                                                                        
+
+SQL> select TEST_DBS.test_global_pkg.get_gval from dual@XE@loopback;
+
+GET_GVAL                                                                        
+--------------------------------------------------------------------------------
+DBS_INIT                                                                        
+
+SQL> select * From test_globals;
+
+       SEQ GVAL                                                                 
+---------- ------------------------------                                       
+         0 DBS_INIT                                                             
+         1 DBS_Val1                                                             
+         2 DBS_INIT                                                             
+         3 MTS_Val1                                                             
+         4 MTS_Val1                                                             
+         5 MTS_Val1                                                             
+         6 MTS_Val1                                                             
+
+7 rows selected.
+
+SQL> -- This fails:
+SQL> insert into test_globals@XE@loopback (seq, gval)
+  2    values (21, test_global_pkg.get_gval);
+insert into test_globals@XE@loopback (seq, gval)
+*
+ERROR at line 1:
+ORA-00904: : invalid identifier 
+ORA-02063: preceding line from XE@LOOPBACK 
+
+
+SQL> -- This fails:
+SQL> insert into test_globals (seq, gval)
+  2    values (22, test_global_pkg.get_gval);
+insert into test_globals (seq, gval)
+*
+ERROR at line 1:
+ORA-00904: : invalid identifier 
+ORA-02063: preceding line from XE@LOOPBACK 
+
+
+SQL> -- This fails:
+SQL> insert into test_globals (seq, gval)
+  2    values (23, TEST_MTS.test_global_pkg.get_gval);
+insert into test_globals (seq, gval)
+*
+ERROR at line 1:
+ORA-00904: : invalid identifier 
+ORA-02063: preceding line from XE@LOOPBACK 
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> 
+SQL> spool off

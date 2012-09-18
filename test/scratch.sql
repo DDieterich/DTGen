@@ -1,41 +1,7 @@
 ------------------------------------------------------------
 REM Test User
 
-execute dbms_output.put_line(glob.get_dtm);
-
-select global_name from global_name;
-
-drop database link XE@LOOPBACK;
-create database link XE@LOOPBACK
-  connect to TDBST identified by "TDBST"
-  using 'loopback';
-grant execute on glob to TMTST;
-revoke execute on glob from TMTST;
-
-select table_name from user_tab_privs
- where grantor    = USER
-  and  privilege  = 'EXECUTE'
-  and  table_name like '%_POP';
-
-select * from dual@XE@LOOPBACK;
-select * from t1a_non@XE@LOOPBACK;
-
-select object_name, status from user_objects@XE@LOOPBACK where object_type = 'PACKAGE BODY';
-select object_name, status from user_objects@XE where object_type = 'PACKAGE BODY';
-
-grant execute on glob to tdbst with grant option;
-grant execute on glob to public;
-revoke execute on glob from public;
-execute dbms_output.put_line(TDBST.glob.get_dtm@XE@LOOPBACK);
-execute dbms_output.put_line(glob.get_dtm@XE@LOOPBACK);
-
-execute test_rig.run_all;
-execute test_rig.run_test('DTC_SQLTAB',111);
-execute test_rig.run_test('DTC_SQLTAB',121);
-execute test_rig.run_test('DTC_SQLTAB',131);
-
 select t1a_non_seq.nextval from dual;
-
 select T1A_EFF_dml.get_id(11) from dual;
 
 select * from T1A_EFF;
@@ -47,6 +13,24 @@ begin
    end case;
 end;
 /
+
+execute dbms_output.put_line(glob.get_dtm);
+execute dbms_output.put_line(glob.get_usr);
+execute dbms_output.put_line(glob.get_usr@XE@loopback);
+execute dbms_output.put_line(tdbst.glob.get_usr@XE@loopback);
+
+select global_name from global_name;
+
+select * from dual@XE@LOOPBACK;
+select * from t1a_non@XE@LOOPBACK;
+select object_name, status from user_objects@XE@loopback where object_type = 'PACKAGE BODY';
+execute dbms_output.put_line(TDBST.glob.get_dtm@XE@loopback);
+execute dbms_output.put_line(glob.get_dtm@XE@loopback);
+
+execute test_rig.run_all;
+execute dbms_output.put_line(test_rig.run_test_instance('DTC_SQLTAB', 'NON', 111));
+execute dbms_output.put_line(test_rig.run_test_instance('DTC_SQLACT', 'NON', 111));
+execute test_rig.run_test('DTC_SQLTAB','LOG');
 
 ------------------------------------------------------------
 REM dtgen_test:

@@ -2,7 +2,7 @@
 -) Check testing results
 -) Remove db_auth data from test_gen?
 -) Need to change the dbid and db_auth fields in DTGEN
--) Need to fix the problem with db_links in TAB procedure, only on Mid-Tier
+-) Need to fix the problem with db_links in TAB and DML procedures, only on Mid-Tier
    Check the link name against the GLOBAL_NAME in the the TAB Procedure?
 
 DTGen "test" README File

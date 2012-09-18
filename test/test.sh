@@ -7,7 +7,9 @@
 . ./t.env
 
 if [ ${OWNER_CONNECT_STRING-NULL} = "NULL" -o \
+     ${OWNERNAME-NULL}            = "NULL" -o \
      ${USER_CONNECT_STRING-NULL}  = "NULL" -o \
+     ${USERNAME-NULL}             = "NULL" -o \
      ${logfile-NULL}              = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run t.sh instead."
@@ -18,12 +20,14 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set echo on
    set trimspool on
    set linesize 4000
+   prompt ****************************************
+   prompt ***  ${OWNERNAME}
    connect ${OWNER_CONNECT_STRING}
-   set serveroutput on format wrapped
-   execute test_rig.run_all;
+   @../test
+   prompt ****************************************
+   prompt ***  ${USERNAME}
    connect ${USER_CONNECT_STRING}
-   set serveroutput on format wrapped
-   execute test_rig.run_all;
+   @../test
    exit
 EOF
 
