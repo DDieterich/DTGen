@@ -123,7 +123,7 @@
 
  = Global Parameter Options =
 || *Test Set* || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
-|| A || Yes || Yes || Yes || -- Default Setting
+|| A (Default) || Yes || Yes || Yes ||
 || B || Yes || Yes || No ||
 || C || Yes || No || Yes ||
 || D || Yes || No || No ||
