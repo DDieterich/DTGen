@@ -123,14 +123,14 @@
 
  = Global Parameter Options =
 || *Test Set* || *DB Integrity* || *Case Correction* || *Ignore No Change* ||
-|| A || No || No || No ||
-|| B || Yes || No || No ||
-|| C || No || Yes || No ||
-|| D || Yes || Yes || No ||
-|| E || No || No || Yes ||
-|| F || Yes || No || Yes ||
-|| G || No || Yes || Yes ||
-|| H || Yes || Yes || Yes ||
+|| A || Yes || Yes || Yes || -- Default Setting
+|| B || Yes || Yes || No ||
+|| C || Yes || No || Yes ||
+|| D || Yes || No || No ||
+|| E || No || Yes || Yes ||
+|| F || No || Yes || No ||
+|| G || No || No || Yes ||
+|| H || No || No || No ||
 
 *Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
 
