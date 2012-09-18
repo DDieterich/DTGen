@@ -14,6 +14,7 @@ begin
    return 'SUCCESS';
 exception
    when others then
+      --util.err(sqlerrm);
       return sqlerrm || CHR(10) || 'SQL: ' || sql_txt;
 end run_sql;
 
@@ -72,6 +73,10 @@ begin
       if is_eff then sql_txt := sql_txt ||
            ', glob.get_dtm';
       end if;
+      -- Don't know why "ORA-20002: Current User has not been set in the
+      --   Glob Package." is thrown when glob.get_usr is evaluated by the
+      --   SQL engine, instead of passing the string results from glob.get_usr.
+      --   ', ''' || glob.get_usr || '''' ||
       if is_log then sql_txt := sql_txt ||
            ', glob.get_usr' ||
            ', glob.get_dtm';

@@ -1,5 +1,6 @@
 SQL>    connect TDBST/TDBST@XE2
 Connected.
+SQL> 
 SQL>    @install_owner
 
 ***************************
@@ -289,6 +290,15 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Table created.
 
 
@@ -341,6 +351,15 @@ Comment created.
 
 
 Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Table altered.
@@ -501,6 +520,15 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Table created.
 
 
@@ -559,6 +587,15 @@ Comment created.
 
 
 Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Table altered.
@@ -834,6 +871,15 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Table created.
 
 
@@ -868,6 +914,15 @@ Comment created.
 
 
 Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Table altered.
@@ -992,6 +1047,15 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Table created.
 
 
@@ -1034,6 +1098,15 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Table altered.
 
 
@@ -2001,6 +2074,33 @@ Comment created.
 View altered.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -2053,6 +2153,33 @@ Comment created.
 
 
 View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 TABLE_NAME
@@ -2123,6 +2250,33 @@ Comment created.
 View altered.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -2181,6 +2335,33 @@ Comment created.
 
 
 View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Grant succeeded.
@@ -2249,6 +2430,33 @@ Comment created.
 View altered.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -2283,6 +2491,33 @@ Comment created.
 
 
 View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 TABLE_NAME
@@ -2335,6 +2570,33 @@ Comment created.
 View altered.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 View created.
 
 
@@ -2377,6 +2639,33 @@ Comment created.
 View altered.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Grant succeeded.
 
 
@@ -2415,9 +2704,6 @@ TABLE_NAME
 ***  t1a_non  ***
 
 
-Table altered.
-
-
 Trigger created.
 
 
@@ -2448,54 +2734,6 @@ no rows selected
 TABLE_NAME
 -----------------
 ***  t1a_log  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
 
 
 Table altered.
@@ -2545,69 +2783,6 @@ Table altered.
 Table altered.
 
 
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
 Trigger created.
 
 
@@ -2643,9 +2818,6 @@ Running Script create_integ
 TABLE_NAME
 -----------------
 ***  t2a_non  ***
-
-
-Table altered.
 
 
 Trigger created.
@@ -2686,54 +2858,6 @@ Table altered.
 Table altered.
 
 
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
 Trigger created.
 
 
@@ -2764,69 +2888,6 @@ no rows selected
 TABLE_NAME
 -----------------
 ***  t2a_eff  ***
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
-
-
-Table altered.
 
 
 Table altered.
@@ -2885,5 +2946,23 @@ Package body created.
 Package body created.
 
 No errors.
+
+SQL>    grant execute on glob to TMTST;
+
+Grant succeeded.
+
+SQL> begin
+  2     FOR buff in (
+  3        select table_name from user_tab_privs
+  4         where grantor    = USER
+  5          and  privilege  = 'EXECUTE'
+  6          and  table_name like '%_POP' )
+  7     loop
+  8        execute immediate 'grant execute on ' || buff.table_name || ' to TMTST';
+  9     end loop;
+ 10  end;
+ 11  /
+
+PL/SQL procedure successfully completed.
 
 SQL>    spool install_user.log

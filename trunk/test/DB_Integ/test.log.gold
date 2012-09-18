@@ -1,10 +1,66 @@
 
-SQL*Plus: Release 10.2.0.1.0 - Production on Wed Sep 12 14:53:15 2012
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Sep 17 12:13:20 2012
 
 Copyright (c) 1982, 2005, Oracle.  All rights reserved.
 
-SQL> SQL> SQL> SQL> Connected.
+SQL> SQL> SQL> SQL> ****************************************
+SQL> ***  TDBST
+SQL> Connected.
 SQL> SQL> 
+SQL> --
+SQL> -- Test Script
+SQL> --
+SQL> -- These executes are run individually to allow the
+SQL> --   serveroutput buffer to dump between executions
+SQL> --
+SQL> 
+SQL> set serveroutput on format wrapped
+SQL> 
+SQL> /*
+SQL> --========================================
+SQL> --  Global Set A
+SQL> execute test_rig.set_global_parms('A')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set B
+SQL> execute test_rig.set_global_parms('B')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set C
+SQL> execute test_rig.set_global_parms('C')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set D
+SQL> execute test_rig.set_global_parms('D')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set E
+SQL> execute test_rig.set_global_parms('E')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set F
+SQL> execute test_rig.set_global_parms('F')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set H
+SQL> execute test_rig.set_global_parms('H')
+SQL> execute test_rig.run_all;
+SQL> */
+SQL> 
+SQL> --========================================
+SQL> --  Global Set G
+SQL> execute test_rig.set_global_parms('G')
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_all;
+
 Running Test DTC_SQLTAB NON Using Parm_Set 111
 SUCCESS
 
@@ -439,8 +495,64 @@ SUCCESS
 
 PL/SQL procedure successfully completed.
 
+SQL> ****************************************
+SQL> ***  TDBUT
 SQL> Connected.
 SQL> SQL> 
+SQL> --
+SQL> -- Test Script
+SQL> --
+SQL> -- These executes are run individually to allow the
+SQL> --   serveroutput buffer to dump between executions
+SQL> --
+SQL> 
+SQL> set serveroutput on format wrapped
+SQL> 
+SQL> /*
+SQL> --========================================
+SQL> --  Global Set A
+SQL> execute test_rig.set_global_parms('A')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set B
+SQL> execute test_rig.set_global_parms('B')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set C
+SQL> execute test_rig.set_global_parms('C')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set D
+SQL> execute test_rig.set_global_parms('D')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set E
+SQL> execute test_rig.set_global_parms('E')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set F
+SQL> execute test_rig.set_global_parms('F')
+SQL> execute test_rig.run_all;
+SQL> 
+SQL> --========================================
+SQL> --  Global Set H
+SQL> execute test_rig.set_global_parms('H')
+SQL> execute test_rig.run_all;
+SQL> */
+SQL> 
+SQL> --========================================
+SQL> --  Global Set G
+SQL> execute test_rig.set_global_parms('G')
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_all;
+
 Running Test DTC_SQLTAB NON Using Parm_Set 111
 SUCCESS
 

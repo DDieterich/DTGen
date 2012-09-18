@@ -406,6 +406,7 @@ begin
    dbms_output.put_line('       trigger_name   as remaining_table_triggers');
    dbms_output.put_line(' from  user_triggers');
    dbms_output.put_line(' where base_object_type = ''TABLE''');
+   dbms_output.put_line('  and  trigger_name not like ''%~_BU'' escape ''~''');
    dbms_output.put_line(' order by table_name');
    dbms_output.put_line('      ,trigger_type');
    dbms_output.put_line('/');
@@ -415,6 +416,9 @@ begin
    dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
    dbms_output.put_line(' from  user_constraints');
    dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_'' escape ''~''');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_~_'' escape ''~''');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_~_~_'' escape ''~''');
    dbms_output.put_line(' order by table_name');
    dbms_output.put_line('      ,constraint_type');
    dbms_output.put_line('      ,owner');

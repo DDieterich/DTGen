@@ -253,11 +253,9 @@ Generator Call Tree
    -) create_gdst;
       -) create_gd;
       -) create_util;
-   -) delete_ods;
-      -) delete_tab;
    -) create_ods;
       -) create_pop_spec;
-TO    -) create_tp_spec;
+      -) create_tp_spec;
       -) create_tab_act;
       -) create_tab_hoa;
       -) create_fk;
@@ -265,37 +263,35 @@ TO    -) create_tp_spec;
       -) create_ind_hoa;
       -) create_ind_pdat;
       -) create_pop_body;
-TO    -) create_tp_body;
+      -) create_tp_body;
    -) create_integ;
-FROM  -) create_tp_spec;
       -) create_cons;
       -) create_ttrig;
-FROM  -) create_tp_body;
    -) create_dist;
       -) create_tp_spec;
       -) create_rem;
       -) create_ind_act;
-NEW   -) create_rem_all_asof   -- Can be replaced with contents of "create_aa"
+      -) create_rem_all_asof  -- To move view logic onto mid-tier, replaced with contents of "create_aa"
       -) create_tp_body;
    -) create_oltp;
       -) create_vp_spec;
-      -) create_dp_spec;
       -) create_act;
-FROM  -) create_all;
-FROM  -) create_asof;
       -) create_vtrig;
+      -) create_dp_spec;  -- Must be after the "create view"
       -) create_vp_body;
-      -) create_dp_body;  -- Move _L and _F Functions to sh
+      -) create_dp_body;
    -) create_aa;
-NEW   -) create_sh_spec;
-TO    -) create_all;
-TO    -) create_asof;
-NEW   -) create_sh_body;
+      -) create_sh_spec;
+      -) create_all;
+      -) create_asof;
+      -) create_sh_body;
    -) create_mods;
       -) create_prg
-   -) create_usyn;
+   -) create_gusr;
       -) create gsyn
+   -) create_usyn;
       -) create_tsyn
+      -) create_msyn
    -) create_flow;
       -) init_flow;
       -) app_flow;

@@ -35,8 +35,7 @@ DOMAINS                       DTGENFTYPEFile TypeU3Type of File
 DOMAINS                       DTGENPTYPEProgram TypeU30Type of Program
 DOMAINS                       DTGENTTYPETable TypeU3An effectivity table type with begin and end timestamps
 DOMAINS                       DTGENYNYes NoU1Yes, true, correct, or affirmative
-EXCEPTIONS                    DTGEN-20014gen_many_updatesGEN_MRU updated %i rows for ID %iGenerated Multi-Row Update updated more than 1 row for a given IDCorrect the duplicate primary key ID.
-EXCEPTIONS                    DTGEN-20013gen_tseq_orderload_nk_aa(): %s must precede %s in ascending table sequence.A Foreign Key Table with a larger sequence number has been referenced by a Table.Correct the table sequence order.
+EXCEPTIONS                    DTGEN-20013gen_many_updatesGEN_MRU updated %i rows for ID %iGenerated Multi-Row Update updated more than 1 row for a given IDCorrect the duplicate primary key ID.
 EXCEPTIONS                    DTGEN-20012gen_apex_initAPEX: %s is null.Initialization data was not found during an APEX import.Initialization values could be incorrect, or APEX has not been properly loaded on target system.
 EXCEPTIONS                    DTGEN-20011gen_apex_nfndAPEX: Unable to find %sAPEX data was not found during an import.Import parameter values could be incorrect, or APEX has not been properly loaded on target system.
 EXCEPTIONS                    DTGEN-20010gen_mv_dml%s not allowed on materialized view %sData Modification Language (Insert, Update, or Delete) cannot be performed on a Materialized View.Attempt the Data Modification Language (DML) on the database node instead of a Mid-Tier node.
@@ -48,7 +47,7 @@ EXCEPTIONS                    DTGEN-20005gen_not_in%s.check_rec(): %s must b
 EXCEPTIONS                    DTGEN-20004gen_null_found%s.check_rec(): %s cannot be null.The data item cannot be null.Provide a value for this data item.
 EXCEPTIONS                    DTGEN-20003gen_bad_case%s.check_rec(): %s must be %s case.The letter case of a string has failed to meet the requirement listed.Modifiy the string to conform to the letter case requirement.
 EXCEPTIONS                    DTGEN-20002gen_no_userCurrent user has not been set in the %s Package.A call to UTIL.GET_USR was made before a call to UTIL.SET_USR gave a value for the username.Set the username by calling UTIL.SET_USR with a valid value.
-EXCEPTIONS                    DTGEN-20001gen_pop_updatepop_audit_bu(): Updates are not allowed.An attempt was made to update data in the POP_AUDIT table.Updates to POP_AUDIT data are not allowed.
+EXCEPTIONS                    DTGEN-20001gen_no_dml_tv%s: %s is not allowed on this table/view.An attempt was made to insert/update/delete data on a table/view that does not allow this action.Retry the insert/update/delete on a transactional view (name ends with "_ACT").
 PROGRAMS                      DTGENdtgen_utilPACKAGEProvides Utility functions and procedures for DTGEN
 PROGRAMS                      DTGENgeneratePACKAGEMain Generation Program Unit
 TABLES                        DTGENAPPapplications1NONEXTRAApplications to be generated
