@@ -29,10 +29,10 @@
       # Application Default Tablespace for History/Audit tables
       # Application Default Tablespace for ACTIVE indexes
       # Application Default Tablespace for History/Audit indexes
-      # Entity Specific Tablespace for ACTIVE tables
-      # Entity Specific Tablespace for History/Audit tables
-      # Entity Specific Tablespace for ACTIVE indexes
-      # Entity Specific Tablespace for History/Audit indexes
+      # Table Specific Tablespace for ACTIVE tables
+      # Table Specific Tablespace for History/Audit tables
+      # Table Specific Tablespace for ACTIVE indexes
+      # Table Specific Tablespace for History/Audit indexes
   # == Augmented Application Functionality ==
     # _*NKUV*_: Natural Key Update-able Views
       # INSERT with/without Primary Key
@@ -88,7 +88,7 @@
       # UPPER
       # LOWER
       # INITCAP
-    # _*HAT*_: Entity Based History and Audit for Tables
+    # _*HAT*_: History and Audit for Tables
       # Optional Effectivity
       # Point-in-Time *_ASOF_* View
     # _*POPT*_: Audited *_POP_* Function for Tables
@@ -187,22 +187,18 @@
    * VARCHAR2 Datatype Length Boundary Test
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
- * HAT: Entity Based History and Audit for Tables
- * CCCT: Custom Check Constraints for Tables
- * CFC: Enforced Case Folding for Columns
- * EDDC: Enforced Discrete Domains (no FK) for Columns
+ * HAT: History and Audit for Tables
  * APIT: Full Procedural APIs for each Table
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
- * HAT: Entity Based History and Audit for Tables
+ * CCCT: Custom Check Constraints for Tables
+ * CFC: Enforced Case Folding for Columns
+ * EDDC: Enforced Discrete Domains (no FK) for Columns
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
- * APIT: Full Procedural APIs for each Table
- * POPT: Audited POP Function for Tables
- * DMLIT: DML Integrity Enforcement for Tables
 
  == TST2: Application Test 2 ==
 
@@ -210,7 +206,6 @@
 
  === Tables: T2A_NON, T2A_LOG, and T2A_EFF ===
 
- * HAT: Entity Based History and Audit for Tables
  * NNCC: Not NULL Constraints for Columns
  * CIT: Custom Indexes for Tables
  * AIT: Automatic Indexes for Tables
