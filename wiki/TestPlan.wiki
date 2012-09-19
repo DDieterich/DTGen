@@ -103,6 +103,9 @@
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
+    # _*NSO*_: Named Schema Objects
+      # Named Not Null Column Constraints
+      # Named LOBS
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
