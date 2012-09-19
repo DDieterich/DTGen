@@ -170,16 +170,17 @@
  == TST1: Application Test 1 ==
 
  * TST: Override Default Tablespace and Table Defined Tablespaces
+ * ESN: Explicit Schema Name in Installation Files
 
  === Tables: T1A_NON, T1A_LOG, and T1A_EFF ===
 
- * HAT: Entity Based History and Audit for Tables
  * DTC: Datatype Support for Columns
    * NUMBER Datatype Length Boundary Test
    * NUMBER Datatype Scale Boundary Test
    * VARCHAR2 Datatype Length Boundary Test
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
+ * HAT: Entity Based History and Audit for Tables
  * CCCT: Custom Check Constraints for Tables
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
@@ -195,7 +196,6 @@
  * APIT: Full Procedural APIs for each Table
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
- * ESN: Explicit Schema Name in Installation Files
 
  == TST2: Application Test 2 ==
 
