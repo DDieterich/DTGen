@@ -108,6 +108,13 @@
       # Table Constraints
       # Constraint Indexes
       # LOBS (CLOBS)
+    # _*MTD*_: Multi-Tiered Deployment
+      # Database Tier, Schema Owner
+      # Database Tier, Application User
+      # Middle Tier, Schema Owner
+      # Middle Tier, Application User
+      # Middle Tier, Schema Owner (DISA Specs)
+      # Middle Tier, Application User (DISA Specs)
     # _*ESN*_: Explicit Schema Name in Installation Files
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
