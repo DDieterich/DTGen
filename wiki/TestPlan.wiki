@@ -108,6 +108,7 @@
       # Table Constraints
       # Constraint Indexes
       # LOBS (CLOBS)
+    # _*ESN*_: Explicit Schema Name in Installation Files
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
@@ -194,6 +195,7 @@
  * APIT: Full Procedural APIs for each Table
  * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
+ * ESN: Explicit Schema Name in Installation Files
 
  == TST2: Application Test 2 ==
 
