@@ -209,3 +209,4 @@
  * CGC: Column Comments
  * CGT: Table Comments
  * CGV: View Comments
+ * NSO: Named Schema Objects
