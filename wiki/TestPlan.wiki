@@ -187,18 +187,22 @@
    * VARCHAR2 Datatype Length Boundary Test
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
+ * POPT: Audited POP Function for Tables
  * HAT: History and Audit for Tables
  * APIT: Full Procedural APIs for each Table
- * POPT: Audited POP Function for Tables
  * DMLIT: DML Integrity Enforcement for Tables
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
+ * HAT: History and Audit for Tables
+ * APIT: Full Procedural APIs for each Table
+ * DMLIT: DML Integrity Enforcement for Tables
  * CCCT: Custom Check Constraints for Tables
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
+ * APIT: Full Procedural APIs for each Table
 
  == TST2: Application Test 2 ==
 
