@@ -190,7 +190,7 @@
  * POPT: Audited POP Function for Tables
  * HAT: History and Audit for Tables
  * APIT: Full Procedural APIs for each Table
- * DMLIT: DML Integrity Enforcement for Tables
+ * DMLIT: DML Integrity Enforcement for Tables (DML with Primary Key and Effective Start Date/Time)
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
