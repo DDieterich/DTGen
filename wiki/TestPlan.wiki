@@ -76,7 +76,7 @@
         # PK Full Path
         # NK Full Path
       # DELETE with/without EFF_END_DTM
-    # _*DMLIT*_: DML Integrity Enforcement for Tables
+    # _*DMLIT*_: DML SQL Integrity Enforcement for Tables/Views
       # INSERT with/without Primary Key
       # INSERT with/without EFF_START_DTM
       # UPDATE with/without EFF_START_DTM
@@ -190,7 +190,7 @@
  * POPT: Audited POP Function for Tables
  * HAT: History and Audit for Tables
  * APIT: Full Procedural APIs for each Table
- * DMLIT: DML Integrity Enforcement for Tables (DML with Primary Key and Effective Start Date/Time)
+ * DML SQL Integrity Enforcement for Tables/Views (with Primary Key and Effective Start Date/Time)
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
