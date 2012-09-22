@@ -196,7 +196,7 @@
 
  * HAT: History and Audit for Tables
  * APIT: Full Procedural APIs for each Table
- * DMLIT: DML Integrity Enforcement for Tables
+ * DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
  * CCCT: Custom Check Constraints for Tables
  * CFC: Enforced Case Folding for Columns
  * EDDC: Enforced Discrete Domains (no FK) for Columns
