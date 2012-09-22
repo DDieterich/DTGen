@@ -9,6 +9,7 @@ spool uninstall
 -- Initialize Variables
 --
 define OWNERNAME = dtgen     -- Schema Owner to be --oved
+define APP_ABBR  = dtgen     -- Application Abbreviation
 
 -- Configure SQL*Plus
 --
@@ -20,9 +21,10 @@ set feedback off
 set define on
 
 prompt
-prompt This will remove the following user from the database:
+prompt This will remove the following from the database:
 prompt
-prompt   -) &OWNERNAME.
+prompt   -) User &OWNERNAME.
+prompt   -) Application Roles for &APP_ABBR.
 prompt
 prompt Note: APEX Applications must be dropped manually
 prompt Note: DTGen users must be dropped manually
@@ -30,8 +32,7 @@ prompt
 prompt Press ENTER to continue
 accept junk
 
-drop role &OWNERNAME._app;
-drop role &OWNERNAME._dml;
-drop user &OWNERNAME. cascade;
+@supp/drop_owner &OWNERNAME.
+@supp/drop_app_role &APP_ABBR.
 
 spool off

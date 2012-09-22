@@ -22,12 +22,14 @@ set verify off
 --
 define NAME = dtgen   -- New Schema Owner Name
 define PASS = dtgen   -- New Schema Owner Password
+define APP  = dtgen   -- Application Abbreviation
 
 -- Create New Schema Owner
 --
 -- New Schema Owner Default Tablespace: users
 --
 @supp/create_owner &NAME. &PASS. users
+@supp/create_app_role &APP.
 
 -- Create DTGen Schema Objects
 --

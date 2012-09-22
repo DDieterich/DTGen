@@ -416,9 +416,9 @@ begin
    dbms_output.put_line('              constraint_name, 1, 40)  as remaining_constraints');
    dbms_output.put_line(' from  user_constraints');
    dbms_output.put_line(' where constraint_type not in (''P'',''U'',''R'')');
-   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_'' escape ''~''');
-   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_~_'' escape ''~''');
-   dbms_output.put_line('  and  constraint_name not like ''%~_NN~_~_~_'' escape ''~''');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN_'' escape ''~''');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN__'' escape ''~''');
+   dbms_output.put_line('  and  constraint_name not like ''%~_NN___'' escape ''~''');
    dbms_output.put_line(' order by table_name');
    dbms_output.put_line('      ,constraint_type');
    dbms_output.put_line('      ,owner');
@@ -544,9 +544,9 @@ begin
    -- RA - Reverse All
    -- NOTE: RO (Reverse last Only) would be the same as FO
    ----------------------------------------
-   user_aa('TDBST').db_schema    := null;
-   user_aa('TDBST').dbid         := null;
-   user_aa('TDBST').db_auth      := null;
+   user_aa('TDBST').db_schema    := 'TDBST';        -- Testing Common App Settings
+   user_aa('TDBST').dbid         := 'XE@loopback';  -- Testing Common App Settings
+   user_aa('TDBST').db_auth      := 'TDBST';        -- Testing Common App Settings
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_glob';
    user_aa('TDBST').action_aa  ('install')(1) := fileapp_rec;
@@ -577,8 +577,8 @@ begin
    user_aa('TDBST').action_aa('uninstall')(6) := fileapp_rec;
    ----------------------------------------
    user_aa('TDBUT').db_schema    := 'TDBST';
-   user_aa('TDBUT').dbid         := null;
-   user_aa('TDBUT').db_auth      := null;
+   user_aa('TDBUT').dbid         := 'XE@loopback'; -- Testing Common App Settings
+   user_aa('TDBUT').db_auth      := 'TDBST';       -- Testing Common App Settings
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gusr';
    user_aa('TDBUT').action_aa  ('install')(1) := fileapp_rec;
@@ -592,9 +592,9 @@ begin
    fileapp_rec.file_name :=       'drop_gusr';
    user_aa('TDBUT').action_aa('uninstall')(2) := fileapp_rec;
    ----------------------------------------
-   user_aa('TMTST').db_schema    := null;
+   user_aa('TMTST').db_schema    := 'TMTST';       -- Testing Common App Settings
    user_aa('TMTST').dbid         := 'XE@loopback';
-   user_aa('TMTST').db_auth      := 'TDBST.';
+   user_aa('TMTST').db_auth      := 'TDBST';
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gdst';
    user_aa('TMTST').action_aa  ('install')(1) := fileapp_rec;
@@ -617,8 +617,8 @@ begin
    user_aa('TMTST').action_aa('uninstall')(4) := fileapp_rec;
    ----------------------------------------
    user_aa('TMTUT').db_schema    := 'TMTST';
-   user_aa('TMTUT').dbid         := null;
-   user_aa('TMTUT').db_auth      := null;
+   user_aa('TMTUT').dbid         := 'XE@loopback';  -- Testing Common App Settings
+   user_aa('TMTUT').db_auth      := 'TDBST';        -- Testing Common App Settings
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gusr';
    user_aa('TMTUT').action_aa  ('install')(1) := fileapp_rec;
@@ -632,9 +632,9 @@ begin
    fileapp_rec.file_name :=       'drop_gusr';
    user_aa('TMTUT').action_aa('uninstall')(2) := fileapp_rec;
    ----------------------------------------
-   user_aa('TMTSTDOD').db_schema := null;
+   user_aa('TMTSTDOD').db_schema := 'TMTSTDOD';    -- Testing Common App Settings
    user_aa('TMTSTDOD').dbid      := 'XE@loopback';
-   user_aa('TMTSTDOD').db_auth   := 'TDBUT.';
+   user_aa('TMTSTDOD').db_auth   := 'TDBUT';
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gdst';
    user_aa('TMTSTDOD').action_aa  ('install')(1) := fileapp_rec;
@@ -657,8 +657,8 @@ begin
    user_aa('TMTSTDOD').action_aa('uninstall')(4) := fileapp_rec;
    ----------------------------------------
    user_aa('TMTUTDOD').db_schema := 'TMTSTDOD';
-   user_aa('TMTUTDOD').dbid      := null;
-   user_aa('TMTUTDOD').db_auth   := null;
+   user_aa('TMTUTDOD').dbid      := 'XE@loopback';  -- Testing Common App Settings
+   user_aa('TMTUTDOD').db_auth   := 'TDBUT';        -- Testing Common App Settings
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_gusr';
    user_aa('TMTUTDOD').action_aa  ('install')(1) := fileapp_rec;

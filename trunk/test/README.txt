@@ -1,4 +1,5 @@
 
+-) _ACT%ROWTYPE insert and update need the foriegn keys and hierarchies queried before returning call.
 -) Check testing results
 -) Remove db_auth data from test_gen?
 -) Need to change the dbid and db_auth fields in DTGEN
@@ -83,7 +84,7 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
    -) Tools -> Unit Test -> Select Current Repository: dtgen_test
    -) Tools -> Unit Test -> Create/Update Repository: (answer questions as needed)
 
-   Share the Unit Test Repository?
+   Share the Unit Test Repository: Yes
 
 4) Install Unit Test Repository Owner Objects
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
@@ -91,9 +92,7 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
 
 5) Load Test Parameters
-   sqlldr dtgen/dtgen control=test_parms_dataload.ctl
-     - OR -
-   sqlldr dtgen_dev/dtgen_dev control=test_parms_dataload.ctl
+   sqlldr dtgen_test/dtgen_test control=ut_dataload.ctl
 
 6) Run SQL*Developer and Load Unit Tests
    -) Tools -> Import from File -> ???

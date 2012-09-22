@@ -12,11 +12,6 @@ define UTO_PASS=dtgen_test
 set define '&'
 set serveroutput on format wrapped
 
--- Create New Application Roles
---
-@create_app_roles TST1 &UTO_NAME.
-@create_app_roles TST2 &UTO_NAME.
-
 -- Create New Schema Owner
 --
 create user &UTO_NAME. identified by &UTO_PASS.
@@ -44,6 +39,11 @@ grant execute on &1..dtgen_util       to &UTO_NAME. with grant option;
 
 prompt NOTE: This grant may fail on a new database
 grant UT_REPO_ADMINISTRATOR to &UTO_NAME. with admin option;
+
+-- Create New Application Roles
+--
+@../supp/create_app_role TST1
+@../supp/create_app_roles TST2
 
 -- Unit Test Specific Role
 create role dtgen_ut_test;

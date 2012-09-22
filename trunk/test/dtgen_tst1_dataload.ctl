@@ -32,7 +32,8 @@ PROGRAMS                      TST1test_rigPACKAGEProvides Unit Testing funct
 TABLES                        TST1T1ANt1a_non10NONDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, NON Table Type
 TABLES                        TST1T1ALt1a_log11LOGDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, LOG Table Type
 TABLES                        TST1T1AEt1a_eff12EFFDTCtest_onln_data_specialtest_onln_indx_specialtest_hist_data_specialtest_hist_indx_specialDatatype Support for Columns Test Table, EFF Table Type
-TAB_COLS                      TST1T1AEseq11NUMBERSequenced Natural Key
+TAB_COLS                      TST1T1AEkey11VARCHAR260UNatural Key Component that allows the same Parameter Set to be used on several different test runs
+TAB_COLS                      TST1T1AEseq22NUMBERNatural Key Sequence
 TAB_COLS                      TST1T1AEnum_plain11NUMBERDTC Number test, plain
 TAB_COLS                      TST1T1AEnum_min_len12NUMBER1DTC Number with minimum length
 TAB_COLS                      TST1T1AEnum_min_min13NUMBER1-84DTC Number with minimum length and minimum scale
@@ -40,7 +41,8 @@ TAB_COLS                      TST1T1AEnum_min_max14NUMBER1127D
 TAB_COLS                      TST1T1AEnum_max_len15NUMBER38DTC Number with maximum length
 TAB_COLS                      TST1T1AEnum_max_min16NUMBER38-84DTC Number with maximum length and minimum scale
 TAB_COLS                      TST1T1AEnum_max_max17NUMBER38127DTC Number with maximum length and maximum scale
-TAB_COLS                      TST1T1ALseq11NUMBERSequenced Natural Key
+TAB_COLS                      TST1T1ALkey11VARCHAR260UNatural Key Component that allows the same Parameter Set to be used on several different test runs
+TAB_COLS                      TST1T1ALseq22NUMBERNatural Key Sequence
 TAB_COLS                      TST1T1ALnum_plain11NUMBERDTC Number test, plain
 TAB_COLS                      TST1T1ALnum_min_len12NUMBER1DTC Number with minimum length
 TAB_COLS                      TST1T1ALnum_min_min13NUMBER1-84DTC Number with minimum length and minimum scale
@@ -48,7 +50,8 @@ TAB_COLS                      TST1T1ALnum_min_max14NUMBER1127D
 TAB_COLS                      TST1T1ALnum_max_len15NUMBER38DTC Number with maximum length
 TAB_COLS                      TST1T1ALnum_max_min16NUMBER38-84DTC Number with maximum length and minimum scale
 TAB_COLS                      TST1T1ALnum_max_max17NUMBER38127DTC Number with maximum length and maximum scale
-TAB_COLS                      TST1T1ANseq11NUMBERSequenced Natural Key
+TAB_COLS                      TST1T1ANkey11VARCHAR260UNatural Key Component that allows the same Parameter Set to be used on several different test runs
+TAB_COLS                      TST1T1ANseq22NUMBERNatural Key Sequence
 TAB_COLS                      TST1T1ANnum_plain11NUMBERDTC Number test, plain
 TAB_COLS                      TST1T1ANnum_min_len12NUMBER1DTC Number with minimum length
 TAB_COLS                      TST1T1ANnum_min_min13NUMBER1-84DTC Number with minimum length and minimum scale

@@ -19,12 +19,6 @@ create user &1. identified by &2.
 alter user &1.
    quota unlimited on &3.;
 
--- Create New Schema Roles
---
-create role &1._dml;
-create role &1._app;
-grant &1._app to &1._dml;
-
 -- Common to both DB and MT
 --
 grant connect to &1.;

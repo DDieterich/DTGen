@@ -159,6 +159,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 Table altered.
 
 
@@ -239,10 +242,16 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 Table altered.
 
 
 Table created.
+
+
+Comment created.
 
 
 Comment created.
@@ -300,6 +309,9 @@ no rows selected
 
 
 Table created.
+
+
+Comment created.
 
 
 Comment created.
@@ -463,10 +475,16 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 Table altered.
 
 
 Table created.
+
+
+Comment created.
 
 
 Comment created.
@@ -530,6 +548,9 @@ no rows selected
 
 
 Table created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1306,6 +1327,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -1422,6 +1446,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -1500,6 +1527,9 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
 
 
 Comment created.
@@ -2071,6 +2101,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -2108,6 +2141,9 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
 
 
 Comment created.
@@ -2247,6 +2283,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -2284,6 +2323,9 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
 
 
 Comment created.
@@ -2726,10 +2768,26 @@ SQL> begin
   5          and  privilege  = 'EXECUTE'
   6          and  table_name like '%_POP' )
   7     loop
-  8        execute immediate 'grant execute on ' || buff.table_name || ' to TMTSN';
-  9     end loop;
- 10  end;
- 11  /
+  8        execute immediate 'grant execute on ' ||
+  9           buff.table_name || ' to TMTSN';
+ 10     end loop;
+ 11  end;
+ 12  /
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2     FOR buff in (
+  3        select table_name from user_tab_privs
+  4         where grantor    = USER
+  5          and  privilege  = 'UPDATE'
+  6          and  table_name not like '%~_ACT' escape '~' )
+  7     loop
+  8        execute immediate 'grant select, insert, update, delete on ' ||
+  9           buff.table_name || ' to TMTSN';
+ 10     end loop;
+ 11  end;
+ 12  /
 
 PL/SQL procedure successfully completed.
 
