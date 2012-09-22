@@ -5,7 +5,6 @@
 --
 -- &1.   -- New Application User Name
 -- &2.   -- New Application User Password
--- &3.   -- DB Schema or MT Schema Owner Name
 --
 
 set define '&'
@@ -19,8 +18,8 @@ create user &1. identified by &2.
 
 grant connect to &1.;
 grant create synonym to &1.;
-grant &3._app to &1.;
 
+--grant &APP_ABBR._app to &1.;
 --connect &1./&2.
 --set serveroutput on format wrapped
 --@install_gusr

@@ -344,15 +344,11 @@ Package dropped.
 
 REMAINING_OBJECTS                                                               
 --------------------------------------------------------------------------------
-SYNONYM: ALL_TESTS(VALID)                                                       
 SYNONYM: GLOBAL_PARMS(VALID)                                                    
-SYNONYM: PARM_TYPES(VALID)                                                      
-SYNONYM: TABLE_TYPES(VALID)                                                     
+SYNONYM: PARM_SETS(VALID)                                                       
 SYNONYM: TEST_GEN(VALID)                                                        
 SYNONYM: TEST_PARMS(VALID)                                                      
 SYNONYM: TEST_SETS(VALID)                                                       
-
-7 rows selected.
 
 SQL> 
 SQL> 

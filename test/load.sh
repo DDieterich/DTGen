@@ -38,9 +38,14 @@ then
    CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBUN identified by \"TDBUN\" using ${DB_USING_STR};"
 fi
 
-# As best I can tell, this is a bug in Oracle11g Express Edition.
+# This may be a bug in Oracle11g Express Edition...
 #   These grants should not be necessary when using private fixed
-#   user database links.
+#   user database links.  The bug appears to be dependent on the
+#   use of "loopback" in that permissions over the database link
+#   are confused with permissions not over the database link for
+#   database objects with the same name.  This is particularly
+#   true to SQL submitted to the database, as opposed to PL/SQL
+#   submitted to the database.
 function setup_grant_execute () {
    GRANT_EXECUTE="grant execute on glob to ${1};
 begin
@@ -50,7 +55,8 @@ begin
         and  privilege  = 'EXECUTE'
         and  table_name like '%_POP' )
    loop
-      execute immediate 'grant execute on ' || buff.table_name || ' to ${1}';
+      execute immediate 'grant execute on ' ||
+         buff.table_name || ' to ${1}';
    end loop;
 end;
 /
@@ -61,7 +67,8 @@ begin
         and  privilege  = 'UPDATE'
         and  table_name not like '%~_ACT' escape '~' )
    loop
-      execute immediate 'grant all on ' || buff.table_name || ' to ${1}';
+      execute immediate 'grant select, insert, update, delete on ' ||
+         buff.table_name || ' to ${1}';
    end loop;
 end;
 /"
@@ -130,15 +137,13 @@ sdiff -s -w 80 install_owner.gold install_owner.log | ${SORT} -u | head
 echo "*** install_user.gold comparison ..."
 sdiff -s -w 80 install_user.gold install_user.log | ${SORT} -u | head
 
-echo "*** Errors and Warnings ..."
-fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
-
 #cd ${GUI_DIR}
-#sqlplus ${OWNER_CONNECT_STRING} > ${logfile} 2>&1 <<EOF
+#sqlplus ${OWNER_CONNECT_STRING} >> ${logfile} 2>&1 <<EOF
 #   @gui_comp
 #EOF
-#
-#fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
+
+echo "*** Errors and Warnings ..."
+fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head
 
 echo "$0 Complete"
 

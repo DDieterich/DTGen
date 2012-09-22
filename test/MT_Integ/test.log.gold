@@ -1,934 +1,972 @@
 
-SQL*Plus: Release 10.2.0.1.0 - Production on Wed Sep 12 11:34:12 2012
+SQL*Plus: Release 10.2.0.1.0 - Production on Fri Sep 21 16:28:27 2012
 
 Copyright (c) 1982, 2005, Oracle.  All rights reserved.
 
+SQL> SQL> SQL> SQL> ****************************************
+SQL> ***  TMTST
 SQL> Connected.
-SQL> SQL> SQL> 
-Running Test DTC_DMLACT EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 11, glob.get_dtm, glob.get_usr, glob.get_dtm, NU
-LL)
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 12, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
-23.89')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 13, glob.get_dtm, glob.get_usr, glob.get_dtm, '-
-1.2e-4')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 14, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
-.2e5')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 11, glob.get_usr, glob.get_dtm, NULL)
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 12, glob.get_usr, glob.get_dtm, '123.89')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 13, glob.get_usr, glob.get_dtm, '-1.2e-4')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 14, glob.get_usr, glob.get_dtm, '1.2e5')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 11, NUL
-L)
-
-Running Test DTC_SQLTAB NON Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 12, '12
-3.89')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 13, '-1
-.2e-4')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 14, '1.
-2e5')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 134
-SUCCESS
+SQL> SQL> 
+SQL> --
+SQL> -- Test Script
+SQL> --
+SQL> -- These executes are run individually to allow the
+SQL> --   serveroutput buffer to dump between executions
+SQL> --
+SQL> 
+SQL> set echo on
+SQL> set serveroutput on format wrapped
+SQL> 
+SQL> execute test_rig.run_global_set('A');
+
+============================================================
+   Global_Set is A
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
 
 PL/SQL procedure successfully completed.
 
-SQL> Connected.
-SQL> SQL> SQL> 
-Running Test DTC_DMLACT EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 11, glob.get_dtm, glob.get_usr, glob.get_dtm, NU
-LL)
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 12, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
-23.89')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 13, glob.get_dtm, glob.get_usr, glob.get_dtm, '-
-1.2e-4')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_EFF (id, seq, eff_beg_dtm, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) v
-alues (T1A_EFF_dml.get_next_id, 14, glob.get_dtm, glob.get_usr, glob.get_dtm, '1
-.2e5')
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB EFF Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 11, glob.get_usr, glob.get_dtm, NULL)
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 12, glob.get_usr, glob.get_dtm, '123.89')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 13, glob.get_usr, glob.get_dtm, '-1.2e-4')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_LOG (id, seq, aud_beg_usr, aud_beg_dtm, NUM_PLAIN) values (T1A_LO
-G_dml.get_next_id, 14, glob.get_usr, glob.get_dtm, '1.2e5')
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB LOG Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLACT NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_DMLTAB NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 111
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 112
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 113
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 114
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLACT NON Using Parm_Set 134
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 111
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 11, NUL
-L)
-
-Running Test DTC_SQLTAB NON Using Parm_Set 112
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 12, '12
-3.89')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 113
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 13, '-1
-.2e-4')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 114
-ORA-02069: global_names parameter must be set to TRUE for this operation, SQL> i
-nsert into T1A_NON (id, seq, NUM_PLAIN) values (T1A_NON_dml.get_next_id, 14, '1.
-2e5')
-
-Running Test DTC_SQLTAB NON Using Parm_Set 121
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 122
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 123
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 124
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 131
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 132
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 133
-SUCCESS
-
-Running Test DTC_SQLTAB NON Using Parm_Set 134
-SUCCESS
+SQL> execute test_rig.run_global_set('B');
+
+============================================================
+   Global_Set is B
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
 
 PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('C');
+
+============================================================
+   Global_Set is C
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('D');
+
+============================================================
+   Global_Set is D
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('E');
+
+============================================================
+   Global_Set is E
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('F');
+
+============================================================
+   Global_Set is F
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('G');
+
+============================================================
+   Global_Set is G
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('H');
+
+============================================================
+   Global_Set is H
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> commit;
+
+Commit complete.
+
+SQL> ****************************************
+SQL> ***  TMTUT
+SQL> Connected.
+SQL> SQL> 
+SQL> --
+SQL> -- Test Script
+SQL> --
+SQL> -- These executes are run individually to allow the
+SQL> --   serveroutput buffer to dump between executions
+SQL> --
+SQL> 
+SQL> set echo on
+SQL> set serveroutput on format wrapped
+SQL> 
+SQL> execute test_rig.run_global_set('A');
+
+============================================================
+   Global_Set is A
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('B');
+
+============================================================
+   Global_Set is B
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('C');
+
+============================================================
+   Global_Set is C
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('D');
+
+============================================================
+   Global_Set is D
+      glob.get_db_constraints	is TRUE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('E');
+
+============================================================
+   Global_Set is E
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('F');
+
+============================================================
+   Global_Set is F
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is TRUE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('G');
+
+============================================================
+   Global_Set is G
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is TRUE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> execute test_rig.run_global_set('H');
+
+============================================================
+   Global_Set is H
+      glob.get_db_constraints	is FALSE
+      glob.get_fold_strings	is FALSE
+      glob.get_ignore_no_change is FALSE
+
+Running Test BTT_SQLTAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLTAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLTAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_NoPerm_MT, SEQ 1
+
+Running Test BTT_SQLACT_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_SQLACT_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_NON_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_LOG_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+Running Test BTT_APITAB_EFF_NUM_PLAIN
+   Parm_Set BTT_NUM_PASS, SEQ 1
+   Parm_Set BTT_NUM_PASS, SEQ 2
+   Parm_Set BTT_NUM_PASS, SEQ 3
+   Parm_Set BTT_NUM_PASS, SEQ 4
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> commit;
+
+Commit complete.
 
 SQL> Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - Production

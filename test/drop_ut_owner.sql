@@ -9,7 +9,8 @@ drop user dtgen_test cascade;
 prompt NOTE: This drop may fail if the UT repository was never built
 drop role UT_REPO_ADMINISTRATOR;
 
-@drop_app_roles
+@../supp/drop_app_role TST1
+@../supp/drop_app_role TST2
 
 drop tablespace test_onln_data_default including contents;
 drop tablespace test_onln_indx_default including contents;
