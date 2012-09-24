@@ -205,18 +205,27 @@ begin
    ----------------------------------------
    loc_txt := 'INSERT';
    ins_val := to_number(tparms.val1);
+   -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+   execute immediate '
    insert into t1a_non (id, key, seq, num_plain)
-      values (rec_id, key_txt, tab_seq, ins_val);
+      values (:rec_id, :key_txt, :tab_seq, :ins_val)'
+      using rec_id, key_txt, tab_seq, ins_val;
    num_plain_rows_non(1, rec_id, tab_seq, ins_val);
    ----------------------------------------
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
-   update t1a_non set num_plain = upd_val
-    where id = rec_id;
+   -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+   execute immediate '
+   update t1a_non set num_plain = :upd_val
+    where id = :rec_id'
+      using upd_val, rec_id;
    num_plain_rows_non(1, rec_id, tab_seq, upd_val);
    ----------------------------------------
    loc_txt := 'DELETE';
-   delete from t1a_non where id = rec_id;
+   -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+   execute immediate '
+   delete from t1a_non where id = :rec_id'
+      using rec_id;
    num_plain_rows_non(0, rec_id);
    ----------------------------------------
    return 'SUCCESS';
@@ -253,16 +262,22 @@ begin
    ins_val := to_number(tparms.val1);
    --  When db_constraints=FALSE on DB server, AUD_BEG_USR and AUD_BEG_DTM must be set
    --  When db_constraints=TRUE on DB server and NoInteg, AUD_BEG_USR and AUD_BEG_DTM must be set
+   -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+   execute immediate '
    insert into t1a_log (id, key, seq, num_plain, aud_beg_usr, aud_beg_dtm)
-      values (rec_id, key_txt, tab_seq, ins_val, glob.get_usr, glob.get_dtm);
+      values (:rec_id, :key_txt, :tab_seq, :ins_val, :get_usr, :get_dtm)'
+      using rec_id, key_txt, tab_seq, ins_val, glob.get_usr, glob.get_dtm;
    num_plain_rows_log(1, 0, 0, rec_id, tab_seq, ins_val);
    ----------------------------------------
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
    for i in 1 .. 1000 loop begin
-      update t1a_log set num_plain = upd_val
-       where id = rec_id;
+      -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+      execute immediate '
+      update t1a_log set num_plain = :upd_val
+       where id = :rec_id'
+         using upd_val, rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
@@ -276,7 +291,10 @@ begin
    loc_txt := 'DELETE';
    success := FALSE;
    for i in 1 .. 1000 loop begin
-      delete from t1a_log where id = rec_id;
+      -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+      execute immediate '
+      delete from t1a_log where id = :rec_id'
+         using rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
@@ -321,16 +339,22 @@ begin
    ins_val := to_number(tparms.val1);
    --  When db_constraints=FALSE on DB server, AUD_BEG_USR and AUD_BEG_DTM must be set
    --  When db_constraints=TRUE on DB server and NoInteg, AUD_BEG_USR and AUD_BEG_DTM must be set
+   -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+   execute immediate '
    insert into t1a_EFF (id, key, seq, num_plain, eff_beg_dtm, aud_beg_usr, aud_beg_dtm)
-      values (rec_id, key_txt, tab_seq, ins_val, glob.get_dtm, glob.get_usr, glob.get_dtm);
+      values (:rec_id, :key_txt, :tab_seq, :ins_val, :get_dtm, :get_usr, :get_dtm)'
+      using rec_id, key_txt, tab_seq, ins_val, glob.get_dtm, glob.get_usr, glob.get_dtm;
    num_plain_rows_eff(1, 0, 0, rec_id, tab_seq, ins_val);
    ----------------------------------------
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
    for i in 1 .. 1000 loop begin
-      update t1a_eff set num_plain = upd_val, eff_beg_dtm = glob.get_dtm
-       where id = rec_id;
+      -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+      execute immediate '
+      update t1a_eff set num_plain = :upd_val, eff_beg_dtm = :get_dtm
+       where id = :rec_id'
+      using upd_val, glob.get_dtm, rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
@@ -344,7 +368,10 @@ begin
    loc_txt := 'DELETE';
    success := FALSE;
    for i in 1 .. 1000 loop begin
-      delete from t1a_eff where id = rec_id;
+      -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
+      execute immediate '
+      delete from t1a_eff where id = :rec_id'
+         using rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;

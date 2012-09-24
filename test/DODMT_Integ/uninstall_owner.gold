@@ -4,6 +4,12 @@ SQL>    ALTER SESSION SET recyclebin = OFF;
 
 Session altered.
 
+SQL>    @../uninstall_test_rig
+
+=== Un-Install DTGen Test Rig ===
+
+Package dropped.
+
 SQL>    @uninstall_owner
 
 ***************************
@@ -14,9 +20,6 @@ Running Script drop_mods
 ***************************
 Running Script drop_mods
 ***************************
-
-
-Package dropped.
 
 
 ***************************
@@ -301,33 +304,14 @@ Package dropped.
 
 REMAINING_OBJECTS                                                               
 --------------------------------------------------------------------------------
-SYNONYM: ALL_TESTS(VALID)                                                       
 SYNONYM: GLOBAL_PARMS(VALID)                                                    
-SYNONYM: PARM_TYPES(VALID)                                                      
-SYNONYM: TABLE_TYPES(VALID)                                                     
+SYNONYM: PARM_SETS(VALID)                                                       
 SYNONYM: TEST_GEN(VALID)                                                        
 SYNONYM: TEST_PARMS(VALID)                                                      
 SYNONYM: TEST_SETS(VALID)                                                       
 
-7 rows selected.
-
-
-***************************
-Running Script drop_dblink
-***************************
-
+SQL>    drop database link XE@loopback;
 
 Database link dropped.
-
-
-***************************
-Running Script drop_dblink
-***************************
-
-
-Database link dropped.
-
-
-no rows selected
 
 SQL> 

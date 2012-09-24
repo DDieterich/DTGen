@@ -21,22 +21,28 @@ fi
 
 # NOTE: There is a DROP_DBLINK in cleanup.sh
 CREATE_DBLINK=""
-if [ ${OWNERNAME} = 'TMTST' ]
-then
-   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBST identified by \"TDBST\" using ${DB_USING_STR};"
-fi
-if [ ${OWNERNAME} = 'TMTSTDOD' ]
-then
-   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBUT identified by \"TDBUT\" using ${DB_USING_STR};"
-fi
-if [ ${OWNERNAME} = 'TMTSN' ]
-then
-   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBSN identified by \"TDBSN\" using ${DB_USING_STR};"
-fi
-if [ ${OWNERNAME} = 'TMTSNDOD' ]
-then
-   CREATE_DBLINK="create database link ${DB_LINK_NAME} connect to TDBUN identified by \"TDBUN\" using ${DB_USING_STR};"
-fi
+case ${OWNERNAME} in
+   'TMTST' )
+      CREATE_DBLINK="create database link ${DB_LINK_NAME}
+   connect to TDBST identified by \"TDBST\"
+   using ${DB_USING_STR};"
+      ;;
+   'TMTSTDOD' )
+      CREATE_DBLINK="create database link ${DB_LINK_NAME}
+   connect to TDBUT identified by \"TDBUT\"
+   using ${DB_USING_STR};"
+      ;;
+   'TMTSN' )
+      CREATE_DBLINK="create database link ${DB_LINK_NAME}
+   connect to TDBSN identified by \"TDBSN\"
+   using ${DB_USING_STR};"
+      ;;
+   'TMTSNDOD' )
+      CREATE_DBLINK="create database link ${DB_LINK_NAME}
+   connect to TDBUN identified by \"TDBUN\"
+   using ${DB_USING_STR};"
+      ;;
+esac
 
 # This may be a bug in Oracle11g Express Edition...
 #   These grants should not be necessary when using private fixed
@@ -46,9 +52,11 @@ fi
 #   database objects with the same name.  This is particularly
 #   true to SQL submitted to the database, as opposed to PL/SQL
 #   submitted to the database.
-function setup_grant_execute () {
-   GRANT_EXECUTE="${GRANT_EXECUTE}
+function grant_access () {
+   GRANT_ACCESS="${GRANT_ACCESS}
 grant execute on glob to ${1};
+declare
+   sql_txt varchar2(4000);
 begin
    FOR buff in (
       select table_name from user_tab_privs
@@ -56,11 +64,14 @@ begin
         and  privilege  = 'EXECUTE'
         and  table_name like '%_POP' )
    loop
-      execute immediate 'grant execute on ' ||
-         buff.table_name || ' to ${1}';
+      sql_txt := 'grant execute on ' || buff.table_name || ' to ${1}';
+      dbms_output.put_line(sql_txt);
+      execute immediate sql_txt;
    end loop;
 end;
 /
+declare
+   sql_txt varchar2(4000);
 begin
    FOR buff in (
       select table_name from user_tab_privs
@@ -68,43 +79,48 @@ begin
         and  privilege  = 'UPDATE'
         and  table_name not like '%~_ACT' escape '~' )
    loop
-      execute immediate 'grant select, insert, update, delete on ' ||
-         buff.table_name || ' to ${1}';
+      sql_txt := 'grant select, insert, update, delete on ' ||
+                  buff.table_name || ' to ${1}';
+      dbms_output.put_line(sql_txt);
+      execute immediate sql_txt;
    end loop;
 end;
 /"
    }
 # This explicit grant is required to allow the application user to
 #   create packages on owner objects
-function setup_grant_option () {
+function grant_option () {
    GRANT_OPTION="${GRANT_OPTION}
-begin
-   FOR buff in (
-      select * from user_tab_privs
-       where grantor    = USER
-        and  grantee    = 'TST1_APP' )
-   loop
-      execute immediate 'grant ' || buff.privilege ||
-                          ' on ' || buff.table_name ||
-                          ' to ${1} with grant option';
-   end loop;
-end;
-/"
+   @../../supp/grant_role_option TST1_APP ${1}
+   @../../supp/grant_role_option TST2_APP ${1}
+"
    }
-GRANT_EXECUTE=""
+GRANT_ACCESS=""
 GRANT_OPTION=""
-if [ ${OWNERNAME} = 'TDBST' ]
-then
-   setup_grant_execute 'TMTST'
-   setup_grant_execute 'TMTSTDOD' 
-   setup_grant_option 'TDBUT'
-fi
-if [ ${OWNERNAME} = 'TDBSN' ]
-then
-   setup_grant_execute 'TMTSN'
-   setup_grant_execute 'TMTSNDOD'
-   setup_grant_option 'TDBUN'
-fi
+case ${OWNERNAME} in
+   'TDBST' )
+      grant_access 'TMTST'
+      grant_access 'TMTSTDOD' 
+      grant_option 'TDBUT'
+      ;;
+   'TMTST' )
+      grant_option 'TMTUT'
+      ;;
+   'TMTSTDOD' )
+      grant_option 'TMTUTDOD'
+      ;;
+   'TDBSN' )
+      grant_access 'TMTSN'
+      grant_access 'TMTSNDOD'
+      grant_option 'TDBUN'
+      ;;
+   'TMTSN' )
+      grant_option 'TMTUN'
+      ;;
+   'TMTSNDOD' )
+      grant_option 'TMTUNDOD'
+      ;;
+esac
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    connect ${OWNER_CONNECT_STRING}
@@ -135,11 +151,13 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    set feedback 6
    spool install_owner.log
    connect ${OWNER_CONNECT_STRING}
+   set serveroutput on format wrapped
    ${CREATE_DBLINK}
    @install_owner
    @../comp
    @../install_test_rig
-   ${GRANT_EXECUTE}
+   ${GRANT_ACCESS}
+   ${GRANT_OPTION}
    spool install_user.log
    connect ${USER_CONNECT_STRING}
    @install_user
