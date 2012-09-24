@@ -40,10 +40,12 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    spool uninstall_user.log
    connect ${USER_CONNECT_STRING}
    ALTER SESSION SET recyclebin = OFF;
+   @../uninstall_test_rig
    @uninstall_user
    spool uninstall_owner.log
    connect ${OWNER_CONNECT_STRING}
    ALTER SESSION SET recyclebin = OFF;
+   @../uninstall_test_rig
    @uninstall_owner
    ${DROP_DBLINK}
 EOF

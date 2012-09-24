@@ -2757,7 +2757,8 @@ Package body created.
 
 No errors.
 
-SQL>    grant execute on glob to TMTSN;
+SQL> 
+SQL> grant execute on glob to TMTSN;
 
 Grant succeeded.
 
@@ -2785,6 +2786,40 @@ SQL> begin
   7     loop
   8        execute immediate 'grant select, insert, update, delete on ' ||
   9           buff.table_name || ' to TMTSN';
+ 10     end loop;
+ 11  end;
+ 12  /
+
+PL/SQL procedure successfully completed.
+
+SQL> grant execute on glob to TMTSNDOD;
+
+Grant succeeded.
+
+SQL> begin
+  2     FOR buff in (
+  3        select table_name from user_tab_privs
+  4         where grantor    = USER
+  5          and  privilege  = 'EXECUTE'
+  6          and  table_name like '%_POP' )
+  7     loop
+  8        execute immediate 'grant execute on ' ||
+  9           buff.table_name || ' to TMTSNDOD';
+ 10     end loop;
+ 11  end;
+ 12  /
+
+PL/SQL procedure successfully completed.
+
+SQL> begin
+  2     FOR buff in (
+  3        select table_name from user_tab_privs
+  4         where grantor    = USER
+  5          and  privilege  = 'UPDATE'
+  6          and  table_name not like '%~_ACT' escape '~' )
+  7     loop
+  8        execute immediate 'grant select, insert, update, delete on ' ||
+  9           buff.table_name || ' to TMTSNDOD';
  10     end loop;
  11  end;
  12  /

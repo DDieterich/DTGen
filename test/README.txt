@@ -1,10 +1,11 @@
 
+-) Split TEST_RIG into User Test Rig with everything but SQLTAB functions.
+-) Split TEST_RIG into Owner Test Rig with the SQLTAB functions.
+-) Split test.sql into Owner and User scripts
+-) Setup Owner to run User Test script.
+-) Re-Test
 -) _ACT%ROWTYPE insert and update need the foriegn keys and hierarchies queried before returning call.
 -) Check testing results
--) Remove db_auth data from test_gen?
--) Need to change the dbid and db_auth fields in DTGEN
--) Need to fix the problem with db_links in TAB and DML procedures, only on Mid-Tier
-   Check the link name against the GLOBAL_NAME in the the TAB Procedure?
 
 DTGen "test" README File
    Developed by DMSTEX (http://dmstex.com)

@@ -47,7 +47,8 @@ fi
 #   true to SQL submitted to the database, as opposed to PL/SQL
 #   submitted to the database.
 function setup_grant_execute () {
-   GRANT_EXECUTE="grant execute on glob to ${1};
+   GRANT_EXECUTE="${GRANT_EXECUTE}
+grant execute on glob to ${1};
 begin
    FOR buff in (
       select table_name from user_tab_privs
@@ -73,22 +74,36 @@ begin
 end;
 /"
    }
+# This explicit grant is required to allow the application user to
+#   create packages on owner objects
+function setup_grant_option () {
+   GRANT_OPTION="${GRANT_OPTION}
+begin
+   FOR buff in (
+      select * from user_tab_privs
+       where grantor    = USER
+        and  grantee    = 'TST1_APP' )
+   loop
+      execute immediate 'grant ' || buff.privilege ||
+                          ' on ' || buff.table_name ||
+                          ' to ${1} with grant option';
+   end loop;
+end;
+/"
+   }
 GRANT_EXECUTE=""
+GRANT_OPTION=""
 if [ ${OWNERNAME} = 'TDBST' ]
 then
    setup_grant_execute 'TMTST'
-fi
-if [ ${OWNERNAME} = 'TDBUT' ]
-then
    setup_grant_execute 'TMTSTDOD' 
+   setup_grant_option 'TDBUT'
 fi
 if [ ${OWNERNAME} = 'TDBSN' ]
 then
    setup_grant_execute 'TMTSN'
-fi
-if [ ${OWNERNAME} = 'TDBUN' ]
-then
    setup_grant_execute 'TMTSNDOD'
+   setup_grant_option 'TDBUN'
 fi
 
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
@@ -123,10 +138,12 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    ${CREATE_DBLINK}
    @install_owner
    @../comp
+   @../install_test_rig
    ${GRANT_EXECUTE}
    spool install_user.log
    connect ${USER_CONNECT_STRING}
    @install_user
+   @../install_test_rig
    spool off
    exit
 EOF

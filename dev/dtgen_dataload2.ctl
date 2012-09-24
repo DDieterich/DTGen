@@ -127,8 +127,8 @@ TAB_COLS                      DTGENAPPdb_schema_exp5DTGENFLAG50
 TAB_COLS                      DTGENAPPapex_schema6VARCHAR230U50Name of the APEX parsing schema owner for the generated APEX pages
 TAB_COLS                      DTGENAPPapex_ws_name7VARCHAR230U50Workspace name (Upper Case) for the generated APEX pages
 TAB_COLS                      DTGENAPPapex_app_name8VARCHAR23050Application name (Mixed Case) for the generated APEX pages
-TAB_COLS                      DTGENAPPdbid9VARCHAR2200050Database link connect string or TNS Alias for mid-tier connections to the centralized database server.
-TAB_COLS                      DTGENAPPdb_auth10VARCHAR220050Database link authorization for mid-tier connections to the centralized database server
+TAB_COLS                      DTGENAPPdbid9VARCHAR2200050Database link name for mid-tier connections from mid-tier servers to the centralized database server
+TAB_COLS                      DTGENAPPdb_auth10VARCHAR220050Centralized database server schema name pointed to by the database link from the mid-tier servers
 TAB_COLS                      DTGENAPPdescription11VARCHAR2100040Description of this application
 TAB_COLS                      DTGENAPPts_null_override12DTGENFLAGFlag to override all tablespace names to null
 TAB_COLS                      DTGENAPPts_onln_data13VARCHAR230L70Default tableapace name for on-line data tables
