@@ -1,5 +1,6 @@
 SQL>    connect TDBSN/TDBSN@XE2
 Connected.
+SQL>    set serveroutput on format wrapped
 SQL> 
 SQL>    @install_owner
 
@@ -2725,12 +2726,6 @@ Running Script create_mods
 ***************************
 
 
-Package created.
-
-
-Grant succeeded.
-
-
 ***************************
 Running Script create_mods
 ***************************
@@ -2738,6 +2733,10 @@ Running Script create_mods
 SQL>    @../comp
 
 === Compile Stored Program Units ===
+
+SQL>    @../install_test_rig
+
+=== Install DTGen Test Rig ===
 
 ../test_rig.pks
 
@@ -2762,33 +2761,50 @@ SQL> grant execute on glob to TMTSN;
 
 Grant succeeded.
 
-SQL> begin
-  2     FOR buff in (
-  3        select table_name from user_tab_privs
-  4         where grantor    = USER
-  5          and  privilege  = 'EXECUTE'
-  6          and  table_name like '%_POP' )
-  7     loop
-  8        execute immediate 'grant execute on ' ||
-  9           buff.table_name || ' to TMTSN';
- 10     end loop;
- 11  end;
- 12  /
+SQL> declare
+  2     sql_txt varchar2(4000);
+  3  begin
+  4     FOR buff in (
+  5        select table_name from user_tab_privs
+  6         where grantor    = USER
+  7          and  privilege  = 'EXECUTE'
+  8          and  table_name like '%_POP' )
+  9     loop
+ 10        sql_txt := 'grant execute on ' || buff.table_name || ' to TMTSN';
+ 11        dbms_output.put_line(sql_txt);
+ 12        execute immediate sql_txt;
+ 13     end loop;
+ 14  end;
+ 15  /
+grant execute on T1A_LOG_POP to TMTSN
+grant execute on T1A_EFF_POP to TMTSN
+grant execute on T2A_LOG_POP to TMTSN
+grant execute on T2A_EFF_POP to TMTSN
 
 PL/SQL procedure successfully completed.
 
-SQL> begin
-  2     FOR buff in (
-  3        select table_name from user_tab_privs
-  4         where grantor    = USER
-  5          and  privilege  = 'UPDATE'
-  6          and  table_name not like '%~_ACT' escape '~' )
-  7     loop
-  8        execute immediate 'grant select, insert, update, delete on ' ||
-  9           buff.table_name || ' to TMTSN';
- 10     end loop;
- 11  end;
- 12  /
+SQL> declare
+  2     sql_txt varchar2(4000);
+  3  begin
+  4     FOR buff in (
+  5        select table_name from user_tab_privs
+  6         where grantor    = USER
+  7          and  privilege  = 'UPDATE'
+  8          and  table_name not like '%~_ACT' escape '~' )
+  9     loop
+ 10        sql_txt := 'grant select, insert, update, delete on ' ||
+ 11                    buff.table_name || ' to TMTSN';
+ 12        dbms_output.put_line(sql_txt);
+ 13        execute immediate sql_txt;
+ 14     end loop;
+ 15  end;
+ 16  /
+grant select, insert, update, delete on T1A_NON to TMTSN
+grant select, insert, update, delete on T1A_LOG to TMTSN
+grant select, insert, update, delete on T1A_EFF to TMTSN
+grant select, insert, update, delete on T2A_NON to TMTSN
+grant select, insert, update, delete on T2A_LOG to TMTSN
+grant select, insert, update, delete on T2A_EFF to TMTSN
 
 PL/SQL procedure successfully completed.
 
@@ -2796,34 +2812,146 @@ SQL> grant execute on glob to TMTSNDOD;
 
 Grant succeeded.
 
-SQL> begin
-  2     FOR buff in (
-  3        select table_name from user_tab_privs
-  4         where grantor    = USER
-  5          and  privilege  = 'EXECUTE'
-  6          and  table_name like '%_POP' )
-  7     loop
-  8        execute immediate 'grant execute on ' ||
-  9           buff.table_name || ' to TMTSNDOD';
- 10     end loop;
- 11  end;
- 12  /
+SQL> declare
+  2     sql_txt varchar2(4000);
+  3  begin
+  4     FOR buff in (
+  5        select table_name from user_tab_privs
+  6         where grantor    = USER
+  7          and  privilege  = 'EXECUTE'
+  8          and  table_name like '%_POP' )
+  9     loop
+ 10        sql_txt := 'grant execute on ' || buff.table_name || ' to TMTSNDOD';
+ 11        dbms_output.put_line(sql_txt);
+ 12        execute immediate sql_txt;
+ 13     end loop;
+ 14  end;
+ 15  /
+grant execute on T1A_LOG_POP to TMTSNDOD
+grant execute on T1A_EFF_POP to TMTSNDOD
+grant execute on T2A_LOG_POP to TMTSNDOD
+grant execute on T2A_EFF_POP to TMTSNDOD
+grant execute on T1A_LOG_POP to TMTSNDOD
+grant execute on T1A_EFF_POP to TMTSNDOD
+grant execute on T2A_LOG_POP to TMTSNDOD
+grant execute on T2A_EFF_POP to TMTSNDOD
 
 PL/SQL procedure successfully completed.
 
-SQL> begin
-  2     FOR buff in (
-  3        select table_name from user_tab_privs
-  4         where grantor    = USER
-  5          and  privilege  = 'UPDATE'
-  6          and  table_name not like '%~_ACT' escape '~' )
-  7     loop
-  8        execute immediate 'grant select, insert, update, delete on ' ||
-  9           buff.table_name || ' to TMTSNDOD';
- 10     end loop;
- 11  end;
- 12  /
+SQL> declare
+  2     sql_txt varchar2(4000);
+  3  begin
+  4     FOR buff in (
+  5        select table_name from user_tab_privs
+  6         where grantor    = USER
+  7          and  privilege  = 'UPDATE'
+  8          and  table_name not like '%~_ACT' escape '~' )
+  9     loop
+ 10        sql_txt := 'grant select, insert, update, delete on ' ||
+ 11                    buff.table_name || ' to TMTSNDOD';
+ 12        dbms_output.put_line(sql_txt);
+ 13        execute immediate sql_txt;
+ 14     end loop;
+ 15  end;
+ 16  /
+grant select, insert, update, delete on T1A_NON to TMTSNDOD
+grant select, insert, update, delete on T1A_LOG to TMTSNDOD
+grant select, insert, update, delete on T1A_EFF to TMTSNDOD
+grant select, insert, update, delete on T2A_NON to TMTSNDOD
+grant select, insert, update, delete on T2A_LOG to TMTSNDOD
+grant select, insert, update, delete on T2A_EFF to TMTSNDOD
+grant select, insert, update, delete on T1A_NON to TMTSNDOD
+grant select, insert, update, delete on T1A_LOG to TMTSNDOD
+grant select, insert, update, delete on T1A_EFF to TMTSNDOD
+grant select, insert, update, delete on T2A_NON to TMTSNDOD
+grant select, insert, update, delete on T2A_LOG to TMTSNDOD
+grant select, insert, update, delete on T2A_EFF to TMTSNDOD
 
 PL/SQL procedure successfully completed.
 
+SQL> 
+SQL>    @../../supp/grant_role_option TST1_APP TDBUN
+old   7:         and  grantee = upper('&1.' ) )
+new   7:         and  grantee = upper('TST1_APP' ) )
+old  11:                  ' to &2. with grant option';
+new  11:                  ' to TDBUN with grant option';
+grant EXECUTE on GLOB to TDBUN with grant option
+grant EXECUTE on UTIL to TDBUN with grant option
+grant EXECUTE on T1A_LOG_POP to TDBUN with grant option
+grant EXECUTE on T1A_EFF_POP to TDBUN with grant option
+grant SELECT on T1A_NON_ACT to TDBUN with grant option
+grant INSERT on T1A_NON_ACT to TDBUN with grant option
+grant UPDATE on T1A_NON_ACT to TDBUN with grant option
+grant DELETE on T1A_NON_ACT to TDBUN with grant option
+grant EXECUTE on T1A_NON_DML to TDBUN with grant option
+grant SELECT on T1A_LOG_ACT to TDBUN with grant option
+grant INSERT on T1A_LOG_ACT to TDBUN with grant option
+grant UPDATE on T1A_LOG_ACT to TDBUN with grant option
+grant DELETE on T1A_LOG_ACT to TDBUN with grant option
+grant EXECUTE on T1A_LOG_DML to TDBUN with grant option
+grant SELECT on T1A_EFF_ACT to TDBUN with grant option
+grant INSERT on T1A_EFF_ACT to TDBUN with grant option
+grant UPDATE on T1A_EFF_ACT to TDBUN with grant option
+grant DELETE on T1A_EFF_ACT to TDBUN with grant option
+grant EXECUTE on T1A_EFF_DML to TDBUN with grant option
+grant SELECT on T1A_LOG_ALL to TDBUN with grant option
+grant SELECT on T1A_LOG_ASOF to TDBUN with grant option
+grant SELECT on T1A_EFF_ALL to TDBUN with grant option
+grant SELECT on T1A_EFF_ASOF to TDBUN with grant option
+grant INSERT on UTIL_LOG to TDBUN with grant option
+grant DELETE on UTIL_LOG to TDBUN with grant option
+grant SELECT on UTIL_LOG to TDBUN with grant option
+grant SELECT on T1A_NON_SEQ to TDBUN with grant option
+grant SELECT on T1A_NON to TDBUN with grant option
+grant SELECT on T1A_LOG_SEQ to TDBUN with grant option
+grant SELECT on T1A_LOG to TDBUN with grant option
+grant SELECT on T1A_LOG_AUD to TDBUN with grant option
+grant SELECT on T1A_LOG_PDAT to TDBUN with grant option
+grant SELECT on T1A_EFF_SEQ to TDBUN with grant option
+grant SELECT on T1A_EFF to TDBUN with grant option
+grant SELECT on T1A_EFF_HIST to TDBUN with grant option
+grant SELECT on T1A_EFF_PDAT to TDBUN with grant option
+
+PL/SQL procedure successfully completed.
+
+SQL>    @../../supp/grant_role_option TST2_APP TDBUN
+old   7:         and  grantee = upper('&1.' ) )
+new   7:         and  grantee = upper('TST2_APP' ) )
+old  11:                  ' to &2. with grant option';
+new  11:                  ' to TDBUN with grant option';
+grant EXECUTE on T2A_LOG_POP to TDBUN with grant option
+grant EXECUTE on T2A_EFF_POP to TDBUN with grant option
+grant SELECT on T2A_NON_ACT to TDBUN with grant option
+grant INSERT on T2A_NON_ACT to TDBUN with grant option
+grant UPDATE on T2A_NON_ACT to TDBUN with grant option
+grant DELETE on T2A_NON_ACT to TDBUN with grant option
+grant EXECUTE on T2A_NON_DML to TDBUN with grant option
+grant SELECT on T2A_LOG_ACT to TDBUN with grant option
+grant INSERT on T2A_LOG_ACT to TDBUN with grant option
+grant UPDATE on T2A_LOG_ACT to TDBUN with grant option
+grant DELETE on T2A_LOG_ACT to TDBUN with grant option
+grant EXECUTE on T2A_LOG_DML to TDBUN with grant option
+grant SELECT on T2A_EFF_ACT to TDBUN with grant option
+grant INSERT on T2A_EFF_ACT to TDBUN with grant option
+grant UPDATE on T2A_EFF_ACT to TDBUN with grant option
+grant DELETE on T2A_EFF_ACT to TDBUN with grant option
+grant EXECUTE on T2A_EFF_DML to TDBUN with grant option
+grant SELECT on T2A_LOG_ALL to TDBUN with grant option
+grant SELECT on T2A_LOG_ASOF to TDBUN with grant option
+grant SELECT on T2A_EFF_ALL to TDBUN with grant option
+grant SELECT on T2A_EFF_ASOF to TDBUN with grant option
+grant SELECT on T2A_NON_SEQ to TDBUN with grant option
+grant SELECT on T2A_NON to TDBUN with grant option
+grant SELECT on T2A_LOG_SEQ to TDBUN with grant option
+grant SELECT on T2A_LOG to TDBUN with grant option
+grant SELECT on T2A_LOG_AUD to TDBUN with grant option
+grant SELECT on T2A_LOG_PDAT to TDBUN with grant option
+grant SELECT on T2A_EFF_SEQ to TDBUN with grant option
+grant SELECT on T2A_EFF to TDBUN with grant option
+grant SELECT on T2A_EFF_HIST to TDBUN with grant option
+grant SELECT on T2A_EFF_PDAT to TDBUN with grant option
+
+PL/SQL procedure successfully completed.
+
+SQL> 
 SQL>    spool install_user.log

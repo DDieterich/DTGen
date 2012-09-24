@@ -1,4 +1,4 @@
-SQL>    connect TDBUN/TDBUN@XE2
+SQL>    connect TMTUNDOD/TMTUNDOD@XE2
 Connected.
 SQL>    @install_user
 

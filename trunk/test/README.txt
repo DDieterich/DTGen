@@ -1,8 +1,9 @@
 
--) Split TEST_RIG into User Test Rig with everything but SQLTAB functions.
--) Split TEST_RIG into Owner Test Rig with the SQLTAB functions.
--) Split test.sql into Owner and User scripts
--) Setup Owner to run User Test script.
+-) Split TEST_RIG into User Test Rig with everything but SQLTAB functions?
+-) Split TEST_RIG into Owner Test Rig with the SQLTAB functions?
+-) Split test.sql into Owner and User scripts?
+-) Setup Owner to run User Test script?
+
 -) Re-Test
 -) _ACT%ROWTYPE insert and update need the foriegn keys and hierarchies queried before returning call.
 -) Check testing results

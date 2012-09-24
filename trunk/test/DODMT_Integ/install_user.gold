@@ -102,9 +102,6 @@ Synonym created.
 Synonym created.
 
 
-Synonym created.
-
-
 ***************************
 Running Script create_usyn
 ***************************
@@ -189,5 +186,27 @@ Synonym created.
 
 
 Synonym created.
+
+SQL>    @../install_test_rig
+
+=== Install DTGen Test Rig ===
+
+../test_rig.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+../test_rig.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
 
 SQL>    spool off

@@ -776,6 +776,9 @@ begin
    user_aa('TMTSNDOD').action_aa('uninstall')(2) := fileapp_rec;
    fileapp_rec.file_name :=       'drop_dist';
    user_aa('TMTSNDOD').action_aa('uninstall')(3) := fileapp_rec;
+   fileapp_rec.applist_key := 'FO';
+   fileapp_rec.file_name :=       'drop_gdst';
+   user_aa('TMTSNDOD').action_aa('uninstall')(4) := fileapp_rec;
    ----------------------------------------
    user_aa('TMTUNDOD').db_schema := 'TMTSNDOD';
    user_aa('TMTUNDOD').dbid      := null;

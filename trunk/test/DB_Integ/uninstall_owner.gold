@@ -4,6 +4,12 @@ SQL>    ALTER SESSION SET recyclebin = OFF;
 
 Session altered.
 
+SQL>    @../uninstall_test_rig
+
+=== Un-Install DTGen Test Rig ===
+
+Package dropped.
+
 SQL>    @uninstall_owner
 
 ***************************
@@ -153,9 +159,6 @@ Running Script drop_mods
 ***************************
 Running Script drop_mods
 ***************************
-
-
-Package dropped.
 
 
 ***************************

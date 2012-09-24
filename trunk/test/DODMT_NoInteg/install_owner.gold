@@ -1,8 +1,8 @@
-SQL>    connect TMTSN/TMTSN@XE2
+SQL>    connect TMTSNDOD/TMTSNDOD@XE2
 Connected.
 SQL>    set serveroutput on format wrapped
 SQL>    create database link XE@loopback
-  2     connect to TDBSN identified by "TDBSN"
+  2     connect to TDBUN identified by "TDBUN"
   3     using 'loopback';
 
 Database link created.
@@ -2195,80 +2195,80 @@ No errors.
 
 SQL> 
 SQL> 
-SQL>    @../../supp/grant_role_option TST1_APP TMTUN
+SQL>    @../../supp/grant_role_option TST1_APP TMTUNDOD
 old   7:         and  grantee = upper('&1.' ) )
 new   7:         and  grantee = upper('TST1_APP' ) )
 old  11:                  ' to &2. with grant option';
-new  11:                  ' to TMTUN with grant option';
-grant EXECUTE on GLOB to TMTUN with grant option
-grant EXECUTE on UTIL to TMTUN with grant option
-grant SELECT on T1A_NON to TMTUN with grant option
-grant SELECT on T1A_LOG to TMTUN with grant option
-grant SELECT on T1A_LOG_AUD to TMTUN with grant option
-grant SELECT on T1A_LOG_PDAT to TMTUN with grant option
-grant EXECUTE on T1A_LOG_POP to TMTUN with grant option
-grant SELECT on T1A_LOG_ALL to TMTUN with grant option
-grant SELECT on T1A_LOG_ASOF to TMTUN with grant option
-grant SELECT on T1A_EFF to TMTUN with grant option
-grant SELECT on T1A_EFF_HIST to TMTUN with grant option
-grant SELECT on T1A_EFF_PDAT to TMTUN with grant option
-grant EXECUTE on T1A_EFF_POP to TMTUN with grant option
-grant SELECT on T1A_EFF_ALL to TMTUN with grant option
-grant SELECT on T1A_EFF_ASOF to TMTUN with grant option
-grant SELECT on T1A_NON_ACT to TMTUN with grant option
-grant INSERT on T1A_NON_ACT to TMTUN with grant option
-grant UPDATE on T1A_NON_ACT to TMTUN with grant option
-grant DELETE on T1A_NON_ACT to TMTUN with grant option
-grant EXECUTE on T1A_NON_DML to TMTUN with grant option
-grant SELECT on T1A_LOG_ACT to TMTUN with grant option
-grant INSERT on T1A_LOG_ACT to TMTUN with grant option
-grant UPDATE on T1A_LOG_ACT to TMTUN with grant option
-grant DELETE on T1A_LOG_ACT to TMTUN with grant option
-grant EXECUTE on T1A_LOG_DML to TMTUN with grant option
-grant SELECT on T1A_EFF_ACT to TMTUN with grant option
-grant INSERT on T1A_EFF_ACT to TMTUN with grant option
-grant UPDATE on T1A_EFF_ACT to TMTUN with grant option
-grant DELETE on T1A_EFF_ACT to TMTUN with grant option
-grant EXECUTE on T1A_EFF_DML to TMTUN with grant option
-grant INSERT on UTIL_LOG to TMTUN with grant option
-grant DELETE on UTIL_LOG to TMTUN with grant option
-grant SELECT on UTIL_LOG to TMTUN with grant option
+new  11:                  ' to TMTUNDOD with grant option';
+grant EXECUTE on GLOB to TMTUNDOD with grant option
+grant EXECUTE on UTIL to TMTUNDOD with grant option
+grant SELECT on T1A_NON to TMTUNDOD with grant option
+grant SELECT on T1A_LOG to TMTUNDOD with grant option
+grant SELECT on T1A_LOG_AUD to TMTUNDOD with grant option
+grant SELECT on T1A_LOG_PDAT to TMTUNDOD with grant option
+grant EXECUTE on T1A_LOG_POP to TMTUNDOD with grant option
+grant SELECT on T1A_LOG_ALL to TMTUNDOD with grant option
+grant SELECT on T1A_LOG_ASOF to TMTUNDOD with grant option
+grant SELECT on T1A_EFF to TMTUNDOD with grant option
+grant SELECT on T1A_EFF_HIST to TMTUNDOD with grant option
+grant SELECT on T1A_EFF_PDAT to TMTUNDOD with grant option
+grant EXECUTE on T1A_EFF_POP to TMTUNDOD with grant option
+grant SELECT on T1A_EFF_ALL to TMTUNDOD with grant option
+grant SELECT on T1A_EFF_ASOF to TMTUNDOD with grant option
+grant SELECT on T1A_NON_ACT to TMTUNDOD with grant option
+grant INSERT on T1A_NON_ACT to TMTUNDOD with grant option
+grant UPDATE on T1A_NON_ACT to TMTUNDOD with grant option
+grant DELETE on T1A_NON_ACT to TMTUNDOD with grant option
+grant EXECUTE on T1A_NON_DML to TMTUNDOD with grant option
+grant SELECT on T1A_LOG_ACT to TMTUNDOD with grant option
+grant INSERT on T1A_LOG_ACT to TMTUNDOD with grant option
+grant UPDATE on T1A_LOG_ACT to TMTUNDOD with grant option
+grant DELETE on T1A_LOG_ACT to TMTUNDOD with grant option
+grant EXECUTE on T1A_LOG_DML to TMTUNDOD with grant option
+grant SELECT on T1A_EFF_ACT to TMTUNDOD with grant option
+grant INSERT on T1A_EFF_ACT to TMTUNDOD with grant option
+grant UPDATE on T1A_EFF_ACT to TMTUNDOD with grant option
+grant DELETE on T1A_EFF_ACT to TMTUNDOD with grant option
+grant EXECUTE on T1A_EFF_DML to TMTUNDOD with grant option
+grant INSERT on UTIL_LOG to TMTUNDOD with grant option
+grant DELETE on UTIL_LOG to TMTUNDOD with grant option
+grant SELECT on UTIL_LOG to TMTUNDOD with grant option
 
 PL/SQL procedure successfully completed.
 
-SQL>    @../../supp/grant_role_option TST2_APP TMTUN
+SQL>    @../../supp/grant_role_option TST2_APP TMTUNDOD
 old   7:         and  grantee = upper('&1.' ) )
 new   7:         and  grantee = upper('TST2_APP' ) )
 old  11:                  ' to &2. with grant option';
-new  11:                  ' to TMTUN with grant option';
-grant SELECT on T2A_NON to TMTUN with grant option
-grant SELECT on T2A_LOG to TMTUN with grant option
-grant SELECT on T2A_LOG_AUD to TMTUN with grant option
-grant SELECT on T2A_LOG_PDAT to TMTUN with grant option
-grant EXECUTE on T2A_LOG_POP to TMTUN with grant option
-grant SELECT on T2A_LOG_ALL to TMTUN with grant option
-grant SELECT on T2A_LOG_ASOF to TMTUN with grant option
-grant SELECT on T2A_EFF to TMTUN with grant option
-grant SELECT on T2A_EFF_HIST to TMTUN with grant option
-grant SELECT on T2A_EFF_PDAT to TMTUN with grant option
-grant EXECUTE on T2A_EFF_POP to TMTUN with grant option
-grant SELECT on T2A_EFF_ALL to TMTUN with grant option
-grant SELECT on T2A_EFF_ASOF to TMTUN with grant option
-grant SELECT on T2A_NON_ACT to TMTUN with grant option
-grant INSERT on T2A_NON_ACT to TMTUN with grant option
-grant UPDATE on T2A_NON_ACT to TMTUN with grant option
-grant DELETE on T2A_NON_ACT to TMTUN with grant option
-grant EXECUTE on T2A_NON_DML to TMTUN with grant option
-grant SELECT on T2A_LOG_ACT to TMTUN with grant option
-grant INSERT on T2A_LOG_ACT to TMTUN with grant option
-grant UPDATE on T2A_LOG_ACT to TMTUN with grant option
-grant DELETE on T2A_LOG_ACT to TMTUN with grant option
-grant EXECUTE on T2A_LOG_DML to TMTUN with grant option
-grant SELECT on T2A_EFF_ACT to TMTUN with grant option
-grant INSERT on T2A_EFF_ACT to TMTUN with grant option
-grant UPDATE on T2A_EFF_ACT to TMTUN with grant option
-grant DELETE on T2A_EFF_ACT to TMTUN with grant option
-grant EXECUTE on T2A_EFF_DML to TMTUN with grant option
+new  11:                  ' to TMTUNDOD with grant option';
+grant SELECT on T2A_NON to TMTUNDOD with grant option
+grant SELECT on T2A_LOG to TMTUNDOD with grant option
+grant SELECT on T2A_LOG_AUD to TMTUNDOD with grant option
+grant SELECT on T2A_LOG_PDAT to TMTUNDOD with grant option
+grant EXECUTE on T2A_LOG_POP to TMTUNDOD with grant option
+grant SELECT on T2A_LOG_ALL to TMTUNDOD with grant option
+grant SELECT on T2A_LOG_ASOF to TMTUNDOD with grant option
+grant SELECT on T2A_EFF to TMTUNDOD with grant option
+grant SELECT on T2A_EFF_HIST to TMTUNDOD with grant option
+grant SELECT on T2A_EFF_PDAT to TMTUNDOD with grant option
+grant EXECUTE on T2A_EFF_POP to TMTUNDOD with grant option
+grant SELECT on T2A_EFF_ALL to TMTUNDOD with grant option
+grant SELECT on T2A_EFF_ASOF to TMTUNDOD with grant option
+grant SELECT on T2A_NON_ACT to TMTUNDOD with grant option
+grant INSERT on T2A_NON_ACT to TMTUNDOD with grant option
+grant UPDATE on T2A_NON_ACT to TMTUNDOD with grant option
+grant DELETE on T2A_NON_ACT to TMTUNDOD with grant option
+grant EXECUTE on T2A_NON_DML to TMTUNDOD with grant option
+grant SELECT on T2A_LOG_ACT to TMTUNDOD with grant option
+grant INSERT on T2A_LOG_ACT to TMTUNDOD with grant option
+grant UPDATE on T2A_LOG_ACT to TMTUNDOD with grant option
+grant DELETE on T2A_LOG_ACT to TMTUNDOD with grant option
+grant EXECUTE on T2A_LOG_DML to TMTUNDOD with grant option
+grant SELECT on T2A_EFF_ACT to TMTUNDOD with grant option
+grant INSERT on T2A_EFF_ACT to TMTUNDOD with grant option
+grant UPDATE on T2A_EFF_ACT to TMTUNDOD with grant option
+grant DELETE on T2A_EFF_ACT to TMTUNDOD with grant option
+grant EXECUTE on T2A_EFF_DML to TMTUNDOD with grant option
 
 PL/SQL procedure successfully completed.
 

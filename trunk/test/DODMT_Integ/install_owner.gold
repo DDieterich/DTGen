@@ -1,6 +1,9 @@
 SQL>    connect TMTSTDOD/TMTSTDOD@XE2
 Connected.
-SQL>    create database link XE@loopback connect to TDBUT identified by "TDBUT" using 'loopback';
+SQL>    set serveroutput on format wrapped
+SQL>    create database link XE@loopback
+  2     connect to TDBUT identified by "TDBUT"
+  3     using 'loopback';
 
 Database link created.
 
@@ -2160,12 +2163,6 @@ Running Script create_mods
 ***************************
 
 
-Package created.
-
-
-Grant succeeded.
-
-
 ***************************
 Running Script create_mods
 ***************************
@@ -2173,6 +2170,10 @@ Running Script create_mods
 SQL>    @../comp
 
 === Compile Stored Program Units ===
+
+SQL>    @../install_test_rig
+
+=== Install DTGen Test Rig ===
 
 ../test_rig.pks
 
@@ -2191,6 +2192,85 @@ Package body created.
 Package body created.
 
 No errors.
+
+SQL> 
+SQL> 
+SQL>    @../../supp/grant_role_option TST1_APP TMTUTDOD
+old   7:         and  grantee = upper('&1.' ) )
+new   7:         and  grantee = upper('TST1_APP' ) )
+old  11:                  ' to &2. with grant option';
+new  11:                  ' to TMTUTDOD with grant option';
+grant EXECUTE on GLOB to TMTUTDOD with grant option
+grant EXECUTE on UTIL to TMTUTDOD with grant option
+grant SELECT on T1A_NON to TMTUTDOD with grant option
+grant SELECT on T1A_LOG to TMTUTDOD with grant option
+grant SELECT on T1A_LOG_AUD to TMTUTDOD with grant option
+grant SELECT on T1A_LOG_PDAT to TMTUTDOD with grant option
+grant EXECUTE on T1A_LOG_POP to TMTUTDOD with grant option
+grant SELECT on T1A_LOG_ALL to TMTUTDOD with grant option
+grant SELECT on T1A_LOG_ASOF to TMTUTDOD with grant option
+grant SELECT on T1A_EFF to TMTUTDOD with grant option
+grant SELECT on T1A_EFF_HIST to TMTUTDOD with grant option
+grant SELECT on T1A_EFF_PDAT to TMTUTDOD with grant option
+grant EXECUTE on T1A_EFF_POP to TMTUTDOD with grant option
+grant SELECT on T1A_EFF_ALL to TMTUTDOD with grant option
+grant SELECT on T1A_EFF_ASOF to TMTUTDOD with grant option
+grant SELECT on T1A_NON_ACT to TMTUTDOD with grant option
+grant INSERT on T1A_NON_ACT to TMTUTDOD with grant option
+grant UPDATE on T1A_NON_ACT to TMTUTDOD with grant option
+grant DELETE on T1A_NON_ACT to TMTUTDOD with grant option
+grant EXECUTE on T1A_NON_DML to TMTUTDOD with grant option
+grant SELECT on T1A_LOG_ACT to TMTUTDOD with grant option
+grant INSERT on T1A_LOG_ACT to TMTUTDOD with grant option
+grant UPDATE on T1A_LOG_ACT to TMTUTDOD with grant option
+grant DELETE on T1A_LOG_ACT to TMTUTDOD with grant option
+grant EXECUTE on T1A_LOG_DML to TMTUTDOD with grant option
+grant SELECT on T1A_EFF_ACT to TMTUTDOD with grant option
+grant INSERT on T1A_EFF_ACT to TMTUTDOD with grant option
+grant UPDATE on T1A_EFF_ACT to TMTUTDOD with grant option
+grant DELETE on T1A_EFF_ACT to TMTUTDOD with grant option
+grant EXECUTE on T1A_EFF_DML to TMTUTDOD with grant option
+grant INSERT on UTIL_LOG to TMTUTDOD with grant option
+grant DELETE on UTIL_LOG to TMTUTDOD with grant option
+grant SELECT on UTIL_LOG to TMTUTDOD with grant option
+
+PL/SQL procedure successfully completed.
+
+SQL>    @../../supp/grant_role_option TST2_APP TMTUTDOD
+old   7:         and  grantee = upper('&1.' ) )
+new   7:         and  grantee = upper('TST2_APP' ) )
+old  11:                  ' to &2. with grant option';
+new  11:                  ' to TMTUTDOD with grant option';
+grant SELECT on T2A_NON to TMTUTDOD with grant option
+grant SELECT on T2A_LOG to TMTUTDOD with grant option
+grant SELECT on T2A_LOG_AUD to TMTUTDOD with grant option
+grant SELECT on T2A_LOG_PDAT to TMTUTDOD with grant option
+grant EXECUTE on T2A_LOG_POP to TMTUTDOD with grant option
+grant SELECT on T2A_LOG_ALL to TMTUTDOD with grant option
+grant SELECT on T2A_LOG_ASOF to TMTUTDOD with grant option
+grant SELECT on T2A_EFF to TMTUTDOD with grant option
+grant SELECT on T2A_EFF_HIST to TMTUTDOD with grant option
+grant SELECT on T2A_EFF_PDAT to TMTUTDOD with grant option
+grant EXECUTE on T2A_EFF_POP to TMTUTDOD with grant option
+grant SELECT on T2A_EFF_ALL to TMTUTDOD with grant option
+grant SELECT on T2A_EFF_ASOF to TMTUTDOD with grant option
+grant SELECT on T2A_NON_ACT to TMTUTDOD with grant option
+grant INSERT on T2A_NON_ACT to TMTUTDOD with grant option
+grant UPDATE on T2A_NON_ACT to TMTUTDOD with grant option
+grant DELETE on T2A_NON_ACT to TMTUTDOD with grant option
+grant EXECUTE on T2A_NON_DML to TMTUTDOD with grant option
+grant SELECT on T2A_LOG_ACT to TMTUTDOD with grant option
+grant INSERT on T2A_LOG_ACT to TMTUTDOD with grant option
+grant UPDATE on T2A_LOG_ACT to TMTUTDOD with grant option
+grant DELETE on T2A_LOG_ACT to TMTUTDOD with grant option
+grant EXECUTE on T2A_LOG_DML to TMTUTDOD with grant option
+grant SELECT on T2A_EFF_ACT to TMTUTDOD with grant option
+grant INSERT on T2A_EFF_ACT to TMTUTDOD with grant option
+grant UPDATE on T2A_EFF_ACT to TMTUTDOD with grant option
+grant DELETE on T2A_EFF_ACT to TMTUTDOD with grant option
+grant EXECUTE on T2A_EFF_DML to TMTUTDOD with grant option
+
+PL/SQL procedure successfully completed.
 
 SQL> 
 SQL>    spool install_user.log
