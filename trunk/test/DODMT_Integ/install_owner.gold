@@ -1,22 +1,10 @@
 SQL>    connect TMTSTDOD/TMTSTDOD@XE2
 Connected.
+SQL>    create database link XE@loopback connect to TDBUT identified by "TDBUT" using 'loopback';
+
+Database link created.
+
 SQL>    @install_owner
-
-***************************
-Running Script create_dblink
-***************************
-
-
-Database link created.
-
-
-***************************
-Running Script create_dblink
-***************************
-
-
-Database link created.
-
 
 ***************************
 Running Script create_gdst
@@ -174,6 +162,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 Package body created.
 
 
@@ -239,48 +230,6 @@ Comment created.
 Comment created.
 
 
-View created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
 Comment created.
 
 
@@ -332,7 +281,85 @@ Comment created.
 Comment created.
 
 
+View created.
+
+
 Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -398,7 +425,13 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View created.
+
+
+Comment created.
 
 
 Comment created.
@@ -508,54 +541,6 @@ Comment created.
 Comment created.
 
 
-View created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
-Comment created.
-
-
 Comment created.
 
 
@@ -613,7 +598,91 @@ Comment created.
 Comment created.
 
 
+View created.
+
+
 Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -685,7 +754,13 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View created.
+
+
+Comment created.
 
 
 Comment created.
@@ -934,6 +1009,33 @@ Comment created.
 Comment created.
 
 
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
 Package created.
 
 
@@ -1123,6 +1225,33 @@ Comment created.
 
 
 Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
 
 
 Package created.
@@ -1321,6 +1450,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -1437,6 +1569,9 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
 View altered.
 
 
@@ -1515,6 +1650,9 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
 
 
 Comment created.
@@ -2054,4 +2192,5 @@ Package body created.
 
 No errors.
 
+SQL> 
 SQL>    spool install_user.log

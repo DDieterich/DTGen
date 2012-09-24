@@ -206,17 +206,20 @@ PROCEDURE dump_sec_lines
    -- Print the security array
 IS
 BEGIN
-   if sec_lines.COUNT = 0 and sec_line = 0 then
-      return;
-   end if;
+   --(There may be an old security script that needs to be cleared.)
+   --if sec_lines.COUNT = 0 and sec_line = 0 then
+   --   return;
+   --end if;
    fbuff.name        := fbuff.name || '_sec';
    fbuff.description := 'Security script to ' || fbuff.description;
    open_file;
    p('');
-   for i in sec_lines.FIRST .. sec_lines.LAST
-   loop
-      p(sec_lines(i));
-   end loop;
+   if sec_lines.COUNT != 0 then
+      for i in sec_lines.FIRST .. sec_lines.LAST
+      loop
+         p(sec_lines(i));
+      end loop;
+   end if;
    p('');
    close_file;
    sec_lines := sec_line0;

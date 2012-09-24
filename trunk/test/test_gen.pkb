@@ -314,10 +314,10 @@ begin
    end loop;
    commit;
    sql_txt := '';
-exception
-   when others then
-      rollback;
-      raise;
+--exception
+--   when others then
+--      rollback;
+--      raise;
 end gen_all;
 
 procedure output_file
