@@ -148,9 +148,9 @@
 *Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
 
  = Deployment Configurations =
-|| DB Account Names          || *DB Schema* || *DB User* || *MT Schema* || *MT User* ||
-|| *Triggers/Constraints*    || TDBST       || TDBUT     || TMTST       || TMTUT     ||
-|| *No Triggers/Constraints* || TDBSN       || TDBUN     || TMTSN       || TMTUN     ||
+|| DB Account Names     || *DB Schema* || *DB User* || *MT Schema* || *MT User* ||
+|| *Application Test 1* || TDBST       || TDBUT     || TMTST       || TMTUT     ||
+|| *Application Test 2* || TDBSN       || TDBUN     || TMTSN       || TMTUN     ||
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
@@ -176,7 +176,6 @@
  == TST1: Application Test 1 ==
 
  * TST: Override Default Tablespace and Table Defined Tablespaces
- * ESN: Explicit Schema Name in Installation Files
 
  === Tables: T1A_NON, T1A_LOG, and T1A_EFF ===
 
@@ -206,6 +205,8 @@
  == TST2: Application Test 2 ==
 
  * TST: Default Tablespaces, Table Defined Tablespaces
+ * ESN: Explicit Schema Name in Installation Files
+ * NTC: No Triggers/Constraints Installed
 
  === Tables: T2A_NON, T2A_LOG, and T2A_EFF ===
 
