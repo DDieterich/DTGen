@@ -2808,67 +2808,6 @@ grant select, insert, update, delete on T2A_EFF to TMTSN
 
 PL/SQL procedure successfully completed.
 
-SQL> grant execute on glob to TMTSNDOD;
-
-Grant succeeded.
-
-SQL> declare
-  2     sql_txt varchar2(4000);
-  3  begin
-  4     FOR buff in (
-  5        select table_name from user_tab_privs
-  6         where grantor    = USER
-  7          and  privilege  = 'EXECUTE'
-  8          and  table_name like '%_POP' )
-  9     loop
- 10        sql_txt := 'grant execute on ' || buff.table_name || ' to TMTSNDOD';
- 11        dbms_output.put_line(sql_txt);
- 12        execute immediate sql_txt;
- 13     end loop;
- 14  end;
- 15  /
-grant execute on T1A_LOG_POP to TMTSNDOD
-grant execute on T1A_EFF_POP to TMTSNDOD
-grant execute on T2A_LOG_POP to TMTSNDOD
-grant execute on T2A_EFF_POP to TMTSNDOD
-grant execute on T1A_LOG_POP to TMTSNDOD
-grant execute on T1A_EFF_POP to TMTSNDOD
-grant execute on T2A_LOG_POP to TMTSNDOD
-grant execute on T2A_EFF_POP to TMTSNDOD
-
-PL/SQL procedure successfully completed.
-
-SQL> declare
-  2     sql_txt varchar2(4000);
-  3  begin
-  4     FOR buff in (
-  5        select table_name from user_tab_privs
-  6         where grantor    = USER
-  7          and  privilege  = 'UPDATE'
-  8          and  table_name not like '%~_ACT' escape '~' )
-  9     loop
- 10        sql_txt := 'grant select, insert, update, delete on ' ||
- 11                    buff.table_name || ' to TMTSNDOD';
- 12        dbms_output.put_line(sql_txt);
- 13        execute immediate sql_txt;
- 14     end loop;
- 15  end;
- 16  /
-grant select, insert, update, delete on T1A_NON to TMTSNDOD
-grant select, insert, update, delete on T1A_LOG to TMTSNDOD
-grant select, insert, update, delete on T1A_EFF to TMTSNDOD
-grant select, insert, update, delete on T2A_NON to TMTSNDOD
-grant select, insert, update, delete on T2A_LOG to TMTSNDOD
-grant select, insert, update, delete on T2A_EFF to TMTSNDOD
-grant select, insert, update, delete on T1A_NON to TMTSNDOD
-grant select, insert, update, delete on T1A_LOG to TMTSNDOD
-grant select, insert, update, delete on T1A_EFF to TMTSNDOD
-grant select, insert, update, delete on T2A_NON to TMTSNDOD
-grant select, insert, update, delete on T2A_LOG to TMTSNDOD
-grant select, insert, update, delete on T2A_EFF to TMTSNDOD
-
-PL/SQL procedure successfully completed.
-
 SQL> 
 SQL>    @../../supp/grant_role_option TST1_APP TDBUN
 old   7:         and  grantee = upper('&1.' ) )
@@ -2898,9 +2837,9 @@ grant SELECT on T1A_LOG_ALL to TDBUN with grant option
 grant SELECT on T1A_LOG_ASOF to TDBUN with grant option
 grant SELECT on T1A_EFF_ALL to TDBUN with grant option
 grant SELECT on T1A_EFF_ASOF to TDBUN with grant option
+grant INSERT on UTIL_LOG to TDBUN with grant option
 grant DELETE on UTIL_LOG to TDBUN with grant option
 grant SELECT on UTIL_LOG to TDBUN with grant option
-grant INSERT on UTIL_LOG to TDBUN with grant option
 grant SELECT on T1A_NON_SEQ to TDBUN with grant option
 grant SELECT on T1A_NON to TDBUN with grant option
 grant SELECT on T1A_LOG_SEQ to TDBUN with grant option

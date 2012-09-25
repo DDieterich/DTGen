@@ -2225,10 +2225,10 @@ grant INSERT on T1A_LOG_ACT to TMTUT with grant option
 grant UPDATE on T1A_LOG_ACT to TMTUT with grant option
 grant DELETE on T1A_LOG_ACT to TMTUT with grant option
 grant EXECUTE on T1A_LOG_DML to TMTUT with grant option
-grant SELECT on T1A_EFF_ACT to TMTUT with grant option
 grant INSERT on T1A_EFF_ACT to TMTUT with grant option
 grant UPDATE on T1A_EFF_ACT to TMTUT with grant option
 grant DELETE on T1A_EFF_ACT to TMTUT with grant option
+grant SELECT on T1A_EFF_ACT to TMTUT with grant option
 grant EXECUTE on T1A_EFF_DML to TMTUT with grant option
 grant INSERT on UTIL_LOG to TMTUT with grant option
 grant DELETE on UTIL_LOG to TMTUT with grant option
