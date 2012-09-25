@@ -90,7 +90,6 @@ GRANT_OPTION=""
 case ${OWNERNAME} in
    'TDBST' )
       grant_access 'TMTST'
-      grant_access 'TMTSTDOD' 
       grant_option 'TDBUT'
       ;;
    'TMTST' )
@@ -98,7 +97,6 @@ case ${OWNERNAME} in
       ;;
    'TDBSN' )
       grant_access 'TMTSN'
-      grant_access 'TMTSNDOD'
       grant_option 'TDBUN'
       ;;
    'TMTSN' )

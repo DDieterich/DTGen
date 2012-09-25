@@ -241,6 +241,8 @@ function BTT_SQLTAB_LOG_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -272,6 +274,7 @@ begin
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
       execute immediate '
@@ -281,8 +284,9 @@ begin
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -292,6 +296,7 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
       execute immediate '
@@ -300,8 +305,9 @@ begin
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -322,6 +328,8 @@ function BTT_SQLTAB_EFF_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -353,6 +361,7 @@ begin
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
       execute immediate '
@@ -362,8 +371,9 @@ begin
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -373,6 +383,7 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       -- EXECUTE IMMEDIATE Allows test_rig to compile without needed permission
       execute immediate '
@@ -381,8 +392,9 @@ begin
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -444,6 +456,8 @@ function BTT_SQLACT_LOG_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -471,14 +485,16 @@ begin
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       update t1a_log_act set num_plain = upd_val
        where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -488,13 +504,15 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       delete from t1a_log_act where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -515,6 +533,8 @@ function BTT_SQLACT_EFF_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -542,14 +562,16 @@ begin
    loc_txt := 'UPDATE';
    upd_val := to_number(tparms.val2);
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       update t1a_eff_act set num_plain = upd_val, eff_beg_dtm = glob.get_dtm
        where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -559,13 +581,15 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       delete from t1a_eff_act where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -647,6 +671,8 @@ function BTT_APITAB_LOG_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -677,13 +703,15 @@ begin
    upd_val := to_number(tparms.val2);
    rec.num_plain := upd_val;
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       t1a_LOG_dml.upd(rec);
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -693,13 +721,15 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       t1a_LOG_dml.del(rec.id);
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-          if sqlerrm like '%_EF1) violated%' then null; end if;
-          if sqlerrm like '%_PK) violated%' then null; end if; 
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -720,6 +750,8 @@ function BTT_APITAB_EFF_NUM_PLAIN
       ,parm_seq_in  in  number)
    return varchar2
 is
+   unique_constraint  EXCEPTION;
+   PRAGMA EXCEPTION_INIT (unique_constraint, -00001);
    check_constraint  EXCEPTION;
    PRAGMA EXCEPTION_INIT (check_constraint, -02290);
    too_quick  EXCEPTION;
@@ -751,14 +783,16 @@ begin
    upd_val := to_number(tparms.val2);
    rec.num_plain := upd_val;
    success := FALSE;
+   savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
       rec.eff_beg_dtm := glob.get_dtm;
       t1a_EFF_dml.upd(rec);
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-         if sqlerrm like '%_EF1) violated%' then null; end if;
-         if sqlerrm like '%_PK) violated%' then null; end if;
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_UPDATE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_UPDATE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -768,14 +802,16 @@ begin
    ----------------------------------------
    loc_txt := 'DELETE';
    success := FALSE;
+   savepoint TEST_RIG_DELETE;
    for i in 1 .. 1000 loop begin
       rec.eff_beg_dtm := glob.get_dtm;
       t1a_EFF_dml.del(rec.id, rec.eff_beg_dtm);
       success := TRUE; EXIT;
    exception when too_quick then null;
       when check_constraint then
-         if sqlerrm like '%_EF1) violated%' then null; end if;
-         if sqlerrm like '%_PK) violated%' then null; end if;
+         if sqlerrm like '%_EF1) violated%' then rollback to TEST_RIG_DELETE; end if;
+      when unique_constraint then
+         if sqlerrm like '%_PK) violated%' then rollback to TEST_RIG_DELETE; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
