@@ -2,7 +2,7 @@
 ROOT_LIST="install_owner install_user"
 #ROOT_LIST="uninstall_owner uninstall_user"
 
-TDIR_LIST="DB_Integ MT_Integ DODMT_Integ DB_NoInteg MT_NoInteg DODMT_NoInteg"
+TDIR_LIST="DB_Integ MT_Integ DB_NoInteg MT_NoInteg"
 
 for TDIR in ${TDIR_LIST}
 do
