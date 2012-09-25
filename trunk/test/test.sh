@@ -32,7 +32,7 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
 EOF
 
 echo "*** ${logfile}.gold comparison ..."
-sdiff -s -w 80 ${logfile}.gold ${logfile} | grep -v 'SQL*Plus: Release' | ${SORT} -u | head
+sdiff -s -w 80 ${logfile}.gold ${logfile} | fgrep -v 'SQL*Plus: Release' | ${SORT} -u | head
 
 echo "*** Errors and Warnings ..."
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head

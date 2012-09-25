@@ -2898,9 +2898,9 @@ grant SELECT on T1A_LOG_ALL to TDBUN with grant option
 grant SELECT on T1A_LOG_ASOF to TDBUN with grant option
 grant SELECT on T1A_EFF_ALL to TDBUN with grant option
 grant SELECT on T1A_EFF_ASOF to TDBUN with grant option
-grant INSERT on UTIL_LOG to TDBUN with grant option
 grant DELETE on UTIL_LOG to TDBUN with grant option
 grant SELECT on UTIL_LOG to TDBUN with grant option
+grant INSERT on UTIL_LOG to TDBUN with grant option
 grant SELECT on T1A_NON_SEQ to TDBUN with grant option
 grant SELECT on T1A_NON to TDBUN with grant option
 grant SELECT on T1A_LOG_SEQ to TDBUN with grant option
