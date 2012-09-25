@@ -1,5 +1,5 @@
 
-SQL*Plus: Release 10.2.0.1.0 - Production on Fri Sep 21 13:20:33 2012
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Sep 24 20:26:13 2012
 
 Copyright (c) 1982, 2005, Oracle.  All rights reserved.
 
@@ -533,22 +533,13 @@ SQL> execute test_rig.run_global_set('A');
       glob.get_ignore_no_change is TRUE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -597,22 +588,13 @@ SQL> execute test_rig.run_global_set('B');
       glob.get_ignore_no_change is FALSE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -661,22 +643,13 @@ SQL> execute test_rig.run_global_set('C');
       glob.get_ignore_no_change is TRUE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -725,22 +698,13 @@ SQL> execute test_rig.run_global_set('D');
       glob.get_ignore_no_change is FALSE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -789,16 +753,13 @@ SQL> execute test_rig.run_global_set('E');
       glob.get_ignore_no_change is TRUE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_LOG_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_EFF_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -847,16 +808,13 @@ SQL> execute test_rig.run_global_set('F');
       glob.get_ignore_no_change is FALSE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_LOG_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_EFF_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -905,16 +863,13 @@ SQL> execute test_rig.run_global_set('G');
       glob.get_ignore_no_change is TRUE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_LOG_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_EFF_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
@@ -963,16 +918,13 @@ SQL> execute test_rig.run_global_set('H');
       glob.get_ignore_no_change is FALSE
 
 Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_PASS, SEQ 1
-   Parm_Set BTT_NUM_PASS, SEQ 2
-   Parm_Set BTT_NUM_PASS, SEQ 3
-   Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_LOG_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_EFF_NoIntDB, SEQ 1
+   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
 
 Running Test BTT_SQLACT_NON_NUM_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1

@@ -42,11 +42,6 @@ drop table test_parms;
 drop table parm_sets;
 drop table global_parms;
 
-delete from test_sets;
-delete from test_parms;
-delete from parm_sets;
-delete from global_parms;
-
 purge recyclebin;
 
 grant select on global_parms to TDBST with grant option;

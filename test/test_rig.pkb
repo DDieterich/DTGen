@@ -280,7 +280,9 @@ begin
          using upd_val, rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -297,7 +299,9 @@ begin
          using rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -357,7 +361,9 @@ begin
       using upd_val, glob.get_dtm, rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -374,7 +380,9 @@ begin
          using rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -468,7 +476,9 @@ begin
        where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -482,7 +492,9 @@ begin
       delete from t1a_log_act where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -535,7 +547,9 @@ begin
        where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -549,7 +563,9 @@ begin
       delete from t1a_eff_act where id = rec_id;
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -665,7 +681,9 @@ begin
       t1a_LOG_dml.upd(rec);
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -679,7 +697,9 @@ begin
       t1a_LOG_dml.del(rec.id);
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+          if sqlerrm like '%_EF1) violated%' then null; end if;
+          if sqlerrm like '%_PK) violated%' then null; end if; 
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -736,7 +756,9 @@ begin
       t1a_EFF_dml.upd(rec);
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+         if sqlerrm like '%_EF1) violated%' then null; end if;
+         if sqlerrm like '%_PK) violated%' then null; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
@@ -751,7 +773,9 @@ begin
       t1a_EFF_dml.del(rec.id, rec.eff_beg_dtm);
       success := TRUE; EXIT;
    exception when too_quick then null;
-      when check_constraint then if sqlerrm like '%_EF1) violated%' then null; end if;
+      when check_constraint then
+         if sqlerrm like '%_EF1) violated%' then null; end if;
+         if sqlerrm like '%_PK) violated%' then null; end if;
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
