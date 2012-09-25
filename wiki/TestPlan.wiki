@@ -148,9 +148,10 @@
 *Note:* "NK_SEP" and "PATH_SEP" parameters are not tested.
 
  = Deployment Configurations =
-|| DB Account Names     || *DB Schema* || *DB User* || *MT Schema* || *MT User* ||
-|| *Application Test 1* || TDBST       || TDBUT     || TMTST       || TMTUT     ||
-|| *Application Test 2* || TDBSN       || TDBUN     || TMTSN       || TMTUN     ||
+|| DB Account Names     || *DB Schema* || *DB User*    || *MT Schema* || *MT User* ||
+|| *Application Test 1* || T1DBS       || T1DBU        || T1MTS       || T1MTU     ||
+|| *Application Test 2* || T2DBS       || T2DBU        || T2MTS       || T2MTU     ||
+|| *DTGen*              || DTGEN(_dev) || DTGENU(_dev) ||             ||           ||
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
@@ -186,17 +187,17 @@
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
  * POPT: Audited POP Function for Tables
- * HAT: History and Audit for Tables
- * APIT: Full Procedural APIs for each Table
- * DML SQL Integrity Enforcement for Tables/Views (with Primary Key and Effective Start Date/Time)
+ * HAT: History and Audit for Tables (Effectivity and Basic Data Movement)
+ * APIT: Full Procedural APIs for each Table (Table ROWTYPE and Active View ROWTYPE API)
+ * DMLIT: DML SQL Integrity Enforcement for Tables/Views (with Primary Key and Effective Start Date/Time)
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
- * HAT: History and Audit for Tables
- * APIT: Full Procedural APIs for each Table
- * DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
+ * HAT: History and Audit for Tables (Point In Time AS_OF)
+ * APIT: Full Procedural APIs for each Table (Column Oriented API)
+ * DMLIT: DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
  * CCCT: Custom Check Constraints for Tables
- * CFC: Enforced Case Folding for Columns
+ * CFC: Enforced Case Folding for Columns (Values Returned through all 3 APIs)
  * EDDC: Enforced Discrete Domains (no FK) for Columns
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
