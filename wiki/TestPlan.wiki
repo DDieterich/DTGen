@@ -154,12 +154,12 @@
 
 *Note:* Multiple Oracle Owners/Schema are created in a single database.  The special database link "loopback" is used to simulate the connection between the database and the mid-tier.
 
-|| v From v \ To -> || *DB Schema* || *DB User* || *MT Schema* || *DOD MT Schema* ||
-|| *DB User*        || Synonym     ||           ||             ||                 ||
-|| *MT Schema*      || DB Link     ||           ||             ||                 ||
-|| *MT User*        ||             ||           || Synonym     ||                 ||
-|| *DOD MT Schema*  ||             || DB Link   ||             ||                 ||
-|| *DOD MT User*    ||             ||           ||             || Synonym         ||
+|| *From v \ To->* || *DB Schema* || *DB User* || *MT Schema* || *DOD MT Schema* ||
+|| *DB User*       || Synonym     ||           ||             ||                 ||
+|| *MT Schema*     || DB Link     ||           ||             ||                 ||
+|| *MT User*       ||             ||           || Synonym     ||                 ||
+|| *DOD MT Schema* ||             || DB Link   ||             ||                 ||
+|| *DOD MT User*   ||             ||           ||             || Synonym         ||
 
  = Boundary Condition Testing =
 || *Condition Name* || *Lowest* || *Highest* || *Nullable* ||
