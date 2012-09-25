@@ -27,19 +27,9 @@ case ${OWNERNAME} in
    connect to TDBST identified by \"TDBST\"
    using ${DB_USING_STR};"
       ;;
-   'TMTSTDOD' )
-      CREATE_DBLINK="create database link ${DB_LINK_NAME}
-   connect to TDBUT identified by \"TDBUT\"
-   using ${DB_USING_STR};"
-      ;;
    'TMTSN' )
       CREATE_DBLINK="create database link ${DB_LINK_NAME}
    connect to TDBSN identified by \"TDBSN\"
-   using ${DB_USING_STR};"
-      ;;
-   'TMTSNDOD' )
-      CREATE_DBLINK="create database link ${DB_LINK_NAME}
-   connect to TDBUN identified by \"TDBUN\"
    using ${DB_USING_STR};"
       ;;
 esac
@@ -106,9 +96,6 @@ case ${OWNERNAME} in
    'TMTST' )
       grant_option 'TMTUT'
       ;;
-   'TMTSTDOD' )
-      grant_option 'TMTUTDOD'
-      ;;
    'TDBSN' )
       grant_access 'TMTSN'
       grant_access 'TMTSNDOD'
@@ -116,9 +103,6 @@ case ${OWNERNAME} in
       ;;
    'TMTSN' )
       grant_option 'TMTUN'
-      ;;
-   'TMTSNDOD' )
-      grant_option 'TMTUNDOD'
       ;;
 esac
 
