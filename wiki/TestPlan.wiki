@@ -115,7 +115,6 @@
       # Middle Tier, Application User
       # Middle Tier, Schema Owner (DISA Specs)
       # Middle Tier, Application User (DISA Specs)
-    # _*ESN*_: Explicit Schema Name in Installation Files
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
@@ -206,7 +205,6 @@
  == TST2: Application Test 2 ==
 
  * TST: Default Tablespaces, Table Defined Tablespaces
- * ESN: Explicit Schema Name in Installation Files
  * NTC: No Triggers/Constraints Installed
 
  === Tables: T2A_NON, T2A_LOG, and T2A_EFF ===
