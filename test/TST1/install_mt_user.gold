@@ -1,0 +1,172 @@
+Connected.
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_gusr ===
+
+old   2:    for &1..util
+new   2:    for T1MTS.util
+
+Synonym created.
+
+old   2:    for &1..util_log
+new   2:    for T1MTS.util_log
+
+Synonym created.
+
+old   2:    for &1..glob
+new   2:    for T1MTS.glob
+
+Synonym created.
+
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_usyn ===
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+old   2:    for &1..t1a_non_seq
+new   2:    for T1MTS.t1a_non_seq
+
+Synonym created.
+
+old   2:    for &1..t1a_non
+new   2:    for T1MTS.t1a_non
+
+Synonym created.
+
+old   2:    for &1..t1a_non_dml
+new   2:    for T1MTS.t1a_non_dml
+
+Synonym created.
+
+old   2:    for &1..t1a_non_act
+new   2:    for T1MTS.t1a_non_act
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+old   2:    for &1..t1a_log_seq
+new   2:    for T1MTS.t1a_log_seq
+
+Synonym created.
+
+old   2:    for &1..t1a_log
+new   2:    for T1MTS.t1a_log
+
+Synonym created.
+
+old   2:    for &1..t1a_log_AUD
+new   2:    for T1MTS.t1a_log_AUD
+
+Synonym created.
+
+old   2:    for &1..t1a_log_PDAT
+new   2:    for T1MTS.t1a_log_PDAT
+
+Synonym created.
+
+old   2:    for &1..t1a_log_pop
+new   2:    for T1MTS.t1a_log_pop
+
+Synonym created.
+
+old   2:    for &1..t1a_log_dml
+new   2:    for T1MTS.t1a_log_dml
+
+Synonym created.
+
+old   2:    for &1..t1a_log_act
+new   2:    for T1MTS.t1a_log_act
+
+Synonym created.
+
+old   2:    for &1..t1a_log_all
+new   2:    for T1MTS.t1a_log_all
+
+Synonym created.
+
+old   2:    for &1..t1a_log_asof
+new   2:    for T1MTS.t1a_log_asof
+
+Synonym created.
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+old   2:    for &1..t1a_eff_seq
+new   2:    for T1MTS.t1a_eff_seq
+
+Synonym created.
+
+old   2:    for &1..t1a_eff
+new   2:    for T1MTS.t1a_eff
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_HIST
+new   2:    for T1MTS.t1a_eff_HIST
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_PDAT
+new   2:    for T1MTS.t1a_eff_PDAT
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_pop
+new   2:    for T1MTS.t1a_eff_pop
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_dml
+new   2:    for T1MTS.t1a_eff_dml
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_act
+new   2:    for T1MTS.t1a_eff_act
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_all
+new   2:    for T1MTS.t1a_eff_all
+
+Synonym created.
+
+old   2:    for &1..t1a_eff_asof
+new   2:    for T1MTS.t1a_eff_asof
+
+Synonym created.
+
+
+=== Install DTGen Test Rig ===
+
+test_rig.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+test_rig.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+

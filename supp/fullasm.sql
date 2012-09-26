@@ -1,7 +1,6 @@
 
 --  SPOOL script to create all script files for an application
 -- &1. is the DTGEN application abbreviation
-spool install_db.sql
 set define '&'
 set feedback off
 set linesize 4000
@@ -10,6 +9,7 @@ set serveroutput on format wrapped
 set trimspool on
 set verify off
 
+spool install_db.sql
 execute dtgen_util.install_script('&1.','DB');
 spool install_db_sec.sql
 execute dtgen_util.install_script('&1.','DB','sec');
@@ -29,12 +29,12 @@ spool uninstall_usr.sql
 execute dtgen_util.uninstall_script('&1.','USR');
 spool dtgen_dataload.ctl
 execute dtgen_util.data_script('&1.')
+spool off
 
 set verify on
 set pagesize 20
 set linesize 80
 set feedback 6
-spool off
 
 --
 --  ============================================================
@@ -48,10 +48,10 @@ spool off
 --
 -- @select_file &1. drop_usyn
 -- @select_file &1. drop_mods
+-- @select_file &1. drop_aa
 -- @select_file &1. drop_oltp
 -- @select_file &1. drop_dist
 -- @select_file &1. drop_integ
--- @select_file &1. delete_ods
 -- @select_file &1. drop_ods
 -- @select_file &1. drop_gdst
 -- @select_file &1. drop_glob
@@ -68,6 +68,8 @@ spool off
 -- @select_file &1. create_dist_sec
 -- @select_file &1. create_oltp
 -- @select_file &1. create_oltp_sec
+-- @select_file &1. create_aa
+-- @select_file &1. create_aa_sec
 -- @select_file &1. create_mods
 -- @select_file &1. create_mods_sec
 -- @select_file &1. create_usyn
