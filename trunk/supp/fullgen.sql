@@ -14,17 +14,16 @@ prompt Running fullgen ...
 BEGIN
 
    /*  Initialize  */
-   util.set_usr('Initial Load');  -- Any string will work for this parameter
+   glob.set_usr('Initial Load');  -- Any string will work for this parameter
    generate.init('&1.');
 
-   /*  Drop/Delete Scripts  */
+   /*  Drop Scripts  */
    generate.drop_usyn;
    generate.drop_mods;
    generate.drop_oltp;
    generate.drop_dist;
    generate.drop_aa;
    generate.drop_integ;
-   generate.delete_ods;
    generate.drop_ods;
    generate.drop_gusr;
    generate.drop_gdst;

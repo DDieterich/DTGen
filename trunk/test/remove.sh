@@ -8,8 +8,10 @@
 . ./t.env
 
 if [ ${SYS_CONNECT_STRING-NULL} = "NULL" -o \
-     ${OWNERNAME-NULL}          = "NULL" -o \
-     ${USERNAME-NULL}           = "NULL" -o \
+     ${DB_SCHEMA-NULL}          = "NULL" -o \
+     ${DB_USER-NULL}            = "NULL" -o \
+     ${MT_SCHEMA-NULL}          = "NULL" -o \
+     ${MT_USER-NULL}            = "NULL" -o \
      ${logfile-NULL}            = "NULL" ]
 then
   echo "This script should not be run stand-alone.  Run t.sh instead."
@@ -17,8 +19,10 @@ then
 fi
 
 sqlplus ${SYS_CONNECT_STRING} as sysdba > ${logfile} 2>&1 <<EOF
-   @../../supp/drop_user ${USERNAME}
-   @../../supp/drop_owner ${OWNERNAME}
+   @../../supp/drop_user ${MT_USER}
+   @../../supp/drop_owner ${MT_SCHEMA}
+   @../../supp/drop_user ${DB_USER}
+   @../../supp/drop_owner ${DB_SCHEMA}
 EOF
 
 fgrep -i -e fail -e warn -e ora- -e sp2- -e pls- ${logfile} | ${SORT} -u | head

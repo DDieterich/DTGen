@@ -1,0 +1,1371 @@
+Connected.
+old   1: create database link &2.
+new   1: create database link XE@loopback
+old   2:    connect to &3. identified by &4.
+new   2:    connect to T1DBS identified by T1DBS
+old   3:    using '&5.'
+new   3:    using 'loopback'
+
+Database link created.
+
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_gdst ===
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Type created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Type created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Table created.
+
+
+Index created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME
+----------------------------
+=== TST1 create_gdst_sec ===
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_dist ===
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Synonym created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME
+----------------------------
+=== TST1 create_dist_sec ===
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_oltp ===
+
+
+TABLE_NAME
+-----------------
+***  t1a_non  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_log  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+TABLE_NAME
+-----------------
+***  t1a_eff  ***
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+View created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+View altered.
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Trigger created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+Package body created.
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME
+----------------------------
+=== TST1 create_oltp_sec ===
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+SCRIPT_NAME
+------------------------
+=== TST1 create_mods ===
+
+
+SCRIPT_NAME
+----------------------------
+=== TST1 create_mods_sec ===
+
+
+=== Compile Stored Program Units ===
+
+
+=== Install DTGen Test Rig ===
+
+test_rig.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+test_rig.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+old   7:         and  grantee = upper('&1.') || '_APP' )
+new   7:         and  grantee = upper('TST1') || '_APP' )
+old  11:                  ' to &2. with grant option';
+new  11:                  ' to T1MTU with grant option';
+grant EXECUTE on GLOB to T1MTU with grant option
+grant EXECUTE on UTIL to T1MTU with grant option
+grant EXECUTE on T1A_LOG_POP to T1MTU with grant option
+grant EXECUTE on T1A_EFF_POP to T1MTU with grant option
+grant EXECUTE on T1A_NON_DML to T1MTU with grant option
+grant EXECUTE on T1A_LOG_DML to T1MTU with grant option
+grant EXECUTE on T1A_EFF_DML to T1MTU with grant option
+grant UPDATE on T1A_NON_ACT to T1MTU with grant option
+grant UPDATE on T1A_LOG_ACT to T1MTU with grant option
+grant UPDATE on T1A_EFF_ACT to T1MTU with grant option
+grant SELECT on UTIL_LOG to T1MTU with grant option
+grant SELECT on T1A_NON to T1MTU with grant option
+grant SELECT on T1A_LOG to T1MTU with grant option
+grant SELECT on T1A_LOG_AUD to T1MTU with grant option
+grant SELECT on T1A_LOG_PDAT to T1MTU with grant option
+grant SELECT on T1A_LOG_ALL to T1MTU with grant option
+grant SELECT on T1A_LOG_ASOF to T1MTU with grant option
+grant SELECT on T1A_EFF to T1MTU with grant option
+grant SELECT on T1A_EFF_HIST to T1MTU with grant option
+grant SELECT on T1A_EFF_PDAT to T1MTU with grant option
+grant SELECT on T1A_EFF_ALL to T1MTU with grant option
+grant SELECT on T1A_EFF_ASOF to T1MTU with grant option
+grant SELECT on T1A_NON_ACT to T1MTU with grant option
+grant SELECT on T1A_LOG_ACT to T1MTU with grant option
+grant SELECT on T1A_EFF_ACT to T1MTU with grant option
+grant INSERT on UTIL_LOG to T1MTU with grant option
+grant INSERT on T1A_NON_ACT to T1MTU with grant option
+grant INSERT on T1A_LOG_ACT to T1MTU with grant option
+grant INSERT on T1A_EFF_ACT to T1MTU with grant option
+grant DELETE on UTIL_LOG to T1MTU with grant option
+grant DELETE on T1A_NON_ACT to T1MTU with grant option
+grant DELETE on T1A_LOG_ACT to T1MTU with grant option
+grant DELETE on T1A_EFF_ACT to T1MTU with grant option
+
+PL/SQL procedure successfully completed.
+

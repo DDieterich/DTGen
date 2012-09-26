@@ -2,7 +2,7 @@ create or replace package test_gen
 is
 
 type applist_nt_type is table
-     of file_lines_act.files_nk1%TYPE;
+     of applications_act.abbr%TYPE;
 applist_nt  applist_nt_type;
 
 type fileapp_rec_type is record
@@ -14,10 +14,16 @@ type fileapp_aa_type is table
 type action_aa_type is table
      of fileapp_aa_type
      index by varchar2(15);
+type app_rec_type is record
+    (db_schema      applications_act.db_schema%TYPE
+    ,db_schema_exp  applications_act.db_schema_exp%TYPE
+    ,dbid           applications_act.dbid%TYPE
+    ,db_auth        applications_act.db_auth%TYPE);
+type app_aa_type is table
+    of app_rec_type
+    index by file_lines_act.files_nk1%TYPE;
 type user_rec_type is record
-    (db_schema  applications_act.db_schema%TYPE
-    ,dbid       applications_act.dbid%TYPE
-    ,db_auth    applications_act.db_auth%TYPE
+    (app_aa     app_aa_type
     ,action_aa  action_aa_type);
 type user_aa_type is table
      of user_rec_type

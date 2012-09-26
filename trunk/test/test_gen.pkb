@@ -265,9 +265,10 @@ begin
        from  applications_act
        where abbr = app_abbr;
       update applications_act
-        set  db_schema = user_aa(db_schema_in).db_schema
-            ,dbid      = user_aa(db_schema_in).dbid
-            ,db_auth   = user_aa(db_schema_in).db_auth
+        set  db_schema     = user_aa(db_schema_in).app_aa(app_abbr).db_schema
+            ,db_schema_exp = user_aa(db_schema_in).app_aa(app_abbr).db_schema
+            ,dbid          = user_aa(db_schema_in).app_aa(app_abbr).dbid
+            ,db_auth       = user_aa(db_schema_in).app_aa(app_abbr).db_auth
        where abbr = app_abbr;
    end loop;
    FOR j in 1 .. user_aa(db_schema_in).action_aa(action_in).COUNT
@@ -544,9 +545,10 @@ begin
    -- RA - Reverse All
    -- NOTE: RO (Reverse last Only) would be the same as FO
    ----------------------------------------
-   user_aa('TDBST').db_schema    := 'TDBST';        -- Testing Common App Settings
-   user_aa('TDBST').dbid         := 'XE@loopback';  -- Testing Common App Settings
-   user_aa('TDBST').db_auth      := 'TDBST';        -- Testing Common App Settings
+   user_aa('TDBST').app_aa('TST1').db_schema     := 'TDBST';        -- Testing Common App Settings
+   user_aa('TDBST').app_aa('TST1').db_schema_exp := 'X';            -- Testing Common App Settings
+   user_aa('TDBST').app_aa('TST1').dbid          := 'XE@loopback';  -- Testing Common App Settings
+   user_aa('TDBST').app_aa('TST1').db_auth       := 'TDBST';        -- Testing Common App Settings
    fileapp_rec.applist_key := 'FO';
    fileapp_rec.file_name :=       'create_glob';
    user_aa('TDBST').action_aa  ('install')(1) := fileapp_rec;

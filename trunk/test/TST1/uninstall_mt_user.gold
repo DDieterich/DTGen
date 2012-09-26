@@ -1,0 +1,115 @@
+Connected.
+
+=== Un-Install DTGen Test Rig ===
+
+Package dropped.
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_usyn ===                                                          
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_gusr ===                                                          
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+Synonym dropped.
+
+
+REMAINING_OBJECTS                                                               
+--------------------------------------------------------------------------------
+SYNONYM: GLOBAL_PARMS(VALID)                                                    
+SYNONYM: PARM_SETS(VALID)                                                       
+SYNONYM: TEST_GEN(VALID)                                                        
+SYNONYM: TEST_PARMS(VALID)                                                      
+SYNONYM: TEST_SETS(VALID)                                                       
+

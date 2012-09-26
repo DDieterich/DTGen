@@ -4,8 +4,11 @@
 #  t.sh - Linux (or Cygwin for Windows) script to test the DTGen application
 #
 
+# Set directory list
+DIR_LIST="TST1"
+
 # Set the Oracle environment for the database connection
-export TNS_ALIAS=DEMO1
+#export TNS_ALIAS=DEMO1
 export TNS_ALIAS=XE2
 DEV_PROD="DEV"
 if [ ${DEV_PROD} = "PROD" ]
@@ -27,9 +30,6 @@ export logfile="${1}.log"
 # Pickup the CygWin sort instead of the Windows sort
 export SORT="/usr/bin/sort"
 
-# Set directory list
-DIR_LIST="DB_Integ MT_Integ DB_NoInteg MT_NoInteg"
-
 # Set Connect Strings
 export DEV_CONNECT_STRING=${DEVNAME}/${DEVPASS}
 if [ ${TNS_ALIAS-NULL} != "NULL" ]
@@ -39,7 +39,7 @@ fi
 export TEST_CONNECT_STRING=${TESTNAME}/${TESTPASS}
 if [ ${TNS_ALIAS-NULL} != "NULL" ]
 then
-   TEST_CONNECT_STRING=${CONNECT_STRING}@${TNS_ALIAS}
+   TEST_CONNECT_STRING=${TEST_CONNECT_STRING}@${TNS_ALIAS}
 fi
 
 function show_usage () {
@@ -89,16 +89,12 @@ then
    echo ""
    echo "Common Environment for ${0}:"
    echo "TNS_ALIAS = ${TNS_ALIAS}"
-   echo "TNS_ALIAS = ${TNS_ALIAS}"
-   echo "SYSNAME   = ${SYSNAME}"
-   echo "SYSPASS   = ${SYSPASS}"
    echo "GUI_DIR   = ${GUI_DIR}"
    echo "DEVNAME   = ${DEVNAME}"
    echo "DEVPASS   = ${DEVPASS}"
    echo "TESTNAME  = ${TESTNAME}"
    echo "TESTPASS  = ${TESTPASS}"
    echo "logfile   = ${logfile}"
-   echo "SYS_CONNECT_STRING  = ${SYS_CONNECT_STRING}"
    echo "DEV_CONNECT_STRING  = ${DEV_CONNECT_STRING}"
    echo "TEST_CONNECT_STRING = ${TEST_CONNECT_STRING}"
    if [ ${#} -eq 1 ]
@@ -152,12 +148,15 @@ function run_script () {
    cd ..
    }
 
+export APP_ABBR=""
 if [ ${#} -eq 1 ]
 then
    for TDIR in ${DIR_LIST}
    do
-      run_script ${1} "${TDIR}"
+      APP_ABBR="${TDIR}"
+      run_script ${1} "${APP_ABBR}"
    done
 else
-   run_script ${1} "${2}"
+   APP_ABBR="${2}"
+   run_script ${1} "${APP_ABBR}"
 fi
