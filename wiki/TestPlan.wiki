@@ -185,13 +185,14 @@
    * VARCHAR2 Datatype Length Boundary Test
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
- * POPT: Audited POP Function for Tables
+ * POPT: Audited POP Function for Tables (Effectivity and Basic Data Movement)
  * HAT: History and Audit for Tables (Effectivity and Basic Data Movement)
  * APIT: Full Procedural APIs for each Table (Table ROWTYPE and Active View ROWTYPE API)
  * DMLIT: DML SQL Integrity Enforcement for Tables/Views (with Primary Key and Effective Start Date/Time)
 
  === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
 
+ * POPT: Audited POP Function for Tables (All View)
  * HAT: History and Audit for Tables (Point In Time AS_OF)
  * APIT: Full Procedural APIs for each Table (Column Oriented API)
  * DMLIT: DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
