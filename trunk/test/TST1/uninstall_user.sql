@@ -7,6 +7,7 @@
 
 spool uninstall_&2._user.log
 connect &1.
+ALTER SESSION SET recyclebin = OFF;
 
 @uninstall_test_rig
 
