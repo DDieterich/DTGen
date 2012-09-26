@@ -8,6 +8,7 @@
 
 spool uninstall_mt_schema.log
 connect &1.
+ALTER SESSION SET recyclebin = OFF;
 
 @uninstall_test_rig
 
