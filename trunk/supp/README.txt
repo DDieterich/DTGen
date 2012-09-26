@@ -5,24 +5,36 @@ DTGen "supp" (Supplemental Install and Sample) README File
 
 Files and Directories:
 ----------------------
+bug_grants.sql     - Permission grants needed to overcome a loopback bug in Oracle
+                     -) Schema/User needing access via DB link is first parameter
 comp_file.sql      - SPOOL script used by an alternaitve path in fullgen.sql
+create_app_role    - Creates all application roles before application installation
+                     -) Application Abbreviation is the first parameter
 create_owner.sql   - Used by install.sql to create the DTGen owner and roles
                      -) Must be run as sys (to grant DBMS_LOCK)
                      -) New Schema Owner Name is the first parameter
                      -) New Schema Owner Password is the second parameter
                      -) New Schema Owner Default Tablespace is the third parameter
                      -) New Schema Owner Temporary Tablespace is the fourth parameter
-create_user.sql    - Sample script used to create an application user
+create_user.sql    - Script used to create an application user
                      -) Must be run by sys or system
                      -) Creates the user and synonyms and grants permissions
-drop_owner.sql     - Sample script used to drop a DTGen owner and roles
-drop_user.sql      - Sample script used to drop an application user
+drop_app_role.sql  - Drops all application roles after application un-installation
+                     -) Application Abbreviation is the first parameter
+drop_owner.sql     - Script used to drop a DTGen owner and roles
+drop_user.sql      - Script used to drop an application user
 dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
 fullasm.sql        - SPOOL script used to assemble scripts for an application
                      -) The ABBR of the application is the first parameter
                         NOTE: must be run after fullgen.sql
 fullgen.sql        - Script used to generate scripts for an application
                      -) The ABBR of the application is the first parameter
+grant_app_role.sql - Script to grant application role to an application user
+                     -) Application Abbreviation is the first parameter
+                     -) User reciebing the grants is the second parameter
+grant_role_option.sql - Required for users to create Application packages
+                     -) Application Abbreviation is the first parameter
+                     -) User reciebing the grants is the second parameter
 select_file.sql    - SPOOL script used by an alternative path in fullgen.sql
 
 
