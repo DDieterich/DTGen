@@ -188,6 +188,7 @@
 
  * TST: Default Tablespaces, Table Defined Tablespaces
  * NTC: No Triggers/Constraints Installed
+ * MTD: Multi-Tiered Deployment
 
  === Tables: T2A_NON, T2A_LOG, and T2A_EFF ===
 
