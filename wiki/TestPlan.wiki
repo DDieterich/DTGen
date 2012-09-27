@@ -190,19 +190,6 @@
  * APIT: Full Procedural APIs for each Table (Table ROWTYPE and Active View ROWTYPE API)
  * DMLIT: DML SQL Integrity Enforcement for Tables/Views (with Primary Key and Effective Start Date/Time)
 
- === Tables: T1B_NON, T1B_LOG, and T1B_EFF ===
-
- * POPT: Audited POP Function for Tables (All View)
- * HAT: History and Audit for Tables (Point In Time ASOF)
- * APIT: Full Procedural APIs for each Table (Column Oriented API)
- * DMLIT: DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
- * CCCT: Custom Check Constraints for Tables
- * CFC: Enforced Case Folding for Columns (Values Returned through all 3 APIs)
- * EDDC: Enforced Discrete Domains (no FK) for Columns
- * FPHC: Full Path Hierarchical Data for Columns
- * NKUV: Natural Key Update-able Views
- * APIT: Full Procedural APIs for each Table
-
  == TST2: Application Test 2 ==
 
  * TST: Default Tablespaces, Table Defined Tablespaces
@@ -218,3 +205,16 @@
  * CGT: Table Comments
  * CGV: View Comments
  * NSO: Named Schema Objects
+
+ === Tables: T2B_NON, T2B_LOG, and T2B_EFF ===
+
+ * POPT: Audited POP Function for Tables (All View)
+ * HAT: History and Audit for Tables (Point In Time ASOF)
+ * APIT: Full Procedural APIs for each Table (Column Oriented API)
+ * DMLIT: DML SQL Integrity Enforcement for Tables/Views (without Primary Key or Effective Start Date/Time)
+ * CCCT: Custom Check Constraints for Tables
+ * CFC: Enforced Case Folding for Columns (Values Returned through all 3 APIs)
+ * EDDC: Enforced Discrete Domains (no FK) for Columns
+ * FPHC: Full Path Hierarchical Data for Columns
+ * NKUV: Natural Key Update-able Views
+ * APIT: Full Procedural APIs for each Table
