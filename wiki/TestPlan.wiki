@@ -103,18 +103,11 @@
       # Datatype storage size
       # Default PCTFREE for required columns
       # Default PCTFREE for non-required columns
-    # _*NSO*_: Named Schema Objects
-      # Column Constraints
-      # Table Constraints
-      # Constraint Indexes
-      # LOBS (CLOBS)
     # _*MTD*_: Multi-Tiered Deployment
       # Database Tier, Schema Owner
       # Database Tier, Application User
       # Middle Tier, Schema Owner
       # Middle Tier, Application User
-      # Middle Tier, Schema Owner (DISA Specs)
-      # Middle Tier, Application User (DISA Specs)
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
@@ -176,6 +169,7 @@
  == TST1: Application Test 1 ==
 
  * TST: Override Default Tablespace and Table Defined Tablespaces
+ * MTD: Multi-Tiered Deployment
 
  === Tables: T1A_NON, T1A_LOG, and T1A_EFF ===
 
@@ -204,7 +198,6 @@
  * CGC: Column Comments
  * CGT: Table Comments
  * CGV: View Comments
- * NSO: Named Schema Objects
 
  === Tables: T2B_NON, T2B_LOG, and T2B_EFF ===
 
