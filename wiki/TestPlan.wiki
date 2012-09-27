@@ -176,7 +176,7 @@
  * DTC: Datatype Support for Columns
    * NUMBER Datatype Length Boundary Test
    * NUMBER Datatype Scale Boundary Test
-   * VARCHAR2 Datatype Length Boundary Test
+   * VARCHAR2 Datatype Length Boundary Test (No CLOB)
    * TIMESTAMP WITH TIME ZONE Datatype Length Boundary Test
    * TIMESTAMP WITH LOCAL TIME ZONE Datatype Length Boundary Test
  * POPT: Audited POP Function for Tables (Effectivity and Basic Data Movement)
@@ -211,3 +211,12 @@
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
  * APIT: Full Procedural APIs for each Table
+
+ == TST3: Application Test 3 ==
+
+ * ???
+
+ === Tables: T3A_NON, T3A_LOG, and T3A_EFF ===
+
+ * DTC: Datatype Support for Columns
+   * VARCHAR2 Datatype Length Boundary Test (CLOB)
