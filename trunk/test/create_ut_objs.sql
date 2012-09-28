@@ -76,7 +76,7 @@ grant select
 create table test_sets
       (user_name    varchar2(30) -- Primary Key
       ,global_set   varchar2(1)  -- Primary Key
-      ,test_name    varchar2(30) -- Primary Key
+      ,test_name    varchar2(60) -- Primary Key
       ,parm_set     varchar2(30) -- Primary Key
       ,description  varchar2(2000)
       ,constraint  test_sets_pk primary key (user_name, global_set, test_name, parm_set)

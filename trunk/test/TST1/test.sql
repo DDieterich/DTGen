@@ -9,13 +9,13 @@
 set echo on
 set serveroutput on format wrapped
 
-execute test_rig.run_global_set('A');
-execute test_rig.run_global_set('B');
-execute test_rig.run_global_set('C');
-execute test_rig.run_global_set('D');
-execute test_rig.run_global_set('E');
-execute test_rig.run_global_set('F');
-execute test_rig.run_global_set('G');
-execute test_rig.run_global_set('H');
+execute trc.run_global_set('A');
+execute trc.run_global_set('B');
+execute trc.run_global_set('C');
+execute trc.run_global_set('D');
+execute trc.run_global_set('E');
+execute trc.run_global_set('F');
+execute trc.run_global_set('G');
+execute trc.run_global_set('H');
 
 commit;

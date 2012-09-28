@@ -30,6 +30,7 @@ create database link &2.
 @comp
 
 @install_test_rig
+@install_test_rig_owner
 @../../supp/grant_role_option &6 &7
 
 spool off

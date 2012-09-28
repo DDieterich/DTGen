@@ -16035,19 +16035,49 @@ END get_usr_collen;
 PROCEDURE init
       (app_abbr_in  in  varchar2)
 IS
+   rec_cnt  number;
 BEGIN
+   -- Get the application record
    BEGIN
-      select *
-       into  abuff
-       from  applications  APP
-       where APP.abbr = upper(app_abbr_in);
+      select * into abuff from applications
+       where abbr = upper(app_abbr_in);
    EXCEPTION
       when NO_DATA_FOUND then
          raise_application_error(-20000, 'There is no application for abbr "' ||
-             app_abbr_in || '"');
-      when others then
-         raise;
+                                          app_abbr_in || '"');
    END;
+   -- Applications must have tables
+   select count(*) into rec_cnt from tables where application_id = abuff.id;
+   if rec_cnt = 0 then
+      abuff := null;
+      raise_application_error(-20000, 'Application "' || app_abbr_in ||
+                                      '" has no tables');
+   end if;
+   -- All tables must have columns
+   for buff in (select id, name from tables where application_id = abuff.id)
+   loop
+      select count(*) into rec_cnt from tab_cols where table_id = buff.id;
+      if rec_cnt = 0 then
+         abuff := null;
+         raise_application_error(-20000, 'Table "' || buff.name ||
+                                         '" has no columns');
+      end if;
+   end loop;
+   -- Multi-Tiered (Remote) LOBs are not allowed
+   if abuff.dbid is not null then
+      for buff in (select id, name from tables order by id)
+      loop
+         for buf2 in (select * from tab_cols where table_id = buff.id order by id)
+         loop
+            if get_dtype(buf2,'DB') = 'CLOB' then
+               abuff := null;
+               raise_application_error(-20000, 'Remote LOBs are not allowed: Column "' ||
+                  buf2.name || '" in Table "' || buff.name ||
+                  '" converts to CLOB storage and DBID is not null');
+            end if;
+         end loop;
+      end loop;
+   end if;
    fbuff.application_id := abuff.id;
    fbuff.type           := 'SQL';
    if substr(abuff.db_auth,length(abuff.db_auth),1) != '.'

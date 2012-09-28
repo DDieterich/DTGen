@@ -150,9 +150,9 @@ new   2:    for T1MTS.t1a_eff_asof
 Synonym created.
 
 
-=== Install DTGen Test Rig ===
+=== Install Test Rig ===
 
-test_rig.pks
+trc.pks
 
 Package created.
 
@@ -161,7 +161,25 @@ Package created.
 
 No errors.
 
-test_rig.pkb
+tr_btt_num.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+trc.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_num.pkb
 
 Package body created.
 
