@@ -153,16 +153,17 @@
 || *MT User*           ||             || Synonym     ||
 
  = Boundary Condition Testing =
-|| *Condition Name* || *Lowest* || *Highest* || *Nullable* ||
-|| Number of Tables || 1 || 200 || No ||
-|| Number of Columns in a Table || 1 || 99 || No ||
-|| Number of Natural Key Columns || 1 || 99 || No ||
-|| NUMBER Datatype Length || 1 || 38 || Yes ||
-|| NUMBER Datatype Scale || -84 || 127 || Yes ||
-|| VARCHAR2 Datatype Length || 1 || 32767 || No ||
-|| TIMESTAMP WITH TIME ZONE Datatype Length || 0 || 9 || Yes ||
-|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0 || 9 || Yes ||
-|| Exception Code || -20999 || -20000 || No ||
+|| *Condition Name*                               || *Lowest* || *Highest* || *Nullable* ||
+|| Number of Tables                               || 1        || 200       || No ||
+|| Number of Columns in a Table                   || 1        || 99        || No ||
+|| Number of Natural Key Columns                  || 1        || 99        || No ||
+|| NUMBER Datatype Length                         || 1        || 38        || Yes ||
+|| NUMBER Datatype Scale                          || -84      || 127       || Yes ||
+|| NUMBER Absolute Value                          || 10^-130^ || 10^126^   || Yes ||
+|| VARCHAR2 Datatype Length                       || 1        || 32767     || No ||
+|| TIMESTAMP WITH TIME ZONE Datatype Length       || 0        || 9         || Yes ||
+|| TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0        || 9         || Yes ||
+|| Exception Code                                 || -20999   || -20000    || No ||
 
  = Implementation =
 
