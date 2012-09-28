@@ -1,36 +1,35 @@
 
 prompt
-prompt === Install DTGen Test Rig ===
+prompt === Install Test Rig ===
 
 set define off
 
-
--- Package Specs
-
 prompt
-prompt test_rig.pks
-@test_rig.pks
+prompt trc.pks
+@trc.pks
 /
-show errors PACKAGE test_rig
-
-
--- Functions
-
-
--- Procedures
-
-
--- Views
-
-
--- Package Bodies
+show errors PACKAGE trc
 
 prompt
-prompt test_rig.pkb
-@test_rig.pkb
+prompt tr_btt_num.pks
+@tr_btt_num.pks
 /
-show errors PACKAGE BODY test_rig
+show errors PACKAGE tr_btt_num
 
+------------------------------------------------------------
 
 prompt
+prompt trc.pkb
+@trc.pkb
+/
+show errors PACKAGE BODY trc
+
+prompt
+prompt tr_btt_num.pkb
+@tr_btt_num.pkb
+/
+show errors PACKAGE BODY tr_btt_num
+
+prompt
+
 set define on

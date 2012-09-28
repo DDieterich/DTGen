@@ -25,6 +25,11 @@ then
   exit -1
 fi
 
+for suffix in db_schema db_user mt_schema mt_user
+do
+   cp install_${suffix}.gold install_${suffix}.log
+done
+
 sqlplus /nolog > ${logfile} 2>&1 <<EOF
    @load ${APP_ABBR} ${DEV_CONNECT_STRING}
    @install_db_schema ${DB_SCHEMA_CONNECT} ${MT_SCHEMA} ${APP_ABBR} ${DB_USER}
@@ -34,17 +39,11 @@ sqlplus /nolog > ${logfile} 2>&1 <<EOF
    exit
 EOF
 
-echo "*** install_db_schema.gold comparison ..."
-sdiff -s -w 80 install_db_schema.gold install_db_schema.log | ${SORT} -u | head
-
-echo "*** install_db_user.gold comparison ..."
-sdiff -s -w 80 install_db_user.gold install_db_user.log | ${SORT} -u | head
-
-echo "*** install_mt_schema.gold comparison ..."
-sdiff -s -w 80 install_mt_schema.gold install_mt_schema.log | ${SORT} -u | head
-
-echo "*** install_mt_user.gold comparison ..."
-sdiff -s -w 80 install_mt_user.gold install_mt_user.log | ${SORT} -u | head
+for suffix in db_schema db_user mt_schema mt_user
+do
+   echo "*** install_${suffix}.gold comparison ..."
+   sdiff -s -w 80 install_${suffix}.gold install_${suffix}.log | ${SORT} -u | head
+done
 
 #cd ${GUI_DIR}
 #sqlplus ${OWNER_CONNECT_STRING} >> ${logfile} 2>&1 <<EOF

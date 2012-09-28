@@ -16,6 +16,8 @@
 set define '&'
 connect &2.
 set serveroutput on format wrapped
+whenever sqlerror exit
+whenever oserror exit
 
 prompt
 prompt Running fullgen ...
@@ -108,3 +110,6 @@ execute dtgen_util.data_script('&1.');
 set linesize 80
 set feedback 6
 spool off
+
+whenever oserror continue
+whenever sqlerror continue

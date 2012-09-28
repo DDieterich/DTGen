@@ -164,6 +164,33 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Table altered.
 
 
@@ -923,6 +950,33 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1719,9 +1773,9 @@ SCRIPT_NAME
 === Compile Stored Program Units ===
 
 
-=== Install DTGen Test Rig ===
+=== Install Test Rig ===
 
-test_rig.pks
+trc.pks
 
 Package created.
 
@@ -1730,7 +1784,46 @@ Package created.
 
 No errors.
 
-test_rig.pkb
+tr_btt_num.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+trc.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_num.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+
+=== Install Test Rig Owner ===
+
+tr_btt_num_owner.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
+tr_btt_num_owner.pkb
 
 Package body created.
 
@@ -1770,6 +1863,13 @@ grant EXECUTE on T1A_EFF_DML to T1DBU with grant option
 grant UPDATE on T1A_NON_ACT to T1DBU with grant option
 grant UPDATE on T1A_LOG_ACT to T1DBU with grant option
 grant UPDATE on T1A_EFF_ACT to T1DBU with grant option
+grant SELECT on T1A_NON_ACT to T1DBU with grant option
+grant SELECT on T1A_LOG_ACT to T1DBU with grant option
+grant SELECT on T1A_EFF_ACT to T1DBU with grant option
+grant SELECT on T1A_LOG_ALL to T1DBU with grant option
+grant SELECT on T1A_LOG_ASOF to T1DBU with grant option
+grant SELECT on T1A_EFF_ALL to T1DBU with grant option
+grant SELECT on T1A_EFF_ASOF to T1DBU with grant option
 grant SELECT on UTIL_LOG to T1DBU with grant option
 grant SELECT on T1A_NON_SEQ to T1DBU with grant option
 grant SELECT on T1A_NON to T1DBU with grant option
@@ -1781,21 +1881,14 @@ grant SELECT on T1A_EFF_SEQ to T1DBU with grant option
 grant SELECT on T1A_EFF to T1DBU with grant option
 grant SELECT on T1A_EFF_HIST to T1DBU with grant option
 grant SELECT on T1A_EFF_PDAT to T1DBU with grant option
-grant SELECT on T1A_NON_ACT to T1DBU with grant option
-grant SELECT on T1A_LOG_ACT to T1DBU with grant option
-grant SELECT on T1A_EFF_ACT to T1DBU with grant option
-grant SELECT on T1A_LOG_ALL to T1DBU with grant option
-grant SELECT on T1A_LOG_ASOF to T1DBU with grant option
-grant SELECT on T1A_EFF_ALL to T1DBU with grant option
-grant SELECT on T1A_EFF_ASOF to T1DBU with grant option
-grant INSERT on UTIL_LOG to T1DBU with grant option
 grant INSERT on T1A_NON_ACT to T1DBU with grant option
 grant INSERT on T1A_LOG_ACT to T1DBU with grant option
 grant INSERT on T1A_EFF_ACT to T1DBU with grant option
-grant DELETE on UTIL_LOG to T1DBU with grant option
+grant INSERT on UTIL_LOG to T1DBU with grant option
 grant DELETE on T1A_NON_ACT to T1DBU with grant option
 grant DELETE on T1A_LOG_ACT to T1DBU with grant option
 grant DELETE on T1A_EFF_ACT to T1DBU with grant option
+grant DELETE on UTIL_LOG to T1DBU with grant option
 
 PL/SQL procedure successfully completed.
 

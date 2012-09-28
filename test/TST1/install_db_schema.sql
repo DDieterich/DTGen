@@ -27,6 +27,7 @@ set serveroutput on format wrapped
 @comp
 
 @install_test_rig
+@install_test_rig_owner
 @../../supp/bug_grants &2.
 @../../supp/grant_role_option &3. &4.
 

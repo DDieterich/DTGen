@@ -16,6 +16,7 @@ res_txt             varchar2(4000);
 -- Ensure the new data value for the data occurs after its current date/time value.
 --PRAGMA EXCEPTION_INIT (too_quick, -20009);
 
+------------------------------------------------------------
 procedure get_tparms
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -39,14 +40,14 @@ begin
               to_char(line_num)         || ':' ||
               upper(parm_set_in)        ;
 end get_tparms;
-
+------------------------------------------------------------
 procedure basic_test
 is
    junk  dual.dummy%TYPE;
 begin
    select dummy into junk from dual;
 end basic_test;
-
+------------------------------------------------------------
 procedure num_plain_rows_non
       (rows_in  in  number
       ,id_in    in  number
@@ -71,7 +72,7 @@ begin
                                                   ' and val_in ' || val_in);
    end if;
 end num_plain_rows_non;
-
+-----------------------------------------------------------
 procedure num_plain_rows_log
       (rows_in       in  number
       ,aud_rows_in   in  number
@@ -128,7 +129,7 @@ begin
                                                   ' and val_in ' || val_in);
    end if;
 end num_plain_rows_log;
-
+-----------------------------------------------------------
 procedure num_plain_rows_eff
       (rows_in       in  number
       ,hist_rows_in  in  number
@@ -185,7 +186,7 @@ begin
                                                   ' and val_in ' || val_in);
    end if;
 end num_plain_rows_eff;
-
+-----------------------------------------------------------
 function BTT_SQLTAB_NON_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -235,7 +236,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLTAB_NON_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_SQLTAB_LOG_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -322,7 +323,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLTAB_LOG_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_SQLTAB_EFF_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -409,7 +410,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLTAB_EFF_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_SQLACT_NON_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -450,7 +451,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLACT_NON_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_SQLACT_LOG_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -527,7 +528,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLACT_LOG_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_SQLACT_EFF_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -622,7 +623,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_SQLACT_EFF_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_APITAB_NON_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -665,7 +666,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_APITAB_NON_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_APITAB_LOG_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -744,7 +745,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_APITAB_LOG_NUM_PLAIN;
-
+-----------------------------------------------------------
 function BTT_APITAB_EFF_NUM_PLAIN
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number)
@@ -826,7 +827,7 @@ exception
                              ': ' || sqlerrm ||
                              '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end BTT_APITAB_EFF_NUM_PLAIN;
-
+-----------------------------------------------------------
 function bool_to_str
       (bool_in in boolean)
    return varchar2
@@ -837,7 +838,7 @@ begin
    end if;
    return 'FALSE';
 end bool_to_str;
-
+-----------------------------------------------------------
 procedure set_global_parms
       (global_set_in  in  varchar2)
 is
@@ -879,7 +880,7 @@ begin
    DBMS_OUTPUT.PUT_LINE('      glob.get_ignore_no_change is ' ||
                    bool_to_str(glob.get_ignore_no_change));
 end set_global_parms;
-
+-----------------------------------------------------------
 procedure run_test
       (test_name_in  in  varchar2)
 is
@@ -915,7 +916,7 @@ begin
       end if;
    end loop;
 end run_test;
-
+-----------------------------------------------------------
 procedure run_global_set
       (global_set_in  in  varchar2)
 is
@@ -931,7 +932,7 @@ begin
       run_test(buff.test_name);
    end loop;
 end run_global_set;
-
+-----------------------------------------------------------
 procedure run_all
 is
 begin
@@ -944,6 +945,6 @@ begin
    end loop;
    commit;
 end run_all;
-
+-----------------------------------------------------------
 end test_rig;
 /

@@ -2,4 +2,5 @@
 prompt
 prompt === Un-Install DTGen Test Rig ===
 
-drop PACKAGE test_rig;
+drop PACKAGE tr_btt_num;
+drop PACKAGE trc;

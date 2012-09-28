@@ -16,7 +16,7 @@ SQL>
 SQL> set echo on
 SQL> set serveroutput on format wrapped
 SQL> 
-SQL> execute test_rig.run_global_set('A');
+SQL> execute trc.run_global_set('A');
 
 ============================================================
    Global_Set is A
@@ -24,46 +24,37 @@ SQL> execute test_rig.run_global_set('A');
       glob.get_fold_strings     is TRUE
       glob.get_ignore_no_change is TRUE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -71,7 +62,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('B');
+SQL> execute trc.run_global_set('B');
 
 ============================================================
    Global_Set is B
@@ -79,46 +70,37 @@ SQL> execute test_rig.run_global_set('B');
       glob.get_fold_strings     is TRUE
       glob.get_ignore_no_change is FALSE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -126,7 +108,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('C');
+SQL> execute trc.run_global_set('C');
 
 ============================================================
    Global_Set is C
@@ -134,46 +116,37 @@ SQL> execute test_rig.run_global_set('C');
       glob.get_fold_strings     is FALSE
       glob.get_ignore_no_change is TRUE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -181,7 +154,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('D');
+SQL> execute trc.run_global_set('D');
 
 ============================================================
    Global_Set is D
@@ -189,46 +162,37 @@ SQL> execute test_rig.run_global_set('D');
       glob.get_fold_strings     is FALSE
       glob.get_ignore_no_change is FALSE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -236,7 +200,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('E');
+SQL> execute trc.run_global_set('E');
 
 ============================================================
    Global_Set is E
@@ -244,46 +208,37 @@ SQL> execute test_rig.run_global_set('E');
       glob.get_fold_strings     is TRUE
       glob.get_ignore_no_change is TRUE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -291,7 +246,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('F');
+SQL> execute trc.run_global_set('F');
 
 ============================================================
    Global_Set is F
@@ -299,46 +254,37 @@ SQL> execute test_rig.run_global_set('F');
       glob.get_fold_strings     is TRUE
       glob.get_ignore_no_change is FALSE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -346,7 +292,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('G');
+SQL> execute trc.run_global_set('G');
 
 ============================================================
    Global_Set is G
@@ -354,46 +300,37 @@ SQL> execute test_rig.run_global_set('G');
       glob.get_fold_strings     is FALSE
       glob.get_ignore_no_change is TRUE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
@@ -401,7 +338,7 @@ Running Test BTT_APITAB_EFF_NUM_PLAIN
 
 PL/SQL procedure successfully completed.
 
-SQL> execute test_rig.run_global_set('H');
+SQL> execute trc.run_global_set('H');
 
 ============================================================
    Global_Set is H
@@ -409,46 +346,37 @@ SQL> execute test_rig.run_global_set('H');
       glob.get_fold_strings     is FALSE
       glob.get_ignore_no_change is FALSE
 
-Running Test BTT_SQLTAB_NON_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_LOG_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLTAB_EFF_NUM_PLAIN
-   Parm_Set BTT_NUM_NoPerm_INS, SEQ 1
-
-Running Test BTT_SQLACT_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_SQLACT_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_NON_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_LOG_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
 
-Running Test BTT_APITAB_EFF_NUM_PLAIN
+Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3

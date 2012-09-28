@@ -1,6 +1,7 @@
 
+
 -) _ACT%ROWTYPE insert and update need the foriegn keys and hierarchies queried before returning call.
--) Check testing results
+
 
 DTGen "test" README File
    Developed by DMSTEX (http://dmstex.com)
@@ -9,6 +10,7 @@ DTGen "test" README File
 Files and Directories:
 ----------------------
 TST1                  - Directory for Testing TST1 Application
+TST2                  - Directory for Testing TST2 Application
 cleanup.sh            - Called by "t.sh cleanup"
 clear_test_parms.sql  - Used to clear the TESTOWNER's tables
 create_tspaces_linux.sql - Used to create example tablespaces in Linux
