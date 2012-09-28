@@ -29,36 +29,156 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.SQLACT_NON_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_NON_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_NON_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_NON_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_NON_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_NON_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_LOG_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.SQLACT_EFF_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.APITAB_NON_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_NON_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_NON_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_NON_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_NON_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_NON_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.APITAB_LOG_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_LOG_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_LOG_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_LOG_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_LOG_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_LOG_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
+
+Running Test TR_BTT_NUM.APITAB_EFF_MIN_MIN
+   Parm_Set BTT_NUM_MIN_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_EFF_MIN_MAX
+   Parm_Set BTT_NUM_MIN_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_EFF_MIN_LEN
+   Parm_Set BTT_NUM_MIN_LEN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_EFF_MAX_MIN
+   Parm_Set BTT_NUM_MAX_MIN_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_EFF_MAX_MAX
+   Parm_Set BTT_NUM_MAX_MAX_PASS, SEQ 1
+
+Running Test TR_BTT_NUM.APITAB_EFF_MAX_LEN
+   Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
 PL/SQL procedure successfully completed.
 
@@ -75,36 +195,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -121,36 +253,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -167,36 +311,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -213,36 +369,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -259,36 +427,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -305,36 +485,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
@@ -351,36 +543,48 @@ Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.SQLACT_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_LOG_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 Running Test TR_BTT_NUM.APITAB_EFF_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2
    Parm_Set BTT_NUM_PASS, SEQ 3
    Parm_Set BTT_NUM_PASS, SEQ 4
+   Parm_Set BTT_NUM_PASS, SEQ 5
+   Parm_Set BTT_NUM_PASS, SEQ 6
 
 PL/SQL procedure successfully completed.
 
