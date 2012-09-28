@@ -51,12 +51,17 @@ install_test_rig.sql    - SQL script called by load.sql
 install_user.sql        - SQL script called by load.sql
 load.sql                - SQL script called by "t.sh load"
 t.env                   - Environment Variable Settings for t.sh
-test_rig.pkb            - SQL script called by install_test_rig.sql
-test_rig.pks            - SQL script called by install_test_rig.sql
+test.sql                - SQL script called by "t.sh test"
 test_T1DBS.gold         - Gold file for "t.sh test" logging
 test_T1DBU.gold         - Gold file for "t.sh test" logging
 test_T1MTS.gold         - Gold file for "t.sh test" logging
 test_T1MTU.gold         - Gold file for "t.sh test" logging
+tr_btt_num.pkb          - SQL script called by install_test_rig.sql
+tr_btt_num.pks          - SQL script called by install_test_rig.sql
+tr_btt_num_owner.pkb    - SQL script called by install_test_rig.sql
+tr_btt_num_owner.pks    - SQL script called by install_test_rig.sql
+trc.pkb                 - SQL script called by install_test_rig.sql
+trc.pks                 - SQL script called by install_test_rig.sql
 uninstall_db_schema.gold - Gold file for "t.sh cleanup" logging
 uninstall_db_schema.sql - SQL script called by cleanup.sql
 uninstall_db_user.gold  - Gold file for "t.sh cleanup" logging
@@ -74,7 +79,7 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
       have been added to the load.sh script to allow successful testing
       of the multi-tier architecture
 
-1) Create the Unit Test Repository Owner
+1) Create the Unit Test Owner
    sqlplus system/password@tns_alias @create_ut_owner dtgen
      - OR -
    sqlplus system/password@tns_alias @create_ut_owner dtgen_dev
@@ -84,24 +89,21 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
      - OR -
    sqlplus system/password@tns_alias @create_tspaces_linux
 
-3) Run SQL*Developer and Create a Unit Test Repository
-   -) Tools -> Unit Test -> Select Current Repository: dtgen_test
-   -) Tools -> Unit Test -> Create/Update Repository: (answer questions as needed)
-
-   Share the Unit Test Repository: Yes
-
-4) Install Unit Test Repository Owner Objects
+3) Install Unit Test Owner Objects
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
      - OR -
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
 
+4) Create Unit Test Applications in DTGen
+   sqlldr dtgen/dtgen control=TST1/ut_dataload.ctl
+     - OR -
+   sqlldr dtgen_dev/dtgen_dev control=TST1/ut_dataload.ctl
+   NOTE: Repeat for TST2, TST3, etc...
+
 5) Load Test Parameters
    sqlldr dtgen_test/dtgen_test control=ut_dataload.ctl
 
-6) Run SQL*Developer and Load Unit Tests
-   -) Tools -> Import from File -> ???
-
-7) Set the names as needed in t.sh
+6) Set the names as needed in t.sh
    export GUI_DIR=../../gui
    export DEVNAME=dtgen
    export DEVPASS=dtgen
@@ -110,10 +112,10 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
    export DEVNAME=dtgen_dev
    export DEVPASS=dtgen_dev
 
-8) Confirm Test Settings
+7) Confirm Test Settings
    ./t.sh -p
 
-9) Setup the Unit Test Environments
+8) Setup the Unit Test Environments
    ./t.sh setup
 
 
@@ -122,7 +124,8 @@ Testing Instructions:
 1) Load for the next test
    ./t.sh load
 
-2) Run SQL*Developer Unit Tests
+2) Run the Unit Tests
+   ./t.sh test
 
 3) Modify code as needed
 
@@ -137,7 +140,7 @@ Un-Install Instructions:
 1) Remove the Unit Test Environments
    ./t.sh remove
 
-2) Remove the Unit Test Repository Owner
+2) Remove the Unit Test Owner
    sqlplus system/password@tns_alias @drop_ut_owner
 
 
