@@ -162,8 +162,10 @@
 || NUMBER Datatype Scale                          || -84      || 127       || Yes        ||
 || NUMBER Absolute Value                          || 10^-130^ || 10^126^   || Yes        ||
 || VARCHAR2 Datatype Length                       || 1        || 32767     || No         ||
+|| DATE Absolute Value                            || 4712 BC  || 4713 AD   || Yes        ||
 || TIMESTAMP WITH TIME ZONE Datatype Length       || 0        || 9         || Yes        ||
 || TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0        || 9         || Yes        ||
+|| TIMESTAMP Absolute Value                       || 4712 BC  || 4713 AD   || Yes        ||
 || Exception Code                                 || -20999   || -20000    || No         ||
 
  = Implementation =
