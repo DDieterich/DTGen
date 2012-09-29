@@ -160,12 +160,12 @@
 || Number of Natural Key Columns                  || 1        || 99        || No         ||
 || NUMBER Datatype Length                         || 1        || 38        || Yes        ||
 || NUMBER Datatype Scale                          || -84      || 127       || Yes        ||
-|| NUMBER Absolute Value                          || 10^-130^ || 10^126^   || Yes        ||
+|| NUMBER Absolute Value                          || 10^-130^ || 10^126^   || N/A        ||
 || VARCHAR2 Datatype Length                       || 1        || 32767     || No         ||
-|| DATE Absolute Value                            || 4712 BC  || 4713 AD   || Yes        ||
+|| DATE Absolute Value                            || 4712 BC  || 4713 AD   || N/A        ||
 || TIMESTAMP WITH TIME ZONE Datatype Length       || 0        || 9         || Yes        ||
 || TIMESTAMP WITH LOCAL TIME ZONE Datatype Length || 0        || 9         || Yes        ||
-|| TIMESTAMP Absolute Value                       || 4712 BC  || 4713 AD   || Yes        ||
+|| TIMESTAMP Absolute Value                       || 4712 BC  || 9999 AD   || N/A        ||
 || Exception Code                                 || -20999   || -20000    || No         ||
 
  = Implementation =
