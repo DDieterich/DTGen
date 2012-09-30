@@ -180,6 +180,96 @@ Running Test TR_BTT_NUM.APITAB_EFF_MAX_MAX
 Running Test TR_BTT_NUM.APITAB_EFF_MAX_LEN
    Parm_Set BTT_NUM_MAX_LEN_PASS, SEQ 1
 
+Running Test TR_BTT_DTM.SQLACT_NON_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_NON_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_NON_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_LOG_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_LOG_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_LOG_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_EFF_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_EFF_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.SQLACT_EFF_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_NON_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_NON_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_NON_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_LOG_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_LOG_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_LOG_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_EFF_TST_TZ
+   Parm_Set BTT_TTZ_PASS, SEQ 1
+   Parm_Set BTT_TTZ_PASS, SEQ 2
+   Parm_Set BTT_TTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_EFF_TST_LTZ
+   Parm_Set BTT_LTZ_PASS, SEQ 1
+   Parm_Set BTT_LTZ_PASS, SEQ 2
+   Parm_Set BTT_LTZ_PASS, SEQ 3
+
+Running Test TR_BTT_DTM.APITAB_EFF_DATE
+   Parm_Set BTT_DTM_PASS, SEQ 1
+   Parm_Set BTT_DTM_PASS, SEQ 2
+   Parm_Set BTT_DTM_PASS, SEQ 3
+
 PL/SQL procedure successfully completed.
 
 SQL> execute trc.run_global_set('B');

@@ -274,10 +274,64 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Table altered.
 
 
 Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -338,6 +392,33 @@ no rows selected
 
 
 Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -507,10 +588,64 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 Table altered.
 
 
 Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -577,6 +712,33 @@ no rows selected
 
 
 Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1131,6 +1293,33 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 View altered.
 
 
@@ -1209,6 +1398,33 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1441,6 +1657,33 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 View altered.
 
 
@@ -1478,6 +1721,33 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1623,6 +1893,33 @@ Comment created.
 Comment created.
 
 
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
 View altered.
 
 
@@ -1660,6 +1957,33 @@ no rows selected
 
 
 no rows selected
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
 
 
 Comment created.
@@ -1793,6 +2117,15 @@ Package created.
 
 No errors.
 
+tr_btt_dtm.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
 trc.pkb
 
 Package body created.
@@ -1803,6 +2136,15 @@ Package body created.
 No errors.
 
 tr_btt_num.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_dtm.pkb
 
 Package body created.
 
@@ -1823,7 +2165,25 @@ Package created.
 
 No errors.
 
+tr_btt_dtm_owner.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
 tr_btt_num_owner.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_dtn_owner.pkb
 
 Package body created.
 
