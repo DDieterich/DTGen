@@ -2126,6 +2126,15 @@ Package created.
 
 No errors.
 
+tr_btt_str.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
 trc.pkb
 
 Package body created.
@@ -2145,6 +2154,15 @@ Package body created.
 No errors.
 
 tr_btt_dtm.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_str.pkb
 
 Package body created.
 
@@ -2174,6 +2192,15 @@ Package created.
 
 No errors.
 
+tr_btt_str_owner.pks
+
+Package created.
+
+
+Package created.
+
+No errors.
+
 tr_btt_num_owner.pkb
 
 Package body created.
@@ -2183,7 +2210,16 @@ Package body created.
 
 No errors.
 
-tr_btt_dtn_owner.pkb
+tr_btt_dtm_owner.pkb
+
+Package body created.
+
+
+Package body created.
+
+No errors.
+
+tr_btt_str_owner.pkb
 
 Package body created.
 
@@ -2209,46 +2245,46 @@ grant select, insert, update, delete on T1A_EFF to T1MTS
 
 PL/SQL procedure successfully completed.
 
-old   7:         and  grantee = upper('&1.') || '_APP' )
-new   7:         and  grantee = upper('TST1') || '_APP' )
-old  11:                  ' to &2. with grant option';
-new  11:                  ' to T1DBU with grant option';
+old   7:         and  grantee = upper('&1.') || '_APP'
+new   7:         and  grantee = upper('TST1') || '_APP'
+old  12:                  ' to &2. with grant option';
+new  12:                  ' to T1DBU with grant option';
 grant EXECUTE on GLOB to T1DBU with grant option
-grant EXECUTE on UTIL to T1DBU with grant option
-grant EXECUTE on T1A_LOG_POP to T1DBU with grant option
-grant EXECUTE on T1A_EFF_POP to T1DBU with grant option
-grant EXECUTE on T1A_NON_DML to T1DBU with grant option
-grant EXECUTE on T1A_LOG_DML to T1DBU with grant option
-grant EXECUTE on T1A_EFF_DML to T1DBU with grant option
-grant UPDATE on T1A_NON_ACT to T1DBU with grant option
-grant UPDATE on T1A_LOG_ACT to T1DBU with grant option
-grant UPDATE on T1A_EFF_ACT to T1DBU with grant option
-grant SELECT on T1A_NON_ACT to T1DBU with grant option
-grant SELECT on T1A_LOG_ACT to T1DBU with grant option
+grant SELECT on T1A_EFF to T1DBU with grant option
+grant DELETE on T1A_EFF_ACT to T1DBU with grant option
+grant INSERT on T1A_EFF_ACT to T1DBU with grant option
 grant SELECT on T1A_EFF_ACT to T1DBU with grant option
-grant SELECT on T1A_LOG_ALL to T1DBU with grant option
-grant SELECT on T1A_LOG_ASOF to T1DBU with grant option
+grant UPDATE on T1A_EFF_ACT to T1DBU with grant option
 grant SELECT on T1A_EFF_ALL to T1DBU with grant option
 grant SELECT on T1A_EFF_ASOF to T1DBU with grant option
-grant SELECT on UTIL_LOG to T1DBU with grant option
-grant SELECT on T1A_NON_SEQ to T1DBU with grant option
-grant SELECT on T1A_NON to T1DBU with grant option
-grant SELECT on T1A_LOG_SEQ to T1DBU with grant option
-grant SELECT on T1A_LOG to T1DBU with grant option
-grant SELECT on T1A_LOG_AUD to T1DBU with grant option
-grant SELECT on T1A_LOG_PDAT to T1DBU with grant option
-grant SELECT on T1A_EFF_SEQ to T1DBU with grant option
-grant SELECT on T1A_EFF to T1DBU with grant option
+grant EXECUTE on T1A_EFF_DML to T1DBU with grant option
 grant SELECT on T1A_EFF_HIST to T1DBU with grant option
 grant SELECT on T1A_EFF_PDAT to T1DBU with grant option
-grant INSERT on T1A_NON_ACT to T1DBU with grant option
-grant INSERT on T1A_LOG_ACT to T1DBU with grant option
-grant INSERT on T1A_EFF_ACT to T1DBU with grant option
-grant INSERT on UTIL_LOG to T1DBU with grant option
-grant DELETE on T1A_NON_ACT to T1DBU with grant option
+grant EXECUTE on T1A_EFF_POP to T1DBU with grant option
+grant SELECT on T1A_EFF_SEQ to T1DBU with grant option
+grant SELECT on T1A_LOG to T1DBU with grant option
 grant DELETE on T1A_LOG_ACT to T1DBU with grant option
-grant DELETE on T1A_EFF_ACT to T1DBU with grant option
+grant INSERT on T1A_LOG_ACT to T1DBU with grant option
+grant SELECT on T1A_LOG_ACT to T1DBU with grant option
+grant UPDATE on T1A_LOG_ACT to T1DBU with grant option
+grant SELECT on T1A_LOG_ALL to T1DBU with grant option
+grant SELECT on T1A_LOG_ASOF to T1DBU with grant option
+grant SELECT on T1A_LOG_AUD to T1DBU with grant option
+grant EXECUTE on T1A_LOG_DML to T1DBU with grant option
+grant SELECT on T1A_LOG_PDAT to T1DBU with grant option
+grant EXECUTE on T1A_LOG_POP to T1DBU with grant option
+grant SELECT on T1A_LOG_SEQ to T1DBU with grant option
+grant SELECT on T1A_NON to T1DBU with grant option
+grant DELETE on T1A_NON_ACT to T1DBU with grant option
+grant INSERT on T1A_NON_ACT to T1DBU with grant option
+grant SELECT on T1A_NON_ACT to T1DBU with grant option
+grant UPDATE on T1A_NON_ACT to T1DBU with grant option
+grant EXECUTE on T1A_NON_DML to T1DBU with grant option
+grant SELECT on T1A_NON_SEQ to T1DBU with grant option
+grant EXECUTE on UTIL to T1DBU with grant option
 grant DELETE on UTIL_LOG to T1DBU with grant option
+grant INSERT on UTIL_LOG to T1DBU with grant option
+grant SELECT on UTIL_LOG to T1DBU with grant option
 
 PL/SQL procedure successfully completed.
 
