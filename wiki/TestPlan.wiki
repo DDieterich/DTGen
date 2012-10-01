@@ -108,6 +108,7 @@
       # Database Tier, Application User
       # Middle Tier, Schema Owner
       # Middle Tier, Application User
+    # _*MMV*_: Middle Tier Materialized View
   # == Cross-Cutting Concerns ==
     # Lock Helper for Global Single Threaded Logic
     # Debug Logging using Autonomous Transaction
