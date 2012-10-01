@@ -72,6 +72,7 @@ PARM_SETS                     BTT_NUM_MAX_MAX_PASSHappy Path Basic Table Test 
 PARM_SETS                     BTT_DTM_PASSHappy Path Basic Table Test (DTC, POPT, Partial HAT, Partial APIT, and Partial DMLIT) for DATE/time Data
 PARM_SETS                     BTT_TTZ_PASSHappy Path Basic Table Test (DTC, POPT, Partial HAT, Partial APIT, and Partial DMLIT) for Plain TIMESTAMP with Time Zone Data
 PARM_SETS                     BTT_LTZ_PASSHappy Path Basic Table Test (DTC, POPT, Partial HAT, Partial APIT, and Partial DMLIT) for Plain TIMESTAMP with Local Time Zone Data
+PARM_SETS                     BTT_CHAR_MAX_PASSHappy Path Basic Table Test (DTC, POPT, Partial HAT, Partial APIT, and Partial DMLIT) for Variable Character Data
 TEST_PARMS                    BTT_NUM_PASS1SUCCESS11456.78
 TEST_PARMS                    BTT_NUM_PASS2SUCCESS12123.89-5.6e-70
 TEST_PARMS                    BTT_NUM_PASS3SUCCESS13-1.2e-403.4e50
@@ -96,6 +97,8 @@ TEST_PARMS                    BTT_TTZ_PASS3SUCCESS1301-JAN-4712 BC 00:00:00
 TEST_PARMS                    BTT_LTZ_PASS1SUCCESS1111-SEP-2001 AD 08:46:01.789
 TEST_PARMS                    BTT_LTZ_PASS2SUCCESS1202-MAY-2011 AD 01:13:07.456
 TEST_PARMS                    BTT_LTZ_PASS3SUCCESS1301-JAN-4712 BC 00:00:00.12331-DEC-9999 AD 23:59:59.999
+TEST_PARMS                    BTT_CHAR_MAX_PASS1SUCCESS11The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.
+TEST_PARMS                    BTT_CHAR_MAX_PASS2SUCCESS12The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.  The length of this sentence, with the 2 (two) leading spaces, and the period, is a 100 characters.
 TEST_SETS                     T1DBSATR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSBTR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSCTR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
@@ -147,6 +150,9 @@ TEST_SETS                     T1DBSATR_BTT_DTM.SQLACT_NON_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_NON_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_NON_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_NON_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBSATR_BTT_STR_OWNER.SQLTAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.SQLACT_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.APITAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1DBSATR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSBTR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSCTR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
@@ -198,6 +204,9 @@ TEST_SETS                     T1DBSATR_BTT_DTM.SQLACT_LOG_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_LOG_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_LOG_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_LOG_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBSATR_BTT_STR_OWNER.SQLTAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.SQLACT_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.APITAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1DBSATR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSBTR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBSCTR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
@@ -249,6 +258,9 @@ TEST_SETS                     T1DBSATR_BTT_DTM.SQLACT_EFF_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_EFF_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_EFF_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBSATR_BTT_DTM.APITAB_EFF_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBSATR_BTT_STR_OWNER.SQLTAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.SQLACT_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBSATR_BTT_STR.APITAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1DBUATR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUBTR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUCTR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
@@ -283,6 +295,8 @@ TEST_SETS                     T1DBUATR_BTT_DTM.SQLACT_NON_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_NON_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_NON_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_NON_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.SQLACT_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.APITAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1DBUATR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUBTR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUCTR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
@@ -317,6 +331,8 @@ TEST_SETS                     T1DBUATR_BTT_DTM.SQLACT_LOG_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_LOG_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_LOG_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_LOG_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.SQLACT_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.APITAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1DBUATR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUBTR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1DBUCTR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
@@ -351,6 +367,8 @@ TEST_SETS                     T1DBUATR_BTT_DTM.SQLACT_EFF_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_EFF_DATEBTT_DTM_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_EFF_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1DBUATR_BTT_DTM.APITAB_EFF_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.SQLACT_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1DBUATR_BTT_STR.APITAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTSATR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSBTR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSCTR_BTT_NUM_OWNER.SQLTAB_NON_PLAINBTT_NUM_PASS
@@ -402,6 +420,9 @@ TEST_SETS                     T1MTSATR_BTT_DTM.SQLACT_NON_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_NON_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_NON_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_NON_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTSATR_BTT_STR_OWNER.SQLTAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.SQLACT_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.APITAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTSATR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSBTR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSCTR_BTT_NUM_OWNER.SQLTAB_LOG_PLAINBTT_NUM_PASS
@@ -453,6 +474,9 @@ TEST_SETS                     T1MTSATR_BTT_DTM.SQLACT_LOG_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_LOG_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_LOG_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_LOG_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTSATR_BTT_STR_OWNER.SQLTAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.SQLACT_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.APITAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTSATR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSBTR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTSCTR_BTT_NUM_OWNER.SQLTAB_EFF_PLAINBTT_NUM_PASS
@@ -504,6 +528,9 @@ TEST_SETS                     T1MTSATR_BTT_DTM.SQLACT_EFF_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_EFF_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_EFF_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTSATR_BTT_DTM.APITAB_EFF_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTSATR_BTT_STR_OWNER.SQLTAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.SQLACT_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTSATR_BTT_STR.APITAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTUATR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUBTR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUCTR_BTT_NUM.SQLACT_NON_PLAINBTT_NUM_PASS
@@ -538,6 +565,8 @@ TEST_SETS                     T1MTUATR_BTT_DTM.SQLACT_NON_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_NON_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_NON_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_NON_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.SQLACT_NON_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.APITAB_NON_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTUATR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUBTR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUCTR_BTT_NUM.SQLACT_LOG_PLAINBTT_NUM_PASS
@@ -572,6 +601,8 @@ TEST_SETS                     T1MTUATR_BTT_DTM.SQLACT_LOG_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_LOG_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_LOG_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_LOG_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.SQLACT_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.APITAB_LOG_CHAR_MAXBTT_CHAR_MAX_PASS
 TEST_SETS                     T1MTUATR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUBTR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
 TEST_SETS                     T1MTUCTR_BTT_NUM.SQLACT_EFF_PLAINBTT_NUM_PASS
@@ -606,3 +637,5 @@ TEST_SETS                     T1MTUATR_BTT_DTM.SQLACT_EFF_TST_LTZBTT_LTZ_PAS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_EFF_DATEBTT_DTM_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_EFF_TST_TZBTT_TTZ_PASS
 TEST_SETS                     T1MTUATR_BTT_DTM.APITAB_EFF_TST_LTZBTT_LTZ_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.SQLACT_EFF_CHAR_MAXBTT_CHAR_MAX_PASS
+TEST_SETS                     T1MTUATR_BTT_STR.APITAB_EFF_CHAR_MAXBTT_CHAR_MAX_PASS

@@ -22,6 +22,12 @@ prompt tr_btt_dtm.pks
 /
 show errors PACKAGE tr_btt_dtm
 
+prompt
+prompt tr_btt_str.pks
+@tr_btt_str.pks
+/
+show errors PACKAGE tr_btt_str
+
 ------------------------------------------------------------
 
 prompt
@@ -41,6 +47,12 @@ prompt tr_btt_dtm.pkb
 @tr_btt_dtm.pkb
 /
 show errors PACKAGE BODY tr_btt_dtm
+
+prompt
+prompt tr_btt_str.pkb
+@tr_btt_str.pkb
+/
+show errors PACKAGE BODY tr_btt_str
 
 prompt
 

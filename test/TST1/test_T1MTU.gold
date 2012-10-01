@@ -24,6 +24,30 @@ SQL> execute trc.run_global_set('A');
       glob.get_fold_strings     is TRUE
       glob.get_ignore_no_change is TRUE
 
+Running Test TR_BTT_STR.SQLACT_NON_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
+Running Test TR_BTT_STR.SQLACT_LOG_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
+Running Test TR_BTT_STR.SQLACT_EFF_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
+Running Test TR_BTT_STR.APITAB_NON_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
+Running Test TR_BTT_STR.APITAB_LOG_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
+Running Test TR_BTT_STR.APITAB_EFF_CHAR_MAX
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 1
+   Parm_Set BTT_CHAR_MAX_PASS, SEQ 2
+
 Running Test TR_BTT_NUM.SQLACT_NON_PLAIN
    Parm_Set BTT_NUM_PASS, SEQ 1
    Parm_Set BTT_NUM_PASS, SEQ 2

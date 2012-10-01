@@ -17,9 +17,10 @@ declare
    sql_txt varchar2(4000);
 begin
    FOR buff in (
-      select * from user_tab_privs
+      select table_name, privilege from user_tab_privs
        where grantor = USER
-        and  grantee = upper('&1.') || '_APP' )
+        and  grantee = upper('&1.') || '_APP'
+       order by table_name, privilege )
    loop
       sql_txt := 'grant ' || buff.privilege ||
                  ' on ' || buff.table_name ||
