@@ -216,7 +216,6 @@
  * EDDC: Enforced Discrete Domains (no FK) for Columns
  * FPHC: Full Path Hierarchical Data for Columns
  * NKUV: Natural Key Update-able Views
- * APIT: Full Procedural APIs for each Table
 
  == TST3: Application Test 3 ==
 
