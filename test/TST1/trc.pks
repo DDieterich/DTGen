@@ -12,7 +12,15 @@ is
       (parm_set_in  in  varchar2
       ,parm_seq_in  in  number);
 
-   procedure basic_test;
+   function basic_test
+      (parm_set_in  in  varchar2
+      ,parm_seq_in  in  number)
+   return varchar2;
+
+   function tablespace_test
+      (parm_set_in  in  varchar2
+      ,parm_seq_in  in  number)
+   return varchar2;
 
    function bool_to_str
       (bool_in in boolean)

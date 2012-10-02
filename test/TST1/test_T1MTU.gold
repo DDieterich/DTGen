@@ -294,6 +294,9 @@ Running Test TR_BTT_DTM.APITAB_EFF_DATE
    Parm_Set BTT_DTM_PASS, SEQ 2
    Parm_Set BTT_DTM_PASS, SEQ 3
 
+Running Test TRC.BASIC_TEST
+   Parm_Set TRC_BASIC_TEST, SEQ 1
+
 PL/SQL procedure successfully completed.
 
 SQL> execute trc.run_global_set('B');

@@ -559,7 +559,7 @@ function get_tspace
 is
    ts_str  varchar2(100);
 begin
-   if abuff.ts_null_override is null
+   if abuff.ts_null_override is not null
    then
       return '';
    end if;
@@ -16127,7 +16127,24 @@ BEGIN
       end if;
    end loop;
    -- Multi-Tiered (Remote) LOBs are not allowed
-   if abuff.dbid is not null then
+   if abuff.dbid is null then
+      if abuff.db_auth is not null then
+         abuff := null;
+         raise_application_error(-20000, 'DBID and DB_AUTH must both have values or both be NULL.');
+      end if;
+      for buff in (select name from tables
+                    where MV_REFRESH_HR is not null
+                    order by name)
+      loop
+         abuff := null;
+         raise_application_error(-20000, 'No Mid-Tier to Create Materialized View for Table "' ||
+                            buff.name || '".  Remove MV_REFRESH_HR or add DBID to APPLICATION');
+      end loop;
+   else
+      if abuff.db_auth is null then
+         abuff := null;
+         raise_application_error(-20000, 'DBID and DB_AUTH must both have values or both be NULL.');
+      end if;
       for buff in (select id, name from tables order by id)
       loop
          for buf2 in (select * from tab_cols where table_id = buff.id order by id)
