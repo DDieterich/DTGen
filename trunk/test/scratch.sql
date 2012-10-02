@@ -1,6 +1,10 @@
 ------------------------------------------------------------
 REM Test User
 
+describe user_tables
+select table_name, tablespace_name from user_tables;
+describe user_indexes
+
 execute glob.set_usr('Duane');
 
 insert into t1a_non(id, key, seq, tstamp_tz_plain, tstamp_ltz_plain) values(1000, 'Duane', 1,

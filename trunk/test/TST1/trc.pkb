@@ -28,12 +28,64 @@ begin
               upper(parm_set_in)        ;
 end get_tparms;
 ------------------------------------------------------------
-procedure basic_test
+function basic_test
+      (parm_set_in  in  varchar2
+      ,parm_seq_in  in  number)
+   return varchar2
 is
-   junk  dual.dummy%TYPE;
+   dual_dummy  dual.dummy%TYPE;
 begin
-   select dummy into junk from dual;
+   trc.get_tparms(parm_set_in, parm_seq_in);
+   select dummy into dual_dummy from dual;
+   if dual_dummy = trc.tparms.val0 then return 'SUCCESS'; end if;
+   return 'FAILURE: Dual Dummy returned ' || dual_dummy ||
+          ' instead of ' || trc.tparms.val0;
+exception
+   when others then
+      return substr('FAILURE: ' || sqlerrm ||
+                           '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
 end basic_test;
+------------------------------------------------------------
+function tablespace_test
+      (parm_set_in  in  varchar2
+      ,parm_seq_in  in  number)
+   return varchar2
+is
+   tname        varchar2(30);
+   data_tspace  varchar2(30);
+   indx_tspace  varchar2(30);
+   loc_txt  varchar2(30);
+   num_tabs  number;
+begin
+   loc_txt := 'STARTUP';
+   trc.get_tparms(parm_set_in, parm_seq_in);
+   tname            := trc.tparms.val0;
+   data_tspace := trc.tparms.val1;
+   indx_tspace := trc.tparms.val2;
+   ----------------------------------------
+   loc_txt := 'DATA_CHECK';
+   select count(*) into num_tabs from user_tables
+    where table_name = tname and tablespace_name = data_tspace;
+   if num_tabs = 0 then
+      return 'FAILURE: Table ' || tname ||
+             ' does not exist in tablespace ' || data_tspace;
+   end if;
+   ----------------------------------------
+   loc_txt := 'INDX_CHECK';
+   select count(*) into num_tabs from user_indexes
+    where table_name = tname and tablespace_name != indx_tspace;
+   if num_tabs != 0 then
+      return 'FAILURE: Indexes for Table ' || tname ||
+             ' exist in tablespaces other than ' || indx_tspace;
+   end if;
+   ----------------------------------------
+   return 'SUCCESS';
+exception
+   when others then
+      return substr('FAILURE at ' || loc_txt ||
+                             ': ' || sqlerrm ||
+                             '. ' || DBMS_UTILITY.FORMAT_ERROR_BACKTRACE,1,4000);
+end tablespace_test;
 -----------------------------------------------------------
 function bool_to_str
       (bool_in in boolean)
