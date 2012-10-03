@@ -6,7 +6,7 @@ set define off
 
 prompt
 prompt trc.pks
-@trc.pks
+@../trc.pks
 /
 show errors PACKAGE trc
 
@@ -32,7 +32,7 @@ show errors PACKAGE tr_btt_str
 
 prompt
 prompt trc.pkb
-@trc.pkb
+@../trc.pkb
 /
 show errors PACKAGE BODY trc
 

@@ -467,12 +467,6 @@ begin
    job_status := js_prefix || ' ' || af_title || ' (5 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    update_apex_app_files(app_abbr_in, 'install', 'USR');
-   -- delete_db
-   af_title        := 'delete_db.sql';
-   af_description  := app_abbr_in || ' data delete script';
-   job_status := js_prefix || ' ' || af_title || ' (6 of 11)';
-   apex_plsql_job.update_job_status(job_num_in, job_status);
-   update_apex_app_files(app_abbr_in, 'delete', 'DB');
    -- uninstall_usr
    af_title        := 'uninstall_usr.sql';
    af_description  := app_abbr_in || ' user synonym uninstallation script';
