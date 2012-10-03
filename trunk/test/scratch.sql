@@ -32,6 +32,11 @@ purge recyclebin;
 ------------------------------------------------------------
 REM dtgen_dev:
 
+select regexp_instr('The last white space in this string is at position 51.'
+                   ,'[   ][^  ]*$') from dual;
+select substr('Testing',7,-1) from dual;
+
+
 execute glob.set_usr('Test');
 execute gui_util.gen_all('TST1');
 

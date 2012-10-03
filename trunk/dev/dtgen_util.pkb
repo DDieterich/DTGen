@@ -395,9 +395,9 @@ begin
    aa_vc2('install_gui') := vc2_list_type
       ('create_flow');
    aa_vc2('install_usr') := vc2_list_type
-      ('gusr'
-      ,'usyn');
+      ('create_gusr'
+      ,'create_usyn');
    aa_vc2('uninstall_usr') := vc2_list_type
-      ('usyn'
-      ,'gusr');
+      ('drop_usyn'
+      ,'drop_gusr');
 END dtgen_util;
