@@ -40,10 +40,9 @@ grant execute on &1..dtgen_util       to &UTO_NAME. with grant option;
 prompt NOTE: This grant may fail on a new database
 grant UT_REPO_ADMINISTRATOR to &UTO_NAME. with admin option;
 
+-- NOTE: These calls to these scripts change the value of &1
 -- Create New Application Roles
---
 @../supp/create_app_role TST1
-@../supp/create_app_roles TST2
-
--- Unit Test Specific Role
-create role dtgen_ut_test;
+@../supp/create_app_role TST2
+-- Unit Test Specific Roles
+@../supp/create_app_role UTP

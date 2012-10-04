@@ -4,8 +4,8 @@ SCRIPT_NAME
 ------------------------
 === TST1 create_gusr ===
 
-old   2:    for &1..util
-new   2:    for T1DBS.util
+old   2:    for &1..glob
+new   2:    for T1DBS.glob
 
 Synonym created.
 
@@ -14,8 +14,8 @@ new   2:    for T1DBS.util_log
 
 Synonym created.
 
-old   2:    for &1..glob
-new   2:    for T1DBS.glob
+old   2:    for &1..util
+new   2:    for T1DBS.util
 
 Synonym created.
 

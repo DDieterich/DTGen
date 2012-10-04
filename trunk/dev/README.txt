@@ -2,7 +2,11 @@
 DTGen "dev" README File
    Developed by DMSTEX (http://dmstex.com)
 
-Because DTGen is used to create DTGen, development is a little tricky.  Somehow, a current version of DTGen must be "morphed" into a newer version of DTGen.  This directory provides scripts to facilitate that morphing process.  The full procedure is decribed in the DTGen Wiki Page "https://code.google.com/p/dtgen/wiki/DTGenModificationProcedure"
+Because DTGen is used to create DTGen, development is a little tricky.
+Somehow, a current version of DTGen must be "morphed" into a newer
+version of DTGen.  This directory provides scripts to facilitate that
+morphing process.  The full procedure is decribed in the DTGen Wiki
+Page "https://code.google.com/p/dtgen/wiki/DTGenModificationProcedure"
 
 
 Files and Directories:

@@ -24,10 +24,17 @@ into table DOMAIN_VALUES_ACT APPEND when key = 'DOMAIN_VALUES                 '
    (key FILLER position(1:31), domains_nk1 CHAR(5), domains_nk2 CHAR(5), value CHAR(100), seq FLOAT EXTERNAL, description CHAR(1000))
 into table TAB_COLS_ACT APPEND when key = 'TAB_COLS                      ' fields terminated by ''
    (key FILLER position(1:31), tables_nk1 CHAR(5), tables_nk2 CHAR(5), name CHAR(25), seq FLOAT EXTERNAL, nk FLOAT EXTERNAL, req CHAR(1), fk_prefix CHAR(4), fk_tables_nk1 CHAR(5), fk_tables_nk2 CHAR(5), d_domains_nk1 CHAR(5), d_domains_nk2 CHAR(5), type CHAR(30), len FLOAT EXTERNAL, scale FLOAT EXTERNAL, fold CHAR(1), default_value CHAR(1000), upd_res_pct FLOAT EXTERNAL, description CHAR(1000))
-into table TAB_INDS_ACT APPEND when key = 'INDEXES                       ' fields terminated by ''
+into table TAB_INDS_ACT APPEND when key = 'TAB_INDS                      ' fields terminated by ''
    (key FILLER position(1:31), tab_cols_nk1 CHAR(5), tab_cols_nk2 CHAR(5), tab_cols_nk3 CHAR(25), tag CHAR(4), seq FLOAT EXTERNAL)
 BEGINDATA
-APPLICATIONS                  DTGENDtgen For OracleDTGENDTGENDTGENDTGen&1.&2.Generates Oracle PL/SQL code and APEX User InterfacesTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+APPLICATIONS                  DTGENDtgen For OracleDTGENDTGENDTGENDTGenGenerates Oracle PL/SQL code and APEX User InterfacesCopyright (c) 2012, Duane.Dieterich@gmail.com
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 DOMAINS                       DTGENCTYPEColumn TypeU30Column Data type (number, varchar2, etc...)
 DOMAINS                       DTGENFLAGFlagU1Flagged
 DOMAINS                       DTGENFOLDCase FoldU1Upper case character fold
@@ -65,7 +72,6 @@ CHECK_CONS                    DTGENAPP1instr(db_schema,' ') = 0DB schema na
 CHECK_CONS                    DTGENAPP2instr(apex_schema,' ') = 0APEX schema name cannot have spaces
 CHECK_CONS                    DTGENAPP3instr(dbid,' ') = 0Database ID cannot have spaces
 CHECK_CONS                    DTGENAPP4db_auth is null or dbid is not nullDatabase ID must not be NULL if Database Authentication is not NULL
-CHECK_CONS                    DTGENAPP5db_schema_exp is null or db_schema is not nullDatabase Schema Name must not be NULL if Database Schema Explicit Flag is not NULL
 CHECK_CONS                    DTGENCK1seq > 0Check constraint sequence must be greater than 0
 CHECK_CONS                    DTGENCOL1instr(name,' ') = 0Column name cannot have spaces
 CHECK_CONS                    DTGENCOL2name not in ('id', 'eff_beg_dtm', 'eff_end_dtm', 'aud_beg_usr', 'aud_end_usr', 'aud_beg_dtm', 'aud_end_dtm', 'last_active')Column name cannot be one of 'id', 'eff_beg_dtm', 'eff_end_dtm', 'aud_beg_usr', 'aud_end_usr', 'aud_beg_dtm', 'aud_end_dtm', or 'last_active'
@@ -93,7 +99,7 @@ CHECK_CONS                    DTGENPRG1instr(name,' ') = 0Stored Program Un
 CHECK_CONS                    DTGENTAB1instr(abbr,' ') = 0Table abbreviation cannot have spaces
 CHECK_CONS                    DTGENTAB2instr(name,' ') = 0Table name cannot have spaces
 CHECK_CONS                    DTGENTAB3seq > 0Table sequence number must be greater than 0
-CHECK_CONS                    DTGENTAB4seq < 200Table sequence number must be less than 200 because of the â€œpnumâ€ offsets in the generator package
+CHECK_CONS                    DTGENTAB4seq < 200Table sequence number must be less than 200 because of the PNUM offsets in the generator package
 CHECK_CONS                    DTGENTAB5mv_refresh_hr > 0Materialized View Refresh Hours must be greater than 0
 CHECK_CONS                    DTGENTAB6instr(ts_onln_data,' ') = 0On-line data table space name cannot have spaces for a table
 CHECK_CONS                    DTGENTAB7instr(ts_onln_indx,' ') = 0On-line index table space name cannot have spaces for a table
@@ -121,23 +127,22 @@ DOMAIN_VALUES                 DTGENYNY1Yes, true, correct, or affirmative
 DOMAIN_VALUES                 DTGENYNN2No, false, incorrect, or negative
 TAB_COLS                      DTGENAPPabbr11XVARCHAR25UAbbreviation for this application
 TAB_COLS                      DTGENAPPname2XVARCHAR230IName of this application
-TAB_COLS                      DTGENAPPversion3XVARCHAR210IVersion of this application
+TAB_COLS                      DTGENAPPversion3VARCHAR210IVersion of this application
 TAB_COLS                      DTGENAPPdb_schema4VARCHAR230U50Name of the database schema objects owner. Used for user synonym and DB Link creation. Also used for explicit owner of all database objects if db_schema_exp flag is set.
-TAB_COLS                      DTGENAPPdb_schema_exp5DTGENFLAG50Explicitly define the schema owner for all database object
-TAB_COLS                      DTGENAPPapex_schema6VARCHAR230U50Name of the APEX parsing schema owner for the generated APEX pages
-TAB_COLS                      DTGENAPPapex_ws_name7VARCHAR230U50Workspace name (Upper Case) for the generated APEX pages
-TAB_COLS                      DTGENAPPapex_app_name8VARCHAR23050Application name (Mixed Case) for the generated APEX pages
-TAB_COLS                      DTGENAPPdbid9VARCHAR2200050Database link name for mid-tier connections from mid-tier servers to the centralized database server
-TAB_COLS                      DTGENAPPdb_auth10VARCHAR220050Centralized database server schema name pointed to by the database link from the mid-tier servers
-TAB_COLS                      DTGENAPPdescription11VARCHAR2100040Description of this application
-TAB_COLS                      DTGENAPPts_null_override12DTGENFLAGFlag to override all tablespace names to null
-TAB_COLS                      DTGENAPPts_onln_data13VARCHAR230L70Default tableapace name for on-line data tables
-TAB_COLS                      DTGENAPPts_onln_indx14VARCHAR230L70Default tablespace name for on-line indexes
-TAB_COLS                      DTGENAPPts_hist_data15VARCHAR230L70Default tablespace name for history data tables
-TAB_COLS                      DTGENAPPts_hist_indx16VARCHAR230L70Default tablespace name for history indexes
-TAB_COLS                      DTGENAPPusr_datatype17VARCHAR220U50Datatype for the "_USR" data columns in history tables tables. The default value is VARCHAR2(30).
-TAB_COLS                      DTGENAPPusr_frgn_key18VARCHAR2100L50Foreign Key for the "_USR" data columns in history tables. Must be of the form "table", "schema.table", "table(column)",  or "schema.table(column)".
-TAB_COLS                      DTGENAPPcopyright19VARCHAR2400050Copyright notice that is placed in the comment header in all generated scripts
+TAB_COLS                      DTGENAPPapex_schema5VARCHAR230U50Name of the APEX parsing schema owner for the generated APEX pages
+TAB_COLS                      DTGENAPPapex_ws_name6VARCHAR230U50Workspace name (Upper Case) for the generated APEX pages
+TAB_COLS                      DTGENAPPapex_app_name7VARCHAR23050Application name (Mixed Case) for the generated APEX pages
+TAB_COLS                      DTGENAPPdbid8VARCHAR2200050Database link name for mid-tier connections from mid-tier servers to the centralized database server
+TAB_COLS                      DTGENAPPdb_auth9VARCHAR220050Centralized database server schema name pointed to by the database link from the mid-tier servers
+TAB_COLS                      DTGENAPPdescription10VARCHAR2100040Description of this application
+TAB_COLS                      DTGENAPPts_null_override11DTGENFLAGFlag to override all tablespace names to null
+TAB_COLS                      DTGENAPPts_onln_data12VARCHAR230L70Default tableapace name for on-line data tables
+TAB_COLS                      DTGENAPPts_onln_indx13VARCHAR230L70Default tablespace name for on-line indexes
+TAB_COLS                      DTGENAPPts_hist_data14VARCHAR230L70Default tablespace name for history data tables
+TAB_COLS                      DTGENAPPts_hist_indx15VARCHAR230L70Default tablespace name for history indexes
+TAB_COLS                      DTGENAPPusr_datatype16VARCHAR220U50Datatype for the "_USR" data columns in history tables tables. The default value is VARCHAR2(30).
+TAB_COLS                      DTGENAPPusr_frgn_key17VARCHAR2100L50Foreign Key for the "_USR" data columns in history tables. Must be of the form "table", "schema.table", "table(column)",  or "schema.table(column)".
+TAB_COLS                      DTGENAPPcopyright18VARCHAR2400050Copyright notice that is placed in the comment header in all generated scripts
 TAB_COLS                      DTGENCKtable_id11XDTGENTABSurrogate Key for the table of this check constraint
 TAB_COLS                      DTGENCKseq22XNUMBER2Sequence number of this check constraint
 TAB_COLS                      DTGENCKtext3XVARCHAR21000Execution (PL/SQL) text for this check constraint
@@ -180,7 +185,7 @@ TAB_COLS                      DTGENFcreated_dt4XDATE1Time/Date
 TAB_COLS                      DTGENFdescription5VARCHAR210001Description for this file
 TAB_COLS                      DTGENFLfile_id11XDTGENF1Surrogate Key for the file of this line
 TAB_COLS                      DTGENFLseq22XNUMBER91Sequence number for this line in the file
-TAB_COLS                      DTGENFLvalue3VARCHAR240001Value or contents of this line in the file
+TAB_COLS                      DTGENFLvalue3VARCHAR210001Value or contents of this line in the file
 TAB_COLS                      DTGENINDtab_col_id11XDTGENCOLSurrogate Key for the column for this index
 TAB_COLS                      DTGENINDtag22XVARCHAR24LTag attached to the table name for this column that uniquely identifies this index
 TAB_COLS                      DTGENINDseq33XNUMBER1Sequence number for this column for this index
@@ -200,16 +205,16 @@ TAB_COLS                      DTGENTABts_onln_indx9VARCHAR230L4
 TAB_COLS                      DTGENTABts_hist_data10VARCHAR230L40Tablespace name for the history data for this table
 TAB_COLS                      DTGENTABts_hist_indx11VARCHAR230L40Tablespace name for the history indexes for this table
 TAB_COLS                      DTGENTABdescription12VARCHAR2100040Description of this table
-INDEXES                       DTGENAPPnameux11
-INDEXES                       DTGENCOLtable_idux11
-INDEXES                       DTGENCOLsequx12
-INDEXES                       DTGENDOMapplication_idux11
-INDEXES                       DTGENDOMnameux12
-INDEXES                       DTGENDVdomain_idux11
-INDEXES                       DTGENDVsequx12
-INDEXES                       DTGENEXCapplication_idux21
-INDEXES                       DTGENEXCnameux22
-INDEXES                       DTGENTABapplication_idux11
-INDEXES                       DTGENTABnameux12
-INDEXES                       DTGENTABapplication_idux21
-INDEXES                       DTGENTABsequx22
+TAB_INDS                      DTGENAPPnameux11
+TAB_INDS                      DTGENCOLtable_idux11
+TAB_INDS                      DTGENCOLsequx12
+TAB_INDS                      DTGENDOMapplication_idux11
+TAB_INDS                      DTGENDOMnameux12
+TAB_INDS                      DTGENDVdomain_idux11
+TAB_INDS                      DTGENDVsequx12
+TAB_INDS                      DTGENEXCapplication_idux21
+TAB_INDS                      DTGENEXCnameux22
+TAB_INDS                      DTGENTABapplication_idux11
+TAB_INDS                      DTGENTABnameux12
+TAB_INDS                      DTGENTABapplication_idux21
+TAB_INDS                      DTGENTABsequx22

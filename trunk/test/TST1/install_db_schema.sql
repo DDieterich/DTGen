@@ -29,6 +29,8 @@ set serveroutput on format wrapped
 @install_test_rig
 @install_test_rig_owner
 @../../supp/bug_grants &2.
-@../../supp/grant_role_option &3. &4.
+
+-- NOTE: This call to this script changes the values of &1 and &2
+@../../supp/grant_role_option &3._APP &4.
 
 spool off

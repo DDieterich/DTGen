@@ -10,16 +10,15 @@
 set define '&'
 set serveroutput on format wrapped
 
-grant create procedure to &1.;
-grant dtgen_ut_test to &1.;
-grant select on &2..global_parms to &1. with grant option;
-grant select on &2..parm_sets    to &1. with grant option;
-grant select on &2..test_parms   to &1. with grant option;
-grant select on &2..test_sets    to &1. with grant option;
+define SCHEMA_OWNER=&1.
+define UTREP_OWNER=&2.
 
---create synonym &1..test_run     for &2..test_run;
-create synonym &1..global_parms for &2..global_parms;
-create synonym &1..parm_sets    for &2..parm_types;
-create synonym &1..test_parms   for &2..test_parms;
-create synonym &1..test_sets    for &2..test_sets;
-create synonym &1..test_gen     for &2..test_gen;
+grant create procedure to &1.;
+
+-- NOTE: This call to this script changes the values of &1 and &2
+@../../supp/grant_app_role UTP &SCHEMA_OWNER.
+
+create synonym &SCHEMA_OWNER..global_parms for &UTREP_OWNER..global_parms;
+create synonym &SCHEMA_OWNER..parm_sets    for &UTREP_OWNER..parm_types;
+create synonym &SCHEMA_OWNER..test_parms   for &UTREP_OWNER..test_parms;
+create synonym &SCHEMA_OWNER..test_sets    for &UTREP_OWNER..test_sets;

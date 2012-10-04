@@ -1,8 +1,4 @@
 
-
--) _ACT%ROWTYPE insert and update need the foriegn keys and hierarchies queried before returning call.
-
-
 DTGen "test" README File
    Developed by DMSTEX (http://dmstex.com)
 
@@ -11,6 +7,7 @@ Files and Directories:
 ----------------------
 TST1                  - Directory for Testing TST1 Application
 TST2                  - Directory for Testing TST2 Application
+UTP                   - Directory for DTGen Unit Test Application Generation (Future)
 cleanup.sh            - Called by "t.sh cleanup"
 clear_test_parms.sql  - Used to clear the TESTOWNER's tables
 create_tspaces_linux.sql - Used to create example tablespaces in Linux
@@ -31,6 +28,8 @@ setup.sh              - Called by "t.sh setup"
 t.sh                  - Script to test the DTGen application
                         t.sh (setup|test|cleanup|remove|-p) {test directory}
 test.sh               - Called by "t.sh test"
+trc.pkb               - SQL script called by "t.sh load" through install_test_rig.sql
+trc.pks               - SQL script called by "t.sh load" through install_test_rig.sql
 tspace_quotas.sql     - Called by "t.sh setup"
 ut_dataload.ctl       - SQL*Loader control file to load unit test data
 
@@ -60,8 +59,6 @@ tr_btt_num.pkb          - SQL script called by install_test_rig.sql
 tr_btt_num.pks          - SQL script called by install_test_rig.sql
 tr_btt_num_owner.pkb    - SQL script called by install_test_rig.sql
 tr_btt_num_owner.pks    - SQL script called by install_test_rig.sql
-trc.pkb                 - SQL script called by install_test_rig.sql
-trc.pks                 - SQL script called by install_test_rig.sql
 uninstall_db_schema.gold - Gold file for "t.sh cleanup" logging
 uninstall_db_schema.sql - SQL script called by cleanup.sql
 uninstall_db_user.gold  - Gold file for "t.sh cleanup" logging
@@ -80,9 +77,9 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
       of the multi-tier architecture
 
 1) Create the Unit Test Owner
-   sqlplus system/password@tns_alias @create_ut_owner dtgen
+   sqlplus sys/password@tns_alias as sysdba @create_ut_owner dtgen
      - OR -
-   sqlplus system/password@tns_alias @create_ut_owner dtgen_dev
+   sqlplus sys/password@tns_alias as sysdba @create_ut_owner dtgen_dev
 
 2) Create the Unit Test Tablespaces
    sqlplus system/password@tns_alias @create_tspaces_windows
@@ -95,13 +92,13 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
 
 4) Create Unit Test Applications in DTGen
-   sqlldr dtgen/dtgen control=TST1/ut_dataload.ctl
+   sqlldr dtgen/dtgen@tns_alias control=TST1/dtgen_dataload.ctl
      - OR -
-   sqlldr dtgen_dev/dtgen_dev control=TST1/ut_dataload.ctl
+   sqlldr dtgen_dev/dtgen_dev@tns_alias control=TST1/dtgen_dataload.ctl
    NOTE: Repeat for TST2, TST3, etc...
 
 5) Load Test Parameters
-   sqlldr dtgen_test/dtgen_test control=ut_dataload.ctl
+   sqlldr dtgen_test/dtgen_test@tns_alias control=ut_dataload.ctl
 
 6) Set the names as needed in t.sh
    export GUI_DIR=../../gui
@@ -161,8 +158,3 @@ remove.log           - Log file for "t.sh remove"
 setup.log            - Log file for "t.sh setup"
 uninstall_owner.log  - Log file for "t.sh cleanup"
 uninstall_user.log   - Log file for "t.sh cleanup"
-
-
-Co-Locating DTGen Applications:
--------------------------------
-This test setup co-locates multiple DTGen applications in the same owner/user environments.  The global objects from one application are created for all other applications to use.  This is configured in the array loading found at the bottom of "test_gen.pkb"
