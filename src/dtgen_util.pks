@@ -1,7 +1,7 @@
-create or replace package assemble as
+create or replace package dtgen_util as
 
 /************************************************************
-DTGEN "assmble" Package Specification
+DTGEN "utility" Package Specification
 
 Copyright (c) 2011, Duane.Dieterich@gmail.com
 All rights reserved.
@@ -18,30 +18,22 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    vc2_list  vc2_list_type;
    type aa_vc2_type
       is table of vc2_list_type
-      index by varchar2(6);
+      index by varchar2(15);
    aa_vc2  aa_vc2_type;
    
    rclob   clob;
 
-   procedure install_script
-         (app_abbr_in  in  varchar2
-         ,aa_key_in    in  varchar2
-         ,suffix_in    in  varchar2 default '');
-   function install_script
-         (app_abbr_in  in  varchar2
-         ,aa_key_in    in  varchar2
-         ,suffix_in    in  varchar2 default '')
-      return clob;
-
-   procedure uninstall_script
-         (app_abbr_in  in  varchar2
-         ,aa_key_in    in  varchar2
-         ,suffix_in    in  varchar2 default '');
-   function uninstall_script
-         (app_abbr_in  in  varchar2
-         ,aa_key_in    in  varchar2
-         ,suffix_in    in  varchar2 default '')
-      return clob;
+   procedure assemble_script
+      (app_abbr_in  in  varchar2
+      ,action_in    in  varchar2
+      ,own_key_in   in  varchar2
+      ,suffix_in    in  varchar2 default '');
+   function assemble_script
+      (app_abbr_in  in  varchar2
+      ,action_in    in  varchar2
+      ,own_key_in   in  varchar2
+      ,suffix_in    in  varchar2 default '')
+   return clob;
 
    procedure data_script
          (app_abbr_in  in  varchar2);
@@ -49,4 +41,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
          (app_abbr_in  in  varchar2)
       return clob;
 
-end assemble;
+   function delete_app
+      (app_abbr_in  in  varchar2)
+   return number;
+   procedure delete_files
+      (app_abbr_in  in  varchar2);
+
+end dtgen_util;

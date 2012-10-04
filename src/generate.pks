@@ -14,8 +14,12 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************************/
 
+   TYPE cr_nt_type IS TABLE
+      OF varchar2(80);
+   cr_nt  cr_nt_type;
+
    TYPE line_rec_type is RECORD
-      (value varchar2(100)
+      (value file_lines.value%TYPE
       );
    TYPE line_t_type IS TABLE
       OF line_rec_type;
@@ -51,14 +55,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    procedure drop_oltp;
    procedure drop_dist;
    procedure drop_integ;
-   procedure delete_ods;
    procedure drop_ods;
+   -- Global Drop/Delete Scripts
+   procedure drop_gusr;
    procedure drop_gdst;
    procedure drop_glob;
 
-   -- Create Scripts
+   -- Global Create Scripts
    procedure create_glob;
    procedure create_gdst;
+   procedure create_gusr;
+   -- Create Scripts
    procedure create_ods;
    procedure create_integ;
    procedure create_dist;
