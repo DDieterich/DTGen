@@ -11,6 +11,7 @@ drop role UT_REPO_ADMINISTRATOR;
 
 @../supp/drop_app_role TST1
 @../supp/drop_app_role TST2
+@../supp/drop_app_role UTP
 
 drop tablespace test_onln_data_default including contents;
 drop tablespace test_onln_indx_default including contents;

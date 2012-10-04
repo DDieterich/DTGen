@@ -14,9 +14,6 @@ create synonym glob             for &1..glob;
 create synonym generate         for &1..generate;
 create synonym dtgen_util       for &1..dtgen_util;
 
-@test_gen.pks
-grant execute on test_gen to dtgen_ut_test;
-
 /*
 create table test_run as
    select abbr          app_abbr
@@ -27,7 +24,7 @@ alter table test_run
    add (constraint test_run_pk
    primary key (app_abbr, db_schema));
 grant select, insert, update, delete
-   on test_run to dtgen_ut_test;
+   on test_run to UTP_app;
 */
 
 create table global_parms
@@ -42,7 +39,7 @@ create table global_parms
       ,constraint global_parms_ck2 check (fold_strings in ('T','F'))
       ,constraint global_parms_ck3 check (ignore_no_change in ('T','F')));
 grant select
-   on global_parms to dtgen_ut_test;
+   on global_parms to UTP_app;
 
 create table parm_sets
       (parm_set     varchar2(30)  -- Primary Key
@@ -50,7 +47,7 @@ create table parm_sets
       ,constraint parm_sets_pk primary key (parm_set))
    organization index;
 grant select
-   on parm_sets to dtgen_ut_test;
+   on parm_sets to UTP_app;
 
 create table test_parms
       (parm_set     varchar2(30)  -- Primary Key
@@ -71,7 +68,7 @@ create table test_parms
       ,constraint test_parms_fk1 foreign key (parm_set)
                        references parm_sets (parm_set));
 grant select
-   on test_parms to dtgen_ut_test;
+   on test_parms to UTP_app;
 
 create table test_sets
       (user_name    varchar2(30) -- Primary Key
@@ -87,6 +84,4 @@ create table test_sets
    organization index;
 create index test_sets_fk1 on test_sets (parm_set);
 grant select
-   on test_sets to dtgen_ut_test;
-
-@test_gen.pkb
+   on test_sets to UTP_app;

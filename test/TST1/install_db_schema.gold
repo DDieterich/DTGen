@@ -2245,8 +2245,8 @@ grant select, insert, update, delete on T1A_EFF to T1MTS
 
 PL/SQL procedure successfully completed.
 
-old   7:         and  grantee = upper('&1.') || '_APP'
-new   7:         and  grantee = upper('TST1') || '_APP'
+old   7:         and  grantee = upper('&1.')
+new   7:         and  grantee = upper('TST1_APP')
 old  12:                  ' to &2. with grant option';
 new  12:                  ' to T1DBU with grant option';
 grant EXECUTE on GLOB to T1DBU with grant option

@@ -19,8 +19,18 @@ create user &1. identified by &2.
 grant connect to &1.;
 grant create synonym to &1.;
 
---grant &APP_ABBR._app to &1.;
+--
+-- Additional useful actions
+--   Variables that must be set
+--
+--  &APP_ABBR  - Abbreviation of the Application to be granted to this user
+--  &APP_OWNER - Owner username of the Application to be granted to this user
+--  &APP_PASS  - Owner password of the Application to be granted to this user
+--
+--@@grant_app_role &APP_ABBR. to &1.
 --connect &1./&2.
 --set serveroutput on format wrapped
 --@install_gusr
 --@install_usyn
+--connect &APP_OWNER./&APP_PASS.
+--@@grant_role_option &APP_ABBR._APP &1.

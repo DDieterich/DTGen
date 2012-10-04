@@ -696,6 +696,26 @@ begin
    return retb;
 end table_self_ref;
 ----------------------------------------
+function table_has_fk
+      (tabid_in  in  tables.id%type)
+   return boolean
+   --  For a table ID, return TRUE if the table
+   --  Contains a self-referencing foreign key
+is
+   cursor c1 is
+      select 1 from tab_cols COL
+       where COL.fk_table_id is not null
+        and  COL.table_id = tabid_in;
+   buf1 c1%ROWTYPE;
+   retb  boolean;
+begin
+   open c1;
+   fetch c1 into buf1;
+   retb := c1%FOUND;
+   close c1;
+   return retb;
+end table_has_fk;
+----------------------------------------
 function get_colformat
       (cbuff_in  in  tab_cols%rowtype)
    return varchar2
@@ -822,7 +842,6 @@ function allow_add_row
    return boolean
 IS
    num_rows  number;
-   retb      boolean := true;
 begin
    select count(c.type)
     into  num_rows
@@ -833,9 +852,9 @@ begin
      and  c.type like 'BLOB%';
    if num_rows > 0
    then
-      retb := false;
+      return false;
    end if;
-   return retb;
+   return true;
 end allow_add_row;
 ----------------------------------------
 procedure load_nk_aa
@@ -5469,7 +5488,7 @@ BEGIN
    if tbuff.mv_refresh_hr IS NOT NULL
    then
       p('');
-      p('create materialized ' || sp_type || ' ' || sp_type || ' ' || sp_name);
+      p('create materialized ' || sp_type || ' ' || sp_name);
       p('   refresh next sysdate + '||tbuff.mv_refresh_hr||'/24');
       p('   as select * from '||abuff.db_auth||sp_name||'@'||abuff.dbid);
       p('/');
@@ -7619,7 +7638,7 @@ BEGIN
    p('');
    p('   procedure clear');
    p('      (n_buff  in out  ' || tbuff.name || '_ACT%ROWTYPE);');
-   if tbuff.type in ('EFF', 'LOG')
+   if tbuff.type in ('EFF', 'LOG') or table_has_fk(tbuff.id)
    then
       p('   procedure clear');
       p('      (n_buff  in out  ' || tbuff.name || '%ROWTYPE);');
@@ -8118,7 +8137,7 @@ BEGIN
       end if;
    end loop;
    p('end clear;');
-   if tbuff.type in ('EFF', 'LOG')
+   if tbuff.type in ('EFF', 'LOG') or table_has_fk(tbuff.id)
    then
       p('----------------------------------------');
       p('procedure clear');
@@ -8241,7 +8260,7 @@ BEGIN
    end loop;
    p('      );');
    p('end ins;') ;
-   if tbuff.type in ('EFF', 'LOG')
+   if tbuff.type in ('EFF', 'LOG') or table_has_fk(tbuff.id)
    then
       p('----------------------------------------');
       p('procedure ins');
@@ -8569,7 +8588,7 @@ BEGIN
    end if;
    p('      );') ;
    p('end upd;') ;
-   if tbuff.type in ('EFF', 'LOG')
+   if tbuff.type in ('EFF', 'LOG') or table_has_fk(tbuff.id)
    then
       p('----------------------------------------');
       p('procedure upd');
@@ -8762,30 +8781,30 @@ BEGIN
 END create_prg;
 ----------------------------------------
 PROCEDURE drop_gsyn
-   --  Drop the user's global and program synonyms
+   --  Drop the user's global synonyms
 IS
 BEGIN
-   p('drop synonym glob');
+   p('drop synonym util');
    p('/');
    p('drop synonym util_log');
    p('/');
-   p('drop synonym util');
+   p('drop synonym glob');
    p('/');
    p('');
 END drop_gsyn;
 ----------------------------------------
 PROCEDURE create_gsyn
-   --  Create the user's global and package synonyms
+   --  Create the user's global synonyms
 IS
 BEGIN
-   p('create synonym util');
-   p('   for '||abuff.db_schema||'.util');
+   p('create synonym glob');
+   p('   for '||abuff.db_schema||'.glob');
    p('/');
    p('create synonym util_log');
    p('   for '||abuff.db_schema||'.util_log');
    p('/');
-   p('create synonym glob');
-   p('   for '||abuff.db_schema||'.glob');
+   p('create synonym util');
+   p('   for '||abuff.db_schema||'.util');
    p('/');
    p('');
 END create_gsyn;
@@ -8864,7 +8883,7 @@ BEGIN
 END create_tsyn;
 ----------------------------------------
 PROCEDURE drop_msyn
-   --  Drop the user's global and program synonyms
+   --  Drop the user's program synonyms
 IS
 BEGIN
    for buff in (
@@ -8879,7 +8898,7 @@ BEGIN
 END drop_msyn;
 ----------------------------------------
 PROCEDURE create_msyn
-   --  Create the user's package synonyms
+   --  Create the user's program synonyms
 IS
 BEGIN
    for buff in (
@@ -16192,6 +16211,7 @@ BEGIN
       end if;
       for buff in (select name from tables
                     where MV_REFRESH_HR is not null
+                     and  application_id = abuff.id
                     order by name)
       loop
          abuff := null;
@@ -16203,9 +16223,13 @@ BEGIN
          abuff := null;
          raise_application_error(-20000, 'DBID and DB_AUTH must both have values or both be NULL.');
       end if;
-      for buff in (select id, name from tables order by id)
+      for buff in (select id, name from tables
+                    where application_id = abuff.id
+                    order by id)
       loop
-         for buf2 in (select * from tab_cols where table_id = buff.id order by id)
+         for buf2 in (select * from tab_cols
+                       where table_id = buff.id
+                       order by id)
          loop
             if get_dtype(buf2,'DB') = 'CLOB' then
                abuff := null;

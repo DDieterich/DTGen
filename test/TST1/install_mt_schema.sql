@@ -31,6 +31,8 @@ create database link &2.
 
 @install_test_rig
 @install_test_rig_owner
-@../../supp/grant_role_option &6 &7
+
+-- NOTE: This call to this script changes the values of &1 and &2
+@../../supp/grant_role_option &6._APP &7.
 
 spool off

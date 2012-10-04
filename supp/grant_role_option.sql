@@ -6,7 +6,7 @@
 -- This explicit grant is required to allow an application user to
 --   create packages on owner objects
 --
--- &1.   -- Application Abbreviation
+-- &1.   -- Role Name
 -- &2.   -- "Grantee"
 --
 
@@ -19,7 +19,7 @@ begin
    FOR buff in (
       select table_name, privilege from user_tab_privs
        where grantor = USER
-        and  grantee = upper('&1.') || '_APP'
+        and  grantee = upper('&1.')
        order by table_name, privilege )
    loop
       sql_txt := 'grant ' || buff.privilege ||
