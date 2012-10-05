@@ -64,31 +64,37 @@ _Note: If this command needs to be run repeatedly, run "./d.sh cleanup" from the
 _Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "dev/d.sh load" script will not overwrite "dtgen_dataload2.ctl".  The "dev/d.sh load" command will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "dev/d.sh load" will use "dtgen_dataload2.ctl"._
 
 
-== Regression Test DTGen_Dev ==
+== Copy Program/Module Source to DTGen_Dev ==
 
-
-
-== Copy Program/Module Source to New DTGen ==
-
-Copy the following Program/Module Sources from "trunk/src" to "trunk/test/dtgen":
+Copy the following Program/Module Sources from "src" to "dev":
 
   * comp.sql
   * dtgen_util.pkb
   * dtgen_util.pks
   * generate.pkb
   * generate.pks
-  * gui_app_tree_vw.sql
-  * gui_util.pkb
-  * gui_util.pks
+  * gui/gui_app_tree_vw.sql
+  * gui/gui_util.pkb
+  * gui/gui_util.pks
+
 
 == Complete Changes to New DTGen ==
 
-The above listed Program/Module Sources can be compiled and tested against the New DTGen installation in the test environment.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the New DTGen should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
+The above listed Program/Module Sources can be compiled and tested using DTGen_Dev.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the DTGen_Dev should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
+
+
+== Regression Test DTGen_Dev ==
+
+The following procedures are found in README.txt in the "test" directory.  (The test environment can be switched between DTGen and DTGen_Dev):
+
+ * Installation Instructions
+ * Testing Instructions
+ * Un-Install Instructions
 
 
 == Update APEX GUI ==
 
-Switch the compile schema for APEX application 900 to the test environment.  Install the new APEX GUI forms:
+Switch the compile schema for APEX application 900 to the dev environment.  Install the new APEX GUI forms:
 
   * sqlplus (owner)/(password)
   * SQL> spool install_gui
@@ -102,39 +108,41 @@ Export the "f900" application to "trunk/test/dtgen".
 
 == Overwrite Old DTGen Program/Module Source ==
 
-Copy the following Program/Module Sources from "trunk/test/dtgen" to "trunk/src":
+Copy the following Program/Module Sources from "dev" to "src":
 
   * comp.sql
   * dtgen_util.pkb
   * dtgen_util.pks
   * generate.pkb
   * generate.pks
+
+Copy the following Program/Module Sources from "dev/gui" to "gui":
+
   * gui_app_tree_vw.sql
   * gui_util.pkb
   * gui_util.pks
 
-Copy one of the following SQL*Loader control files from "trunk/test/dtgen" to "trunk/supp/dtgen_dataload.ctl":
+Copy one of the following SQL*Loader control files from "dev" to "supp/dtgen_dataload.ctl":
 
   * dtgen_dataload.ctl
   * dtgen_dataload2.ctl (This is usually the choice, if it exists)
 
-Review and update the following scripts::
+Review and update files in the following directories:
 
-  * trunk/install.sql
-  * trunk/supp/comp_file.sql
-  * trunk/supp/select_file.sql
+  * src
+  * supp
 
 NOTE: Wait until the next step to review and modify "trunk/uninstall.sql"
 
 == Re-Install DTGen ==
 
-Un-Install the "old" DTgen by running the "uninstall.sql" script in the "trunk" directory.
+Un-Install the DTgen by running the "uninstall.sql" script in the "trunk" directory.
 
 After a successful uninstall, review and update the "uninstall.sql" file so it is compatible with the "new" DTGen.
 
-Install the "new" DTgen by running the "install.sql" script in the "trunk" directory.
+Install the DTgen_Dev by running the "install.sql" script in the "trunk" directory.
 
-Load the DTGen data into the new installation using the following command in the "trunk/supp" directory:
+Load the DTGen data into the new installation using the following command in the "supp" directory:
 
   * sqlldr dtgen/dtgen CONTROL=dtgen_dataload.ctl
 
@@ -155,17 +163,16 @@ Review and test all demonstration scripts in the "trunk/demo" directory.
 
 Review and update as needed the "README.txt" documents in the following directories:
 
-  * trunk
-  * trunk/src
+  * src
   * demo
   * demo/asof
   * demo/basics
   * demo/gui
   * demo/tiers
 
-Review and update as needed the documents in "trunk/docs"
+Review and update as needed the documents in "docs"
 
 
 == Cleanup ==
 
-Run "./t.sh" from the "trunk/test" directory to remove testing objects from the database and file system.
+Run "./d.sh remove" from the "dev" directory to remove testing objects from the database and file system.
