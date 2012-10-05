@@ -7,7 +7,7 @@ Since DTGen generates DTGen, there is a need for 2 DTGen(s) during development:
   * Old DTGen to generate the new DTGen
   * New DTGen to test prior to overwriting the old DTGen
 
-The following procedure is a way to accomplish that effort.  The following environment is assumed for the procedure:
+The following procedure uses the "dev" directory to accomplish that effort.  The following environment is assumed for the procedure:
 
   * The "trunk" directory is up-to-date from Sub-Version
   * DTGen is installed in schema "dtgen" in an Oracle database
