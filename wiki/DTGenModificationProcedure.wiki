@@ -79,7 +79,7 @@ Copy the following Program/Module Sources from "src" to "dev":
   * gui/gui_util.pks
 
 
-== Complete Changes to New DTGen ==
+== Complete Changes to DTGen_Dev ==
 
 The above listed Program/Module Sources can be compiled and tested using DTGen_Dev.  Additionally, the dtgen_dataload.ctl can be modified and tested.  With this step complete, the DTGen_Dev should be fully available in the database with all source compiled and dtgen_dataload.ctl loaded.
 
