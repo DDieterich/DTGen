@@ -8,6 +8,6 @@ Welcome to the DTGen Wiki.
   * ProjectGoals
   * ProjectStatus
   * TestPlan
-  * DTGenModificationProcedure
+  * [http://code.google.com/p/dtgen/wiki/DTGenModificationProcedure DTGenModificationProcedure]
   * ReleaseProcess
   * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
