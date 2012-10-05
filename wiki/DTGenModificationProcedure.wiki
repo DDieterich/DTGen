@@ -4,8 +4,8 @@
 
 Since DTGen generates DTGen, there is a need for 2 DTGen(s) during development:
 
-  * Old DTGen to generate the new DTGen
-  * New DTGen to test prior to overwriting the old DTGen
+  * DTGen to generate DTGen_Dev
+  * DTGen_Dev to test prior to overwriting DTGen
 
 The following procedure uses the "dev" directory to accomplish that effort.  The following environment is assumed for the procedure:
 
@@ -17,56 +17,55 @@ The following procedure uses the "dev" directory to accomplish that effort.  The
 
 = Details =
 
-== Complete Changes to Old DTGen ==
+== Complete Changes to DTGen ==
 
-Ensure that the changes to Old DTGen are as complete as possible.  Do not make any changes to Old DTGen that will cause it not to work.  The Old DTGen will be copied to a new location.  Any changes to Old DTGen, after the copy is made, will need to be duplicated in the New DTGen
+Ensure that the changes to DTGen are as complete as possible.  Do not make any changes that will cause it not to work.  DTGen will be copied to the "dev" directory.  Any changes to DTGen, after the copy is made, will need to be duplicated in the "dev" directory.
 
 With this step complete, commit changes to Sub-Version.
 
 
-== Setup the Test Environment ==
+== Setup the DTGen_Dev Environment ==
 
-If a previous test environment remains, run this command in the "trunk/test" directory to remove it.
+If a previous DTGen_Dev environment remains, run this command in the "dev" directory to remove it.
 
-  * ./t.sh remove
+  * ./d.sh remove
 
 Review and modify as necessary the following scripts:
 
-  * trunk/test/t.sh
-  * trunk/test/dtgen/t.env
-  * trunk/test/dtgen/setup.sh
-  * trunk/test/dtgen/test.sh
-  * trunk/test/dtgen/cleanup.sh
-  * trunk/test/dtgen/remove.sh
+  * dev/d.sh
+  * dev/d.env
+  * dev/setup.sh
+  * dev/test.sh
+  * dev/cleanup.sh
+  * dev/remove.sh
 
-Review the following Supplemental Scripts for required changes in the "trunk/supp" directory:
+Review the Supplemental Scripts for required changes in the "supp" directory.
 
-  * create_owner.sql
-  * create_user.sql
-  * fullasm.sql
-  * fullgen.sql
+Run this command in the "dev" directory to setup the DTGen_Dev environment.
 
-Run this command in the "trunk/test" directory to setup the test environment.
-
-  * ./t.sh setup
+  * ./d.sh setup
 
 
 == Set the APEX Configuration for Testing ==
 
-Run APEX and add the test environment schema (dtgen_test) to the workspace that contains the DTGen APEX application (ID 900).
+Run APEX and add the DTGen_Dev environment schema (dtgen_dev) to the workspace that contains the DTGen APEX application (ID 900).
 
-Run the DTGen GUI and change the "Schema Name" for the DTGen application to the test environment (dtgen_test).  _(With care, the "Schema Name" can be set to "&1".  The test environment schema name would need to be passed to the "@install_gui" as the first parameter.)_
+Run the DTGen GUI and change the "Schema Name" for the DTGen application to the DTGen_Dev environment (dtgen_dev).  _(With care, the "Schema Name" can be set to "&1".  The DTGen_Dev environment schema name would need to be passed to the "@install_gui" as the first parameter.)_
 
 
-== Test Generate the New DTGen ==
+== Load DTGen_Dev ==
 
-This is the first test of the New DTGen.  It is likely that the "compl.sql" script will produce errors.  This is not a problem, so long as the New DTGen generates successfully from the Old DTGen and loads into the test environment successfully.  The command for performing this first test is run from the "trunk/test" directory:
+This step will use the old DTGen environment to generate a new version of DTGen_Dev.
 
-  * ./t.sh test dtgen
+  * ./d.sh load
 
-_Note: If this command needs to be run repeatedly, run "./t.sh cleanup dtgen" from the "trunk/test" directory to remove the DTGen database test objects before re-running "./t.sh test dtgen"_
+_Note: If this command needs to be run repeatedly, run "./d.sh cleanup" from the "dev" directory to remove the DTGen_Dev database objects before re-running "./d.sh load"_
 
-_Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "trunk/dtgen/test.sh" script will not overwrite "dtgen_dataload2.ctl".  The "./t.sh test" command will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "./t.sh test" will use "dtgen_dataload2.ctl"._
+_Note: If this command needs to be run repeatedly, the SQL*Loader control file "dtgen_dataload2.ctl" can be created.  The "dev/d.sh load" script will not overwrite "dtgen_dataload2.ctl".  The "dev/d.sh load" command will use "dtgen_dataload2.ctl", instead of "dtgen_dataload.ctl", if "dtgen_dataload2.ctl" exists.  Otherwise, "dev/d.sh load" will use "dtgen_dataload2.ctl"._
+
+
+== Regression Test DTGen_Dev ==
+
 
 
 == Copy Program/Module Source to New DTGen ==
