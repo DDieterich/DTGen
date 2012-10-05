@@ -1,6 +1,6 @@
 #summary Test Plan
 
-The following procedures are found in README.txt in the test directory:
+The following procedures are found in README.txt in the "test" directory:
  * Installation Instructions
  * Testing Instructions
  * Un-Install Instructions
