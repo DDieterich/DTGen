@@ -39,17 +39,9 @@ Review and test all demonstration scripts in the "trunk/demo" directory.
 
 == Update Documentation ==
 
-Review and update as needed the "README.txt" documents in the following directories:
+Review and update as needed the "README.txt" files.
 
-  * trunk
-  * trunk/src
-  * demo
-  * demo/asof
-  * demo/basics
-  * demo/gui
-  * demo/tiers
-
-Review and update as needed the documents in "trunk/docs"
+Review and update as needed the documents in the "docs" directory
 
 = Release Procedure =
 
