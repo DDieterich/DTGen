@@ -1,4 +1,5 @@
 #summary Why not connect a Mid-Tier schema to a Database user?
+#labels Phase-Design
 
 = Introduction =
 
