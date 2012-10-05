@@ -12,3 +12,4 @@ Welcome to the DTGen Wiki.
   * TestPlan
   * ReleaseProcess
   * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
+  * ReleaseNotes
