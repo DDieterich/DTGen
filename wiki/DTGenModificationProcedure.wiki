@@ -150,6 +150,8 @@ Load the DTGen data into the new installation using the following command in the
 
 == Reset the APEX Configuration ==
 
+Reload the GUI scripts using gui/gui_comp.sql
+
 Run the DTGen GUI and change the "Schema Name" for the DTGen application to the normal environment (dtgen).
 
 
