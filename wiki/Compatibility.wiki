@@ -1,4 +1,5 @@
 #summary DTGen release compatibility.
+#labels Phase-Deploy
 
  * See PreRelease12Compatibility for Pre-Release 0.12 Compatibility
 
