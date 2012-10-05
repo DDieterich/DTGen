@@ -11,7 +11,7 @@ The following procedure uses the "dev" directory to accomplish that effort.  The
 
   * The "trunk" directory is up-to-date from Sub-Version
   * DTGen is installed in schema "dtgen" in an Oracle database
-  * "dtgen_dataload.ctl" has been loaded into the "dtgen" schema.
+  * "dtgen_dataload.dat" has been loaded into the "dtgen" schema.
   * The DTGen GUI (f900) is installed in the same Oracle database.
 
 
