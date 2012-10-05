@@ -1,4 +1,5 @@
 #summary Test Plan
+#labels Phase-QA
 
 The following procedures are found in README.txt in the "test" directory:
  * Installation Instructions
