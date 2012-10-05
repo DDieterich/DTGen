@@ -1,5 +1,10 @@
 #summary Test Plan
 
+The following procedures are found in README.txt in the test directory:
+ * Installation Instructions
+ * Testing Instructions
+ * Un-Install Instructions
+
  = Functional Testing =
   # == Fundamental Database Features ==
     # _*DTC*_: Datatype Support for Columns
