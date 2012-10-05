@@ -9,5 +9,5 @@ Welcome to the DTGen Wiki.
   * ProjectStatus
   * TestPlan
   * OracleCompatibility
-  * Compatibility
+  * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
   * ReleaseProcess
