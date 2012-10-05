@@ -1,4 +1,5 @@
 #summary DTGen Release Notes for Pre-Release 0.11
+#labels Phase-Deploy
 
 = Pre-Release 0.11 =
 
