@@ -31,14 +31,13 @@ grant &1._app to &UTO_NAME.;
 grant select  on &1..applications_act to &UTO_NAME. with grant option;
 grant update  on &1..applications_act to &UTO_NAME. with grant option;
 grant select  on &1..file_lines_act   to &UTO_NAME. with grant option;
-grant select  on &1..file_lines_asof  to &UTO_NAME. with grant option;
 grant execute on &1..glob             to &UTO_NAME. with grant option;
 grant execute on &1..util             to &UTO_NAME. with grant option;
 grant execute on &1..generate         to &UTO_NAME. with grant option;
 grant execute on &1..dtgen_util       to &UTO_NAME. with grant option;
 
-prompt NOTE: This grant may fail on a new database
-grant UT_REPO_ADMINISTRATOR to &UTO_NAME. with admin option;
+-- prompt NOTE: This grant may fail on a new database
+-- grant UT_REPO_ADMINISTRATOR to &UTO_NAME. with admin option;
 
 -- NOTE: These calls to these scripts change the value of &1
 -- Create New Application Roles

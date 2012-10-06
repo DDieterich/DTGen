@@ -8,8 +8,6 @@ spool install
 
 -- Configure SQL*Plus
 --
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
 set define '&'
 set trimspool on
 set feedback off
@@ -20,25 +18,25 @@ set verify off
 --
 -- create_owner.sql defines variables OWNERNAME, OWNERPASS, and DEF_SPACE
 --
-define NAME = dtgen   -- New Schema Owner Name
+define NAME = DTGEN   -- New Schema Owner Name
 define PASS = dtgen   -- New Schema Owner Password
+define TNS  = @XE2    -- TNS Alias Name for Remote Database
+                      -- (must include the @ sign)
 define APP  = dtgen   -- Application Abbreviation
 
 -- Create New Schema Owner
 --
 -- New Schema Owner Default Tablespace: users
 --
-@supp/create_owner &NAME. &PASS. users
-@supp/create_app_role &APP.
+@../supp/create_owner &NAME. &PASS. users
+@../supp/create_app_role &APP.
 
 -- Create DTGen Schema Objects
 --
-connect &NAME./&PASS.
-WHENEVER SQLERROR EXIT SQL.SQLCODE
-WHENEVER OSERROR EXIT
+connect &NAME./&PASS.&TNS.
 set serveroutput on format wrapped
-@src/install_db
-@src/comp
+@install_db
+@comp
 
 set feedback on
 set verify on

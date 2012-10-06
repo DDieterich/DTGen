@@ -86,21 +86,27 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
      - OR -
    sqlplus system/password@tns_alias @create_tspaces_linux
 
-3) Install Unit Test Owner Objects
+3) Create Synonyms back to the Generator Schema Object Owner
+   sqlplus dtgen_test/dtgen_test@tns_alias @../src/install_usr
+     - OR -
+   sqlplus dtgen_test/dtgen_test@tns_alias @../dev/install_usr
+
+4) Install Unit Test Owner Objects
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen
      - OR -
    sqlplus dtgen_test/dtgen_test@tns_alias @create_ut_objs dtgen_dev
 
-4) Create Unit Test Applications in DTGen
-   sqlldr dtgen/dtgen@tns_alias control=TST1/dtgen_dataload.ctl
-     - OR -
-   sqlldr dtgen_dev/dtgen_dev@tns_alias control=TST1/dtgen_dataload.ctl
-   NOTE: Repeat for TST2, TST3, etc...
-
 5) Load Test Parameters
    sqlldr dtgen_test/dtgen_test@tns_alias control=ut_dataload.ctl
 
-6) Set the names as needed in t.sh
+6) Create Unit Test Applications in DTGen
+   cd TST1
+   sqlldr dtgen/dtgen@tns_alias control=dtgen_dataload.ctl
+     - OR -
+   sqlldr dtgen_dev/dtgen_dev@tns_alias control=dtgen_dataload.ctl
+   NOTE: Repeat for TST2, TST3, etc...
+
+7) Set the names as needed in t.sh
    export GUI_DIR=../../gui
    export DEVNAME=dtgen
    export DEVPASS=dtgen
@@ -109,10 +115,10 @@ NOTE: Due to an apperent bug in Oracle11g Express Edition regarding
    export DEVNAME=dtgen_dev
    export DEVPASS=dtgen_dev
 
-7) Confirm Test Settings
+8) Confirm Test Settings
    ./t.sh -p
 
-8) Setup the Unit Test Environments
+9) Setup the Unit Test Environments
    ./t.sh setup
 
 

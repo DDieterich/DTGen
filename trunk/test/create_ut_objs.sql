@@ -5,28 +5,6 @@
 -- &1. - Name of the Generator Schema Object Owner
 --
 
--- Create Synonyms back to the Generator Schema Object Owner
-create synonym applications_act for &1..applications_act;
-create synonym file_lines_act   for &1..file_lines_act;
-create synonym file_lines_asof  for &1..file_lines_asof;
-create synonym util             for &1..util;
-create synonym glob             for &1..glob;
-create synonym generate         for &1..generate;
-create synonym dtgen_util       for &1..dtgen_util;
-
-/*
-create table test_run as
-   select abbr          app_abbr
-         ,db_schema     db_schema
-         ,systimestamp  gen_tstamp
-   from applications_act where 0 = 1;
-alter table test_run
-   add (constraint test_run_pk
-   primary key (app_abbr, db_schema));
-grant select, insert, update, delete
-   on test_run to UTP_app;
-*/
-
 create table global_parms
       (global_set        varchar2(1)  -- Primary Key
       ,db_constraints    varchar2(1) not null

@@ -24,6 +24,7 @@ drop_app_role.sql  - Drops all application roles after application un-installati
 drop_owner.sql     - Script used to drop a DTGen owner and roles
 drop_user.sql      - Script used to drop an application user
 dtgen_dataload.ctl - SQL*Loader control file with data that will generate DTGen
+dtgen_dataload.dat - Data file used by dtgen_dataload.ctl
 fullasm.sql        - SPOOL script used to assemble scripts for an application
                      -) The ABBR of the application is the first parameter
                         NOTE: must be run after fullgen.sql

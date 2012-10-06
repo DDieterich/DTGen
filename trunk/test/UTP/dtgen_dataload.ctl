@@ -8,8 +8,8 @@
 -- sqlldr username/password CONTROL=FILENAME
 --
 load data infile *
-into table APPLICATIONS_ACT APPEND when key = 'APPLICATIONS                  ' fields terminated by ''
-   (key FILLER position(1:31), abbr CHAR(5), name CHAR(30), db_schema CHAR(30), db_schema_exp CHAR(1), apex_schema CHAR(30), apex_ws_name CHAR(30), apex_app_name CHAR(30), dbid CHAR(2000), db_auth CHAR(200), description CHAR(1000), ts_null_override CHAR(1), ts_onln_data CHAR(30), ts_onln_indx CHAR(30), ts_hist_data CHAR(30), ts_hist_indx CHAR(30), usr_datatype CHAR(20), usr_frgn_key CHAR(100), copyright CHAR(4000))
+into table APPLICATIONS APPEND when key = 'APPLICATIONS                  ' fields terminated by ''
+   (key FILLER position(1:31), abbr CHAR(5), name CHAR(30), db_schema CHAR(30), apex_schema CHAR(30), apex_ws_name CHAR(30), apex_app_name CHAR(30), dbid CHAR(2000), db_auth CHAR(200), description CHAR(1000), ts_null_override CHAR(1), ts_onln_data CHAR(30), ts_onln_indx CHAR(30), ts_hist_data CHAR(30), ts_hist_indx CHAR(30), usr_datatype CHAR(20), usr_frgn_key CHAR(100), copyright CHAR(4000))
 into table DOMAINS_ACT APPEND when key = 'DOMAINS                       ' fields terminated by ''
    (key FILLER position(1:31), applications_nk1 CHAR(5), abbr CHAR(5), name CHAR(20), fold CHAR(1), len FLOAT EXTERNAL, description CHAR(1000))
 into table EXCEPTIONS_ACT APPEND when key = 'EXCEPTIONS                    ' fields terminated by ''
@@ -27,7 +27,7 @@ into table TAB_COLS_ACT APPEND when key = 'TAB_COLS                      ' fiel
 into table TAB_INDS_ACT APPEND when key = 'TAB_INDS                      ' fields terminated by ''
    (key FILLER position(1:31), tab_cols_nk1 CHAR(5), tab_cols_nk2 CHAR(5), tab_cols_nk3 CHAR(25), tag CHAR(4), seq FLOAT EXTERNAL)
 BEGINDATA
-APPLICATIONS                  UTPUnit Test ParametersDTGen Unit Testing Parameter DatabaseCopyright (c) 2012, Duane.Dieterich@gmail.com
+APPLICATIONS                  UTPUnit Test ParametersDTGen Unit Testing Parameter DatabaseCopyright (c) 2012, Duane.Dieterich@gmail.com
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

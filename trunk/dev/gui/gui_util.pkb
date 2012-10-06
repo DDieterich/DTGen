@@ -486,8 +486,8 @@ begin
    apex_plsql_job.update_job_status(job_num_in, job_status);
    update_apex_app_files(app_abbr_in, 'uninstall', 'DB');
    -- dtgen_dataload
-   af_title        := 'dtgen_dataload.ctl';
-   af_description  := app_abbr_in || ' DTGen dataload script';
+   af_title        := 'dtgen_dataload.dat';
+   af_description  := app_abbr_in || ' DTGen dataload data';
    job_status := js_prefix || ' ' || af_title || ' (10 of 11)';
    apex_plsql_job.update_job_status(job_num_in, job_status);
    update_apex_app_files(app_abbr_in, 'data');
