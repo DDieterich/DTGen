@@ -10,7 +10,7 @@ DIR_LIST="TST1"
 # Set the Oracle environment for the database connection
 #export TNS_ALIAS=DEMO1
 export TNS_ALIAS=XE2
-DEV_PROD="DEV"
+DEV_PROD="PROD"
 if [ ${DEV_PROD} = "PROD" ]
 then
    export GUI_DIR=../../gui

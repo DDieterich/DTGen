@@ -8,8 +8,8 @@ spool uninstall
 
 -- Initialize Variables
 --
-define OWNERNAME = dtgen     -- Schema Owner to be --oved
-define APP_ABBR  = dtgen     -- Application Abbreviation
+define OWNERNAME = DTGEN     -- Schema Owner to be --oved
+define APP_ABBR  = DTGEN     -- Application Abbreviation
 
 -- Configure SQL*Plus
 --
@@ -32,7 +32,7 @@ prompt
 prompt Press ENTER to continue
 accept junk
 
-@supp/drop_owner &OWNERNAME.
-@supp/drop_app_role &APP_ABBR.
+@../supp/drop_owner &OWNERNAME.
+@../supp/drop_app_role &APP_ABBR.
 
 spool off

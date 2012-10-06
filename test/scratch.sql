@@ -32,6 +32,8 @@ purge recyclebin;
 ------------------------------------------------------------
 REM dtgen_dev:
 
+execute dtgen_util.data_script('DTGEN')
+
 select regexp_instr('The last white space in this string is at position 51.'
                    ,'[   ][^  ]*$') from dual;
 select substr('Testing',7,-1) from dual;

@@ -25,7 +25,7 @@ prompt Running fullgen ...
 BEGIN
 
    /*  Initialize  */
-   util.set_usr('Test Load');  -- Any string will work for this parameter
+   glob.set_usr('Test Load');  -- Any string will work for this parameter
    generate.init('&1.');
 
    /*  Drop Scripts  */

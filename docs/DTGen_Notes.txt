@@ -245,6 +245,78 @@ NOTE: Must be run on database server because it disables the table trigger from 
 
 
 ============================================================
+View Package Return Values
+--------------------------
+NOTE: Path is a Natural Key value for a self-referencing Foreign Key
+
+-) Conditions for full view query:
+   1) db_constraints is true
+      TAB package will not have returned any updated values
+   2) self-ref path data is not set
+      Doesn't matter what the TAB package provides,
+         the database table must ultimately be queried for the path value.
+
+-) Conditions for ID and FK functions only:
+   1) db_constraints is false and
+         non-path foreign keys have no natural key values
+      TAB package will not provide FK natural key data,
+         FK lookups may be cached at MT with MV and/or Function Caching.
+   2) db_constraints is false and
+         non-path foreign key IDs don't match
+      TAB package will not provide FK natural key data,
+         FK lookups may be cached at MT with MV and/or Function Caching.
+
+-) Conditions for no query:
+   1) db_constraints is false and
+         no foreign keys
+      TAB package will provide all returning data
+   2) db_constraints is false and
+         all foreign keys have natural key values and
+         old foreign key IDs match new foreign key IDs
+      TAB package will provide non-FK data,
+         FK data already populated,
+         FK natural keys will not change.
+
+db_constraints  DML  FK IDs  FK NKs  SR IDs  Paths  Action
+--------------  ---  ------  ------  ------  -----  ------
+TRUE            INS  none    none    none    none   Full View Query
+TRUE            INS  NULL    NULL    none    none   Full View Query
+TRUE            INS  NULL    set     none    none   Full View Query
+TRUE            INS  set     NULL    none    none   Full View Query
+TRUE            INS  set     set     none    none   Full View Query
+TRUE            INS  none    none    NULL    NULL   Full View Query
+TRUE            INS  none    none    NULL    set    Full View Query
+TRUE            INS  none    none    set     NULL   Full View Query
+TRUE            INS  none    none    set     set    Full View Query
+TRUE            INS  NULL    NULL    NULL    NULL   Full View Query
+TRUE            INS  none    none    NULL    set    Full View Query
+TRUE            INS  none    none    set     NULL   Full View Query
+TRUE            INS  none    none    set     set    Full View Query
+TRUE            INS   -       -       -       -     Full View Query
+
+ -              INS   -       -      set      -     Full View Query
+ -              INS   -       -      NULL    set    Path ID Query
+FALSE           INS  NULL    NULL    NULL    NULL   No Query
+FALSE           INS  none    none    none    none   No Query
+
+
+TRUE            UPD   -       -       -       -     Full View Query
+ -              UPD   -       -      diff     -     Full View Query
+FALSE           UPD  match   match   match   match  No Query
+FALSE           UPD  none    none    none    none   No Query
+
+
+FALSE           INS  set      -      none    none   FK Function Query
+FALSE           UPD  diff     -      none    none   FK Function Call
+FALSE           INS   -      set     set      -     FK ID Query
+
+ -  - Don't care, could be any value, existing or not
+none - There are none of these, they don't exist
+set  - For an INSERT, The new value is set (NOT NULL)
+diff - For an UPDATE, The old value and new value are different
+match - For an UPDATE, The old value and new value match
+
+============================================================
 Generator Call Tree
 -------------------
    -) create_glob;
