@@ -121,7 +121,6 @@ REMAINING_OBJECTS
 --------------------------------------------------------------------------------
 SYNONYM: GLOBAL_PARMS(VALID)                                                    
 SYNONYM: PARM_SETS(VALID)                                                       
-SYNONYM: TEST_GEN(VALID)                                                        
 SYNONYM: TEST_PARMS(VALID)                                                      
 SYNONYM: TEST_SETS(VALID)                                                       
 

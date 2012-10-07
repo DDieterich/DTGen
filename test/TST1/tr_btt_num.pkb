@@ -515,10 +515,16 @@ begin
    ins_val := to_number(trc.tparms.val1);
    --  When db_constraints=TRUE on DB server and NoInteg, AUD_BEG_USR and AUD_BEG_DTM must be set
    rec.num_plain   := ins_val;
-   rec.eff_beg_dtm := glob.get_dtm;
-   rec.aud_beg_usr := glob.get_usr;
-   rec.aud_beg_dtm := glob.get_dtm;
+   --rec.eff_beg_dtm := glob.get_dtm;
+   --rec.aud_beg_usr := glob.get_usr;
+   --rec.aud_beg_dtm := glob.get_dtm;
    t1a_eff_dml.ins(rec);
+   if rec.id is null then
+      raise_application_error(-20000, 'rec.ID was not set by t1a_eff_dml.ins');
+   end if;
+   if rec.eff_beg_dtm is null then
+      raise_application_error(-20000, 'rec.EFF_BEG_DTM was not set by t1a_eff_dml.ins');
+   end if;
    plain_rows_EFF(1, 0, 0, rec.id, rec.seq, ins_val);
    ----------------------------------------
    loc_txt := 'UPDATE';
@@ -527,7 +533,7 @@ begin
    success := FALSE;
    savepoint TEST_RIG_UPDATE;
    for i in 1 .. 1000 loop begin
-      rec.eff_beg_dtm := glob.get_dtm;
+      rec.eff_beg_dtm := null;
       t1a_EFF_dml.upd(rec);
       success := TRUE; EXIT;
    exception when too_quick then null;
@@ -538,6 +544,9 @@ begin
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
+   end if;
+   if rec.eff_beg_dtm is null then
+      raise_application_error(-20000, 'rec.EFF_BEG_DTM was not set by t1a_eff_dml.upd');
    end if;
    plain_rows_EFF(1, 0, 0, rec.id, rec.seq, upd_val);
    plain_rows_EFF(0, 1, 0, rec.id, rec.seq, ins_val);
@@ -557,6 +566,9 @@ begin
    end; end loop;
    if not success then
       raise_application_error (-20000, 'failed to successfully exit the "too_quick" loop');
+   end if;
+   if rec.eff_beg_dtm is null then
+      raise_application_error(-20000, 'rec.EFF_BEG_DTM was not set by t1a_eff_dml.del');
    end if;
    plain_rows_EFF(0, 1, 0, rec.id, rec.seq, upd_val);
    plain_rows_EFF(0, 1, 0, rec.id, rec.seq, ins_val);

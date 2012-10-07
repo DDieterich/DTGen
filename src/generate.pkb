@@ -5842,12 +5842,25 @@ BEGIN
       p('   n_aud_beg_usr  ' || usrfdt || ';');
       p('   n_aud_beg_dtm  timestamp(9) with local time zone;');
    end if;
+   p('   full_query  boolean := FALSE;');
    p('begin');
    p('   if util.db_object_exists('''||upper(tbuff.name)||''', ''MATERIALIZED VIEW'')');
    p('   then');
    p('      raise_application_error(-20010, ''Insert not allowed on materialized view ' ||
             tbuff.name || '.  Inserts on ' || tbuff.name ||
             ' must be performed on the central database.'');');
+   p('   end if;');
+   p('   if glob.get_db_constraints');
+   for buff in (
+      select name from tab_cols COL
+       where COL.table_id    = tbuff.id
+        and  COL.fk_table_id is not null
+       order by COL.seq )
+   loop
+      p('      or n_'||buff.name||'.id is not null');
+   end loop;
+   p('   then');
+   p('      full_query := TRUE;');
    p('   end if;');
    vtrig_fksets(sp_name, 'ins');
    p('   if not glob.get_db_constraints');
@@ -5915,15 +5928,7 @@ BEGIN
    p('         );');
    p('');
    p('  -- Set Returning Values with Full Query');
-   p('   if glob.get_db_constraints');
-   for buff in (
-      select name from tab_cols COL
-       where COL.table_id = COL.fk_table_id
-        and  COL.table_id = tbuff.id
-       order by COL.seq )
-   loop
-      p('      or '||buff.name||' is not null');
-   end loop;
+   p('   if full_query');
    p('   then');
    -- Generate an select list
    p('      select id');
@@ -5952,8 +5957,13 @@ BEGIN
          end loop;
       end if;
    end loop;
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('         ,aud_beg_usr');
+      p('         ,aud_beg_dtm');
+   end if;
    -- Generate a select INTO list
-   p('      in n_id');
+   p('      into n_id');
    if tbuff.type = 'EFF'
    then
       p('         ,n_eff_beg_dtm');
@@ -5979,9 +5989,14 @@ BEGIN
          end loop;
       end if;
    end loop;
-   p('       from  ' || buff.name || '_ACT TV');
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('         ,n_aud_beg_usr');
+      p('         ,n_aud_beg_dtm');
+   end if;
+   p('       from  ' || tbuff.name || '_ACT');
    p('       where (    n_id is not null');
-   p('              and id = n_id');
+   p('              and n_id = id');
    p('             )');
    -- Generate List of Natural Key Columns
    for buff in (
@@ -5995,32 +6010,10 @@ BEGIN
       else
          p('              and n_'||buff.name||' is not null');
       end if;
-      p('              and n_'||buff.name||' = TV.'||buff.name);
+      p('              and n_'||buff.name||' = '||buff.name);
    end loop;
    -- There must be a natural key, so the loop will always run
    p('             );');
-   fkfnd := FALSE;
-   for buff in (
-      select rownum, name from tab_cols COL
-       where COL.fk_table_id is not null
-        and  COL.table_id    = tbuff.id
-       order by COL.seq )
-   loop
-      if buff.rownum = 1 then
-         p('   else');
-      end if;
-      p('      if n_'||buff.name||' is not null');
-      p('      then');
-      for buf2 in (
-         select rownum from dual )
-      loop
-         p('         select NOT FINISHED ');
-      end loop;
-      p('      end if;');
-   end loop;
-   if fkfnd then
-      p('      end if;')
-   end if;
    p('   end if;');
    p('end ins;') ;
    p('----------------------------------------');
@@ -6083,12 +6076,27 @@ BEGIN
       p('   n_aud_beg_usr  ' || usrfdt || ';');
       p('   n_aud_beg_dtm  timestamp(9) with local time zone;');
    end if;
+   p('   full_query  boolean := FALSE;');
+   p('   junk  varchar2(1);  -- A DTGen generator short-cut');
    p('begin');
    p('   if util.db_object_exists('''||upper(tbuff.name)||''', ''MATERIALIZED VIEW'')');
    p('   then');
    p('      raise_application_error(-20010, ''Update not allowed on materialized view ' ||
             tbuff.name || '.  Updates on ' || tbuff.name ||
             ' must be performed on the central database.'');');
+   p('   end if;');
+   p('   if glob.get_db_constraints');
+   for buff in (
+      select name from tab_cols COL
+       where COL.table_id    = tbuff.id
+        and  COL.fk_table_id is not null
+       order by COL.seq )
+   loop
+      p('      or NOT util.is_equal(n_' || buff.name || '.id' ||
+                                  ',o_' || buff.name || '.id)');
+   end loop;
+   p('   then');
+   p('      full_query := TRUE;');
    p('   end if;');
    vtrig_fksets(sp_name, 'upd');
    p('   if not glob.get_db_constraints');
@@ -6143,6 +6151,94 @@ BEGIN
       p('         ,' || tbuff.abbr || '.aud_beg_usr = n_aud_beg_usr');
    end if;
    p('    where ' || tbuff.abbr || '.id = o_id;');
+   p('   -- Set Returning Values with Full Query');
+   p('   if full_query');
+   p('   then');
+   -- Generate an select list
+   p('      select ''X''');
+   if tbuff.type = 'EFF'
+   then
+      p('         ,eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('         ,'||buff.name) ;
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('         ,'|| buff.fk_prefix || 'id_path');
+            p('         ,'|| buff.fk_prefix || 'nk_path');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('         ,' || buff.fk_prefix ||
+                        get_tabname(buff.fk_table_id) ||
+                        'k' || i);
+         end loop;
+      end if;
+   end loop;
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('         ,aud_beg_usr');
+      p('         ,aud_beg_dtm');
+   end if;
+   -- Generate a select INTO list
+   p('      into junk');
+   if tbuff.type = 'EFF'
+   then
+      p('         ,n_eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('         ,n_'||buff.name) ;
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('         ,n_'|| buff.fk_prefix || 'id_path');
+            p('         ,n_'|| buff.fk_prefix || 'nk_path');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('         ,n_' || buff.fk_prefix ||
+                        get_tabname(buff.fk_table_id) ||
+                        '_nk' || i);
+         end loop;
+      end if;
+   end loop;
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      p('         ,n_aud_beg_usr');
+      p('         ,n_aud_beg_dtm');
+   end if;
+   p('       from  ' || tbuff.name || '_ACT');
+   p('       where (    o_id is not null');
+   p('              and id = o_id');
+   p('             )');
+   -- Generate List of Natural Key Columns
+   for buff in (
+      select rownum, name from tab_cols COL
+       where nk          is not null
+        and  COL.table_id = tbuff.id
+       order by COL.nk )
+   loop
+      if buff.rownum = 1 then
+         p('        or   (    n_'||buff.name||' is not null');
+      else
+         p('              and n_'||buff.name||' is not null');
+      end if;
+      p('              and n_'||buff.name||' = '||buff.name);
+   end loop;
+   -- There must be a natural key, so the loop will always run
+   p('             );');
+   p('   end if;');
    p('end upd;') ;
    p('----------------------------------------');
    p('procedure del');
@@ -6200,6 +6296,18 @@ BEGIN
    p('   end if;');
    p('   delete from ' || tbuff.name || ' ' || tbuff.abbr);
    p('    where ' || tbuff.abbr || '.id = o_id;');
+   if tbuff.type in ('EFF')
+   then
+      p('   -- Set Returning Values Effective End Date/Time');
+      p('   if glob.get_db_constraints');
+      p('   then');
+      p('      select eff_end_dtm');
+      p('       into  x_eff_end_dtm');
+      p('       from  ' || tbuff.name || HOA);
+      p('       where ' || tbuff.name || '_id = o_id');
+      p('        and  last_active = ''Y'';');
+      p('   end if;');
+   end if;
    p('end del;') ;
    p('----------------------------------------');
    p('end '||sp_name||';');
