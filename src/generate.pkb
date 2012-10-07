@@ -5792,6 +5792,7 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
    first_time  boolean;
+   fkfnd    boolean;
 BEGIN
    sp_type := 'package body';
    sp_name := tbuff.name||'_view';
@@ -5911,7 +5912,116 @@ BEGIN
       p('         ,n_aud_beg_usr');
       p('         ,n_aud_beg_dtm');
    end if;
-   p('         ) returning id into n_id;');
+   p('         );');
+   p('');
+   p('  -- Set Returning Values with Full Query');
+   p('   if glob.get_db_constraints');
+   for buff in (
+      select name from tab_cols COL
+       where COL.table_id = COL.fk_table_id
+        and  COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('      or '||buff.name||' is not null');
+   end loop;
+   p('   then');
+   -- Generate an select list
+   p('      select id');
+   if tbuff.type = 'EFF'
+   then
+      p('         ,eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('         ,'||buff.name) ;
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('         ,'|| buff.fk_prefix || 'id_path');
+            p('         ,'|| buff.fk_prefix || 'nk_path');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('         ,' || buff.fk_prefix ||
+                        get_tabname(buff.fk_table_id) ||
+                        'k' || i);
+         end loop;
+      end if;
+   end loop;
+   -- Generate a select INTO list
+   p('      in n_id');
+   if tbuff.type = 'EFF'
+   then
+      p('         ,n_eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('         ,n_'||buff.name) ;
+      if buff.fk_table_id is not null
+      then
+         if buff.fk_table_id = tbuff.id
+         then
+            p('         ,n_'|| buff.fk_prefix || 'id_path');
+            p('         ,n_'|| buff.fk_prefix || 'nk_path');
+         end if;
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('         ,n_' || buff.fk_prefix ||
+                        get_tabname(buff.fk_table_id) ||
+                        '_nk' || i);
+         end loop;
+      end if;
+   end loop;
+   p('       from  ' || buff.name || '_ACT TV');
+   p('       where (    n_id is not null');
+   p('              and id = n_id');
+   p('             )');
+   -- Generate List of Natural Key Columns
+   for buff in (
+      select rownum, name from tab_cols COL
+       where nk          is not null
+        and  COL.table_id = tbuff.id
+       order by COL.nk )
+   loop
+      if buff.rownum = 1 then
+         p('        or   (    n_'||buff.name||' is not null');
+      else
+         p('              and n_'||buff.name||' is not null');
+      end if;
+      p('              and n_'||buff.name||' = TV.'||buff.name);
+   end loop;
+   -- There must be a natural key, so the loop will always run
+   p('             );');
+   fkfnd := FALSE;
+   for buff in (
+      select rownum, name from tab_cols COL
+       where COL.fk_table_id is not null
+        and  COL.table_id    = tbuff.id
+       order by COL.seq )
+   loop
+      if buff.rownum = 1 then
+         p('   else');
+      end if;
+      p('      if n_'||buff.name||' is not null');
+      p('      then');
+      for buf2 in (
+         select rownum from dual )
+      loop
+         p('         select NOT FINISHED ');
+      end loop;
+      p('      end if;');
+   end loop;
+   if fkfnd then
+      p('      end if;')
+   end if;
+   p('   end if;');
    p('end ins;') ;
    p('----------------------------------------');
    p('procedure upd');
