@@ -27,16 +27,18 @@ set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
+
+execute glob.set_usr('Demo1');
 
 prompt Remove old DEMO1 Schema from DTGEN
 delete from exceptions_act where applications_nk1 = 'DEMO1';
 delete from programs_act where applications_nk1 = 'DEMO1';
 delete from check_cons_act where tables_nk1 = 'DEMO1';
-delete from indexes_act where tab_cols_nk1 = 'DEMO1';
+delete from tab_inds_act where tab_cols_nk1 = 'DEMO1';
 delete from tab_cols_act where tables_nk1 = 'DEMO1';
 delete from tables_act where applications_nk1 = 'DEMO1';
 delete from domain_values_act where domains_nk1 = 'DEMO1';
@@ -73,7 +75,6 @@ insert into check_cons_act (tables_nk1, tables_nk2, seq, text, description) valu
 
 prompt Generate Demo1 Application
 begin
-   util.set_usr('Demo1');
    generate.init('DEMO1');
    generate.create_glob;
    generate.create_ods;
@@ -88,13 +89,13 @@ prompt Capture install_db.sql Script
 set termout off
 set linesize 5000
 spool install_db.sql
-execute assemble.install_script('DEMO1', 'DB');
+execute dtgen_util.assemble_script('DEMO1', 'INSTALL', 'DB');
 
 spool install
 set linesize 80
 set termout on
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped

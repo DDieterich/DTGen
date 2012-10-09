@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
@@ -36,7 +36,7 @@ select name, db_schema from applications where abbr = 'DEMO3';
 set echo off
 
 prompt Login to &USR_NAME.
-connect &USR_NAME./&USR_PASS.
+connect &USR_NAME./&USR_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped

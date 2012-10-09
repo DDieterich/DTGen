@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
@@ -47,7 +47,7 @@ select seq, name, type from tables_act
 
 prompt
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
@@ -71,7 +71,7 @@ select dept_id id, deptno dept, loc,
   aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
   from dept_aud where deptno = 50;
 
-execute util.set_usr('USER1');
+execute glob.set_usr('USER1');
 select systimestamp from dual;
 insert into dept_act (deptno, dname, loc)
   values (50, 'NEW_DEPT', 'LZ');
@@ -84,7 +84,7 @@ select dept_id id, deptno dept, loc,
   from dept_aud where deptno = 50;
 
 execute dbms_lock.sleep(1);
-execute util.set_usr('USER2');
+execute glob.set_usr('USER2');
 select systimestamp from dual;
 update dept_act
   set  loc = 'LA'
@@ -98,7 +98,7 @@ select dept_id id, deptno dept, loc,
   from dept_aud where deptno = 50;
 
 execute dbms_lock.sleep(1);
-execute util.set_usr('USER3');
+execute glob.set_usr('USER3');
 select systimestamp from dual;
 delete from dept_act where deptno = 50;
 
@@ -149,7 +149,7 @@ select emp_id id, empno, ename,
   aud_end_usr, to_char(aud_end_dtm,'DD HH24:MI:SS') aud_end_dtm
   from emp_hist where empno = 9999;
 
-execute util.set_usr('USER1');
+execute glob.set_usr('USER1');
 select systimestamp from dual;
 insert into emp_act (empno, ename, job, hiredate, sal, dept_nk1,
      eff_beg_dtm)
@@ -167,7 +167,7 @@ select emp_id id, empno, ename,
   from emp_hist where empno = 9999;
 
 execute dbms_lock.sleep(1);
-execute util.set_usr('USER2');
+execute glob.set_usr('USER2');
 select systimestamp from dual;
 update emp_act
   set  ename = 'UPD_EMP',
@@ -190,7 +190,7 @@ declare
    eff_end_dtm  timestamp with local time zone;
    emp_id       number;
 begin
-   util.set_usr('USER3');
+   glob.set_usr('USER3');
    select id into emp_id
      from emp_act where empno = 9999;
    eff_end_dtm := to_timestamp('1983-6-3 13', 'YYYY-MM-DD HH24');

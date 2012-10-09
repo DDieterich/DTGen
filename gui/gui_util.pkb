@@ -54,6 +54,32 @@ begin
    return col_len;
 end get_column_length;
 ----------------------------------------
+function get_aaf_prefix
+      (app_abbr_in  in  varchar2)
+   return varchar2
+is
+begin
+   return af_flow_id || '-' || app_abbr_in || '/';
+end get_aaf_prefix;
+----------------------------------------
+function get_aaf_prefix
+      (app_abbr_in  in  varchar2
+      ,flow_id_in   in  number)
+   return varchar2
+is
+begin
+   af_flow_id := nvl(flow_id_in, v('APP_ID'));
+   return get_aaf_prefix(app_abbr_in);
+end get_aaf_prefix;
+----------------------------------------
+function get_aaf_name
+      (app_abbr_in  in  varchar2)
+   return varchar2
+is
+begin
+   return get_aaf_prefix(app_abbr_in) || af_title;
+end get_aaf_name;
+----------------------------------------
 procedure update_apex_app_files
       (app_abbr_in  in  varchar2
       ,action_in    in  varchar2
@@ -63,6 +89,7 @@ is
    dest_offset   number  := 1;
    src_offset    number  := 1;
    lang_context  number  := DBMS_LOB.DEFAULT_LANG_CTX;
+   aaf_name      varchar2(4000);
    warning       number;
    af_id  number;
    cnt   number;
@@ -99,9 +126,9 @@ begin
    end if;
    af_doc_size := dbms_lob.getlength(af_blob_content);
    af_id       := wwv_flow_id.next_val;
+   aaf_name    := get_aaf_name(app_abbr_in);
    delete from apex_application_files
-    where flow_id = af_flow_id
-     and  title   = af_title;
+    where name = aaf_name;
    insert into apex_application_files
          (id
          ,flow_id
@@ -118,7 +145,7 @@ begin
       values
          (af_id
          ,af_flow_id
-         ,af_id || '/' || af_title
+         ,aaf_name
          ,af_title
          ,'text/plain'
          ,af_doc_size
@@ -512,15 +539,13 @@ procedure del_all
       (app_abbr_in  in  varchar2
       ,flow_id_in   in  number)
 is
+   aaf_pattern  varchar2(4000);
 begin
+   af_flow_id := nvl(flow_id_in, v('APP_ID'));
+   aaf_pattern := get_aaf_prefix(app_abbr_in) || '%';
    dtgen_util.delete_files(app_abbr_in);
    delete from apex_application_files
-    where flow_id = flow_id_in
-     and  title   in (
-          select title
-           from apex_application_files
-           where flow_id     = flow_id_in
-            and  description like app_abbr_in || ' %');
+    where name like aaf_pattern;
 end del_all;
 ----------------------------------------
 begin

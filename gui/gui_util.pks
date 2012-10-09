@@ -20,6 +20,10 @@ function get_column_length
       (tab_name_in  in  varchar2
       ,col_name_in  in  varchar2)
    return number;
+function get_aaf_prefix
+      (app_abbr_in  in  varchar2
+      ,flow_id_in   in  number)
+   return varchar2;
 function index_desc
       (app_abbr_in  in  varchar2
       ,tab_abbr_in  in  varchar2

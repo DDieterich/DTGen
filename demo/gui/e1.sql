@@ -26,17 +26,19 @@ set feedback off
 set trimspool on
 set define on
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 set define off
 
+execute glob.set_usr('DEMO4');
+
 prompt Remove old DEMO4 Schema from DTGEN
 delete from exceptions_act where applications_nk1 = 'DEMO4';
 delete from programs_act where applications_nk1 = 'DEMO4';
 delete from check_cons_act where tables_nk1 = 'DEMO4';
-delete from indexes_act where tab_cols_nk1 = 'DEMO4';
+delete from tab_inds_act where tab_cols_nk1 = 'DEMO4';
 delete from tab_cols_act where tables_nk1 = 'DEMO4';
 delete from tables_act where applications_nk1 = 'DEMO4';
 delete from domain_values_act where domains_nk1 = 'DEMO4';
@@ -73,7 +75,6 @@ insert into check_cons_act (tables_nk1, tables_nk2, seq, text, description) valu
 
 prompt Generate DEMO4 Application
 begin
-   util.set_usr('DEMO4');
    generate.init('DEMO4');
    generate.create_glob;
    generate.create_ods;
@@ -90,9 +91,9 @@ prompt Capture SQL Scripts
 set termout off
 set linesize 5000
 spool install_db.sql
-execute assemble.install_script('DEMO4', 'DB');
+execute dtgen_util.assemble_script('DEMO4', 'INSTALL', 'DB');
 spool install_gui.sql
-execute assemble.install_script('DEMO4', 'GUI');
+execute dtgen_util.assemble_script('DEMO4', 'INSTALL', 'GUI');
 
 ------------------------------------------------------------
 
@@ -101,7 +102,7 @@ set linesize 80
 set termout on
 set define on
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 set serveroutput on format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE

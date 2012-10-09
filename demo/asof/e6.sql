@@ -37,7 +37,7 @@ column dname        format A10
 column loc          format A8
 
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped

@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
@@ -39,7 +39,7 @@ set echo off
 
 prompt
 prompt Login to &MT_NAME.
-connect &MT_NAME./&MT_PASS.
+connect &MT_NAME./&MT_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped

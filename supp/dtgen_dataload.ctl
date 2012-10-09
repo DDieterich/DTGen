@@ -18,7 +18,7 @@
 options (skip = 1)
 load data infile dtgen_dataload.dat  "STR x'1E0D0A'"
 into table APPLICATIONS APPEND when key = 'APPLICATIONS                  ' fields terminated by ''
-   (key FILLER position(1:31), abbr CHAR(5), name CHAR(30), db_schema CHAR(30), apex_schema CHAR(30), apex_ws_name CHAR(30), apex_app_name CHAR(30), dbid CHAR(2000), db_auth CHAR(200), description CHAR(1000), ts_null_override CHAR(1), ts_onln_data CHAR(30), ts_onln_indx CHAR(30), ts_hist_data CHAR(30), ts_hist_indx CHAR(30), usr_datatype CHAR(20), usr_frgn_key CHAR(100), copyright CHAR(4000))
+   (key FILLER position(1:31), abbr CHAR(5), name CHAR(30), version CHAR(10), db_schema CHAR(30), apex_schema CHAR(30), apex_ws_name CHAR(30), apex_app_name CHAR(30), dbid CHAR(2000), db_auth CHAR(200), description CHAR(1000), ts_null_override CHAR(1), ts_onln_data CHAR(30), ts_onln_indx CHAR(30), ts_hist_data CHAR(30), ts_hist_indx CHAR(30), usr_datatype CHAR(20), usr_frgn_key CHAR(100), copyright CHAR(32767))
 into table DOMAINS_ACT APPEND when key = 'DOMAINS                       ' fields terminated by ''
    (key FILLER position(1:31), applications_nk1 CHAR(5), abbr CHAR(5), name CHAR(20), fold CHAR(1), len FLOAT EXTERNAL, description CHAR(1000))
 into table EXCEPTIONS_ACT APPEND when key = 'EXCEPTIONS                    ' fields terminated by ''

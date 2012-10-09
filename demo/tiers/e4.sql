@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &USR_NAME.
-connect &USR_NAME./&USR_PASS.
+connect &USR_NAME./&USR_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
@@ -36,7 +36,7 @@ set echo on
 
 describe glob
 
-execute util.set_usr('DEMO3');
+execute glob.set_usr('DEMO3');
 execute dbms_output.put_line(glob.request_lock('DEMO3'));
 
 set echo off
