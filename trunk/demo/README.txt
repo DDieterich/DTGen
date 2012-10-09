@@ -21,7 +21,7 @@ Introduction:
 
 Example Demonstration Procedure:
 --------------------------------
-sqlplus sys/password as sysdba @create_demo_user
+sqlplus sys/password as sysdba @create_demo_users
 cd basics
 sqlplus /nolog @e1
 sqlplus /nolog @e2
@@ -33,6 +33,6 @@ sqlplus /nolog @e7
 sqlplus /nolog @e8
 sqlplus /nolog @e9
 cd ..
-sqlplus system/password @drop_demo_user
+sqlplus system/password @drop_demo_users
 
 NOTE: drop_demo_user may have to be run twice to successfully drop all users.

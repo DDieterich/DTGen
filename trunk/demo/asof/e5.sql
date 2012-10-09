@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
@@ -55,7 +55,7 @@ select empno, ename, id eid, stat, dept_id did,
        aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
   from emp_all order by empno, id;
 
-execute util.set_usr('MILLER');
+execute glob.set_usr('MILLER');
 
 -- SMITH retires today
 delete from emp_act

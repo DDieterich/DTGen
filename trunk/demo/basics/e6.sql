@@ -29,7 +29,7 @@ set trimspool on
 set define on
 
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 set serveroutput on format wrapped
 
 WHENEVER SQLERROR CONTINUE

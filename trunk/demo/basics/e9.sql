@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
@@ -59,7 +59,7 @@ column description  clear
 
 prompt
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 set serveroutput on format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE

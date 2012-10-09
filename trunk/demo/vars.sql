@@ -5,6 +5,7 @@ REM (Use @vars like an INCLUDE file)
 REM
 
 define TSPACE = users               -- Default Tablespace
+define TNS_ALIAS = @XE2             -- TNS Alias (must include @ sign)
 define OWNERNAME = dtgen            -- DTGen Generator Schema Username
 define OWNERPASS = dtgen            -- DTGen Generator Schema Password
 define DB_NAME = dtgen_db_demo      -- Database DEMO Schema Username

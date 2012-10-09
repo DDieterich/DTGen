@@ -14,6 +14,8 @@ REM THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
 REM
 
 spool e1
+set define off
+define parm1 = &1.
 set define '&'
 
 REM Initialize Variables
@@ -26,17 +28,19 @@ set feedback off
 set trimspool on
 set define on
 prompt Login to &OWNERNAME.
-connect &OWNERNAME./&OWNERPASS.
+connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
 set define off
 
+execute glob.set_usr('DEMO3');
+
 prompt Remove old DEMO3 Schema from DTGEN
 delete from exceptions_act where applications_nk1 = 'DEMO3';
 delete from programs_act where applications_nk1 = 'DEMO3';
 delete from check_cons_act where tables_nk1 = 'DEMO3';
-delete from indexes_act where tab_cols_nk1 = 'DEMO3';
+delete from tab_inds_act where tab_cols_nk1 = 'DEMO3';
 delete from tab_cols_act where tables_nk1 = 'DEMO3';
 delete from tables_act where applications_nk1 = 'DEMO3';
 delete from domain_values_act where domains_nk1 = 'DEMO3';
@@ -46,7 +50,7 @@ delete from files_act where applications_nk1 = 'DEMO3';
 delete from applications_act where abbr = 'DEMO3';
 
 prompt create a DEMO3 Schema in DTGEN
-insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', 'dtgen_mt_demo', 'loopback', 'CONNECT TO dtgen_db_demo IDENTIFIED BY dtgen', 'Based on the ASOF Demonstration, adds muti-tier capabilities');
+insert into applications_act (abbr, name, db_schema, dbid, db_auth, description) values ('DEMO3', 'DTGen Tiers Demonstration', '&parm1.', 'XE@loopback', '&DB_NAME.', 'Based on the ASOF Demonstration, adds muti-tier capabilities');
 
 insert into domains_act (applications_nk1, abbr, name, fold, len, description) values ('DEMO3', 'JOB', 'Job Name', 'U', 9, 'Job Names');
 insert into domain_values_act (domains_nk1, domains_nk2, seq, value, description) values ('DEMO3', 'JOB', 10, 'PRESIDENT', 'Company President');
@@ -73,7 +77,6 @@ insert into check_cons_act (tables_nk1, tables_nk2, seq, text, description) valu
 
 prompt Generate DEMO3 Application
 begin
-   util.set_usr('DEMO3');
    generate.init('DEMO3');
    generate.create_glob;
    generate.create_gdst;
@@ -92,13 +95,13 @@ prompt Capture SQL Scripts
 set termout off
 set linesize 5000
 spool install_db.sql
-execute assemble.install_script('DEMO3', 'DB');
+execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'DB');
 spool install_mt.sql
-execute assemble.install_script('DEMO3', 'MT');
+execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'MT');
 spool install_mt_sec.sql
-execute assemble.install_script('DEMO3', 'MT', 'sec');
+execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'MT', 'sec');
 spool install_usr.sql
-execute assemble.install_script('DEMO3', 'USR');
+execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'USR');
 
 ------------------------------------------------------------
 
@@ -107,7 +110,7 @@ set linesize 80
 set termout on
 set define on
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 set serveroutput on format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
@@ -216,7 +219,7 @@ prompt ============================================================
 
 set define on
 prompt Login to &MT_NAME.
-connect &MT_NAME./&MT_PASS.
+connect &MT_NAME./&MT_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped

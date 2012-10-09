@@ -196,8 +196,14 @@ BEGIN
    fbuff.created_dt := sysdate;
    if fbuff.id is null
    then
+      -- fbuff.id does not need to be set after the RETURNING
+      --   VALUE fix (Issue 92) is in place for FILES_DML
+      fbuff.id := files_dml.get_next_id;
       files_dml.ins(fbuff);
    else
+      update files_act
+        set  created_dt = fbuff.created_dt
+       where id = fbuff.id;
       -- The BULK COLLECT changes the size of the "lbuff_aa" as needed.
       -- Not Needed: lbuff_aa.trim(lbuff_aa.COUNT-SQL%ROWCOUNT);
       select * bulk collect into lbuff_orig_aa
@@ -5172,28 +5178,28 @@ BEGIN
    for buff in (
       select COL.name
             ,COL.d_domain_id
-            ,rownum  rnum
+            ,COL.seq
        from  tab_cols  COL
        where d_domain_id is not null
         and  COL.table_id = tbuff.id
        order by COL.seq desc)
    loop
       p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_dm' || buff.rnum);
+                          tbuff.name || '_dm' || buff.seq);
       p('/');
    end loop;
    -- Drop the case fold checking
    for buff in (
       select COL.name
             ,COL.fold
-            ,rownum  rnum
+            ,COL.seq
        from  tab_cols  COL
        where fold is not null
         and  COL.table_id = tbuff.id
        order by COL.seq desc)
    loop
       p('alter table ' || tbuff.name || ' drop constraint ' ||
-                          tbuff.name || '_fld' || buff.rnum);
+                          tbuff.name || '_fld' || buff.seq);
       p('/');
    end loop;
    -- Drop the custom check constraints
@@ -5235,14 +5241,14 @@ begin
    for buff in (
       select COL.name
             ,COL.fold
-            ,rownum  rnum
+            ,COL.seq
        from  tab_cols  COL
        where fold is not null
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
       p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_fld' || buff.rnum);
+                          tname || '_fld' || buff.seq);
       case buff.fold
       when 'U' then
          p('   check (' || buff.name || ' = upper(' || buff.name || '))');
@@ -5257,14 +5263,14 @@ begin
    for buff in (
       select COL.name
             ,COL.d_domain_id
-            ,rownum  rnum
+            ,COL.seq
        from  tab_cols  COL
        where d_domain_id is not null
         and  COL.table_id = tbuff.id
        order by COL.seq )
    loop
       p('alter table ' || tname || ' add constraint ' ||
-                          tname || '_dm' || buff.rnum);
+                          tname || '_dm' || buff.seq);
       p('   check (' || buff.name || ' in ' ||
             get_domlist(buff.d_domain_id) || ')');
       p('/');
@@ -5842,25 +5848,12 @@ BEGIN
       p('   n_aud_beg_usr  ' || usrfdt || ';');
       p('   n_aud_beg_dtm  timestamp(9) with local time zone;');
    end if;
-   p('   full_query  boolean := FALSE;');
    p('begin');
    p('   if util.db_object_exists('''||upper(tbuff.name)||''', ''MATERIALIZED VIEW'')');
    p('   then');
    p('      raise_application_error(-20010, ''Insert not allowed on materialized view ' ||
             tbuff.name || '.  Inserts on ' || tbuff.name ||
             ' must be performed on the central database.'');');
-   p('   end if;');
-   p('   if glob.get_db_constraints');
-   for buff in (
-      select name from tab_cols COL
-       where COL.table_id    = tbuff.id
-        and  COL.fk_table_id is not null
-       order by COL.seq )
-   loop
-      p('      or n_'||buff.name||'.id is not null');
-   end loop;
-   p('   then');
-   p('      full_query := TRUE;');
    p('   end if;');
    vtrig_fksets(sp_name, 'ins');
    p('   if not glob.get_db_constraints');
@@ -5927,8 +5920,9 @@ BEGIN
    end if;
    p('         );');
    p('');
-   p('  -- Set Returning Values with Full Query');
-   p('   if full_query');
+   p('   -- Set RETURNING VALUES if ' || tbuff.name || '_TAB.ins was not run');
+   p('   -- NOTE: returning values clause on insert will not work over DB Link');
+   p('   if glob.get_db_constraints');
    p('   then');
    -- Generate an select list
    p('      select id');
@@ -5942,20 +5936,6 @@ BEGIN
        order by COL.seq )
    loop
       p('         ,'||buff.name) ;
-      if buff.fk_table_id is not null
-      then
-         if buff.fk_table_id = tbuff.id
-         then
-            p('         ,'|| buff.fk_prefix || 'id_path');
-            p('         ,'|| buff.fk_prefix || 'nk_path');
-         end if;
-         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
-         loop
-            p('         ,' || buff.fk_prefix ||
-                        get_tabname(buff.fk_table_id) ||
-                        'k' || i);
-         end loop;
-      end if;
    end loop;
    if tbuff.type in ('EFF', 'LOG')
    then
@@ -5974,45 +5954,36 @@ BEGIN
        order by COL.seq )
    loop
       p('         ,n_'||buff.name) ;
-      if buff.fk_table_id is not null
-      then
-         if buff.fk_table_id = tbuff.id
-         then
-            p('         ,n_'|| buff.fk_prefix || 'id_path');
-            p('         ,n_'|| buff.fk_prefix || 'nk_path');
-         end if;
-         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
-         loop
-            p('         ,n_' || buff.fk_prefix ||
-                        get_tabname(buff.fk_table_id) ||
-                        '_nk' || i);
-         end loop;
-      end if;
    end loop;
    if tbuff.type in ('EFF', 'LOG')
    then
       p('         ,n_aud_beg_usr');
       p('         ,n_aud_beg_dtm');
    end if;
-   p('       from  ' || tbuff.name || '_ACT');
+   p('       from  ' || tbuff.name);
    p('       where (    n_id is not null');
-   p('              and n_id = id');
-   p('             )');
-   -- Generate List of Natural Key Columns
+   p('              and n_id = id       )');
+   -- Generate List of Natural Key Columns for select when ID is null
+   -- There must be a natural key, so the loop should always run
    for buff in (
-      select rownum, name from tab_cols COL
-       where nk          is not null
+      select name
+            ,COL.nk
+            ,(select min(COL2.nk)
+               from  tab_cols COL2
+               where COL2.nk is not null
+                and  COL2.table_id = tbuff.id  )  min_nk
+       from  tab_cols COL
+       where COL.nk       is not null
         and  COL.table_id = tbuff.id
        order by COL.nk )
    loop
-      if buff.rownum = 1 then
+      if buff.nk = buff.min_nk then
          p('        or   (    n_'||buff.name||' is not null');
       else
          p('              and n_'||buff.name||' is not null');
       end if;
       p('              and n_'||buff.name||' = '||buff.name);
    end loop;
-   -- There must be a natural key, so the loop will always run
    p('             );');
    p('   end if;');
    p('end ins;') ;
@@ -6076,7 +6047,6 @@ BEGIN
       p('   n_aud_beg_usr  ' || usrfdt || ';');
       p('   n_aud_beg_dtm  timestamp(9) with local time zone;');
    end if;
-   p('   full_query  boolean := FALSE;');
    p('   junk  varchar2(1);  -- A DTGen generator short-cut');
    p('begin');
    p('   if util.db_object_exists('''||upper(tbuff.name)||''', ''MATERIALIZED VIEW'')');
@@ -6084,19 +6054,6 @@ BEGIN
    p('      raise_application_error(-20010, ''Update not allowed on materialized view ' ||
             tbuff.name || '.  Updates on ' || tbuff.name ||
             ' must be performed on the central database.'');');
-   p('   end if;');
-   p('   if glob.get_db_constraints');
-   for buff in (
-      select name from tab_cols COL
-       where COL.table_id    = tbuff.id
-        and  COL.fk_table_id is not null
-       order by COL.seq )
-   loop
-      p('      or NOT util.is_equal(n_' || buff.name || '.id' ||
-                                  ',o_' || buff.name || '.id)');
-   end loop;
-   p('   then');
-   p('      full_query := TRUE;');
    p('   end if;');
    vtrig_fksets(sp_name, 'upd');
    p('   if not glob.get_db_constraints');
@@ -6151,8 +6108,9 @@ BEGIN
       p('         ,' || tbuff.abbr || '.aud_beg_usr = n_aud_beg_usr');
    end if;
    p('    where ' || tbuff.abbr || '.id = o_id;');
-   p('   -- Set Returning Values with Full Query');
-   p('   if full_query');
+   p('   -- Set RETURNING VALUES if ' || tbuff.name || '_TAB.upd was not run');
+   p('   -- NOTE: returning values clause on update will not work over DB Link');
+   p('   if glob.get_db_constraints');
    p('   then');
    -- Generate an select list
    p('      select ''X''');
@@ -6166,20 +6124,6 @@ BEGIN
        order by COL.seq )
    loop
       p('         ,'||buff.name) ;
-      if buff.fk_table_id is not null
-      then
-         if buff.fk_table_id = tbuff.id
-         then
-            p('         ,'|| buff.fk_prefix || 'id_path');
-            p('         ,'|| buff.fk_prefix || 'nk_path');
-         end if;
-         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
-         loop
-            p('         ,' || buff.fk_prefix ||
-                        get_tabname(buff.fk_table_id) ||
-                        'k' || i);
-         end loop;
-      end if;
    end loop;
    if tbuff.type in ('EFF', 'LOG')
    then
@@ -6198,45 +6142,36 @@ BEGIN
        order by COL.seq )
    loop
       p('         ,n_'||buff.name) ;
-      if buff.fk_table_id is not null
-      then
-         if buff.fk_table_id = tbuff.id
-         then
-            p('         ,n_'|| buff.fk_prefix || 'id_path');
-            p('         ,n_'|| buff.fk_prefix || 'nk_path');
-         end if;
-         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
-         loop
-            p('         ,n_' || buff.fk_prefix ||
-                        get_tabname(buff.fk_table_id) ||
-                        '_nk' || i);
-         end loop;
-      end if;
    end loop;
    if tbuff.type in ('EFF', 'LOG')
    then
       p('         ,n_aud_beg_usr');
       p('         ,n_aud_beg_dtm');
    end if;
-   p('       from  ' || tbuff.name || '_ACT');
+   p('       from  ' || tbuff.name);
    p('       where (    o_id is not null');
-   p('              and id = o_id');
-   p('             )');
-   -- Generate List of Natural Key Columns
+   p('              and id = o_id       )');
+   -- Generate List of Natural Key Columns for select when ID is null
+   -- There must be a natural key, so the loop will always run
    for buff in (
-      select rownum, name from tab_cols COL
-       where nk          is not null
+      select name
+            ,COL.nk
+            ,(select min(COL2.nk)
+               from  tab_cols COL2
+               where COL2.nk is not null
+                and  COL2.table_id = tbuff.id  )  min_nk
+       from  tab_cols COL
+       where COL.nk       is not null
         and  COL.table_id = tbuff.id
        order by COL.nk )
    loop
-      if buff.rownum = 1 then
+      if buff.nk = buff.min_nk then
          p('        or   (    n_'||buff.name||' is not null');
       else
          p('              and n_'||buff.name||' is not null');
       end if;
       p('              and n_'||buff.name||' = '||buff.name);
    end loop;
-   -- There must be a natural key, so the loop will always run
    p('             );');
    p('   end if;');
    p('end upd;') ;

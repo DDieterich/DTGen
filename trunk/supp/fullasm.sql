@@ -10,23 +10,23 @@ set trimspool on
 set verify off
 
 spool install_db.sql
-execute dtgen_util.install_script('&1.','DB');
+execute dtgen_util.assemble_script('&1.','INSTALL','DB');
 spool install_db_sec.sql
-execute dtgen_util.install_script('&1.','DB','sec');
+execute dtgen_util.assemble_script('&1.','INSTALL','DB','sec');
 spool install_mt.sql
-execute dtgen_util.install_script('&1.','MT');
+execute dtgen_util.assemble_script('&1.','INSTALL','MT');
 spool install_mt_sec.sql
-execute dtgen_util.install_script('&1.','MT','sec');
+execute dtgen_util.assemble_script('&1.','INSTALL','MT','sec');
 spool install_usr.sql
-execute dtgen_util.install_script('&1.','USR');
+execute dtgen_util.assemble_script('&1.','INSTALL','USR');
 spool install_gui.sql
-execute dtgen_util.install_script('&1.','GUI');
+execute dtgen_util.assemble_script('&1.','INSTALL','GUI');
 spool uninstall_db.sql
-execute dtgen_util.uninstall_script('&1.','DB');
+execute dtgen_util.assemble_script('&1.','UNINSTALL','DB');
 spool uninstall_mt.sql
-execute dtgen_util.uninstall_script('&1.','MT');
+execute dtgen_util.assemble_script('&1.','UNINSTALL','MT');
 spool uninstall_usr.sql
-execute dtgen_util.uninstall_script('&1.','USR');
+execute dtgen_util.assemble_script('&1.','UNINSTALL','USR');
 spool dtgen_dataload.ctl
 execute dtgen_util.data_script('&1.')
 spool off

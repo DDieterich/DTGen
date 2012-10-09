@@ -27,7 +27,7 @@ set trimspool on
 set define on
 
 prompt Login to &DB_NAME.
-connect &DB_NAME./&DB_PASS.
+connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 set serveroutput on format wrapped
@@ -53,7 +53,7 @@ select id did, deptno, dname, loc from dept_act;
 select empno, ename, job, dept_id did, dept_nk1 dept, aud_beg_usr, aud_beg_dtm
  from emp_act where dept_nk1 = 40;
 
-execute util.set_usr('SMITH');
+execute glob.set_usr('SMITH');
 
 -- Add a new manager MCMURRY to the Operations Department
 insert into emp_act (empno, ename, job, mgr_emp_nk1, hiredate, sal, dept_id)
@@ -81,7 +81,7 @@ select id eid, empno, ename, job, dept_id did, dept_nk1 dept,
        aud_beg_usr, aud_beg_dtm
  from emp_act where dept_nk1 = 40;
 
-execute util.set_usr('MILLER');
+execute glob.set_usr('MILLER');
 
 select emp_id eid, empno, ename, dept_id did,
        aud_beg_usr, aud_beg_dtm, aud_end_usr, aud_end_dtm
