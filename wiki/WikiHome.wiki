@@ -1,5 +1,4 @@
 #summary Wiki Home Page
-#labels Featured
 
 = Wiki Home Page =
 
