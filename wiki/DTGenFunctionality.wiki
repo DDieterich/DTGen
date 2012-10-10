@@ -6,6 +6,8 @@ Given a basic entity-relational model and required model meta-data, DTGen genera
 
 == Augmented Schema Functionality ==
 
+The transition from Entity/Relationship model to Oracle database schema requires some not-so-obvious functions that are typically provided by application developers.  Augmented schema functionality generates the needed SQL and PL/SQL source code to enable functions like update-able natural keys, case folding, and full path hierarchical data.  The following sections describe this augmented functionality in more detail.
+
 === Sequences and Surrogate Primary Keys (PK) ===
 
 === Natural Key Update-able Views ===
