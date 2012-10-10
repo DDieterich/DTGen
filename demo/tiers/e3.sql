@@ -40,7 +40,7 @@ connect &USR_NAME./&USR_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
-@install_usr
+@install_usr &MT_NAME.
 
 set linesize 120
 set pagesize 5000

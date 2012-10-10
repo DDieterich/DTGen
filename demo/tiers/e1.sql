@@ -26,13 +26,12 @@ REM Configure SQL*Plus
 REM
 set feedback off
 set trimspool on
-set define on
 prompt Login to &OWNERNAME.
 connect &OWNERNAME./&OWNERPASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
-set define off
+set define on
 
 execute glob.set_usr('DEMO3');
 
@@ -86,6 +85,7 @@ begin
    generate.create_oltp;
    generate.create_aa;
    generate.create_mods;
+   generate.create_gusr;
    generate.create_usyn;
    commit;
 end;
@@ -96,6 +96,8 @@ set termout off
 set linesize 5000
 spool install_db.sql
 execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'DB');
+spool install_db_sec.sql
+execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'DB', 'sec');
 spool install_mt.sql
 execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'MT');
 spool install_mt_sec.sql
@@ -108,16 +110,16 @@ execute dtgen_util.assemble_script('DEMO3', 'INSTALL', 'USR');
 spool install
 set linesize 80
 set termout on
-set define on
 prompt Login to &DB_NAME.
 connect &DB_NAME./&DB_PASS.&TNS_ALIAS.
 set serveroutput on format wrapped
 WHENEVER SQLERROR CONTINUE
 WHENEVER OSERROR CONTINUE
 @install_db
+@install_db_sec
+@../../supp/bug_grants &MT_NAME.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
-set define off
 
 execute glob.set_db_constraints(FALSE);
 
@@ -217,16 +219,16 @@ set pagesize 14
 prompt
 prompt ============================================================
 
-set define on
 prompt Login to &MT_NAME.
 connect &MT_NAME./&MT_PASS.&TNS_ALIAS.
 WHENEVER SQLERROR EXIT SQL.SQLCODE
 WHENEVER OSERROR EXIT
 set serveroutput on format wrapped
-@install_mt @1
+create database link XE@loopback
+   connect to &DB_NAME. identified by &DB_PASS.
+   using 'loopback';
+@install_mt
 @install_mt_sec
-
-set define off
 
 set linesize 120
 set pagesize 5000

@@ -36,7 +36,7 @@ WHENEVER OSERROR EXIT ROLLBACK
 set serveroutput on format wrapped
 
 column id          format 999
-column empno       format 99999
+column empno       format A6
 column mgr_id_path format A20
 column mgr_nk_path format A30
 
