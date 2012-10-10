@@ -1,15 +1,29 @@
 #summary Wiki Home Page
 #labels Featured
 
-= Introduction =
+= Wiki Home Page =
 
-Welcome to the DTGen Wiki.
+The following wiki pages are organized by phase
 
-  * ProjectGoals
-  * ProjectStatus
-  * [http://code.google.com/p/dtgen/wiki/DB_User_Connection_From_MT_Schema DB_User_Connection_From_MT_Schema]
-  * [http://code.google.com/p/dtgen/wiki/DTGenModificationProcedure DTGenModificationProcedure]
-  * TestPlan
-  * ReleaseProcess
-  * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
-  * ReleaseNotes
+=== Requirements/Functionality ===
+
+ * ProjectGoals
+ * [http://code.google.com/p/dtgen/wiki/DTGenFunctionality DTGenFunctionality]
+
+=== Implementation ===
+
+ * [http://code.google.com/p/dtgen/wiki/DTGenModificationProcedure DTGenModificationProcedure]
+
+=== Quality Assurance ===
+
+ * TestPlan
+
+=== Deployment ===
+
+ * Compatibility
+ * ReleaseProcess
+ * ReleaseNotes
+
+ * ProjectStatus
+ * [http://code.google.com/p/dtgen/wiki/DB_User_Connection_From_MT_Schema DB_User_Connection_From_MT_Schema]
+ * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
