@@ -109,7 +109,7 @@ APEX requires a custom handler for CLOB data returned from the browser.  DTGen g
 
 With Audit and POP data stored separately from the online or active data, the OMNI view provides a single view of all data related to a surrogate key of a table.  DTGen generates the APEX export file that has an OMNI view form defined for each table with history data.
 
-=== GUI Query-able *_ASOF_* and *_OMNI_* Reporting === _[DTGenFunctionality#Note_1 (See Note 1)]_
+=== GUI Query-able *_ASOF_* and *_OMNI_* Reporting _[DTGenFunctionality#Note_1 (See Note 1)]_ ===
 
 Each of the ASOF view and OMNI view forms include filtering that allows column specific filtering of data.  DTGen generates the APEX export file that has this ASOF view form and OMNI view form filtering defined for each table with history data.
 
@@ -119,13 +119,23 @@ One of the second most difficult concerns for a database designer is dealing wit
 
 === Optional Deployment to Multiple Mid-Tier (MT) Servers ===
 
+One option available to the database designer is the deployment of Oracle databases at the mid-tier.  Much of the integrity constraint enforcement can be off-loaded from the database-tier to the mid-tier.  DTGen generates and assembles the scripts necessary to deploy SQL and API access directly onto mid-tier servers.
+
 === Optional Deployment to Multiple Database (DB) Servers using Oracle RAC ===
+
+Another option available to the database designer is the deployment of the central schema across multiple database-tier nodes through the use of Oracle RAC.  Fortunately, RAC deployment is transparent to the database schema and requires not special functionality from DTGen.
 
 === Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement) ===
 
+There is a switch (db_constraints) that allows integrity constraint enforcement to be dynamically moved between the mid-tier and database-tier servers.  DTGen generates the PL/SQL code needed to deploy this functionality.
+
 === Simultaneous Data Access from DB and MT Servers ===
 
+Another option available is the execution of DML and POP on either the database servers or mid-tier servers.  DTGen generates that PL/SQL and SQL code needed to allow this access at both tiers.
+
 === Generated Materialized Views for MT Deployment of Selected Entities ===
+
+Part of the deployment option is the caching of data at the mid-tiers through the use of materialized views.  Slow changing tables can be identified for mid-tier caching.  Also, a refresh rate can be specified for each of these tables.  DTGen generates the .
 
 ==== Note 1 ====
 _These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until issue #2 is resolved._
