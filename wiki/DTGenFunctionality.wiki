@@ -42,3 +42,6 @@ Given a basic entity-relational model and required model meta-data, DTGen genera
  * Generated Materialized Views for MT Deployment of Selected Entities
 
 _Note 1: These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until issue #2 is resolved._
+
+----
+Oracle and Java are registered trademarks of Oracle Corporation and/or its affiliates.
