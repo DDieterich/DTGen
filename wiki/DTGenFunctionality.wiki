@@ -2,7 +2,7 @@
 
 = Introduction =
 
-DTGen 
+Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code. The input for DTGen is data saved to a DTGen schema in an Oracle database. The data can be entered from a user built SQL*Loader Control file and/or the DTGen application in APEX. The output from DTGen is line oriented text data stored in the same DTGen schema. The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on Oracle's Free Database. See Compatibility for more details on software versions.
 
 
 = Details =
