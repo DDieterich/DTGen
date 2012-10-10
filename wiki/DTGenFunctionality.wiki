@@ -99,7 +99,7 @@ With the recording of historical data in tables in the database, a POP or UNDO f
 
 === Generated PL/SQL for CLOB DML (APEX) ===
 
-=== Comprehensive *_OMNI_* View Forms _([DTGenFunctionality#Note_1 Note 1])_ ===
+=== Comprehensive *_OMNI_* View Forms _[DTGenFunctionality#Note_1 (Note 1)]_ ===
 
 === GUI Query-able *_ASOF_* and *_OMNI_* Reporting _(Note 1)_ ===
 
