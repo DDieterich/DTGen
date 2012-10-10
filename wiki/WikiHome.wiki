@@ -10,6 +10,15 @@ The following wiki pages are organized by phase
  * ProjectGoals
  * [http://code.google.com/p/dtgen/wiki/DTGenFunctionality DTGenFunctionality]
 
+=== Project Management ===
+
+ * ProjectStatus
+ * ReleaseProcess
+
+=== Design ===
+
+[http://code.google.com/p/dtgen/wiki/DB_User_Connection_From_MT_Schema DB_User_Connection_From_MT_Schema]
+
 === Implementation ===
 
  * [http://code.google.com/p/dtgen/wiki/DTGenModificationProcedure DTGenModificationProcedure]
@@ -20,10 +29,5 @@ The following wiki pages are organized by phase
 
 === Deployment ===
 
- * Compatibility
- * ReleaseProcess
- * ReleaseNotes
-
- * ProjectStatus
- * [http://code.google.com/p/dtgen/wiki/DB_User_Connection_From_MT_Schema DB_User_Connection_From_MT_Schema]
  * [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility]
+ * ReleaseNotes
