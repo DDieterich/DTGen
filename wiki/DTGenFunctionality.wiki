@@ -4,7 +4,7 @@
 
 Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code.  The input for DTGen is data saved to a DTGen schema in an Oracle database.  The data can be entered from a user built SQL*Loader Control file (an example is included) and/or the DTGen application in APEX.  The output from DTGen is line oriented text data stored in the same DTGen schema.  The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on [http://www.oracle.com/technetwork/database/express-edition/overview/index.html Oracle's Free Database].  See [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility] for more details on software versions.
 
-== _Augmented Schema Functionality_ ==
+== *Augmented Schema Functionality* ==
 
 The transition from Entity/Relationship model to SQL schema requires some not-so-obvious functions that are typically provided by application developers.  Augmented schema functionality generates the needed SQL and PL/SQL source code to enable functions like update-able natural keys, case folding, and full path hierarchical data.  The following sections describe this augmented functionality in more detail.
 
