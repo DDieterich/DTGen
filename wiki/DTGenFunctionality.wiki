@@ -2,12 +2,35 @@
 
 = Introduction =
 
-Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code. The input for DTGen is data saved to a DTGen schema in an Oracle database. The data can be entered from a user built SQL*Loader Control file and/or the DTGen application in APEX. The output from DTGen is line oriented text data stored in the same DTGen schema. The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on Oracle's Free Database. See Compatibility for more details on software versions.
+Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code.  The input for DTGen is data saved to a DTGen schema in an Oracle database.  The data can be entered from a user built SQL*Loader Control file (an example is included) and/or the DTGen application in APEX.  The output from DTGen is line oriented text data stored in the same DTGen schema.  The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on [http://www.oracle.com/technetwork/database/express-edition/overview/index.html Oracle's Free Database].  See [http://code.google.com/p/dtgen/wiki/Compatibility Compatibility] for more details on software versions.
 
+== Augmented Schema Functionality ==
+ * Sequences and Surrogate Primary Keys (PK)
+ * Natural Key Update-able Views
+ * Indexed Foreign Keys (FK) and Natural Keys (NK)
+ * Custom Check Constraints
+ * Enforced Discrete Domains (no FK)
+ * Enforced Case Folding
+ * Full Procedural APIs for each Entity
+ * Full Path Hierarchical Data (PK and NK)
 
-= Details =
+== Cross-Cutting Concerns ==
+ * Global Lock Helper Function for Single Threaded Logic
+ * Global Logging Function using Autonomous Transaction
+ * Entity Based History and Audit _(Note 1)_
+ * Point-in-Time *_ASOF_* Views _(Note 1)_
+ * Transportable *_ASOF_* Data _(Note 1)_
+ * Audited *_POP_* Functions _(Note 1)_
+ ==== Default Maintenance User Interface ====
+ * Data Domain Filterable Grid Edit (APEX)
+ * Generated PL/SQL for CLOB DML (APEX)
+ * Comprehensive *_OMNI_* View Forms _(Note 1)_
+ * GUI Query-able *_ASOF_* and *_OMNI_* Reporting _(Note 1)_
+ ==== Configurable Multi-Tier Deployments ====
+ * Optional Deployment to Multiple Mid-Tier (MT) Servers
+ * Optional Deployment to Multiple Database (DB) Servers using Oracle RAC
+ * Optional Disablement of DB Enforced Integrity Constraints (MT Enforcement)
+ * Simultaneous Data Access from DB and MT Servers
+ * Generated Materialized Views for MT Deployment of Selected Entities
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+_Note 1: These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until issue #2 is resolved._
