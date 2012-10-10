@@ -61,6 +61,10 @@ When a table has a foreign key to it's own primary key, the table is self-refere
 
 == Cross-Cutting Concerns ==
 
+"In computer science, cross-cutting concerns are aspects of a program which affect other concerns."
+
+http://en.wikipedia.org/wiki/Cross-cutting_concern
+
 
 
 === Global Lock Helper Function for Single Threaded Logic ===
