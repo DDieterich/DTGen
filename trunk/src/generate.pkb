@@ -1134,13 +1134,13 @@ BEGIN
             p('   if     n_' || buff.name ||' = o_' || buff.name);
          end if;
          p('      and not util.is_equal(n_' || buff.fk_prefix || 'id_path, ' ||
-                                               tbuff.name     || '_dml.get_' ||
+                                               tbuff.name     || '_view.get_' ||
                                                buff.fk_prefix || 'id_path(o_id))');
          p('      and not util.is_equal(n_' || buff.fk_prefix || 'id_path, ' ||
                                        'o_' || buff.fk_prefix || 'id_path)');
       end case;
       p('   then');
-      p('      n_' || buff.name || ' := ' || tbuff.name || '_dml.get_' ||
+      p('      n_' || buff.name || ' := ' || tbuff.name || '_view.get_' ||
                       buff.fk_prefix || 'id_by_id_path(n_' || buff.fk_prefix ||
                       'id_path);');
       p('   end if;');
@@ -1167,13 +1167,13 @@ BEGIN
             p('   if     n_' || buff.name ||' = o_' || buff.name);
          end if;
          p('      and not util.is_equal(n_' || buff.fk_prefix || 'nk_path, ' ||
-                                               tbuff.name     || '_dml.get_' ||
+                                               tbuff.name     || '_view.get_' ||
                                                buff.fk_prefix || 'nk_path(o_id))');
          p('      and not util.is_equal(n_' || buff.fk_prefix || 'nk_path, ' ||
                                        'o_' || buff.fk_prefix || 'nk_path)');
       end case;
       p('   then');
-      p('      n_' || buff.name || ' := ' || tbuff.name || '_dml.get_' ||
+      p('      n_' || buff.name || ' := ' || tbuff.name || '_view.get_' ||
                       buff.fk_prefix || 'id_by_nk_path(n_' || buff.fk_prefix ||
                       'nk_path);');
       p('   end if;');
@@ -1359,6 +1359,56 @@ begin
    p('/');
    col_comments(tname_in);
 end tab_col_comments;
+----------------------------------------
+PROCEDURE a_col_comments
+      (tname_in  in  varchar2)
+   --  Natural Key Active View Column Comments
+IS
+begin
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       and   COL.nk       is not null
+       order by COL.seq )
+   loop
+      p('comment on column ' || tname_in || '.' || buff.name || ' is ''' ||
+         replace(buff.description,SQ1,SQ2) || '''');
+      p('/');
+   end loop;
+   if tbuff.type in ('EFF', 'LOG')
+   then
+      if tbuff.type = 'EFF'
+      then
+         p('comment on column ' || tname_in || '.eff_beg_dtm is ''Date/Time this record became effective''');
+         p('/');
+      end if;
+      p('comment on column ' || tname_in || '.aud_beg_usr is ''User that created this record''');
+      p('/');
+      p('comment on column ' || tname_in || '.aud_beg_dtm is ''Date/Time this record was created (must be in nanoseconds)''');
+      p('/');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+        and  COL.nk       is not null
+       order by COL.seq )
+   loop
+      -- Self-referencing foreign keys (hierarchies) cannot be
+      --   part of the natural key
+      if buff.fk_table_id is not null
+      then
+         for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+         loop
+            p('comment on column ' || tname_in || '.' || buff.fk_prefix ||
+               get_tabname(buff.fk_table_id) || '_nk' || i || ' is ''' ||
+               upper(get_tabname(buff.fk_table_id)) ||
+               ' Natural Key Value ' || i || ': ' ||
+               replace(nk_aa(buff.fk_table_id).cbuff_va(i).description,SQ1,SQ2) || '''');
+            p('/');
+         end loop;
+      end if;
+   end loop;
+end a_col_comments;
 ----------------------------------------
 PROCEDURE act_col_comments
       (tname_in  in  varchar2)
@@ -5501,15 +5551,18 @@ BEGIN
       p('   refresh next sysdate + '||tbuff.mv_refresh_hr||'/24');
       p('   as select * from '||abuff.db_auth||sp_name||'@'||abuff.dbid);
       p('/');
+      p('comment on materialized view ' || sp_name || ' is ''' ||
+         replace(tbuff.description,SQ1,SQ2) || '''');
+      p('/');
    else
       p('');
       p('create ' || sp_type || ' ' || sp_name);
       p('   as select * from '||abuff.db_auth||sp_name||'@'||abuff.dbid);
       p('/');
+      p('comment on table ' || sp_name || ' is ''' ||
+         replace(tbuff.description,SQ1,SQ2) || '''');
+      p('/');
    end if;
-   p('comment on table ' || sp_name || ' is ''' ||
-      replace(tbuff.description,SQ1,SQ2) || '''');
-   p('/');
    ps('');
    ps('grant select on ' || sp_name || ' to ' || abuff.abbr || '_app');
    ps('/');
@@ -5679,6 +5732,26 @@ BEGIN
    p('   --    ');
    header_comments;
    p('');
+   for buff in (
+      select * from tab_cols COL
+       where COL.fk_table_id = tbuff.id
+        and  COL.table_id    = tbuff.id )
+   loop
+      p('');
+      p('   function get_' || buff.fk_prefix || 'id_path');
+      p('      (id_in  in  number');
+      p('      ) return varchar2;');
+      p('   function get_' || buff.fk_prefix || 'nk_path');
+      p('      (id_in  in  number');
+      p('      ) return varchar2;');
+      p('   function get_' || buff.fk_prefix || 'id_by_id_path');
+      p('      (id_path_in  varchar2');
+      p('      ) return number;');
+      p('   function get_' || buff.fk_prefix || 'id_by_nk_path');
+      p('      (nk_path_in  varchar2');
+      p('      ) return number;');
+   end loop;
+   p('');
    p('   procedure ins');
    p('      (n_id  in out  NUMBER');
    if tbuff.type = 'EFF'
@@ -5810,6 +5883,117 @@ BEGIN
    p('--    (DML, Foreign Keys, Paths, and )');
    header_comments;
    p('');
+   -- Setup hierarchy functions
+   for buff in (
+      select * from tab_cols COL
+       where COL.fk_table_id = tbuff.id
+        and  COL.table_id    = tbuff.id )
+   loop
+      p('----------------------------------------');
+      p('function get_' || buff.fk_prefix || 'id_path');
+      p('      (id_in  in  number)');
+      p('   return varchar2');
+      p('   -- For a hierarchy ID, return a delimited list of IDs');
+      p('is');
+      p('   rtxt  varchar2(4000);');
+      p('   rlen  number(4);');
+      p('begin');
+      p('   rtxt := NULL;');
+      p('   rlen := 0;');
+      p('   for buff in (');
+      p('      select id, level from ' || tbuff.name);
+      p('       start with id = id_in');
+      p('       connect by nocycle id = prior ' || buff.name);
+      p('       order by level desc )');
+      p('   loop');
+      p('      if buff.level > 1');
+      p('      then');
+      p('         rlen := rlen + length(buff.id);');
+      p('         if rlen > 4000 - 3');
+      p('         then');
+      p('            return rtxt || ''...'';');
+      p('         end if;');
+      p('         rtxt := rtxt || buff.id || util.path_sep;');
+      p('      end if;');
+      p('   end loop;');
+      p('   return substr(rtxt,1,length(rtxt)-1);');
+      p('end get_' || buff.fk_prefix || 'id_path;');
+      p('----------------------------------------');
+      p('function get_' || buff.fk_prefix || 'nk_path');
+      p('      (id_in  in  number)');
+      p('   return varchar2');
+      p('   -- For a hierarchy ID, return a delimited list of');
+      p('   --    Natural Key sets');
+      p('is');
+      p('   rtxt  varchar2(4000);');
+      p('   rlen  number(4);');
+      p('begin');
+      p('   rtxt := NULL;');
+      p('   rlen := 0;');
+      p('   for buff in (');
+      p('      select ' || tbuff.name || '_dml.get_nk(id) nk');
+      p('            ,level');
+      p('       from  ' || tbuff.name);
+      p('       start with id = id_in');
+      p('       connect by nocycle id = prior ' || buff.name);
+      p('       order by level desc )');
+      p('   loop');
+      p('      if buff.level > 1');
+      p('      then');
+      p('         rlen := rlen + length(buff.nk);');
+      p('         if rlen > 4000 - 3');
+      p('         then');
+      p('            return rtxt || ''...'';');
+      p('         end if;');
+      p('         rtxt := rtxt || buff.nk || util.path_sep;');
+      p('      end if;');
+      p('   end loop;');
+      p('   return substr(rtxt,1,length(rtxt)-1);');
+      p('end get_' || buff.fk_prefix || 'nk_path;');
+      p('----------------------------------------');
+      p('function get_' || buff.fk_prefix || 'id_by_id_path');
+      p('      (id_path_in  varchar2');
+      p('      ) return number');
+      p('is');
+      p('   retid  number(38);');
+      p('begin');
+      p('   select ' || tbuff.abbr || '.id');
+      p('    into  retid');
+      p('    from  ' || tbuff.name || ' ' || tbuff.abbr);
+      p('    where ' || tbuff.name      || '_view.get_' ||
+                         buff.fk_prefix || 'id_path('  ||
+                        tbuff.abbr      || '.id) || util.path_sep || ' );
+      p('          ' || tbuff.abbr      || '.id = id_path_in;' );
+      p('   return retid;');
+      p('exception');
+      p('   when no_data_found then');
+      p('      return null;');
+      p('   when others then');
+      p('      raise;');
+      p('end get_' || buff.fk_prefix || 'id_by_id_path;');
+      p('----------------------------------------');
+      p('function get_' || buff.fk_prefix || 'id_by_nk_path');
+      p('      (nk_path_in  varchar2');
+      p('      ) return number');
+      p('is');
+      p('   retid  number(38);');
+      p('begin');
+      p('   select ' || tbuff.abbr || '.id');
+      p('    into  retid');
+      p('    from  ' || tbuff.name || ' ' || tbuff.abbr);
+      p('    where ' || tbuff.name      || '_view.get_' ||
+                         buff.fk_prefix || 'nk_path('  ||
+                        tbuff.abbr      || '.id) || util.path_sep ||' );
+      p('          ' || tbuff.name      || '_dml.get_nk(' ||
+                        tbuff.abbr      || '.id) = nk_path_in;' );
+      p('   return retid;');
+      p('exception');
+      p('   when no_data_found then');
+      p('      return null;');
+      p('   when others then');
+      p('      raise;');
+      p('end get_' || buff.fk_prefix || 'id_by_nk_path;');
+   end loop;
    p('----------------------------------------');
    p('procedure ins');
    p('      (n_id  in out  NUMBER');
@@ -6270,6 +6454,159 @@ IS
    nkseq     number;
 BEGIN
    sp_type := 'view';
+   if table_self_ref(tbuff.id)
+   then
+      -- Create a natural key view to be used for parent
+      --   foreign key join to active view.
+      sp_name := tbuff.name||'_a';
+      p('create '||sp_type||' '||sp_name);
+      p('      (id');
+      if tbuff.type = 'EFF'
+      then
+         p('      ,eff_beg_dtm');
+      end if;
+      -- Generate a natural key column list for the view
+      for buff in (
+         select * from tab_cols COL
+          where COL.table_id = tbuff.id
+           and  COL.nk       is not null
+          order by COL.seq )
+      loop
+         p('      ,'||buff.name);
+         -- Self-referencing foreign keys (hierarchies) cannot be
+         --   part of the natural key
+         if buff.fk_table_id is not null
+         then
+            for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+            loop
+               p('      ,' || buff.fk_prefix ||
+                        get_tabname(buff.fk_table_id) ||
+                        '_nk' || i);
+            end loop;
+         end if;
+      end loop;
+      if tbuff.type in ('EFF', 'LOG')
+      then
+         p('      ,aud_beg_usr');
+         p('      ,aud_beg_dtm');
+      end if;
+      p('      )');
+      p('   as select ') ;
+      p('       '||tbuff.abbr||'.id');
+      if tbuff.type = 'EFF'
+      then
+         p('      ,' || tbuff.abbr || '.eff_beg_dtm');
+      end if;
+      -- Generate a list of natural key columns for the select
+      for buff in (
+         select * from tab_cols COL
+          where COL.table_id = tbuff.id
+           and  COL.nk       is not null
+          order by COL.seq )
+      loop
+         p('      ,' || tbuff.abbr || '.'|| buff.name);
+         -- Self-referencing foreign keys (hierarchies) cannot be
+         --   part of the natural key
+         if buff.fk_table_id is not null
+         then
+            fk_tid := -1;
+            for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+            loop
+               if nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i) is null
+               then
+                  p('      ,' || buff.fk_prefix ||
+                                 get_tababbr(buff.fk_table_id) ||
+                          '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
+                  fk_tid := -1;  -- The same Foreign Key Table may be referenced
+                                 --   twice, back-to-back, in column order
+               else
+                  if fk_tid != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
+                  then
+                     fk_tid := nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i);
+                     nkseq := 1;
+                  else
+                     nkseq := nkseq + 1;
+                  end if;
+                  p('      ,' || buff.fk_prefix ||
+                                 get_tababbr(buff.fk_table_id) ||
+                          '.' || get_tabname(nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)) ||
+                        '_nk' || nkseq);
+               end if;
+            end loop;
+   /*
+            for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
+            loop
+               p('      ,' || buff.fk_prefix ||
+                  get_tababbr(nk_aa(buff.fk_table_id).cbuff_va(i).table_id) ||
+                       '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
+            end loop;
+   */
+         end if;
+      end loop;
+      if tbuff.type in ('EFF', 'LOG')
+      then
+         p('      ,' || tbuff.abbr || '.aud_beg_usr');
+         p('      ,' || tbuff.abbr || '.aud_beg_dtm');
+      end if;
+      p(' from             ' || tbuff.name || ' ' || tbuff.abbr);
+      -- Generate a table join list for the natural key columns for the view
+      for buff in (
+         select * from tab_cols COL
+          where COL.fk_table_id is not null
+           and  COL.table_id    = tbuff.id
+           and  COL.nk          is not null
+          order by COL.seq )
+      loop
+         tababbr := get_tababbr(buff.fk_table_id);
+         join_txt := '       inner join ';
+         p(join_txt || get_tabname(buff.fk_table_id) || '_act ' ||
+             buff.fk_prefix || tababbr || ' on ' ||
+             buff.fk_prefix || tababbr || '.id = ' ||
+             tbuff.abbr || '.' || buff.name);
+   /*
+         -- nk_tabs is a recursive procedure
+         nk_tabs(buff.fk_table_id, '  ', nvl(buff.req,buff.nk), buff.fk_prefix,
+                 tbuff.abbr || '.' || buff.name);
+   */
+      end loop;
+      p('/');
+      show_errors(sp_type, sp_name);
+      ps('');
+      ps('grant select on '||sp_name||' to '||abuff.abbr||'_app');
+      ps('/');
+      ps('-- audit rename on '||sp_name||' by access');
+      ps('-- /');
+      p('');
+      p('comment on table ' ||sp_name|| ' is ''Natural Keys for' ||
+         replace(tbuff.description,SQ1,SQ2) || '''');
+      p('/');
+      p('');
+      a_col_comments(sp_name);
+      p('');
+      p('alter view '||sp_name||' add constraint '||sp_name||'_pk');
+      p('   primary key (id) disable');
+      p('/');
+      p('');
+      fkseq := 0;
+      for buff in (
+         select * from tab_cols COL
+          where COL.fk_table_id is not null
+           and  COL.table_id    = tbuff.id
+           and  COL.nk          is not null
+          order by COL.seq )
+      loop
+         fkseq := fkseq + 1;
+         p('alter view ' || sp_name || ' add constraint ' ||
+                            sp_name || '_' || 'fk' || fkseq);
+         p('   foreign key (' || buff.name || ') references ' ||
+                            get_tabname(buff.fk_table_id) || '_act (id) disable');
+         p('/');
+      end loop;
+      p('');
+      trig_no_dml(sp_name, sp_type, 'insert');
+      trig_no_dml(sp_name, sp_type, 'update');
+      trig_no_dml(sp_name, sp_type, 'delete');
+   end if;
    sp_name := tbuff.name||'_act';
    p('create '||sp_type||' '||sp_name);
    p('      (id');
@@ -6324,9 +6661,9 @@ BEGIN
          if buff.fk_table_id = tbuff.id
          then
             -- Setup the path functions for the hierarchy
-            p('      ,' || tbuff.name || '_dml.get_'|| buff.fk_prefix || 'id_path(' ||
+            p('      ,' || tbuff.name || '_view.get_'|| buff.fk_prefix || 'id_path(' ||
                            tbuff.abbr || '.id)');
-            p('      ,' || tbuff.name || '_dml.get_'|| buff.fk_prefix || 'nk_path(' ||
+            p('      ,' || tbuff.name || '_view.get_'|| buff.fk_prefix || 'nk_path(' ||
                            tbuff.abbr || '.id)');
          end if;
          fk_tid := -1;
@@ -6383,10 +6720,18 @@ BEGIN
       else
          join_txt := '       inner join ';
       end if;
-      p(join_txt || get_tabname(buff.fk_table_id) || '_act ' ||
-          buff.fk_prefix || tababbr || ' on ' ||
-          buff.fk_prefix || tababbr || '.id = ' ||
-          tbuff.abbr || '.' || buff.name);
+      if table_self_ref(buff.fk_table_id)
+      then
+         p(join_txt || get_tabname(buff.fk_table_id) || '_a ' ||
+             buff.fk_prefix || tababbr || ' on ' ||
+             buff.fk_prefix || tababbr || '.id = ' ||
+             tbuff.abbr || '.' || buff.name);
+      else
+         p(join_txt || get_tabname(buff.fk_table_id) || '_act ' ||
+             buff.fk_prefix || tababbr || ' on ' ||
+             buff.fk_prefix || tababbr || '.id = ' ||
+             tbuff.abbr || '.' || buff.name);
+      end if;
 /*
       -- nk_tabs is a recursive procedure
       nk_tabs(buff.fk_table_id, '  ', nvl(buff.req,buff.nk), buff.fk_prefix,
@@ -8107,105 +8452,37 @@ BEGIN
       p('function get_' || buff.fk_prefix || 'id_path');
       p('      (id_in  in  number)');
       p('   return varchar2');
-      p('   -- For a hierarchy ID, return a delimited list of IDs');
       p('is');
-      p('   rtxt  varchar2(4000);');
-      p('   rlen  number(4);');
       p('begin');
-      p('   rtxt := NULL;');
-      p('   rlen := 0;');
-      p('   for buff in (');
-      p('      select id, level from ' || tbuff.name);
-      p('       start with id = id_in');
-      p('       connect by nocycle id = prior ' || buff.name);
-      p('       order by level desc )');
-      p('   loop');
-      p('      if buff.level > 1');
-      p('      then');
-      p('         rlen := rlen + length(buff.id);');
-      p('         if rlen > 4000 - 3');
-      p('         then');
-      p('            return rtxt || ''...'';');
-      p('         end if;');
-      p('         rtxt := rtxt || buff.id || util.path_sep;');
-      p('      end if;');
-      p('   end loop;');
-      p('   return substr(rtxt,1,length(rtxt)-1);');
+      p('   return ' || tbuff.name || '_view.get_' ||
+                    buff.fk_prefix || 'id_path(id_in);');
       p('end get_' || buff.fk_prefix || 'id_path;');
       p('----------------------------------------');
       p('function get_' || buff.fk_prefix || 'nk_path');
       p('      (id_in  in  number)');
       p('   return varchar2');
-      p('   -- For a hierarchy ID, return a delimited list of');
-      p('   --    Natural Key sets');
       p('is');
-      p('   rtxt  varchar2(4000);');
-      p('   rlen  number(4);');
       p('begin');
-      p('   rtxt := NULL;');
-      p('   rlen := 0;');
-      p('   for buff in (');
-      p('      select ' || tbuff.name || '_dml.get_nk(id) nk');
-      p('            ,level');
-      p('       from  ' || tbuff.name);
-      p('       start with id = id_in');
-      p('       connect by nocycle id = prior ' || buff.name);
-      p('       order by level desc )');
-      p('   loop');
-      p('      if buff.level > 1');
-      p('      then');
-      p('         rlen := rlen + length(buff.nk);');
-      p('         if rlen > 4000 - 3');
-      p('         then');
-      p('            return rtxt || ''...'';');
-      p('         end if;');
-      p('         rtxt := rtxt || buff.nk || util.path_sep;');
-      p('      end if;');
-      p('   end loop;');
-      p('   return substr(rtxt,1,length(rtxt)-1);');
+      p('   return ' || tbuff.name || '_view.get_' ||
+                    buff.fk_prefix || 'nk_path(id_in);');
       p('end get_' || buff.fk_prefix || 'nk_path;');
       p('----------------------------------------');
       p('function get_' || buff.fk_prefix || 'id_by_id_path');
       p('      (id_path_in  varchar2');
       p('      ) return number');
       p('is');
-      p('   retid  number(38);');
       p('begin');
-      p('   select ' || tbuff.abbr || '.id');
-      p('    into  retid');
-      p('    from  ' || tbuff.name || ' ' || tbuff.abbr);
-      p('    where ' || tbuff.name      || '_dml.get_' ||
-                         buff.fk_prefix || 'id_path('  ||
-                        tbuff.abbr      || '.id) || util.path_sep || ' );
-      p('          ' || tbuff.abbr      || '.id = id_path_in;' );
-      p('   return retid;');
-      p('exception');
-      p('   when no_data_found then');
-      p('      return null;');
-      p('   when others then');
-      p('      raise;');
+      p('   return ' || tbuff.name || '_view.get_' ||
+                    buff.fk_prefix || 'id_by_id_path(id_path_in);');
       p('end get_' || buff.fk_prefix || 'id_by_id_path;');
       p('----------------------------------------');
       p('function get_' || buff.fk_prefix || 'id_by_nk_path');
       p('      (nk_path_in  varchar2');
       p('      ) return number');
       p('is');
-      p('   retid  number(38);');
       p('begin');
-      p('   select ' || tbuff.abbr || '.id');
-      p('    into  retid');
-      p('    from  ' || tbuff.name || ' ' || tbuff.abbr);
-      p('    where ' || tbuff.name      || '_dml.get_' ||
-                         buff.fk_prefix || 'nk_path('  ||
-                        tbuff.abbr      || '.id) || util.path_sep ||' );
-      p('          ' || tbuff.name      || '_dml.get_nk(' ||
-                        tbuff.abbr      || '.id) = nk_path_in;' );
-      p('   return retid;');
-      p('exception');
-      p('   when no_data_found then');
-      p('      return null;');
-      p('   when others then');
-      p('      raise;');
+      p('   return ' || tbuff.name || '_view.get_' ||
+                    buff.fk_prefix || 'id_by_nk_path(nk_path_in);');
       p('end get_' || buff.fk_prefix || 'id_by_nk_path;');
    end loop;
    p('----------------------------------------');
@@ -8727,8 +9004,8 @@ BEGIN
          nkfnd := TRUE;
          if buff.fk_table_id = tbuff.id
          then
-            p('      ,n_buff.'|| buff.fk_prefix || 'id_path_in');
-            p('      ,n_buff.'|| buff.fk_prefix || 'nk_path_in');
+            p('      ,n_buff.'|| buff.fk_prefix || 'id_path');
+            p('      ,n_buff.'|| buff.fk_prefix || 'nk_path');
          end if;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop

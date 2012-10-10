@@ -46,7 +46,7 @@ set echo on
 
 REM Export the 4 tables
 REM 
-host exp &DB_NAME./&DB_PASS. LOG=e6_exp.log FILE=e6.dmp TABLES=dept,dept_aud,emp,emp_hist
+host exp &DB_NAME./&DB_PASS.&TNS_ALIAS. LOG=e6_exp.log FILE=e6.dmp TABLES=dept,dept_aud,emp,emp_hist
 
 REM  These constraints are only used to assist Data Dictionary Queries
 REM  Since they were created, these constraints were never enabled
@@ -71,7 +71,7 @@ drop table dept;
 
 REM Import the 4 tables
 REM 
-host imp &DB_NAME./&DB_PASS. LOG=e6_imp.log FILE=e6.dmp
+host imp &DB_NAME./&DB_PASS.&TNS_ALIAS. LOG=e6_imp.log FILE=e6.dmp
 
 REM While not necessary in this exercise, it is important to demonstrate
 REM   a possible method of transporting the sequence generators
