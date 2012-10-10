@@ -135,7 +135,7 @@ Another option available is the execution of DML and POP on either the database 
 
 === Generated Materialized Views for MT Deployment of Selected Entities ===
 
-Part of the deployment option is the caching of data at the mid-tiers through the use of materialized views.  Slow changing tables can be identified for mid-tier caching.  Also, a refresh rate can be specified for each of these tables.  DTGen generates the .
+Part of the deployment option is the caching of data at the mid-tiers through the use of materialized views.  Slow changing tables can be identified for mid-tier caching.  Also, a refresh rate can be specified for each of these tables.  DTGen generates the PL/SQL and SQL code needed to deploy this caching and automated refresh to the mid-tier.
 
 ==== Note 1 ====
 _These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until issue #2 is resolved._
