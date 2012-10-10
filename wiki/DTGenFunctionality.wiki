@@ -109,7 +109,7 @@ APEX requires a custom handler for CLOB data returned from the browser.  DTGen g
 
 With Audit and POP data stored separately from the online or active data, the OMNI view provides a single view of all data related to a surrogate key of a table.  DTGen generates the APEX export file that has an OMNI view form defined for each table with history data.
 
-=== GUI Query-able *_ASOF_* and *_OMNI_* Reporting _[DTGenFunctionality#Note_1 (See Note 1)]_ ===
+=== GUI Query-able *_ASOF_* and *_OMNI_* Reporting === _[DTGenFunctionality#Note_1 (See Note 1)]_
 
 Each of the ASOF view and OMNI view forms include filtering that allows column specific filtering of data.  DTGen generates the APEX export file that has this ASOF view form and OMNI view form filtering defined for each table with history data.
 
