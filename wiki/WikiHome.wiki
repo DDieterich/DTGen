@@ -17,7 +17,7 @@ The following wiki pages are organized by phase
 
 === Design ===
 
- * [https://code.google.com/p/dtgen/source/browse/trunk/docs/DTGen_Notes.pdf DTGen_Notes.pdf
+ * [https://code.google.com/p/dtgen/source/browse/trunk/docs/DTGen_Notes.pdf DTGen_Notes.pdf]
  * [https://code.google.com/p/dtgen/source/browse/trunk/docs/DTGen_Notes.txt DTGen_Notes.txt]
  * [http://code.google.com/p/dtgen/wiki/DB_User_Connection_From_MT_Schema DB_User_Connection_From_MT_Schema]
 
