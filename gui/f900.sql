@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   14:17 Monday October 8, 2012
+--   Date and Time:   19:14 Wednesday October 10, 2012
 --   Exported By:     DTGEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 91833365296068322 + wwv_flow_api.g_id_offset,
   p_error_template=> 91829667765068300 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20121008141736',
+  p_checksum_salt_last_reset => '20121010191439',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -168,7 +168,7 @@ wwv_flow_api.create_flow(
   p_cust_authentication_process=> '.'||to_char(91838984254068400 + wwv_flow_api.g_id_offset)||'.',
   p_cust_authentication_page=> '',
   p_custom_auth_login_url=> '',
-  p_flow_version=> 'DTGen_0.11',
+  p_flow_version=> 'DTGen_0.12',
   p_flow_status=> 'AVAILABLE_W_EDIT_LINK',
   p_flow_unavailable_text=> 'This application is currently unavailable at this time.',
   p_build_status=> 'RUN_AND_BUILD',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 91832266353068321 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 91832968948068321 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'DTGEN',
-  p_last_upd_yyyymmddhh24miss=> '20121008141736',
+  p_last_upd_yyyymmddhh24miss=> '20121010191439',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -1651,7 +1651,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'No help is available for this page.'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20121003083637'
+ ,p_last_upd_yyyymmddhh24miss => '20121008155913'
   );
 null;
  
@@ -2784,7 +2784,7 @@ declare
     h varchar2(32767) := null;
 begin
 h := null;
-h:=h||'Name of the database schema objects owner. Used for user synonym and DB Link creation. Also used for explicit owner of all database objects if db_schema_exp flag is set.';
+h:=h||'Name of the database schema objects owner. Used for user synonym and DB Link creation';
 
 wwv_flow_api.create_page_item(
   p_id=>92006182454082079 + wwv_flow_api.g_id_offset,
@@ -2980,7 +2980,7 @@ declare
     h varchar2(32767) := null;
 begin
 h := null;
-h:=h||'Database link connect string for mid-tier connections to the centralized database server';
+h:=h||'Database link name for mid-tier connections from mid-tier servers to the centralized database server';
 
 wwv_flow_api.create_page_item(
   p_id=>92008188793082087 + wwv_flow_api.g_id_offset,
@@ -3029,7 +3029,7 @@ declare
     h varchar2(32767) := null;
 begin
 h := null;
-h:=h||'Database link authorization for mid-tier connections to the centralized database server';
+h:=h||'Centralized database server schema name pointed to by the database link from the mid-tier servers';
 
 wwv_flow_api.create_page_item(
   p_id=>92008681109082089 + wwv_flow_api.g_id_offset,
