@@ -4,7 +4,15 @@
 
 == New Features ==
 
-No previous releases
+ * Issue 29: Allow %ROWTYPE record for "DML" ins and upd procedures
+ * Issue 34: Add Custom Copyright Notice to PL/SQL Generated Code
+ * Issue 44: Add an Option to Constrain Audited Users Against SYS.USR$
+ * Issue 45: Add Tablespace Storage for Individual Tables
+ * Issue 46: Add an Update Reserve Percentage for each Column to set PCTFREE
+ * Issue 54: Cache GLOB Settings at Mid-Tier
+ * Issue 73: Cache SQL Script Changes in Generate and Only Save Differences
+ * Issue 78: Read-Only Views Need Trigger Errors
+ * Issue 7: Specify storage name for (and drop) LOB columns
 
 == Bugs ==
 
