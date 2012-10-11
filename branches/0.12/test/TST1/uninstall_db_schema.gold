@@ -1,0 +1,298 @@
+Connected.
+
+Session altered.
+
+
+=== Un-Install DTGen Test Rig Owner ===
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+=== Un-Install DTGen Test Rig ===
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_mods ===                                                          
+
+
+SCRIPT_NAME                                                                     
+--------------------                                                            
+=== TST1 drop_aa ===                                                            
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+View dropped.
+
+
+View dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_oltp ===                                                          
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+SCRIPT_NAME                                                                     
+-----------------------                                                         
+=== TST1 drop_integ ===                                                         
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Trigger dropped.
+
+
+Table altered.
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME                                                                     
+---------------------                                                           
+=== TST1 drop_ods ===                                                           
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Sequence dropped.
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_glob ===                                                          
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Type dropped.
+
+
+Type dropped.
+
+
+Package dropped.
+
+
+REMAINING_OBJECTS                                                               
+--------------------------------------------------------------------------------
+SYNONYM: GLOBAL_PARMS(VALID)                                                    
+SYNONYM: PARM_SETS(VALID)                                                       
+SYNONYM: TEST_PARMS(VALID)                                                      
+SYNONYM: TEST_SETS(VALID)                                                       
+

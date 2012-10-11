@@ -1,0 +1,448 @@
+
+============================================================
+DTGen Goals:
+------------
+
+-) Prevent repetitive coding of basic functions
+   -) integrity checks
+   -) maintenance forms
+   -) architecture deployment
+-) Customizable generation
+-) Open Source
+
+
+============================================================
+Included Features:
+------------------
+
+-) Portable and maintainable "AS_OF" Functionality
+-) "Usable" audit data
+-) "OMNI" view of data
+-) Generated maintenance forms
+   -) Full CRUD support
+   -) Filterable Grid Edit
+   -) OMNI view presentation and search
+   -) PL/SQL example for Form DML
+   -) PL/SQL example for Grid Edit
+   -) PL/SQL example for Form Filter
+-) Selectable DB/M-T functionality
+   -) Set ID (the primary key)
+   -) Set aud_beg_usr and aud_end_usr
+   -) Set aud_beg_dtm and aud_end_dtm
+   -) Case folding
+   -) eff_beg_dtm < systimestamp + 10 seconds
+   -) HIST/AUD Records
+   -) Not null
+   -) Domain value
+   -) Custom check_constraints
+   -) eff_beg_dtm <= eff_end_dtm
+   -) last_active = 'Y'
+   -) aud_beg_dtm <= aud_end_dtm
+-) View and DML package helpers:
+   -) View selection included FK Natural Key data
+   -) Record update/delete using FK Natural Key data
+   -) Record update/delete using FK Natural Key data parent/child path
+   -) Record update/delete using Surrogate Key ID parent/child path
+   -) Missing FK Natural Key data option in DML package API
+   -) Optional EFF_END_DTM for DML package delete
+   -) Setting of "Early EFF_END_DTM" flag for DML package delete
+-) Generated Data Functions:
+   -) get_id (Returns a Surrogate Key ID for a given Natural Key)
+   -) get_nk (Returns a Natural Key for a given Surrogate Key ID)
+   -) get_id_path (Returns a Surrogate Key ID parent/child path)
+   -) get_nk_path (Returns a FK Natural Key data parent/child path)
+   -) Pop the last update/delete from HIST/AUD
+-) Selectable path and composite data delimiters
+-) Selectable case folding vs. case checking
+-) EFF/LOG table choice with HIST/AUD Tables
+-) POP function with audit
+-) Auto-indexing of defined foreign keys
+-) Generated check constratints for domains
+-) Generated materialized views for non-database tier
+   -) generated refresh procedure
+   -) generated error check to prevent MV updates
+-) Generated string columns up to 32K in length
+   (Automatic CLOB storage in database when >4K)
+
+
+============================================================
+Strategies
+----------
+
+Keep it Simple and Straightforward.
+
+Only a single (RAC) database.
+
+Scripts generated for generic use
+   -) No schema names on schema objects
+
+EFF/LOG table choices with HIST/AUD Tables
+
+POP function
+
+Auto-indexing of FKs
+
+Multi-table logic on transaction views
+
+Check Constraints optionally augment trigger checks
+   -) Not null
+   -) Domain value
+   -) Custom check_constraints
+   -) eff_beg_dtm <= eff_end_dtm
+   -) last_active = 'Y'
+   -) aud_beg_dtm <= aud_end_dtm
+
+
+============================================================
+Default Deployment Architecture:
+--------------------------------
+
+-) Only a single (RAC) database.
+   (Primary/Natural/Unique Key (index) enforcement required in database)
+   (Foreign Key enforcement required in database)
+-) Multi-table logic on transaction views
+   (Transaction views are not generated)
+-) Scripts generated for generic use
+   (No schema names on schema objects)
+-) Application Express Page (Flow) Imports
+   (Does not create the APEX application (workflow))
+   (Re-generated APEX pages only replace old pages)
+-) New generators are generated with the generator
+
+
+============================================================
+Mulit-tier Architecture Options:
+--------------------------------
+
+Functionality that is movable between DB and APP server:
+   -) Set ID (the primary key)
+   -) Set aud_beg_usr and aud_end_usr
+   -) Set aud_beg_dtm and aud_end_dtm
+   -) Case folding
+   -) eff_beg_dtm < systimestamp + 10 seconds
+   -) HIST/AUD Records
+   -) Not null
+   -) Domain value
+   -) Custom check_constraints
+   -) eff_beg_dtm <= eff_end_dtm
+   -) last_active = 'Y'
+   -) aud_beg_dtm <= aud_end_dtm
+
+Functionality that is only in DB server:
+   -) Primary/Natural/Unique Key (index)
+   -) Foreign Key
+
+Functionality that is only in APP server:
+   -) Setting FK Surrogate Key???
+
+UTIL Package DB_Constraints:
+   -) TRUE - Table Triggers run TABLE_TAB calls
+   -) FALSE - View_TABs run TABLE_TAB calls
+
+UTIL Package fold_strings:
+   -) TRUE - Change string data to required case
+   -) FALSE - Check string data for require case
+
+============================================================
+Table_TAB Packages - DML Role
+-----------------------------
+check_rec:
+-) Set Case Folding
+-) Not Null Checks
+-) Domain Checks
+-) Custom Checks
+-) Set(if needed)/Check EFF_BEG_DTM - util.upd_early_eff
+
+ins:
+-) Set ID, if needed
+-) check_rec
+-) set_audit
+
+upd:
+-) Check for update changes
+-) check_rec
+-) eff_beg_dtm <= eff_end_dtm
+-) aud_beg_dtm <= aud_end_dtm
+-) Insert History Record
+
+del:
+-) Set(if needed)/Check x_eff_end_dtm - util.upd_early_eff
+-) set_audit
+-) aud_beg_dtm <= aud_end_dtm
+-) Insert History Record with LAST_ACTIVE
+
+============================================================
+Table_VIEW Packages - DML Role
+------------------------------
+ins:
+-) Parent FK Temporal Continuity Test/Lock
+-) Child FK Temporal Continuity Test/Lock
+-) set_fk
+-) Optionally Call Table_TAB.ins
+-) SQL insert
+
+upd:
+-) Parent FK Temporal Continuity Test/Lock
+-) Child FK Temporal Continuity Test/Lock
+-) set_fk
+-) Optionally Call Table_TAB.upd
+-) SQL update
+
+del:
+-) Parent FK Temporal Continuity Test/Lock
+-) Child FK Temporal Continuity Test/Lock
+-) Optionally Call Table_TAB.del
+-) SQL delete
+
+============================================================
+Table_DML Packages - APP Role
+-----------------------------
+Functions:
+-) get_id
+-) get_nk
+-) get_id_path
+-) get_nk_path
+-) Pop the last update/delete from HIST/AUD
+
+ins:
+-) Table_VIEW.ins
+
+upd:
+-) Populates OLD record
+-) Table_VIEW.upd
+
+del:
+-) Populates OLD record
+-) Table_VIEW.del
+
+============================================================
+POP Function - APP Role
+-----------------------
+NOTE: Must be run on database server because it disables the table trigger from running.
+   -) If no active record
+      -) if history record
+         -) Parent FK Temporal Continuity Test/Lock
+         -) Child FK Temporal Continuity Test/Lock
+         -) Insert H-pop into Pop_Audit
+         -) insert history into active
+         -) delete history record
+   -) if active record
+      -) Create COL Object
+      -) if no history record (simple delete)
+         -) Parent FK Temporal Continuity Test/Lock
+         -) Child FK Temporal Continuity Test/Lock
+         -) Insert A-pop into Pop_Audit
+         -) delete active record
+         -) delete history record created from delete
+      -) if history record
+         -) Parent FK Temporal Continuity Test/Lock
+         -) Child FK Temporal Continuity Test/Lock
+         -) Insert B-pop into Pop_Audit
+         -) Set UTIL Package DB_Constraints FALSE, if TRUE
+         -) update active record from latest history record
+         -) delete latest history record
+         -) Set UTIL Package DB_Constraints TRUE, if needed
+
+
+============================================================
+Generator Call Tree
+-------------------
+   -) create_glob;
+      -) create_globals;
+      -) create_util;
+   -) create_gdst;
+      -) create_gd;
+      -) create_util;
+   -) create_ods;
+      -) create_pop_spec;
+      -) create_tp_spec;
+      -) create_tab_act;
+      -) create_tab_hoa;
+      -) create_fk;
+      -) create_ind_act;
+      -) create_ind_hoa;
+      -) create_ind_pdat;
+      -) create_pop_body;
+      -) create_tp_body;
+   -) create_integ;
+      -) create_cons;
+      -) create_ttrig;
+   -) create_dist;
+      -) create_tp_spec;
+      -) create_rem;
+      -) create_ind_act;
+      -) create_rem_all_asof  -- To move view logic onto mid-tier, replaced with contents of "create_aa"
+      -) create_tp_body;
+   -) create_oltp;
+      -) create_vp_spec;
+      -) create_act;
+      -) create_vtrig;
+      -) create_dp_spec;  -- Must be after the "create view"
+      -) create_vp_body;
+      -) create_dp_body;
+   -) create_aa;
+      -) create_sh_spec;
+      -) create_all;
+      -) create_asof;
+      -) create_sh_body;
+   -) create_mods;
+      -) create_prg
+   -) create_gusr;
+      -) create gsyn
+   -) create_usyn;
+      -) create_tsyn
+      -) create_msyn
+   -) create_flow;
+      -) init_flow;
+      -) app_flow;
+      -) maint_flow;
+      -) form_flow;
+      -) omni_flow;
+      -) asof_flow;
+      -) tuid_flow;
+      -) auid_flow;
+      -) fin_flow;
+
+
+============================================================
+APEX Form Generation
+--------------------
+
+Called Procedures:
+  -) create_search_where - where clause for SQL
+  -) create_crc          - wwv_flow_api.create_report_columns (Grid Edit)
+  -) create_search_crc   - wwv_flow_api.create_page_item (Search)
+  -) create_cpi          - www_flow_api.create_page_item (DML Form)
+  -) create_rep_col      - wwv_flow_api.create_report_columns (Grid Report)
+  -) create_ws_col       - wwv_flow_api.create_worksheet_column
+  -) func_flow           - Function Definitions
+
+INIT_FLOW:
+  1) SQL*Plus Setup
+  2) Comment Header
+  3) wwv_flow_application_install setup
+  4) set nls_numeric_characters
+  5) wwv_flow_api setup
+
+APP_FLOW:
+  1) application/set_environment
+  2) func_flow
+  3) Initialize and Error Check
+  4) user_interface/lov/domains
+  5) Maintenance Menu (pnum1) and Tab
+  6) navigation/lists/ "Group" maintenance_forms
+  7) Utility Log Report (pnum2) and Tab
+  8) OMNI Report Menu (pnum3) and Tab
+  9) navigation/lists/ "Group" omni_reports
+ 10) ASOF Report Menu (pnum4) and Tab
+ 11) navigation/lists/ "Group" asof_reports
+ 12) navigation/lists/utility_menu
+
+MAINT_FLOW:
+  1) application/set_environment
+  2) func_flow
+  3) Initialize and Error Check
+  4) Page Export Variables
+  5) Create Shared LOV
+     -) Natural Key
+     -) Natural Key Path
+  6) Remove page
+  7) Create page
+  8) Create Main Grid Edit (Active)
+  9) Create Filter Criteria
+ 10) Create Page Processing
+ 11) Create Page Tab
+ 12) application/set_environment
+ 13) Page Export Variables
+ 14) func_flow
+ 15) Initialize and Error Check
+ 16) Create ALL Report (Active, HOA, and PDAT)
+ 17) Create History Report (HOA)
+ 18) Create POP_AUDIT Report (PDAT)
+ 19) Create ASOF Report
+
+FORM_FLOW:
+  1) application/set_environment
+  2) func_flow
+  3) Initialize and Error Check
+  4) Page Export Variables
+  5) Remove page
+  6) Create page
+  7) Create DML Edit (Active) and Validation
+  8) Create Page Processing
+  9) Create Page Tab
+
+OMNI_FLOW:
+  1) application/set_environment
+  2) func_flow
+  3) Initialize and Error Check
+  4) Page Export Variables
+  5) Remove page
+  6) Create page
+  7) Create Interactive Report (Active, HOA, and PDAT)
+  8) Create Page Tab
+
+ASOF_FLOW:
+  1) application/set_environment
+  2) func_flow
+  3) Initialize and Error Check
+  4) Page Export Variables
+  5) Remove page
+  6) Create page
+  7) Create Main Interactive Report
+  8) Create Page Tab
+
+FIN_FLOW:
+  1) commit
+  2) set nls_numeric_characters
+  3) SQL*Plus cleanup
+
+
+============================================================
+Requirement for Table Hierarchy:
+--------------------------------
+
+Tables must be defined in a top-down hierarchy.  Only 2 circular foreign key references are allowed in DTGen:
+
+   1) Self-referencing tables
+   2) _USR Audit Table Reference
+
+Any other circular references between tables does not allow the ACTIVE view to determine the datatatypes of the columns in any of the views.  The following demonstrates the difficulty with circular foreign key references:
+
+-- v2_col is a foreign key to v2
+create table v1
+  (col     varchar2(1)
+  ,v2_col  varchar2(1));
+-- v3_col is a foreign key to v3
+create table v2
+  (col     varchar2(1)
+  ,v3_col  varchar2(1));
+-- v1_col is a foreign key to v1
+create table v3
+  (col     varchar2(1)
+  ,v1_col  varchar2(1));
+
+-- The natural keys are references in the ACTIVE views
+
+drop table v1;
+create view v1 as
+  select bt.dummy col, v2.col v2_col
+   from  dual bt inner join v2 on v2.v3_col = bt.dummy;
+describe v1
+
+drop table v2;
+create view v2 as
+  select bt.dummy col, v3.col v3_col
+   from  dual bt inner join v3 on v3.v1_col = bt.dummy;
+describe v2
+
+drop table v3;  -- This causes an error in the V2 view
+-- The V2 view error will not allow view V3 to be created
+create force view v3 as
+  select bt.dummy col, v1.col v1_col
+   from  dual bt inner join v1 on v1.v2_col = bt.dummy;
+describe v3
+
+drop view v1;
+drop view v2;
+drop view v3;

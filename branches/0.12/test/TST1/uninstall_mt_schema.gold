@@ -1,0 +1,203 @@
+Connected.
+
+Session altered.
+
+
+=== Un-Install DTGen Test Rig Owner ===
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+=== Un-Install DTGen Test Rig ===
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_mods ===                                                          
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_oltp ===                                                          
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+View dropped.
+
+
+Package dropped.
+
+
+Package dropped.
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_dist ===                                                          
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_eff  ***                                                               
+
+
+Package dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+Package dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_log  ***                                                               
+
+
+Package dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+Package dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+View dropped.
+
+
+Synonym dropped.
+
+
+TABLE_NAME                                                                      
+-----------------                                                               
+***  t1a_non  ***                                                               
+
+
+Package dropped.
+
+
+View dropped.
+
+
+Synonym dropped.
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+no rows selected
+
+
+SCRIPT_NAME                                                                     
+----------------------                                                          
+=== TST1 drop_gdst ===                                                          
+
+
+Package dropped.
+
+
+Table dropped.
+
+
+Type dropped.
+
+
+Type dropped.
+
+
+Package dropped.
+
+
+REMAINING_OBJECTS                                                               
+--------------------------------------------------------------------------------
+SYNONYM: GLOBAL_PARMS(VALID)                                                    
+SYNONYM: PARM_SETS(VALID)                                                       
+SYNONYM: TEST_PARMS(VALID)                                                      
+SYNONYM: TEST_SETS(VALID)                                                       
+
+old   1: drop database link &2.
+new   1: drop database link XE@loopback
+
+Database link dropped.
+
