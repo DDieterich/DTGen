@@ -1,6 +1,8 @@
 #summary Wiki Home Page
 #labels Featured
 
+http://dtgen.googlecode.com/files/DTGen_Project.png
+
 = Wiki Home Page =
 
 The following wiki pages are organized by phase
