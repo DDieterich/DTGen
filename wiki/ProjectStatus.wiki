@@ -5,12 +5,10 @@
 
   [http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.12.zip Pre-Release 0.12 Available for Download]
 
-= Release 0.11 Includes =
+= Release 0.12 Includes =
 
-  * Project Reorganization
-  * Finalized Release Process
-  * Code Archives and Uploads
-  * Demonstration Code and Documentation
+  * Major start on regression testing
+  * 39 Defects Fixed and Enhancements Implemented (See [http://code.google.com/p/dtgen/])
 
 = Release Schedule =
 
