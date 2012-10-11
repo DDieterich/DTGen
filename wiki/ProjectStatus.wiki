@@ -5,7 +5,7 @@
 
   [http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.12.zip Pre-Release 0.12 Available for Download]
 
-= Release 0.12 Includes =
+= Pre-Release 0.12 Includes =
 
   * Major start on regression testing
   * 39 Defects Fixed and Enhancements Implemented
