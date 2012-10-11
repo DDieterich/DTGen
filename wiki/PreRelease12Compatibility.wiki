@@ -1,5 +1,5 @@
 #summary DTGen Pre-Release0.12 Compatibility.
-#labels Phase-Deploy,Featured
+#labels Phase-Deploy
 
 = Introduction =
 
