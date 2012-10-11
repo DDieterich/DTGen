@@ -8,7 +8,8 @@
 = Release 0.12 Includes =
 
   * Major start on regression testing
-  * 39 Defects Fixed and Enhancements Implemented (See [http://code.google.com/p/dtgen/])
+  * 39 Defects Fixed and Enhancements Implemented
+  * More details at PreRelease12ReleaseNotes
 
 = Release Schedule =
 
