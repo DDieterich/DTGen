@@ -1,13 +1,14 @@
-#summary One-sentence summary of this page.
+#summary DTGen Release Notes for Pre-Release 0.12
 
-= Introduction =
+= Pre-Release 0.12 =
 
-Add your content here.
+== New Features ==
 
+No previous releases
 
-= Details =
+== Bugs ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * Issue #2
+ * Issue #11
+ * Issue #12
+ * Issue #13
