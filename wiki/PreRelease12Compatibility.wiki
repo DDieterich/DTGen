@@ -14,7 +14,7 @@ Note ^1^: DTGen can be run entirely in command line mode, without any GUI, APEX,
 = Minimum Requirements =
 
 || *Operating System* || *Examples* ||
-|| Any^2^ || Windows, Linux, OS X ||
+|| Any^2^ || Windows, Linux ||
 
 || *Database<br>Version* || *Database<br>Edition* || *APEX<br>Version* ||
 || Oracle11g || Any^3^ || 4.0 ||
