@@ -1,6 +1,0 @@
-#summary Wiki Image Testing.
-#labels Phase-ProjectManage
-
-= An Image from Downloads =
-
-http://dtgen.googlecode.com/files/DTGen_Project.png
