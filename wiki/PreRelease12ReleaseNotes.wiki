@@ -62,3 +62,49 @@
  * Issue 15 Need Application Copy Function
  * Issue 39 Interface with Oracle DataModeler
  * Issue 37 Generate Performance Test Dataloads
+
+== Closed Issues ==
+
+ * Issue 32 Defect (Fixed): Foreign Key Prefixes in _ACT view join needs to be Unique
+ * Issue 33 Defect (Fixed): Need more than 100,000 lines in FILE_LINES
+ * Issue 50 Defect (Fixed): ORU-10027: buffer overflow
+ * Issue 82 Defect (Fixed): POP INSERT throws no aud_prev_beg_usr data error
+ * Issue 92 Defect (Fixed): Can't Generate New Files in DTGen GUI
+ * Issue 91 Defect (Fixed): GUI File Assembly Replaces Files in Other Applications
+ * Issue 12 Defect (Fixed): Date Format Incorrect on ASOF Reports Menu
+ * Issue 26 Defect (Fixed): Column Name Too Long Throws UnHandled Exception
+ * Issue 60 Defect (Fixed): LOG/EFF Table Views Won't Join with NON Table Views
+ * Issue 61 Defect (Fixed): New AUD_BEG_USR and AUD_BEG_DTM not set when IGNORE_NO_CHANGE and there are not changes
+ * Issue 62 Defect (Fixed): UTIL.ERR is not capturing Error Location
+ * Issue 63 Defect (Fixed): Missing Error Checking for Incomplete Schema
+ * Issue 86 Defect (Fixed): Mid-Tier Sequence Does Not Work
+ * Issue 27 Enhancement (WontFix): Some Columns Nullable in a Multi-Column Natural Key
+ * Issue 29 Enhancement (Fixed): Allow %ROWTYPE record for "_DML" ins and upd procedures
+ * Issue 30 Enhancement (Fixed): Reduce Exception Masking of Location of Other Errors
+ * Issue 34 Enhancement (Fixed): Add Custom Copyright Notice to PL/SQL Generated Code
+ * Issue 43 Enhancement (Fixed): Remove Circular FK Reference Limit
+ * Issue 44 Enhancement (Fixed): Add an Option to Constrain Audited Users Against SYS.USR$
+ * Issue 45 Enhancement (Fixed): Add Tablespace Storage for Individual Tables
+ * Issue 46 Enhancement (Fixed): Add an Update Reserve Percentage for each Column to set PCTFREE
+ * Issue 47 Enhancement (WontFix): Need to explicitly define schema owner during database object creation
+ * Issue 48 Enhancement (Fixed): Need to Change Single Column Table Constraints to Column Constraints
+ * Issue 49 Enhancement (Fixed): IS NOT NULL not required in APPLICATIONS table constraints
+ * Issue 53 Enhancement (Fixed): Change DELETE_TAB script to UTIL.DELETE_TAB function
+ * Issue 54 Enhancement (Fixed): Cache GLOB Settings at Mid-Tier
+ * Issue 70 Enhancement (Fixed): application.db_schema_exp is no longer used
+ * Issue 73 Enhancement (Fixed): Cache SQL Script Changes in Generate and Only Save Differences
+ * Issue 74 Enhancement (Fixed): Header Comments Need to be Consolidated in Generate
+ * Issue 75 Enhancement (Fixed): Don't Update Created_DT in FILES when generating
+ * Issue 76 Enhancement (Fixed): SQL Scripts Need Consistent Use of "/"
+ * Issue 77 Enhancement (Fixed): ORA-20013: load_nk_aa() is not a Generated Error
+ * Issue 78 Enhancement (Fixed): Read-Only Views Need Trigger Errors
+ * Issue 79 Enhancement (Fixed): vtrig_fksets has varchar parameters instead of varchar2
+ * Issue 80 Enhancement (Duplicate): Delete_ODS Script Needs to be Procedure
+ * Issue 81 Enhancement (Fixed): DB Link Too Complicated to Create with DTGen
+ * Issue 83 Enhancement (Fixed): POP Audit using local time instead of GLOB time
+ * Issue 84 Enhancement (Fixed): POP UPDATE using HOA data instead of Active data
+ * Issue 85 Enhancement (Fixed): POP Function is missing Exception Handler
+ * Issue 87 Enhancement (Fixed): update active view trigger missing _ACT in name
+ * Issue 89 Enhancement (Fixed): Remove Database Object Reports from Drop SQL Scripts
+ * Issue 93 Enhancement (WontFix): Faster returning FK NK lookups in _VIEW.ins and _VIEW.upd
+ * Issue 7 Enhancement (Fixed): Specificy storage name for (and drop) LOB columns
