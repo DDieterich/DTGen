@@ -102,9 +102,9 @@ One of the most tedious programming tasks is to create basic maintenance forms. 
 
 The grid edit is an elusive form in APEX.  There is no native generation for it.  It is a combination of a table report and custom processing of the arrays returned from the browser.  DTGen generates an APEX export file that includes everything necessary for these grid edit forms on each table in an application.  Additionally, discrete domain filtering is included as well.
 
-=== CLOB to varchar2 Conversion ===
+=== CLOB to VARCHAR2 Conversion ===
 
-PL/SQL (and APEX) will work with a varchar2 string as large as 32K.  However, the database limits the maximum length of a varchar2 to 4000 characters.  DTGen handles this conversion automatically when string lengths are between 4001 and 32K characters.  CLOB storage is used in the database while varchar2 storage is used in PL/SQL.  Since LOBs can require special handling in PL/SQL (and APEX), this is an simpler solution than using CLOBs for everything between 4001 and 32K characters in length.
+PL/SQL (and APEX) will work with a VARCHAR2 string as large as 32K.  However, the database limits the maximum length of a VARCHAR2 to 4000 characters.  DTGen handles this conversion automatically when string lengths are between 4001 and 32K characters.  CLOB storage is used in the database while VARCHAR2 storage is used in PL/SQL.  Since LOBs can require special handling in PL/SQL (and APEX), this is an simpler solution than using CLOBs for everything between 4001 and 32K characters in length.
 
 === Comprehensive *_OMNI_* View Forms _[DTGenFunctionality#Note_1 (See Note 1)]_ ===
 
