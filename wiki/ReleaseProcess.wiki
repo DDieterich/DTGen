@@ -97,6 +97,7 @@ Review and update as needed the documents in the "docs" directory
      * eol style: default
      * HEAD revision
      * Click "OK"
+  * Remove extra directories (dev and test)
   * ZIP the export
      * Goto the ".../Releases/dtgen_ReleaseNumber" directory
      * Select all directories and files under ".../Releases/dtgen_ReleaseNumber"
