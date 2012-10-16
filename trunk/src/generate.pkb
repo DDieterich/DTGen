@@ -13208,7 +13208,7 @@ BEGIN
    pr('       ''   MRU_COUNT  number := 0;'' ');
    pr('       ''   rows       number;'' ');
    pr('       ''begin'' ');
-   pr('       ''   glob.get_ignore_no_change := FALSE;'' ');
+   pr('       ''   glob.set_ignore_no_change(FALSE);'' ');
    pr('       ''   for i in 1 .. apex_application.g_f02.count'' ');
    pr('       ''   loop'' ');
    --  Create the update statement
