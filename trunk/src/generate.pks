@@ -26,18 +26,18 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    FUNCTION exception_lines
       RETURN line_t_type PIPELINED;
 
-   TYPE tab_col_va_type IS VARRAY(10)   -- Array of 10 TAB_COLS%ROWTYPE
+   TYPE tab_col_va_type IS VARRAY(100)   -- Array of 100 TAB_COLS%ROWTYPE
       OF tab_cols%rowtype;
-   TYPE fk_tid_va_type IS VARRAY(10)   -- Array of 10 FK_TABLE_IDs
+   TYPE fk_tid_va_type IS VARRAY(100)   -- Array of 100 FK_TABLE_IDs
       OF tab_cols.fk_table_id%type;
 
-   TYPE nk_aa_rec_type IS RECORD   -- A TABLES%ROWTYPE with 10 TAB_COLS%ROWTYPE
+   TYPE nk_aa_rec_type IS RECORD   -- A TABLES%ROWTYPE with 100 TAB_COLS%ROWTYPE
       (tbuff           tables%rowtype
       ,cbuff_va        tab_col_va_type
       ,lvl1_fk_tid_va  fk_tid_va_type
       );
    TYPE nk_aa_type IS TABLE       -- Associative Array of TABLES%ROWTYPE
-      OF nk_aa_rec_type           --   Each of which have 10 TAB_COLS%ROWTYPE
+      OF nk_aa_rec_type           --   Each of which have 100 TAB_COLS%ROWTYPE
       INDEX BY PLS_INTEGER;
 
    nk_aa  nk_aa_type;
