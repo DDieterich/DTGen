@@ -27,7 +27,7 @@ spool uninstall_mt.sql
 execute dtgen_util.assemble_script('&1.','UNINSTALL','MT');
 spool uninstall_usr.sql
 execute dtgen_util.assemble_script('&1.','UNINSTALL','USR');
-spool dtgen_dataload.ctl
+spool dtgen_dataload.dat
 execute dtgen_util.data_script('&1.')
 spool off
 
