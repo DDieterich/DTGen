@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
    cr_nt  cr_nt_type;
 
    TYPE line_rec_type is RECORD
-      (value file_lines.value%TYPE
+      (value  file_lines.value%TYPE
       );
    TYPE line_t_type IS TABLE
       OF line_rec_type;
@@ -28,12 +28,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
    TYPE tab_col_va_type IS VARRAY(100)   -- Array of 100 TAB_COLS%ROWTYPE
       OF tab_cols%rowtype;
+   TYPE fk_pfx_va_type IS VARRAY(100)   -- Array of 100 FK Prefixes
+      OF tab_cols.fk_prefix%type;
    TYPE fk_tid_va_type IS VARRAY(100)   -- Array of 100 FK_TABLE_IDs
       OF tab_cols.fk_table_id%type;
 
    TYPE nk_aa_rec_type IS RECORD   -- A TABLES%ROWTYPE with 100 TAB_COLS%ROWTYPE
       (tbuff           tables%rowtype
       ,cbuff_va        tab_col_va_type
+      ,lvl1_fk_pfx_va  fk_pfx_va_type
       ,lvl1_fk_tid_va  fk_tid_va_type
       );
    TYPE nk_aa_type IS TABLE       -- Associative Array of TABLES%ROWTYPE
