@@ -35,11 +35,11 @@ tbuff  tables%rowtype;
 cbuff  tab_cols%rowtype;
 cbuf0  tab_cols%rowtype;  -- Used to Initialize cbuff
 cnum   number;
-pnum1  number := 1000;  -- Main Maintenance Menu, DML Pages Follow
-pnum2  number := 1200;  -- UTIL_LOG page
--- DML Forms  := 1201;  -- DML Maintenance Forms use this empty space
-pnum3  number := 1400;  -- OMNI Report Menu, DML Pages Follow
-pnum4  number := 1600;  -- ASOF Report Menu, DML Pages Follow
+pnum1  number := 200;   -- Main Maintenance Menu, DML Pages Follow
+pnum2  number := 400;   -- UTIL_LOG page
+-- DML Forms  := 401;   -- DML Maintenance Forms use this empty space
+pnum3  number := 600;   -- OMNI Report Menu, DML Pages Follow
+pnum4  number := 800;   -- ASOF Report Menu, DML Pages Follow
 HOA    varchar2(6);     -- HISTory or AUDit flag
 SQ1    CONSTANT varchar2(1) := CHR(39);
 SQ2    CONSTANT varchar2(2) := SQ1||SQ1;
@@ -1747,7 +1747,7 @@ BEGIN
    header_comments;
    p('');
    p('current_usr           ' || usrfdt || ';');
-   p('db_constraints        boolean := true;');
+   p('db_constraints        boolean := false;');
    p('fold_strings          boolean := true;');
    p('asof_dtm              timestamp with time zone := ');
    p('   to_timestamp_tz(''2010-01-01 00:00:00 UTC'',''YYYY-MM-DD HH24:MI:SS TZR'');');
@@ -9376,11 +9376,11 @@ BEGIN
    elsif cbuff.type = 'NUMBER' OR
          cbuff.fk_table_id is not null
    then
-      pr('        '' and  (   (    :P'' || pnum || ''_' || upper(cbuff.name) || '_MIN is null'' ');
-      pr('        ''           and :P'' || pnum || ''_' || upper(cbuff.name) || '_MAX is null'' ');
+      pr('        '' and  (   (    :N'' || pnum || ''_' || upper(cbuff.name) || ' is null'' ');
+      pr('        ''           and :X'' || pnum || ''_' || upper(cbuff.name) || ' is null'' ');
       pr('        ''          )'' ');
-      pr('        ''       or (   ' || cbuff.name || ' between nvl(:P'' || pnum || ''_' || upper(cbuff.name) || '_MIN,-1E125)'' ');
-      pr('        ''                  and nvl(:P'' || pnum || ''_' || upper(cbuff.name) || '_MAX, 1E125)'' ');
+      pr('        ''       or (   ' || cbuff.name || ' between nvl(:N'' || pnum || ''_' || upper(cbuff.name) || ',-1E125)'' ');
+      pr('        ''                  and nvl(:X'' || pnum || ''_' || upper(cbuff.name) || ', 1E125)'' ');
       pr('        ''          )   )'' ');
    elsif cbuff.type = 'VARCHAR2'
    then
@@ -9402,12 +9402,12 @@ BEGIN
          dform := 'DD-MON-YYYY HH24:MI:SS.FF9';
          dfunc := 'to_timestamp';
       end if;
-      pr('        '' and (   (    :P'' || pnum || ''_' || upper(cbuff.name) || '_MIN is null'' ');
-      pr('        ''          and :P'' || pnum || ''_' || upper(cbuff.name) || '_MAX is null'' ');
+      pr('        '' and (   (    :N'' || pnum || ''_' || upper(cbuff.name) || ' is null'' ');
+      pr('        ''          and :X'' || pnum || ''_' || upper(cbuff.name) || ' is null'' ');
       pr('        ''          )'' ');
-      pr('        ''      or (   ' || cbuff.name || ' between nvl('||dfunc||'(:P'' || pnum || ''_' || upper(cbuff.name) || '_MIN'' ');
+      pr('        ''      or (   ' || cbuff.name || ' between nvl('||dfunc||'(:N'' || pnum || ''_' || upper(cbuff.name) || ''' ');
       pr('        ''                                   ,''''' || dform || '''''), "#OWNER#".util.get_first_dtm)'' ');
-      pr('        ''                             and nvl('||dfunc||'(:P'' || pnum || ''_' || upper(cbuff.name) || '_MAX'' ');
+      pr('        ''                             and nvl('||dfunc||'(:X'' || pnum || ''_' || upper(cbuff.name) || ''' ');
       pr('        ''                                   ,''''' || dform || '''''), "#OWNER#".util.get_last_dtm)'' ');
       pr('        ''          )   )'' ');
    else
@@ -9521,6 +9521,7 @@ IS
    item_seq    number := cnum * 10;
    named_lov   varchar2(30) := null;
    new_line    varchar2(5) := 'YES';
+   pi_prefix   varchar2(1) := 'P';
    pi_suffix   varchar2(50) := '_' || upper(cbuff.name);
    prompt_txt  varchar2(50) := null;
    saved_id    number;
@@ -9562,7 +9563,7 @@ BEGIN
       help_text := 'Search range for ' || upper(cbuff.name) ||
                    ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Numbers will be included in range.';
-      pi_suffix := pi_suffix || '_MIN';
+      pi_prefix := 'N';
       prompt_txt := initcap(replace(upper(cbuff.name),'_',' ')) ||
                     note_txt || ' Range from:';
       p('');
@@ -9577,7 +9578,7 @@ BEGIN
                    ' "From" and "To" Numbers will be included in range.';
       item_seq := item_seq + 5;
       new_line := 'NO';
-      pi_suffix := pi_suffix || '_MAX';
+      pi_prefix := 'X';
       prompt_txt := 'to:';
       p('');
       p('   lov_id := null;');
@@ -9614,7 +9615,7 @@ BEGIN
       help_text := 'Search range for ' || upper(cbuff.name) ||
                    ' (' || replace(cbuff.description,SQ1,SQ2) || ').' ||
                    ' "From" and "To" Dates may not be included in range.';
-      pi_suffix := pi_suffix || '_MIN';
+      pi_prefix := 'N';
       prompt_txt := initcap(replace(upper(cbuff.name),'_',' ')) ||
                     note_txt || ' Range from:';
       p('');
@@ -9629,7 +9630,7 @@ BEGIN
                    ' "From" and "To" Dates may not be included in range.';
       item_seq := item_seq + 5;
       new_line := 'NO';
-      pi_suffix := pi_suffix || '_MAX';
+      pi_prefix := 'X';
       prompt_txt := 'to:';
       p('');
       p('   lov_id := null;');
@@ -9661,7 +9662,7 @@ BEGIN
    p('      p_id=> wwv_flow_id.next_val,');
    p('      p_flow_id=> wwv_flow.g_flow_id,');
    p('      p_flow_step_id=> pnum,');
-   p('      p_name=>''P'' || pnum || ''' || pi_suffix || ''',');
+   p('      p_name=>''' || pi_prefix || ''' || pnum || ''' || pi_suffix || ''',');
    p('      p_data_type=> ''VARCHAR'',');
    p('      p_is_required=> false,');
    p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -9671,7 +9672,7 @@ BEGIN
    p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
    p('      p_prompt=>''' || prompt_txt || ''',');
    p('      p_format_mask=>''' || get_colformat(cbuff) || ''',');
-   p('      p_source=>''P'' || pnum || ''' || pi_suffix || ''',');
+   p('      p_source=>''' || pi_prefix || ''' || pnum || ''' || pi_suffix || ''',');
    p('      p_source_type=> ''ITEM'',');
    p('      p_display_as=> ''' || display_as || ''',');
    p('      p_named_lov=> ''' || named_lov || ''',');
@@ -9716,6 +9717,7 @@ IS
    help_text   varchar2(1000) := replace(cbuff.description,SQ1,SQ2);
    item_seq    number         := cnum * 10;
    named_lov   varchar2(30);
+   pi_prefix   varchar2(1)    := 'P';
    pi_suffix   varchar2(50)   := '_' || upper(cbuff.name);
    prompt_txt  varchar2(50)   := initcap(replace(upper(cbuff.name),'_',' ')) ||
                                  note_txt || ':';
@@ -9781,7 +9783,7 @@ BEGIN
    p('      p_id=> item_id,');
    p('      p_flow_id=> wwv_flow.g_flow_id,');
    p('      p_flow_step_id=> pnum,');
-   p('      p_name=>''P'' || pnum || ''' || pi_suffix || ''',');
+   p('      p_name=>''' || pi_prefix || ''' || pnum || ''' || pi_suffix || ''',');
    p('      p_data_type=> ''VARCHAR'',');
    p('      p_is_required=> false,');
    p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -12222,20 +12224,20 @@ BEGIN
       pr('              '',AUD_BEG_DTM'' ');
    end if;
    pr('        ''from "#OWNER#".' || upper(tbuff.name) || '_ACT'' ');
-   pr('        ''where (   (    :P'' || pnum || ''_ID_MIN is null'' ');
-   pr('        ''           and :P'' || pnum || ''_ID_MAX is null'' ');
+   pr('        ''where (   (    :N'' || pnum || ''_ID is null'' ');
+   pr('        ''           and :X'' || pnum || ''_ID is null'' ');
    pr('        ''          )'' ');
-   pr('        ''       or (    id between nvl(:P'' || pnum || ''_ID_MIN,-1E125)'' ');
-   pr('        ''                      and nvl(:P'' || pnum || ''_ID_MAX, 1E125)'' ');
+   pr('        ''       or (    id between nvl(:N'' || pnum || ''_ID,-1E125)'' ');
+   pr('        ''                      and nvl(:X'' || pnum || ''_ID, 1E125)'' ');
    pr('        ''          )   )'' ');
    if tbuff.type = 'EFF'
    then
-      pr('        '' and (   (    :P'' || pnum || ''_EFF_BEG_DTM_MIN is null'' ');
-      pr('        ''          and :P'' || pnum || ''_EFF_BEG_DTM_MAX is null'' ');
+      pr('        '' and (   (    :N'' || pnum || ''_EFF_BEG_DTM is null'' ');
+      pr('        ''          and :X'' || pnum || ''_EFF_BEG_DTM is null'' ');
       pr('        ''          )'' ');
-      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MIN,'' ');
+      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-      pr('        ''                          and nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MAX,'' ');
+      pr('        ''                          and nvl(to_timestamp(:X'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
       pr('        ''          )   )'' ');
    end if;
@@ -12285,12 +12287,12 @@ BEGIN
       pr('        ''      or aud_beg_usr like :P'' || pnum || ''_AUD_BEG_USR'' ');
                               -- NOTE: "Like" works with numbers and strings
       pr('        ''      )'' ');
-      pr('        '' and (   (    :P'' || pnum || ''_AUD_BEG_DTM_MIN is null'' ');
-      pr('        ''          and :P'' || pnum || ''_AUD_BEG_DTM_MAX is null'' ');
+      pr('        '' and (   (    :N'' || pnum || ''_AUD_BEG_DTM is null'' ');
+      pr('        ''          and :X'' || pnum || ''_AUD_BEG_DTM is null'' ');
       pr('        ''          )'' ');
-      pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MIN,'' ');
+      pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_AUD_BEG_DTM,'' ');
       pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-      pr('        ''                             and nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MAX,'' ');
+      pr('        ''                             and nvl(to_timestamp(:X'' || pnum || ''_AUD_BEG_DTM,'' ');
       pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
       pr('        ''          )   )'' ');
    end if;
@@ -12841,7 +12843,7 @@ BEGIN
    p('      p_id=> wwv_flow_id.next_val,');
    p('      p_flow_id=> wwv_flow.g_flow_id,');
    p('      p_flow_step_id=> pnum,');
-   p('      p_name=>''P'' || pnum || ''_ID_MIN'',');
+   p('      p_name=>''N'' || pnum || ''_ID'',');
    p('      p_data_type=> ''VARCHAR'',');
    p('      p_is_required=> false,');
    p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -12851,7 +12853,7 @@ BEGIN
    p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
    p('      p_prompt=>''ID Range from:'',');
    p('      p_format_mask=>'''',');
-   p('      p_source=> ''P'' || pnum || ''_ID_MIN'',');
+   p('      p_source=> ''N'' || pnum || ''_ID'',');
    p('      p_source_type=> ''ITEM'',');
    p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
    p('      p_cSize=> ''12'',');    -- ' || trunc(39*0.8) || '
@@ -12875,7 +12877,7 @@ BEGIN
    p('      p_id=> wwv_flow_id.next_val,');
    p('      p_flow_id=> wwv_flow.g_flow_id,');
    p('      p_flow_step_id=> pnum,');
-   p('      p_name=>''P'' || pnum || ''_ID_MAX'',');
+   p('      p_name=>''X'' || pnum || ''_ID'',');
    p('      p_data_type=> ''VARCHAR'',');
    p('      p_is_required=> false,');
    p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -12885,7 +12887,7 @@ BEGIN
    p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
    p('      p_prompt=>''to:'',');
    p('      p_format_mask=>'''',');
-   p('      p_source=> ''P'' || pnum || ''_ID_MAX'',');
+   p('      p_source=> ''X'' || pnum || ''_ID'',');
    p('      p_source_type=> ''ITEM'',');
    p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
    p('      p_cSize=> ''12'',');    -- ' || trunc(39*0.8) || '
@@ -12912,7 +12914,7 @@ BEGIN
       p('      p_id=> wwv_flow_id.next_val,');
       p('      p_flow_id=> wwv_flow.g_flow_id,');
       p('      p_flow_step_id=> pnum,');
-      p('      p_name=>''P'' || pnum || ''_EFF_BEG_DTM_MIN'',');
+      p('      p_name=>''N'' || pnum || ''_EFF_BEG_DTM'',');
       p('      p_data_type=> ''VARCHAR'',');
       p('      p_is_required=> false,');
       p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -12922,7 +12924,7 @@ BEGIN
       p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
       p('      p_prompt=>''EFF_BEG_DTM Range from:'',');
       p('      p_format_mask=>''DD-MON-YYYY HH24:MI:SS.FF9'',');
-      p('      p_source=> ''P'' || pnum || ''_EFF_BEG_DTM_MIN'',');
+      p('      p_source=> ''N'' || pnum || ''_EFF_BEG_DTM'',');
       p('      p_source_type=> ''ITEM'',');
       p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
       p('      p_cSize=> 15,');   -- ' || trunc(37*0.8) || '
@@ -12946,7 +12948,7 @@ BEGIN
       p('      p_id=> wwv_flow_id.next_val,');
       p('      p_flow_id=> wwv_flow.g_flow_id,');
       p('      p_flow_step_id=> pnum,');
-      p('      p_name=>''P'' || pnum || ''_EFF_BEG_DTM_MAX'',');
+      p('      p_name=>''X'' || pnum || ''_EFF_BEG_DTM'',');
       p('      p_data_type=> ''VARCHAR'',');
       p('      p_is_required=> false,');
       p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -12956,7 +12958,7 @@ BEGIN
       p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
       p('      p_prompt=>''to:'',');
       p('      p_format_mask=>''DD-MON-YYYY HH24:MI:SS.FF9'',');
-      p('      p_source=> ''P'' || pnum || ''_EFF_BEG_DTM_MAX'',');
+      p('      p_source=> ''X'' || pnum || ''_EFF_BEG_DTM'',');
       p('      p_source_type=> ''ITEM'',');
       p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
       p('      p_cSize=> 15,');   -- ' || trunc(37*0.8) || '
@@ -13063,7 +13065,7 @@ BEGIN
       p('      p_id=> wwv_flow_id.next_val,');
       p('      p_flow_id=> wwv_flow.g_flow_id,');
       p('      p_flow_step_id=> pnum,');
-      p('      p_name=>''P'' || pnum || ''_AUD_BEG_DTM_MIN'',');
+      p('      p_name=>''N'' || pnum || ''_AUD_BEG_DTM'',');
       p('      p_data_type=> ''VARCHAR'',');
       p('      p_is_required=> false,');
       p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -13073,7 +13075,7 @@ BEGIN
       p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
       p('      p_prompt=>''EFF_BEG_DTM Range from:'',');
       p('      p_format_mask=>''DD-MON-YYYY HH24:MI:SS.FF9'',');
-      p('      p_source=> ''P'' || pnum || ''_AUD_BEG_DTM_MIN'',');
+      p('      p_source=> ''N'' || pnum || ''_AUD_BEG_DTM'',');
       p('      p_source_type=> ''ITEM'',');
       p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
       p('      p_cSize=> 15,');   -- ' || trunc(37*0.8) || '
@@ -13097,7 +13099,7 @@ BEGIN
       p('      p_id=> wwv_flow_id.next_val,');
       p('      p_flow_id=> wwv_flow.g_flow_id,');
       p('      p_flow_step_id=> pnum,');
-      p('      p_name=>''P'' || pnum || ''_AUD_BEG_DTM_MAX'',');
+      p('      p_name=>''X'' || pnum || ''_AUD_BEG_DTM'',');
       p('      p_data_type=> ''VARCHAR'',');
       p('      p_is_required=> false,');
       p('      p_accept_processing=> ''REPLACE_EXISTING'',');
@@ -13107,7 +13109,7 @@ BEGIN
       p('      p_item_default_type=> ''STATIC_TEXT_WITH_SUBSTITUTIONS'',');
       p('      p_prompt=>''to:'',');
       p('      p_format_mask=>''DD-MON-YYYY HH24:MI:SS.FF9'',');
-      p('      p_source=> ''P'' || pnum || ''_AUD_BEG_DTM_MAX'',');
+      p('      p_source=> ''X'' || pnum || ''_AUD_BEG_DTM'',');
       p('      p_source_type=> ''ITEM'',');
       p('      p_display_as=> ''NATIVE_TEXT_FIELD'',');
       p('      p_cSize=> 15,');   -- ' || trunc(37*0.8) || '
@@ -13711,11 +13713,11 @@ BEGIN
    pr('              '',AUD_BEG_DTM'' ');
    pr('              '',AUD_END_DTM'' ');
    pr('        ''from "#OWNER#".' || upper(tbuff.name) || '_ALL'' ');
-   pr('        ''where (   (    :P'' || pnum || ''_ID_MIN is null'' ');
-   pr('        ''           and :P'' || pnum || ''_ID_MAX is null'' ');
+   pr('        ''where (   (    :N'' || pnum || ''_ID is null'' ');
+   pr('        ''           and :X'' || pnum || ''_ID is null'' ');
    pr('        ''          )'' ');
-   pr('        ''       or (    id between nvl(:P'' || pnum || ''_ID_MIN,-1E125)'' ');
-   pr('        ''                      and nvl(:P'' || pnum || ''_ID_MAX, 1E125)'' ');
+   pr('        ''       or (    id between nvl(:N'' || pnum || ''_ID,-1E125)'' ');
+   pr('        ''                      and nvl(:X'' || pnum || ''_ID, 1E125)'' ');
    pr('        ''          )   )'' ');
    for buff in (
       select * from tab_cols COL
@@ -13759,12 +13761,12 @@ BEGIN
    end loop;
    if tbuff.type = 'EFF'
    then
-      pr('        '' and (   (    :P'' || pnum || ''_EFF_BEG_DTM_MIN is null'' ');
-      pr('        ''          and :P'' || pnum || ''_EFF_BEG_DTM_MAX is null'' ');
+      pr('        '' and (   (    :N'' || pnum || ''_EFF_BEG_DTM is null'' ');
+      pr('        ''          and :X'' || pnum || ''_EFF_BEG_DTM is null'' ');
       pr('        ''          )'' ');
-      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MIN,'' ');
+      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-      pr('        ''                          and nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MAX,'' ');
+      pr('        ''                          and nvl(to_timestamp(:X'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
       pr('        ''          )   )'' ');
    end if;
@@ -13772,12 +13774,12 @@ BEGIN
    pr('        ''      or aud_beg_usr like :P'' || pnum || ''_AUD_BEG_USR'' ');
                               -- NOTE: "Like" works with numbers and strings
    pr('        ''      )'' ');
-   pr('        '' and (   (    :P'' || pnum || ''_AUD_BEG_DTM_MIN is null'' ');
-   pr('        ''          and :P'' || pnum || ''_AUD_BEG_DTM_MAX is null'' ');
+   pr('        '' and (   (    :N'' || pnum || ''_AUD_BEG_DTM is null'' ');
+   pr('        ''          and :X'' || pnum || ''_AUD_BEG_DTM is null'' ');
    pr('        ''          )'' ');
-   pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MIN,'' ');
+   pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_AUD_BEG_DTM,'' ');
    pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-   pr('        ''                             and nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MAX,'' ');
+   pr('        ''                             and nvl(to_timestamp(:X'' || pnum || ''_AUD_BEG_DTM,'' ');
    pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
    p('        ''          )   )'';');
    p('');
@@ -15680,11 +15682,11 @@ BEGIN
    pr('              '',AUD_BEG_DTM'' ');
    pr('              '',AUD_END_DTM'' ');
    pr('        ''from "#OWNER#".' || upper(tbuff.name) || '_ASOF'' ');
-   pr('        ''where (   (    :P'' || pnum || ''_ID_MIN is null'' ');
-   pr('        ''           and :P'' || pnum || ''_ID_MAX is null'' ');
+   pr('        ''where (   (    :N'' || pnum || ''_ID is null'' ');
+   pr('        ''           and :X'' || pnum || ''_ID is null'' ');
    pr('        ''          )'' ');
-   pr('        ''       or (    id between nvl(:P'' || pnum || ''_ID_MIN,-1E125)'' ');
-   pr('        ''                      and nvl(:P'' || pnum || ''_ID_MAX, 1E125)'' ');
+   pr('        ''       or (    id between nvl(:N'' || pnum || ''_ID,-1E125)'' ');
+   pr('        ''                      and nvl(:X'' || pnum || ''_ID, 1E125)'' ');
    pr('        ''          )   )'' ');
    for buff in (
       select * from tab_cols COL
@@ -15728,12 +15730,12 @@ BEGIN
    end loop;
    if tbuff.type = 'EFF'
    then
-      pr('        '' and (   (    :P'' || pnum || ''_EFF_BEG_DTM_MIN is null'' ');
-      pr('        ''          and :P'' || pnum || ''_EFF_BEG_DTM_MAX is null'' ');
+      pr('        '' and (   (    :N'' || pnum || ''_EFF_BEG_DTM is null'' ');
+      pr('        ''          and :X'' || pnum || ''_EFF_BEG_DTM is null'' ');
       pr('        ''          )'' ');
-      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MIN,'' ');
+      pr('        ''      or (eff_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-      pr('        ''                          and nvl(to_timestamp(:P'' || pnum || ''_EFF_BEG_DTM_MAX,'' ');
+      pr('        ''                          and nvl(to_timestamp(:X'' || pnum || ''_EFF_BEG_DTM,'' ');
       pr('        ''                                ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
       pr('        ''          )   )'' ');
    end if;
@@ -15741,12 +15743,12 @@ BEGIN
    pr('        ''      or aud_beg_usr like :P'' || pnum || ''_AUD_BEG_USR'' ');
                               -- NOTE: "Like" works with numbers and strings
    pr('        ''      )'' ');
-   pr('        '' and (   (    :P'' || pnum || ''_AUD_BEG_DTM_MIN is null'' ');
-   pr('        ''          and :P'' || pnum || ''_AUD_BEG_DTM_MAX is null'' ');
+   pr('        '' and (   (    :N'' || pnum || ''_AUD_BEG_DTM is null'' ');
+   pr('        ''          and :X'' || pnum || ''_AUD_BEG_DTM is null'' ');
    pr('        ''          )'' ');
-   pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MIN,'' ');
+   pr('        ''      or (   aud_beg_dtm between nvl(to_timestamp(:N'' || pnum || ''_AUD_BEG_DTM,'' ');
    pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_first_dtm)'' ');
-   pr('        ''                             and nvl(to_timestamp(:P'' || pnum || ''_AUD_BEG_DTM_MAX,'' ');
+   pr('        ''                             and nvl(to_timestamp(:X'' || pnum || ''_AUD_BEG_DTM,'' ');
    pr('        ''                                   ''''DD-MON-YYYY HH24:MI:SS.FF9''''), "#OWNER#".util.get_last_dtm)'' ');
    p('        ''          )   )'';');
    p('');
