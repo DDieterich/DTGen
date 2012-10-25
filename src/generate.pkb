@@ -902,14 +902,17 @@ begin
                then
                   -- Initialize the array
                   nk_aa(buff.id).cbuff_va       := tab_col_va_type(null);
+                  nk_aa(buff.id).lvl1_fk_pfx_va := fk_pfx_va_type(null);
                   nk_aa(buff.id).lvl1_fk_tid_va := fk_tid_va_type(null);
                else
                   -- Extend the array
                   nk_aa(buff.id).cbuff_va.extend;
+                  nk_aa(buff.id).lvl1_fk_pfx_va.extend;
                   nk_aa(buff.id).lvl1_fk_tid_va.extend;
                end if;
                nknum := nknum + 1;
                nk_aa(buff.id).cbuff_va(nknum) := nk_aa(buf2.fk_table_id).cbuff_va(i);
+               nk_aa(buff.id).lvl1_fk_pfx_va(nknum) := buf2.fk_prefix;
                nk_aa(buff.id).lvl1_fk_tid_va(nknum) := buf2.fk_table_id;
             end loop;
          else
@@ -918,10 +921,12 @@ begin
             then
                -- Initialize the array
                nk_aa(buff.id).cbuff_va       := tab_col_va_type(null);
+               nk_aa(buff.id).lvl1_fk_pfx_va := fk_pfx_va_type(null);
                nk_aa(buff.id).lvl1_fk_tid_va := fk_tid_va_type(null);
             else
                -- Extend the array
                nk_aa(buff.id).cbuff_va.extend;
+               nk_aa(buff.id).lvl1_fk_pfx_va.extend;
                nk_aa(buff.id).lvl1_fk_tid_va.extend;
             end if;
             nknum := nknum + 1;
@@ -930,7 +935,6 @@ begin
          end if;
       end loop;
    end loop;
-   /*
    nknum := nk_aa.FIRST;
    loop
       for i in 1 .. nk_aa(nknum).cbuff_va.COUNT
@@ -939,13 +943,13 @@ begin
           ': ' || get_tabname(nk_aa(nknum).cbuff_va(i).table_id) ||
                        '.' || nk_aa(nknum).cbuff_va(i).name ||
                        '(' || get_dtype(nk_aa(nknum).cbuff_va(i)) ||
-                      ');' || nk_aa(nknum).lvl1_fk_tid_va(i));
+                      ');' || nk_aa(nknum).lvl1_fk_pfx_va(i) ||
+                              nk_aa(nknum).lvl1_fk_tid_va(i));
       end loop;
       exit when nknum = nk_aa.LAST;
       dbms_output.put_line('-');
       nknum := nk_aa.NEXT(nknum);
    end loop;
-   */
 end load_nk_aa;
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -6450,7 +6454,8 @@ IS
    fkseq     number(2);
    tababbr   tables.abbr%type;
    join_txt  varchar2(30);
-   fk_tid    number;
+   fk_pfx    tab_cols.fk_prefix%type;
+   fk_tid    tab_cols.fk_table_id%type;
    nkseq     number;
 BEGIN
    sp_type := 'view';
@@ -6509,7 +6514,8 @@ BEGIN
          --   part of the natural key
          if buff.fk_table_id is not null
          then
-            fk_tid := -1;
+            fk_pfx := null;
+            fk_tid := null;
             for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
             loop
                if nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i) is null
@@ -6517,11 +6523,15 @@ BEGIN
                   p('      ,' || buff.fk_prefix ||
                                  get_tababbr(buff.fk_table_id) ||
                           '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
-                  fk_tid := -1;  -- The same Foreign Key Table may be referenced
-                                 --   twice, back-to-back, in column order
+                  -- The same Foreign Key Table may be referenced
+                  --   twice, back-to-back, in column order
+                  fk_pfx := null;
+                  fk_tid := null;
                else
-                  if fk_tid != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
+                  if nvl(fk_pfx,chr(0)) != nk_aa(buff.fk_table_id).lvl1_fk_pfx_va(i) or
+                     nvl(fk_tid, -1)    != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
                   then
+                     fk_pfx := nk_aa(buff.fk_table_id).lvl1_fk_pfx_va(i);
                      fk_tid := nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i);
                      nkseq := 1;
                   else
@@ -6529,7 +6539,7 @@ BEGIN
                   end if;
                   p('      ,' || buff.fk_prefix ||
                                  get_tababbr(buff.fk_table_id) ||
-                          '.' || get_tabname(nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)) ||
+                          '.' || fk_pfx || get_tabname(fk_tid) ||
                         '_nk' || nkseq);
                end if;
             end loop;
@@ -6666,7 +6676,8 @@ BEGIN
             p('      ,' || tbuff.name || '_view.get_'|| buff.fk_prefix || 'nk_path(' ||
                            tbuff.abbr || '.id)');
          end if;
-         fk_tid := -1;
+         fk_pfx := null;
+         fk_tid := null;
          for i in 1 .. nk_aa(buff.fk_table_id).cbuff_va.COUNT
          loop
             if nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i) is null
@@ -6674,11 +6685,15 @@ BEGIN
                p('      ,' || buff.fk_prefix ||
                               get_tababbr(buff.fk_table_id) ||
                        '.' || nk_aa(buff.fk_table_id).cbuff_va(i).name);
-               fk_tid := -1;  -- The same Foreign Key Table may be referenced
-                              --   twice, back-to-back, in column order
+               -- The same Foreign Key Table may be referenced
+               --   twice, back-to-back, in column order
+               fk_pfx := null;
+               fk_tid := null;
             else
-               if fk_tid != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
+               if nvl(fk_pfx,chr(0)) != nk_aa(buff.fk_table_id).lvl1_fk_pfx_va(i) or
+                  nvl(fk_tid, -1)    != nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)
                then
+                  fk_pfx := nk_aa(buff.fk_table_id).lvl1_fk_pfx_va(i);
                   fk_tid := nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i);
                   nkseq := 1;
                else
@@ -6686,7 +6701,7 @@ BEGIN
                end if;
                p('      ,' || buff.fk_prefix ||
                               get_tababbr(buff.fk_table_id) ||
-                       '.' || get_tabname(nk_aa(buff.fk_table_id).lvl1_fk_tid_va(i)) ||
+                       '.' || fk_pfx || get_tabname(fk_tid) ||
                      '_nk' || nkseq);
             end if;
          end loop;
