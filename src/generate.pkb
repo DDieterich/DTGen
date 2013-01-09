@@ -3740,7 +3740,7 @@ BEGIN
       if tbuff.type = 'EFF'
       then
          p('  -- If no beg_dtm was set, :new.beg_dtm will be the same as :old.beg_dtm');
-         p('   if n_eff_beg_dtm <= o_eff_beg_dtm');
+         p('   if n_eff_beg_dtm = o_eff_beg_dtm');
          p('   then');
          p('      n_eff_beg_dtm := systimestamp;');
          p('   elsif n_eff_beg_dtm <= o_eff_beg_dtm');
@@ -8097,6 +8097,7 @@ IS
    sp_type  user_errors.type%type;
    sp_name  user_errors.name%type;
    nkfnd    boolean;
+   fcol     boolean;  -- Is this the first column?
 BEGIN
    sp_type := 'package';
    sp_name := tbuff.name||'_dml';
@@ -8251,6 +8252,33 @@ BEGIN
       p('      ,x_eff_end_dtm  in out  timestamp with local time zone');
    end if;
    p('      );');
+   p('');
+   p('   -- Special Data Warehouse Dimension Function');
+   p('   --   Attempts to find matching record based on natural keys');
+   p('   --   If found, performs updates on non-NK columns that changed');
+   p('   --   If not found, inserts new record');
+   p('   --   Returns ID of record');
+   p('   function get_dim_id');
+   nkfnd := FALSE;
+   fcol := TRUE;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      if fcol
+      then
+         p('      (d_' || buff.name || '  in out  ' || get_dtype(buff));
+         fcol := FALSE;
+      else
+         p('      ,d_' || buff.name || '  in out  ' || get_dtype(buff));
+      end if;
+   end loop;
+   if tbuff.type = 'EFF'
+   then
+      p('      ,d_eff_beg_dtm  in out  timestamp with local time zone');
+   end if;
+   p('      ) return number;');
    if tbuff.type in ('EFF', 'LOG')
    then
       p('');
@@ -8276,6 +8304,7 @@ IS
    tstr     varchar2(200);
    nkseq    number(2);
    nkfnd    boolean;
+   fcol     boolean;   -- Is this the first column?
 BEGIN
    sp_type := 'package body';
    sp_name := tbuff.name||'_dml';
@@ -9166,6 +9195,134 @@ BEGIN
    end if;
    p('      );') ;
    p('end del;') ;
+   p('----------------------------------------');
+   p('function get_dim_id');
+   fcol := TRUE;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      if fcol then
+         p('      (d_' || buff.name || '  in out  ' || get_dtype(buff));
+         fcol := FALSE;
+      else
+         p('      ,d_' || buff.name || '  in out  ' || get_dtype(buff));
+      end if;
+   end loop;
+   if tbuff.type = 'EFF'
+   then
+      p('      ,d_eff_beg_dtm  in out  timestamp with local time zone');
+   end if;
+   p('      ) return number');
+   p('is');
+   p('   -- Special Data Warehouse Dimension Function');
+   if tbuff.type = 'EFF' then
+      p('   eff_dtm    ' || tbuff.name || '.eff_beg_dtm%TYPE;');
+   end if;
+   p('   ret_id     number;');
+   p('   procedure private_upd is');
+   p('      saved_inc  boolean := glob.get_ignore_no_change;');
+   p('   begin');
+   p('      glob.set_ignore_no_change(TRUE);');
+   p('      upd (o_id_in => ret_id');
+   if tbuff.type = 'EFF'
+   then
+      p('          ,n_eff_beg_dtm => d_eff_beg_dtm');
+   end if;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('          ,n_' || buff.name || ' => d_' || buff.name);
+   end loop;
+   p('          ,nkdata_provided_in => ''N''');
+   p('          );');
+   p('      glob.set_ignore_no_change(saved_inc);');
+   p('   exception');
+   p('      when others then');
+   if tbuff.type = 'EFF' then
+      p('         -- Since this can run multi-threaded, another thread');
+      p('         --   may have already updated this value.');
+      p('         if sqlerrm not like ''ORA-20009: emp_tab.upd(): The new Effectivity Date must be greater than %''');
+      p('         then');
+      p('            util.err(sqlerrm);');
+      p('            glob.set_ignore_no_change(saved_inc);');
+      p('            raise;');
+      p('         end if;');
+      p('         glob.set_ignore_no_change(saved_inc);');
+   else
+      p('         util.err(sqlerrm);');
+      p('         glob.set_ignore_no_change(saved_inc);');
+      p('         raise;');
+   end if;
+   p('   end private_upd;');
+   p('begin');
+   p('   -- Attempt to find matching record based on natural keys');
+   p('   begin');
+   p('      select id');
+   if tbuff.type = 'EFF' then
+      p('            ,eff_beg_dtm');
+   end if;
+   p('       into  ret_id');
+   if tbuff.type = 'EFF' then
+      p('            ,eff_dtm');
+   end if;
+   p('       from  ' || tbuff.name);
+   fcol := TRUE;
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+        and  COL.NK is not null
+       order by COL.NK )
+   loop
+      if fcol then
+         p('       where ' || buff.name || ' = d_' || buff.name);
+         fcol := FALSE;
+      else
+         p('        and  ' || buff.name || ' = d_' || buff.name);
+      end if;
+   end loop;
+   p('       ;');
+   p('   exception');
+   p('      when NO_DATA_FOUND then ret_id := null;');
+   p('   end;');
+   p('   if ret_id is not null');
+   p('   then');
+   p('      -- If found, perform update on non-NK columns that changed');
+   if tbuff.type = 'EFF' then
+      p('      --   if this effectivity is newer');
+      p('      if d_eff_beg_dtm > eff_dtm then');
+      p('         private_upd;');
+      p('      end if;');
+   else
+      p('      private_upd;');
+   end if;
+   p('      return ret_id;   -- Return ID of record');
+   p('   end if;');
+   p('   -- If not found, insert new record');
+   p('   begin');
+   p('      ins (n_id => ret_id');
+   for buff in (
+      select * from tab_cols COL
+       where COL.table_id = tbuff.id
+       order by COL.seq )
+   loop
+      p('          ,n_' || buff.name || ' => d_' || buff.name);
+   end loop;
+   if tbuff.type = 'EFF' then
+      p('          ,n_eff_beg_dtm => d_eff_beg_dtm');
+   end if;
+   p('          );');
+   p('   exception');
+   p('      when DUP_VAL_ON_INDEX then');
+   p('         -- Since this can run multi-threaded, another thread');
+   p('         --   may have already populated this value.');
+   p('         private_upd;');
+   p('   end;');
+   p('   return ret_id;   -- Return ID of record');
+   p('end get_dim_id;');
    if tbuff.type in ('EFF', 'LOG')
    then
       p('----------------------------------------');
