@@ -202,7 +202,7 @@ begin
    p('--    ' || to_char(sysdate,'Month DD, YYYY  HH:MI:SS AM'));
    p('--');
    p('-- 1) Copy this Header to a file named "dtgen_dataload.ctl"');
-   p('--    (The split is necessary to for the "STR" record terminator)');
+   p('--    (The split is necessary for the "STR" record terminator)');
    p('--    (The "STR" record terminator is necessary for records with embedded LineFeeds)');
    p('--    (1E = Record Separator, 0D = Carriage Return, 0A = LineFeed)');
    p('-- 2) sqlldr username/password CONTROL=dtgen_dataload.ctl');

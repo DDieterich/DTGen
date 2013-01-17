@@ -1725,7 +1725,7 @@ BEGIN
    p('      return varchar2;');
    p('');
    p('   -- Centralized procedure to delete all application data in database');
-   p('   -- procedure delete_all_data;');
+   p('   procedure delete_all_data;');
    p('');
    p('end ' || sp_name || ';');
    p('/');
@@ -1963,27 +1963,29 @@ BEGIN
    p('end release_lock;');
    p('----------------------------------------');
    p('--  NOT GLOBAL: This Procedure is Application Specific');
-   p('--procedure delete_all_data');
+   p('procedure delete_all_data');
    p('   --  delete all rows in all tables');
    p('   --  EXECUTE IMMEDIATE is used because these tables');
    p('   --      don''t exist at UTIL PACKAGE compile time');
-   p('--is');
-   p('--begin');
+   p('is');
+   p('begin');
    for buff in (
       select * FROM tables TAB
        where TAB.application_id = abuff.id
        order by TAB.seq desc)
    LOOP
-      p('--   EXECUTE IMMEDIATE ''delete from '|| buff.name||''';');
+      p('   EXECUTE IMMEDIATE ''delete from '|| buff.name||''';');
       if buff.type in ('EFF', 'LOG')
       then
          HOA := get_hoa(buff.type);
-         p('--   EXECUTE IMMEDIATE ''delete from '|| buff.name||HOA||''';');
-         p('--   EXECUTE IMMEDIATE ''delete from '|| buff.name||'_PDAT'';');
+         p('   EXECUTE IMMEDIATE ''delete from '|| buff.name||HOA||''';');
+         p('   EXECUTE IMMEDIATE ''delete from '|| buff.name||'_PDAT'';');
       end if;
    end loop;
-   p('--   EXECUTE IMMEDIATE ''delete from util_log'';');
-   p('--end delete_all_data;');
+   p('   EXECUTE IMMEDIATE ''delete from util_log'';');
+   p('   -- Make a record of the DELETE_ALL_DATA Event');
+   p('   util.log(''DELETE_ALL_DATA Completed (and not commited)'');');
+   p('end delete_all_data;');
    p('----------------------------------------');
    p('begin');
    p('   st_lockname := null;');
@@ -2311,7 +2313,7 @@ BEGIN
    p('         ,substr(txt_in,1,4000)');
    p('         ,nvl(substr(loc_in,1,4000), fcs_txt)');
    p('         );');
-   p('   dbms_output.put_line(txt_in || fcs_txt);');
+   p('   --dbms_output.put_line(txt_in || fcs_txt);');
    p('   commit;');
    p('end log;');
    p('----------------------------------------');
