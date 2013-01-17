@@ -13,7 +13,7 @@ prompt  APPLICATION 900 - DTGen
 -- Application Export:
 --   Application:     900
 --   Name:            DTGen
---   Date and Time:   19:14 Wednesday October 10, 2012
+--   Date and Time:   10:53 Thursday January 17, 2013
 --   Exported By:     DTGEN
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -29,7 +29,7 @@ prompt  APPLICATION 900 - DTGen
 --     Items:                450
 --     Computations:          26
 --     Validations:            0
---     Processes:            147
+--     Processes:            148
 --     Regions:              139
 --     Buttons:              151
 --     Dynamic Actions:        0
@@ -146,7 +146,7 @@ wwv_flow_api.create_flow(
   p_default_region_template=> 91833365296068322 + wwv_flow_api.g_id_offset,
   p_error_template=> 91829667765068300 + wwv_flow_api.g_id_offset,
   p_page_protection_enabled_y_n=> 'Y',
-  p_checksum_salt_last_reset => '20121010191439',
+  p_checksum_salt_last_reset => '20130117105300',
   p_max_session_length_sec=> 28800,
   p_home_link=> 'f?p=&APP_ID.:1:&SESSION.',
   p_flow_language=> 'en',
@@ -191,7 +191,7 @@ wwv_flow_api.create_flow(
   p_default_listr_template => 91832266353068321 + wwv_flow_api.g_id_offset,
   p_default_irr_template => 91832968948068321 + wwv_flow_api.g_id_offset,
   p_last_updated_by => 'DTGEN',
-  p_last_upd_yyyymmddhh24miss=> '20121010191439',
+  p_last_upd_yyyymmddhh24miss=> '20130117105300',
   p_required_roles=> wwv_flow_utilities.string_to_table2(''));
  
  
@@ -1651,7 +1651,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'No help is available for this page.'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20121008155913'
+ ,p_last_upd_yyyymmddhh24miss => '20130117104615'
   );
 null;
  
@@ -2023,8 +2023,9 @@ wwv_flow_api.create_page_item(
   p_use_cache_before_default=> 'NO',
   p_item_default_type=> 'STATIC_TEXT_WITH_SUBSTITUTIONS',
   p_prompt=>'Copyright Notice',
-  p_source=>'COPYRIGHT',
-  p_source_type=> 'DB_COLUMN',
+  p_source=>'select COPYRIGHT from applications'||chr(10)||
+' where ID = :P1_APP_ID;',
+  p_source_type=> 'QUERY',
   p_display_as=> 'NATIVE_TEXTAREA',
   p_lov_display_null=> 'NO',
   p_lov_translated=> 'N',
@@ -3346,6 +3347,45 @@ wwv_flow_api.create_page_process(
   p_process_sql_clob => p, 
   p_process_error_message=> 'Unable to process row of table APPLICATIONS_ACT.',
   p_process_success_message=> 'Action Processed.',
+  p_process_is_stateful_y_n=>'N',
+  p_process_comment=>'');
+end;
+null;
+ 
+end;
+/
+
+ 
+begin
+ 
+declare
+  p varchar2(32767) := null;
+  l_clob clob;
+  l_length number := 1;
+begin
+p:=p||'declare'||chr(10)||
+'   gen_no_change EXCEPTION;'||chr(10)||
+'   PRAGMA EXCEPTION_INIT(gen_no_change, -20008);'||chr(10)||
+'begin'||chr(10)||
+'   update #OWNER#.applications_act'||chr(10)||
+'     set  copyright = :P1_COPYRIGHT'||chr(10)||
+'    where id = :P1_APP_ID;'||chr(10)||
+'exception'||chr(10)||
+'   when gen_no_change then null;'||chr(10)||
+'   -- (Don''t have to raise others)'||chr(10)||
+'end;';
+
+wwv_flow_api.create_page_process(
+  p_id     => 14839205207978266 + wwv_flow_api.g_id_offset,
+  p_flow_id=> wwv_flow.g_flow_id,
+  p_flow_step_id => 1,
+  p_process_sequence=> 31,
+  p_process_point=> 'AFTER_SUBMIT',
+  p_process_type=> 'PLSQL',
+  p_process_name=> 'Update CLOBs',
+  p_process_sql_clob => p, 
+  p_process_error_message=> '',
+  p_process_success_message=> '',
   p_process_is_stateful_y_n=>'N',
   p_process_comment=>'');
 end;
@@ -9380,7 +9420,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'Tables to be generated for each application'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20120731170241'
+ ,p_last_upd_yyyymmddhh24miss => '20130104125352'
   );
 null;
  
@@ -9484,9 +9524,9 @@ wwv_flow_api.create_report_region (
   p_query_show_nulls_as=> '-',
   p_query_break_cols=> '0',
   p_query_no_data_found=> 'No data found.',
-  p_query_num_rows_type=> '0',
+  p_query_num_rows_type=> 'NEXT_PREVIOUS_LINKS',
   p_query_row_count_max=> '500',
-  p_pagination_display_position=> 'BOTTOM_RIGHT',
+  p_pagination_display_position=> 'BOTTOM_LEFT',
   p_csv_output=> 'N',
   p_query_asc_image=> 'apex/builder/dup.gif',
   p_query_asc_image_attr=> 'width="16" height="16" alt="" ',
@@ -17075,7 +17115,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'Unique and Non-Unique Indexes to be generated for each table'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20120809161405'
+ ,p_last_upd_yyyymmddhh24miss => '20121108072118'
   );
 null;
  
@@ -22086,7 +22126,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'Applications to be generated'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20121004200535'
+ ,p_last_upd_yyyymmddhh24miss => '20130117103018'
   );
 null;
  
@@ -24300,7 +24340,7 @@ p:=p||'declare'||chr(10)||
 '   MRU_COUNT  number := 0;'||chr(10)||
 '   rows       number;'||chr(10)||
 'begin'||chr(10)||
-'   glob.get_ignore_no_change := FALSE;'||chr(10)||
+'   glob.set_ignore_no_change(FALSE);'||chr(10)||
 '   for i in 1 .. apex_application.g_f02.count'||chr(10)||
 '   loop'||chr(10)||
 '      rows := 0;'||chr(10)||
@@ -24308,9 +24348,9 @@ p:=p||'declare'||chr(10)||
 '      then'||chr(10)||
 '         begin'||chr(10)||
 '            update #OWNER#.applications_act'||chr(10)||
-'      ';
+'        ';
 
-p:=p||'        set  abbr = '||chr(10)||
+p:=p||'      set  abbr = '||chr(10)||
 '                      apex_application.g_f03(i)'||chr(10)||
 '                  ,name = '||chr(10)||
 '                      apex_application.g_f04(i)'||chr(10)||
@@ -24320,9 +24360,9 @@ p:=p||'        set  abbr = '||chr(10)||
 '                      apex_application.g_f06(i)'||chr(10)||
 '                  ,apex_schema = '||chr(10)||
 '                      apex_application.g_f07(i)'||chr(10)||
-'                ';
+'                  ';
 
-p:=p||'  ,apex_ws_name = '||chr(10)||
+p:=p||',apex_ws_name = '||chr(10)||
 '                      apex_application.g_f08(i)'||chr(10)||
 '                  ,apex_app_name = '||chr(10)||
 '                      apex_application.g_f09(i)'||chr(10)||
@@ -24332,9 +24372,9 @@ p:=p||'  ,apex_ws_name = '||chr(10)||
 '                      apex_application.g_f11(i)'||chr(10)||
 '                  ,description = '||chr(10)||
 '                      apex_application.g_f12(i)'||chr(10)||
-'              ';
+'                ';
 
-p:=p||'    ,ts_null_override = '||chr(10)||
+p:=p||'  ,ts_null_override = '||chr(10)||
 '                      apex_application.g_f13(i)'||chr(10)||
 '                  ,ts_onln_data = '||chr(10)||
 '                      apex_application.g_f14(i)'||chr(10)||
@@ -24343,9 +24383,9 @@ p:=p||'    ,ts_null_override = '||chr(10)||
 '                  ,ts_hist_data = '||chr(10)||
 '                      apex_application.g_f16(i)'||chr(10)||
 '                  ,ts_hist_indx = '||chr(10)||
-'                      apex_application.g_f1';
+'                      apex_application.g_f17(';
 
-p:=p||'7(i)'||chr(10)||
+p:=p||'i)'||chr(10)||
 '                  ,usr_datatype = '||chr(10)||
 '                      apex_application.g_f18(i)'||chr(10)||
 '                  ,usr_frgn_key = '||chr(10)||
@@ -24356,9 +24396,9 @@ p:=p||'7(i)'||chr(10)||
 '            rows := SQL%ROWCOUNT;'||chr(10)||
 '         exception'||chr(10)||
 '            when gen_no_change'||chr(10)||
-'            th';
+'            then';
 
-p:=p||'en'||chr(10)||
+p:=p||''||chr(10)||
 '               -- A matching record was found, but the data'||chr(10)||
 '               -- in the record is the same as the new data'||chr(10)||
 '               goto NEXT_ITERATION;'||chr(10)||
@@ -24373,9 +24413,9 @@ p:=p||'en'||chr(10)||
 '               (id'||chr(10)||
 '               ,abbr'||chr(10)||
 '               ,name'||chr(10)||
-'              ';
+'               ,';
 
-p:=p||' ,version'||chr(10)||
+p:=p||'version'||chr(10)||
 '               ,db_schema'||chr(10)||
 '               ,apex_schema'||chr(10)||
 '               ,apex_ws_name'||chr(10)||
@@ -24389,9 +24429,9 @@ p:=p||' ,version'||chr(10)||
 '               ,ts_hist_data'||chr(10)||
 '               ,ts_hist_indx'||chr(10)||
 '               ,usr_datatype'||chr(10)||
-'               ,usr_frgn_k';
+'               ,usr_frgn_key';
 
-p:=p||'ey'||chr(10)||
+p:=p||''||chr(10)||
 '               ,copyright'||chr(10)||
 '               )'||chr(10)||
 '         values '||chr(10)||
@@ -24403,9 +24443,9 @@ p:=p||'ey'||chr(10)||
 '               ,apex_application.g_f07(i)'||chr(10)||
 '               ,apex_application.g_f08(i)'||chr(10)||
 '               ,apex_application.g_f09(i)'||chr(10)||
-' ';
+'   ';
 
-p:=p||'              ,apex_application.g_f10(i)'||chr(10)||
+p:=p||'            ,apex_application.g_f10(i)'||chr(10)||
 '               ,apex_application.g_f11(i)'||chr(10)||
 '               ,apex_application.g_f12(i)'||chr(10)||
 '               ,apex_application.g_f13(i)'||chr(10)||
@@ -24414,9 +24454,9 @@ p:=p||'              ,apex_application.g_f10(i)'||chr(10)||
 '               ,apex_application.g_f16(i)'||chr(10)||
 '               ,apex_application.g_f17(i)'||chr(10)||
 '               ,apex_application.g_f18(i)'||chr(10)||
-'               ,apex_ap';
+'               ,apex_appl';
 
-p:=p||'plication.g_f19(i)'||chr(10)||
+p:=p||'ication.g_f19(i)'||chr(10)||
 '               ,apex_application.g_f20(i)'||chr(10)||
 '               );'||chr(10)||
 '         MRI_COUNT := MRI_COUNT + 1;'||chr(10)||
@@ -24428,9 +24468,9 @@ p:=p||'plication.g_f19(i)'||chr(10)||
 '                                 rows || '' rows for ID '' ||'||chr(10)||
 '                                 apex_application.g_f02(i));'||chr(10)||
 '      end if;'||chr(10)||
-'      ';
+'      <<';
 
-p:=p||'<<NEXT_ITERATION>>  -- not allowed unless an executable statement follows'||chr(10)||
+p:=p||'NEXT_ITERATION>>  -- not allowed unless an executable statement follows'||chr(10)||
 '      NULL;               -- add NULL statement to avoid error'||chr(10)||
 '   end loop;'||chr(10)||
 '   if MRI_COUNT > 0 or MRU_COUNT > 0'||chr(10)||
@@ -31356,7 +31396,7 @@ wwv_flow_api.create_page (
  ,p_help_text => 
 'Data domains to be generated as check constraints and/or lists of values for selected columns'
  ,p_last_updated_by => 'DTGEN'
- ,p_last_upd_yyyymmddhh24miss => '20121004200535'
+ ,p_last_upd_yyyymmddhh24miss => '20121108204717'
   );
 null;
  
@@ -31442,10 +31482,12 @@ wwv_flow_api.create_report_region (
   p_query_num_rows=> '15',
   p_query_options=> 'DERIVED_REPORT_COLUMNS',
   p_query_show_nulls_as=> '-',
+  p_query_break_cols=> '0',
   p_query_no_data_found=> 'No data found.',
   p_query_num_rows_type=> 'NEXT_PREVIOUS_LINKS',
   p_query_row_count_max=> '500',
   p_pagination_display_position=> 'BOTTOM_LEFT',
+  p_csv_output=> 'N',
   p_query_asc_image=> 'apex/builder/dup.gif',
   p_query_asc_image_attr=> 'width="16" height="16" alt="" ',
   p_query_desc_image=> 'apex/builder/ddown.gif',
@@ -31465,10 +31507,11 @@ wwv_flow_api.create_report_columns (
   p_query_column_id=> 1,
   p_form_element_id=> null,
   p_column_alias=> 'CHECK$01',
-  p_column_display_sequence=> 10,
+  p_column_display_sequence=> 1,
   p_column_heading=> '&nbsp;',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'CENTER',
+  p_default_sort_column_sequence=>0,
   p_disable_sort_column=>'Y',
   p_sum_column=> 'N',
   p_hidden_column=> 'N',
@@ -31490,7 +31533,7 @@ wwv_flow_api.create_report_columns (
   p_query_column_id=> 2,
   p_form_element_id=> null,
   p_column_alias=> 'ID',
-  p_column_display_sequence=> 20,
+  p_column_display_sequence=> 2,
   p_column_heading=> 'ID',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31521,7 +31564,7 @@ wwv_flow_api.create_report_columns (
   p_query_column_id=> 3,
   p_form_element_id=> null,
   p_column_alias=> 'ID_DISPLAY',
-  p_column_display_sequence=> 30,
+  p_column_display_sequence=> 3,
   p_column_heading=> 'ID',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31551,7 +31594,7 @@ wwv_flow_api.create_report_columns (
   p_query_column_id=> 4,
   p_form_element_id=> null,
   p_column_alias=> 'EDIT_RECORD_LINK_COLUMN_NAME',
-  p_column_display_sequence=> 40,
+  p_column_display_sequence=> 4,
   p_column_heading=> 'Form Link',
   p_column_link=>'javascript:apex.submit({request:''GOTO_FORM'', set:{''P1004_FORM_ID'':#ID#}});',
   p_column_linktext=>'<img src="#IMAGE_PREFIX#ed-item.gif" alt="Save Changes and Edit Record #ID#">',
@@ -31579,10 +31622,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11221921927532567 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 6,
+  p_query_column_id=> 5,
   p_form_element_id=> null,
   p_column_alias=> 'APPLICATION_ID',
-  p_column_display_sequence=> 60,
+  p_column_display_sequence=> 5,
   p_column_heading=> 'Application Id',
   p_column_format=> '99999999999999999999999999999999999999',
   p_column_alignment=>'RIGHT',
@@ -31613,10 +31656,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11222104053532568 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 8,
+  p_query_column_id=> 6,
   p_form_element_id=> null,
   p_column_alias=> 'APPLICATIONS_NK1',
-  p_column_display_sequence=> 80,
+  p_column_display_sequence=> 6,
   p_column_heading=> 'Applications Nk1',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31646,10 +31689,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11222328370532568 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 10,
+  p_query_column_id=> 7,
   p_form_element_id=> null,
   p_column_alias=> 'ABBR',
-  p_column_display_sequence=> 100,
+  p_column_display_sequence=> 7,
   p_column_heading=> 'Abbr',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31679,10 +31722,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11222531588532568 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 12,
+  p_query_column_id=> 8,
   p_form_element_id=> null,
   p_column_alias=> 'NAME',
-  p_column_display_sequence=> 120,
+  p_column_display_sequence=> 8,
   p_column_heading=> 'Name',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31712,10 +31755,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11222720085532568 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 14,
+  p_query_column_id=> 9,
   p_form_element_id=> null,
   p_column_alias=> 'FOLD',
-  p_column_display_sequence=> 140,
+  p_column_display_sequence=> 9,
   p_column_heading=> 'Fold',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -31745,10 +31788,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11222902804532568 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 16,
+  p_query_column_id=> 10,
   p_form_element_id=> null,
   p_column_alias=> 'LEN',
-  p_column_display_sequence=> 160,
+  p_column_display_sequence=> 10,
   p_column_heading=> 'Len',
   p_column_format=> '99',
   p_column_alignment=>'RIGHT',
@@ -31779,10 +31822,10 @@ wwv_flow_api.create_report_columns (
   p_id=> 11223117507532569 + wwv_flow_api.g_id_offset,
   p_region_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
-  p_query_column_id=> 18,
+  p_query_column_id=> 11,
   p_form_element_id=> null,
   p_column_alias=> 'DESCRIPTION',
-  p_column_display_sequence=> 180,
+  p_column_display_sequence=> 11,
   p_column_heading=> 'Description',
   p_column_alignment=>'LEFT',
   p_heading_alignment=>'LEFT',
@@ -32948,7 +32991,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11222018912532567 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 5,
+  p_column_sequence=> 4,
   p_query_column_name=> 'APPLICATION_ID',
   p_display_as=> 'TEXT',
   p_column_comment=> 'Surrogate Key for the application of this data domain');
@@ -32957,7 +33000,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11222214378532568 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 7,
+  p_column_sequence=> 5,
   p_query_column_name=> 'APPLICATIONS_NK1',
   p_display_as=> 'TEXT',
   p_column_comment=> 'APPLICATIONS Natural Key Value 1: Abbreviation for this application');
@@ -32966,7 +33009,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11222412231532568 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 9,
+  p_column_sequence=> 6,
   p_query_column_name=> 'ABBR',
   p_display_as=> 'TEXT',
   p_column_comment=> 'Name of this data domain');
@@ -32975,7 +33018,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11222607440532568 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 11,
+  p_column_sequence=> 7,
   p_query_column_name=> 'NAME',
   p_display_as=> 'TEXT',
   p_column_comment=> 'Name of this data domain');
@@ -32984,7 +33027,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11222821197532568 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 13,
+  p_column_sequence=> 8,
   p_query_column_name=> 'FOLD',
   p_display_as=> 'TEXT',
   p_column_comment=> 'Value of this sequence in this data domain');
@@ -32993,7 +33036,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11223030791532569 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 15,
+  p_column_sequence=> 9,
   p_query_column_name=> 'LEN',
   p_display_as=> 'TEXT',
   p_column_comment=> 'Value of this sequence in this data domain');
@@ -33002,7 +33045,7 @@ wwv_flow_api.create_region_rpt_cols (
   p_id     => 11223207894532569 + wwv_flow_api.g_id_offset,
   p_flow_id=> wwv_flow.g_flow_id,
   p_plug_id=> 11220516666532554 + wwv_flow_api.g_id_offset,
-  p_column_sequence=> 17,
+  p_column_sequence=> 10,
   p_query_column_name=> 'DESCRIPTION',
   p_display_as=> 'TEXTAREA',
   p_column_comment=> 'Description of this data domain value');
