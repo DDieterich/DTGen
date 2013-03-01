@@ -1966,7 +1966,7 @@ BEGIN
    p('procedure delete_all_data');
    p('   --  delete all rows in all tables');
    p('   --  EXECUTE IMMEDIATE is used because these tables');
-   p('   --      don''t exist at UTIL PACKAGE compile time');
+   p('   --      don''t exist at GLOB PACKAGE compile time');
    p('is');
    p('begin');
    for buff in (
@@ -1984,7 +1984,8 @@ BEGIN
    end loop;
    p('   EXECUTE IMMEDIATE ''delete from util_log'';');
    p('   -- Make a record of the DELETE_ALL_DATA Event');
-   p('   util.log(''DELETE_ALL_DATA Completed (and not commited)'');');
+   p('   EXECUTE IMMEDIATE ''insert into util_log (dtm, usr, txt, loc) '' ||');
+   p('      ''values (systimestamp, USER, ''''DELETE_ALL_DATA Completed'''', ''''GLOB Package'''')'';');
    p('end delete_all_data;');
    p('----------------------------------------');
    p('begin');
