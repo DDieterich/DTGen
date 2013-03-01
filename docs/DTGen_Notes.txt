@@ -6,9 +6,10 @@ DTGen Goals:
 -) Prevent repetitive coding of basic functions
    -) integrity checks
    -) maintenance forms
-   -) architecture deployment
+   -) architecture deployment (Superceeded by Issue 128)
+   -) Database Streamlining (No Table Triggers or Constraints)
 -) Customizable generation
--) Open Source
+-) Open Source (???)
 
 
 ============================================================
@@ -25,7 +26,7 @@ Included Features:
    -) PL/SQL example for Form DML
    -) PL/SQL example for Grid Edit
    -) PL/SQL example for Form Filter
--) Selectable DB/M-T functionality
+-) Selectable DB/M-T functionality (Superceeded by Issue 128)
    -) Set ID (the primary key)
    -) Set aud_beg_usr and aud_end_usr
    -) Set aud_beg_dtm and aud_end_dtm
