@@ -1,7 +1,5 @@
 ![http://dtgen.googlecode.com/files/DTGen_Project.png](http://dtgen.googlecode.com/files/DTGen_Project.png)
 
-NOTE: Google Code will be shutting down January 2016 (http://google-opensource.blogspot.com/2015/03/farewell-to-google-code.html).  I do not plan to move this site.  See http://dmstex.com for further developments to this generator.
-
 ### Oracle Database Source Code Generation Tool for Relational Designers ###
 
 DTGen is a data driven source code generator that creates Oracle data dictionary language (DDL) scripts and Oracle Application Express (APEX) export files.  Some of the functionality available in DTGen are described in the [DTGen Functionality Wiki Page](http://code.google.com/p/dtgen/wiki/DTGenFunctionality).
