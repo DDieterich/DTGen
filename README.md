@@ -1,6 +1,6 @@
 ![DTGen_Project.png](DTGen_Project.png)
 
-(For the top-level Wiki link, go to [WikiHome](WikiHome))
+(For the top-level Wiki link, go to [WikiHome](WikiHome.md))
 
 (For the Master Branch, go to [MasterBranch](http://github.com/DDieterich/dtgen))
 
