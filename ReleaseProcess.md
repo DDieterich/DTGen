@@ -98,7 +98,7 @@ Review and update as needed the documents in the "docs" directory<br>
      * Goto the ".../Releases/dtgen_ReleaseNumber" directory<br>
      * Select all directories and files under ".../Releases/dtgen_ReleaseNumber"<br>
      * Rename the ZIP file to "dtgen_ReleaseNumber"<br>
-  * Upload to http://code.google.com/p/dtgen/downloads/list<br>
+  * Add to repository<br>
      -) Type-Archive<br>
      -) OpSys-Any?<br>
 </code></pre>

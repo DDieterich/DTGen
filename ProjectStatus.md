@@ -1,6 +1,6 @@
 # Current Release #
 
-> [Pre-Release 0.12 Available for Download](http://code.google.com/p/dtgen/downloads/detail?name=dtgen_0.12.zip)
+> [Pre-Release 0.12](dtgen_0.12.zip)
 
 # Pre-Release 0.12 Includes #
 
@@ -10,7 +10,7 @@
 
 # Release Schedule #
 
-Note: See [Issue](https://code.google.com/p/dtgen/issues/list) Milestones for list of changes in each release.
+Note: See Issue Milestones for list of changes in each release.
 
 Current as of 04-Oct-2012
 
@@ -26,5 +26,3 @@ Current as of 04-Oct-2012
 |1.0|2 |22-Feb-2013|Cleanup and Documentation|
 |1.1|3 |15-Mar-2013|Developer Friendly Enhancements|
 |1.2|4 |12-Apr-2013|Performance Test Data Generation|
-
-The release schedule is also available in [Release Schedule.pdf](http://code.google.com/p/dtgen/downloads/detail?name=Release%20Schedule.pdf)

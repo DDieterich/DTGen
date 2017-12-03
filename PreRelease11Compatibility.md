@@ -26,8 +26,8 @@ Note <sup>3</sup>: To view or develop Oracle Application Express applications, W
 <h1>Tested Installations</h1>
 
 <table><thead><th> <b>Operating</b><br>System</th><th> Rev </th><th> <b>Operating System</b><br>Edition</th><th> Bits </th><th> <b>Database</b> </th><th> Rev </th><th> <b>Database</b><br>Edition</th><th> Bits </th><th> <b>APEX</b><br>Version</th></thead><tbody>
-<tr><td> Windows 7 </td><td> SP1 </td><td> Home Premium </td><td> 64 </td><td> Oracle10g </td><td> <a href='https://code.google.com/p/dtgen/source/detail?r=2'>R2</a> </td><td> XE </td><td> 32 </td><td> 4.0 </td></tr>
-<tr><td> Windows XP </td><td> SP3 </td><td> Professional </td><td> 32 </td><td> Oracle11g </td><td> <a href='https://code.google.com/p/dtgen/source/detail?r=2'>R2</a> </td><td> XE </td><td> 32 </td><td> 4.0 </td></tr></tbody></table>
+<tr><td> Windows 7 </td><td> SP1 </td><td> Home Premium </td><td> 64 </td><td> Oracle10g </td><td> R2 </a> </td><td> XE </td><td> 32 </td><td> 4.0 </td></tr>
+<tr><td> Windows XP </td><td> SP3 </td><td> Professional </td><td> 32 </td><td> Oracle11g </td><td> R2 </td><td> XE </td><td> 32 </td><td> 4.0 </td></tr></tbody></table>
 
 <table><thead><th> <b>Web Browser</b> </th><th> <b>Version</b> </th></thead><tbody>
 <tr><td> Google Chrome </td><td> 18.0 </td></tr>

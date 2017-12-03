@@ -4,7 +4,7 @@
 
 # Introduction #
 
-Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code.  The input for DTGen is data saved to a DTGen schema in an Oracle database.  The data can be entered from a user built SQL\*Loader Control file (an example is included) and/or the DTGen application in APEX.  The output from DTGen is line oriented text data stored in the same DTGen schema.  The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on [Oracle's Free Database](http://www.oracle.com/technetwork/database/express-edition/overview/index.html).  See [Compatibility](http://code.google.com/p/dtgen/wiki/Compatibility) for more details on software versions.
+Given a basic entity-relational model and required model meta-data, DTGen generates Oracle SQL, PL/SQL, and APEX source code.  The input for DTGen is data saved to a DTGen schema in an Oracle database.  The data can be entered from a user built SQL\*Loader Control file (an example is included) and/or the DTGen application in APEX.  The output from DTGen is line oriented text data stored in the same DTGen schema.  The text data can be queried from the DTGen schema and/or downloaded as a file via generated URLs in APEX. DTGen runs on [Oracle's Free Database](http://www.oracle.com/technetwork/database/express-edition/overview/index.html).  See [Compatibility](Compatibility.md) for more details on software versions.
 
 ## Augmented Schema Functionality ##
 
@@ -136,7 +136,7 @@ Another option available is the execution of DML and POP on either the database 
 Part of the deployment option is the caching of data at the mid-tiers through the use of materialized views.  Slow changing tables can be identified for mid-tier caching.  Also, a refresh rate can be specified for each of these tables.  DTGen generates the PL/SQL and SQL code needed to deploy this caching and automated refresh to the mid-tier.
 
 #### Note 1 ####
-_These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until [issue #2](https://code.google.com/p/dtgen/issues/detail?id=#2) is resolved._
+_These functions should be avoided due to the difficulty of maintaining foreign key transaction integrity until issue #2 is resolved._
 
 
 ---
