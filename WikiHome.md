@@ -6,18 +6,20 @@ The following wiki pages are organized by phase
 
 ### Requirements/Functionality ###
 
-  * ProjectGoals
+  * [ProjectGoals](ProjectGoals.pdf)
+  * [Problem Statements](Problem Statements.pdf)
   * [DTGenFunctionality](DTGenFunctionality.md)
 
 ### Project Management ###
 
-  * ProjectStatus
-  * ReleaseProcess
+  * [ProjectStatus[(ProjectStatus.md)]
+  * [ReleaseProcess](ReleaseProcess.md)
+  * [RedMine WorkFlow Diagram](RedMine WorkFlow Diagram.png)
 
 ### Design ###
 
+  * [Capabilities Matrix](Capabilities Matrix.html)
   * [DTGen\_Notes.pdf](DTGen_Notes.pdf)
-  * [DTGen\_Notes.txt](DTGen_Notes.txt)
   * [DB\_User\_Connection\_From\_MT\_Schema](DB_User_Connection_From_MT_Schema.md)
 
 ### Implementation ###
@@ -26,7 +28,7 @@ The following wiki pages are organized by phase
 
 ### Quality Assurance ###
 
-  * TestPlan
+  * [TestPlan.pdf](TestPlan.pdf)
 
 ### Deployment ###
 

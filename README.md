@@ -1,5 +1,7 @@
 ![DTGen_Project.png](DTGen_Project.png)
 
+(For the top-level Wiki link, go to [WikiHome](WikiHome))
+
 ### Oracle Database Source Code Generation Tool for Relational Designers ###
 
 DTGen is a data driven source code generator that creates Oracle data dictionary language (DDL) scripts and Oracle Application Express (APEX) export files.  Some of the functionality available in DTGen are described in the [DTGen Functionality Wiki Page](DTGenFunctionality.md).
