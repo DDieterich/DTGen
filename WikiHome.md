@@ -19,7 +19,7 @@ The following wiki pages are organized by phase
 ### Design ###
 
   * [CapabilitiesMatrix](CapabilitiesMatrix.html)
-  * [DTGen\_Notes.pdf](DTGen_Notes.pdf)
+  * [DTGen\_Notes](DTGen_Notes.pdf)
   * [DB\_User\_Connection\_From\_MT\_Schema](DB_User_Connection_From_MT_Schema.md)
 
 ### Implementation ###
