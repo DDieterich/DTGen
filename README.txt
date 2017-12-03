@@ -1,6 +1,8 @@
 
 Welcome to DTGen
 
+The Wiki is in the Wiki Branch: https://github.com/DDieterich/dtgen/blob/wiki/README.md
+
 NOTE: The APEX GUI "f900.sql" creates database objects with the prefix
   "GUI_".  Use of this prefix for database objects in an application
   may cause problems/error with APEX GUI objects in the database.
