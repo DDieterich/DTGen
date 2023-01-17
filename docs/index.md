@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ![DTGen_Project.png](https://github.com/DDieterich/DTGen/wiki/DTGen_Project.png)
 
 (For the top-level Wiki link, go to [WikiHome](https://github.com/DDieterich/DTGen/wiki/home))
