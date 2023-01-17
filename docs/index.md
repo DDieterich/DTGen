@@ -1,5 +1,14 @@
 ![DTGen_Project.png](https://github.com/DDieterich/DTGen/wiki/DTGen_Project.png)
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8L07JHMQGK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8L07JHMQGK');
+</script>
+
 (For the top-level Wiki link, go to [WikiHome](https://github.com/DDieterich/DTGen/wiki/home))
 
 ### Oracle Database Source Code Generation Tool for Relational Designers ###
