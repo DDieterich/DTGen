@@ -1,5 +1,5 @@
-title: Cayman theme
-description: Cayman is a clean, responsive theme for GitHub Pages.
+title: DTGen Project
+description: DTGen is a data driven source code generator that creates Oracle data dictionary language (DDL) scripts and Oracle Application Express (APEX) export files.
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-cayman
